@@ -7,12 +7,6 @@ define('PAGETYPE_TEMPLATED', 2);
 define('PAGETYPE_DIRECTORY', 3);
 define('PAGETYPE_PARENTLINK',4);
 
-if(isset($_GET['action']) && strlen($_GET['action']) > 0) {
-	if(strcmp($_GET['action'],'delete') == 0) {
-		delete_page($_GET['pageid']);
-	}
-}
-
 function delete_page($pageid)
 {
 	global $nsisweb;
