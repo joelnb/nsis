@@ -52,7 +52,7 @@ class NsisWebPage
 			}
 			
 			if($this->private_info['source'] && !$this->private_info['ppsource']) {
-				$this->private_info['ppsource'] = preprocess($this->private_info['source']);
+				$this->private_info['ppsource'] = preprocess($this->private_info['source'],$this->private_info['pageid']);
 			}
 		} else if((int)$param > 0) {
 			$pageid = (int)$param;
@@ -177,7 +177,7 @@ class NsisWebPage
 		global $nsisweb;
 		$title    = mysql_escape_string($title);
 		$source   = mysql_escape_string($content);
-		$ppsource = mysql_escape_string(preprocess($content));
+		$ppsource = mysql_escape_string(preprocess($content,$this->get_pageid()));
 		$session  = $nsisweb->get_session();
 		$author   = $session->user_id;
 		$result   = $nsisweb->query("update nsisweb_pages set flags=$flags,title='$title',source='$source',ppsource='$ppsource',last_author=$author,last_updated=NOW() where pageid=".$this->get_pageid());
@@ -196,7 +196,7 @@ class NsisWebPage
 		global $nsisweb;
 		$title    = mysql_escape_string($title);
 		$source   = mysql_escape_string($content);
-		$ppsource = mysql_escape_string(preprocess($content));
+		$ppsource = mysql_escape_string(preprocess($content,$this->get_pageid()));
 		$session  = $nsisweb->get_session();
 		$author   = $session->user_id;
 		$result   = $nsisweb->query("insert into nsisweb_pages set type=$type,flags=$flags,title='$title',source='$source',ppsource='$ppsource',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0,votes=0");
@@ -329,7 +329,7 @@ class NsisWebInstance
 	function get_page()
 	{
 		if(!$this->private_info['page'] && $this->private_info['instanceid'] > 0) {
-			$this->private_info['page'] = new NsisWebPage($this->get_pageid(),FETCH_CONTENT_PP);
+			$this->private_info['page'] = new NsisWebPage($this->get_pageid(),FETCH_CONTENT_BOTH);
 		}
 		return $this->private_info['page'];
 	}
@@ -381,7 +381,7 @@ class NsisWebInstance
 	}
 };
 
-function preprocess($content)
+function preprocess($content,$pageid)
 {
 	/* TODO: HTML Filter is taken from Squirrel Mail -- check the license before
 	   using this in the final site implementation. This was mentioned in a user
@@ -429,7 +429,7 @@ function preprocess($content)
 		$add_attr_to_tag
 	);
 
-	return colour_source($trusted);
+	return colour_source($trusted,$pageid);
 }
 
 /* Based on a function provided in the PHP Manual from php.net, in a user
@@ -442,7 +442,7 @@ function preprocess($content)
    linebreaks must be converted to <br> tags. The exception to this rule
    is inside [source]..[/source] blocks where linebreaks are retained as is
    all other formatting and the block is styled as preformatted text. */
-function colour_source($string){
+function colour_source($string,$pageid){
 	$array_contenido = explode("[source]",str_replace("\n",'<br>',$string));
 	$final = $array_contenido[0];
 	$count = count($array_contenido);
@@ -467,7 +467,13 @@ function colour_source($string){
 				$array_contents[0] = ob_get_contents();
 				ob_end_clean();
 		  }
-			$final .= '<span style="white-space:pre;font-family:courier new;font-size:10pt;">'.$array_contents[0]."</span>".$array_contents[1];
+		  
+		  /* attach a disk icon to enable saving the source */
+		  if($pageid > 0) {
+				$final .= '<a href="savescript.php?pageid='.$pageid.'&script='.$i.'"><img border="0" src="images/disk.gif" width="19" height="19" hspace="5" vspace="5" align="middle"></a><font style="font-family:verdana;font-size:7pt;">Save this script</a><br>';
+			}
+			$final .= '<span style="white-space:pre;font-family:courier new;font-size:10pt;">';
+			$final .= $array_contents[0]."</span>".$array_contents[1];
 		}
 
 		if(USE_BEAUTIFIER == TRUE) {
