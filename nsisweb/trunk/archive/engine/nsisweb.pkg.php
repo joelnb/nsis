@@ -142,19 +142,6 @@ class NsisWeb
   }
   function query($query)
   {
-    /* own database permission check */
-    if(!NSISWEB_OWNDB && strstr($query,' database ')) {
-      $this->record_error('NsisWeb::query(): A query was blocked because NSISWEB_OWNDB is FALSE and the query contained " database " [query='.$query.']');
-      return FALSE;
-    }
-
-    /* admin rights check */
-    if(stristr($query,'create table') || stristr($query,'drop ')) {
-    /* not implemented yet, force manual manipulation for now */
-    /*$this->record_error('insufficient privileges');
-    return FALSE;*/
-    }
-
     unset($this->$last_query);
     if($link = mysql_pconnect(NSISWEB_MYSQL_HOST,NSISWEB_MYSQL_USER,NSISWEB_MYSQL_PASSWORD)) {
       /* only select the db if the query does not mention the db name and we have not already selected the database */
