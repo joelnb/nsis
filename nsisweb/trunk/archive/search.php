@@ -61,7 +61,7 @@ END_OF_HTML;
 END_OF_HTML;
     $i = 0;
 		while($record = $nsisweb->get_result_array($result)) {
-			if($i % 0 == 0) {
+			if($i == 0) {
 				print '<tr style="background-color:#eeffee;">';
 			} else {
 				print '<tr style="background-color:#eeeeee;">';
