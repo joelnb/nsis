@@ -13,7 +13,7 @@
 			 + $pageid  : the NSISWeb internal id of the user document
 			 + $nsisweb : the NSISWeb core object instance
 */
-	$edit_link = '<a href="'.$nsisweb->get_home_url().'/nsisweb.php?action=edit&pageid='.$pageid.'">edit</a>';
+	$edit_link = '<a href="'.$nsisweb->get_page_url('edit').'&pageid='.$pageid.'">edit</a>';
 	$delete_link = '<a href="'.$nsisweb->get_home_url().'/nsisweb.php?action=delete&pageid='.$pageid.'">delete</a>';
 ?>
 <!-- user_page.skel.php: begin -->
@@ -21,7 +21,16 @@
   <tr>
     <td>
 			<font style="font-size: 20pt;"><?= $title ?></font><br>
-			<font>Written by <?= $author ?>, <?= $date ?></font><br>
+			<font style="font-size: 8pt;">Written by <?= $author ?>, <?= $date ?>
+			<?
+				$page = find_pageid($pageid);
+				if($page['created'] != $page['last_updated']) {
+					$user   = find_userid($page['last_author']);
+					$author = $user->username;
+					print ' [ Last updated by '.$author.', '.$page['last_updated'].' ]';
+				}
+			?>
+			</font><br>
 		</td>
 		<td align="right" valign="top">
 		  <?= $edit_link ?> | <?= $delete_link ?><br>

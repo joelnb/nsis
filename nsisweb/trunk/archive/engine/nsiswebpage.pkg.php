@@ -131,6 +131,17 @@ function create_templated_page($title,$body)
 	return $nsisweb->get_created_id();
 }
 
+function update_templated_page($pageid,$title,$body)
+{
+	global $nsisweb;
+	$source  = process_templated_content($body);
+	$source  = mysql_escape_string($source);
+	$title   = mysql_escape_string($title);
+	$session = $nsisweb->get_session();
+	$author  = $session->user_id;
+	$nsisweb->query("update nsisweb_pages set source='$source',title='$title',last_author=$author,last_updated=NOW() where pageid=$pageid");
+}
+
 function process_templated_content($content)
 {
 	/* TODO: HTML Filter is taken from Squirrel Mail -- check the license before
