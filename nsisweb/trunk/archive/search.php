@@ -211,6 +211,7 @@ if($do_search) {
 	  </tr>
 END_OF_HTML;
 	  $i = 0;
+	  $user_map = array();
 		while($record = $nsisweb->get_result_array($result)) {
 			if($i == 0) {
 				print '<tr style="background-color:#eeffee;">';
@@ -219,7 +220,10 @@ END_OF_HTML;
 			}
 			$userid = $record['author'];
 			if($userid > 0) {
-				$user = find_userid($userid);
+				if(!is_object($user_map[$userid])) {
+					$user_map[$userid] = find_userid($userid);
+				}
+				$user = $user_map[$userid];
 				print '<td align="center">&nbsp;'.$user->username.'&nbsp;</td>';
 		  } else {
 			  print '<td align="center">&nbsp;Anonymous&nbsp;</td>';
