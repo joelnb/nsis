@@ -509,10 +509,17 @@ function colour_source($string,$pageid){
     for($i = 1;$i < $count;$i++){
       $array_contents = explode("[/source]",$array_contenido[$i]);
 
+      /* A word about wordwrap: i'm using cut mode 1 because I *never*
+         want a page layout messed up by a long script line and it's
+         conceivable that a long file path would exceed the 78 character
+         limit, especially if chained together with anything else. Cut
+         mode zero will allow the limit to be exceeded if it can't find
+         a suitable break point so I can't use that. Cut mode 1 forcibly
+         breaks at the limit. */
       $script = tempnam(NSISWEB_SESSION_DIR,"nsis_");
       @unlink($script);
       $temp = fopen($script,"w");
-      fwrite($temp,str_replace("<br>","\n",$array_contents[0]));
+      fwrite($temp,wordwrap(str_replace("<br>","\n",$array_contents[0]),78,"\n",1));
       fclose($temp); 
       $cmd = NSISWEB_LEXER_PATH." < ".$script." 2>&1";
       $array_contents[0] = `$cmd`;

@@ -147,8 +147,15 @@ edits, or Cancel to discard them and return to the page you were viewing.</p>
 <?
 /* Show a preview of the appearance of the page */
 if(strlen($title)>0 || strlen($content)>0) {
-  $session = $nsisweb->get_session();
-  $fake_page_details = array('title'=>$title,'source'=>$content,'author'=>$session->user_id);
+  $session  = $nsisweb->get_session();
+  $modified = date('Y-m-d H:i:s',time());
+  $fake_page_details = array(
+    'title'        => $title,
+    'source'       => $content,
+    'author'       => $page->get_authorid(),
+    'created'      => $page->get_author_date(),
+    'last_author'  => $session->user_id,
+    'last_updated' => $modified);
   if($page->get_type() == PAGETYPE_TEMPLATED) {
     $fake_page_details['type'] = PAGETYPE_TEMPLATED;
   } else {
