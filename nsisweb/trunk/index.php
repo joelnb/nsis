@@ -10,37 +10,38 @@
 <ul> 
 	<li class="text"><b><a href="http://www.nullsoft.com/free/nsis/">Official Home Page</a></b>
 		<ul>
-		<span class="smalltext">General information about NSIS</span>
+		General information about NSIS
 		</ul>
 	</li>
 	<li class="text"><b><a href="http://sourceforge.net/projects/nsis/">Project page</a></b>
 		<ul>
-		<span class="smalltext">Latest development info and downloads</span>
+		Latest development info and downloads
 		</ul>
 	</li>
 	<li class="text"><b><a href="http://sourceforge.net/tracker/?group_id=22049&atid=373085">Submit Bug</a></b>
 		<ul>
-		<span class="smalltext">Found a bug?</span>
+		Found a bug?
 		</ul>
 	</li>
 	<li class="text"><b><a href="http://forums.winamp.com/forumdisplay.php?s=&forumid=65">Forum</a></b>
 		<ul>
-		<span class="smalltext">Talk to other NSIS users</span>
+		Talk to other NSIS users
 		</ul>
 	</li>
 	<li class="text"><b><a href="http://forums.winamp.com/showthread.php?s=&threadid=102650">FAQ</a></b>
 		<ul>
-		<span class="smalltext">Some frequently asked questions</span>
+		Some frequently asked questions
 		</ul>
 	</li>
 	<li class="text"><b><a href="http://nsis.sourceforge.net/Docs/">Documentation</a></b>
 		<ul>
-		<span class="smalltext">Browse the latest NSIS documentation</span>
+		Browse the latest NSIS documentation
 		</ul>
 	</li>
 	<li class="text"><b><a href="http://nsis.sourceforge.net/changelog.php">Change Log</a></b> 
 		<ul>
-		<span class="smalltext">See what's cooking<br>Updated: <?=LocalFileDate("nightly/changelog.htm")?></span> 
+		See what's cooking<br>
+		<span class="smalltext">Updated: <?=LocalFileDate("nightly/changelog.htm")?></span> 
 		</ul>
 	</li>
 	<li class="text"><b><a href="http://nsis.sourceforge.net/nightly/nsis.zip" title="NSIS CVS directory zipped up">Development Snapshot</a></b> 
@@ -50,7 +51,7 @@
 	</li>
 	<li class="text"><b><a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/nsis/NSIS/">Browse CVS</a></b>
 		<ul>
-		<span class="smalltext">Browse the files of the latest version</span>
+		Browse the files of the latest version
 		</ul>
 	</li>
 </ul> 
