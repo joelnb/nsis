@@ -79,7 +79,7 @@ if(!isset($_GET['userid'])) {
 					  if($toggle) $bgcolour = '#ffffff'; else $bgcolour = '#eeeeee';
 						print '<tr style="background-color:'.$bgcolour.'">';
 						print '<td align="left" valign="middle"><a href="viewpage.php?pageid='.$record['pageid'].'" target="_blank">'.$record['title'].'</a></td>';
-						print '<td align="left" valign="middle">'.$record['created'].'</td>';
+						print '<td align="left" valign="middle" width="150">'.$record['created'].'</td>';
 						print '</tr>';
 					  $toggle = 1-$toggle;
 				  }
