@@ -112,7 +112,7 @@ ENDOFHTML;
     $title = "Pick a title for your page";
   }
   if(strlen($content)<=0) {
-    $content = "Enter your page content here. You can remove the outer paragraph if you wish, it depends on the appearance you want for your page.\n\nYou can put NSIS source code in like this:\n\n[source]; Turn off old selected section\nSectionGetFlags $1 $0\nIntOp $0 $0 & ${SECTION_OFF}\nSectionSetFlags $1 $0\n[/source]\nAnd then carry on again...";
+    $content = "Enter your page content here. You can remove the outer paragraph if you wish, it depends on the appearance you want for your page.\n\nYou can put NSIS source code in like this:\n\n[source]; Turn off old selected section\nSectionGetFlags $1 $0\nIntOp $0 $0 & \${SECTION_OFF}\nSectionSetFlags $1 $0\n[/source]\nAnd then carry on again...";
   }
 
   $safe_content = htmlentities($content);
@@ -159,6 +159,10 @@ ENDOFHTML;
 
 function SavePage()
 {
+  if(!strcmp(stripslashes(str_replace("\r\n", "\n", $_POST['content'])), "Enter your page content here. You can remove the outer paragraph if you wish, it depends on the appearance you want for your page.\n\nYou can put NSIS source code in like this:\n\n[source]; Turn off old selected section\nSectionGetFlags $1 $0\nIntOp $0 $0 & \${SECTION_OFF}\nSectionSetFlags $1 $0\n[/source]\nAnd then carry on again...")) {
+    ContributeNewPage();
+    return;
+  }
   /* When saving the page show the user every section that exists and ask them
      to choose one to insert their page in. */
   global $nsisweb;
