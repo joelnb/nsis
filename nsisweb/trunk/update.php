@@ -12,7 +12,7 @@ function get_param($param_name)
   return $param_value;
 }
 
-$latest = "1.98";
+$latest = "2.0";
 $modernseries = "2.0";
 $modernversion = "rc4";
 $output = "";
