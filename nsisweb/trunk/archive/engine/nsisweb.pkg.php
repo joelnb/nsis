@@ -4,7 +4,7 @@
 include_once(dirname(__FILE__)."/nsisweb.cfg.php");
 include_once(dirname(__FILE__)."/nsiswebsession.pkg.php");
 include_once(dirname(__FILE__)."/nsiswebpage.pkg.php");
-include_once(dirname(__FILE__)."/nsiswebstorage.pkg.php");
+include_once(dirname(__FILE__)."/nsiswebfiles.pkg.php");
 include_once(dirname(__FILE__)."/nsiswebuser.pkg.php");
 define('ANONYMOUS_USER_ID',0);
 
@@ -46,8 +46,7 @@ class NsisWeb
       initialise_session_table();
       initialise_page_table();
       initialise_picks_table();
-      $storage = new NsisWebStorage;
-      $storage->initialise();
+      initialise_files_table();
     }
   }
   function record_error($error)
