@@ -60,17 +60,12 @@ switch($stage) {
 		$nsisweb->start_page('Contribute');
 		print <<<ENDOFHTML
 		<font style="font-family: verdana; font-size: 20pt; color: #000000;">Contribute: Stage One</font>
-		<p>Firstly you need to decide what type of content you are contributing to the site. Currently you have
-		two choices: (1) you can create a page of content, containing content or containing other pages, or (2) you can
-		con upload files to the archive.<br>
-		<br>
-		I want to contribute:
-		</p>
+		<p>I want to contribute:</p>
 		<form name="wizard" method="post" enctype="multipart/form-data" action="contribute.php">
 		  <p style="margin-left:20px;">
 				<input type="radio" name="pagetype" value="newpage" checked>a page of content of my design.<br>
 				<input type="radio" name="pagetype" value="newsection">a new section that can contain other pages.<br>
-				<input type="radio" name="pagetype" value="newfile">one or more files that others can download.<br>
+				<!--<input type="radio" name="pagetype" value="newfile" DISABLED>one or more files that others can download.-->
 			</p>
 			<p>
 			When you have made your choice press continue to move on to the next stage:
