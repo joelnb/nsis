@@ -41,7 +41,7 @@ if($revert || $_GET['pageid'] > 0) {
 // make sure that user can edit this post
 $session = $nsisweb->get_session();
 $author  = $page['last_author'];
-if($author && $author != $session->user_id) {
+if($author != ANONYMOUS_USER_ID && $author != $session->user_id) {
 	$nsisweb->start_page('Edit');
 	?>
 	<font style="font-family: verdana; font-size: 20pt; color: #000000;">Edit Page: <font color="red">Access Denied</font></font>
