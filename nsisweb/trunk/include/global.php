@@ -19,13 +19,13 @@ function IncludePageHeader($title,$showback=false) {
 	<table width="720" border="0" cellpadding="0" cellspacing="0" class="innertable"> 
 	<tr class="header"> 
 		<td width="48"><img class="center" src="images/logo.gif" width="48" height="48"></td> 
-		<td width="678"><div align="center" class="header"><? echo $title; ?></div></td> 
+		<td width="678"><div align="center" class="header"><? echo $title; if ($showback) _BackButton(); ?></div></td> 
 	</tr> 
 	<tr> 
 		<td colspan="2">
 		<div class="margin"> 
 <?
-	if ($showback) _BackButton();
+	
 }
 
 function IncludePageFooter() {
