@@ -52,7 +52,7 @@ if(!$user->is_admin()) {
 ENDOFHTML;
 
   $i = 0;
-  $result = $nsisweb->query("select sessionid,a.userid,a.created,last_access,username,ip,a.flags from nsisweb_sessions as a,nsisweb_users as b where a.userid=b.userid");
+  $result = $nsisweb->query("select sessionid,a.userid,a.created,last_access,username,ip,a.flags from nsisweb_sessions as a,nsisweb_users as b where a.userid=b.userid order by ip");
   if($result && $nsisweb->how_many_results($result) > 0) {
     while($record = $nsisweb->get_result_array($result)) {
       if($i == 0) {
@@ -75,7 +75,7 @@ ENDOFHTML;
     }
   }
 
-  $result = $nsisweb->query("select sessionid,userid,created,last_access,ip from nsisweb_sessions where userid=0");
+  $result = $nsisweb->query("select sessionid,userid,created,last_access,ip from nsisweb_sessions where userid=0 order by ip");
   if($result && $nsisweb->how_many_results($result) > 0) {
     while($record = $nsisweb->get_result_array($result)) {
       if($i == 0) {
