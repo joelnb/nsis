@@ -21,7 +21,7 @@ if ($version) {
 				print "2|".$betaseries.$betaversion;
 			}
 			else print "0";
-		}&&$betaversion>$revision) print "2|".$betaseries.$betaversion;
+		}
 		else print "0";
 	}
 	else {
