@@ -229,7 +229,7 @@ function end_session()
 	}
 
 	setcookie(COOKIE_NAME,"",time()-86400,"/","",0);
-	setcookie(session_name(),"","","/");
+	setcookie(session_name(),"",time()-86400,"/","",0);
 	unset($_GET[COOKIE_NAME]);
 
 	@session_start();
