@@ -36,9 +36,10 @@ if($instanceid != 0) {
 	$instance = new NsisWebInstance($instanceid,FETCH_CONTENT_YES);
 	$page = $instance->get_page();
 } else {
-	$page = new NsisWebPage($_GET['pageid'],FETCH_CONTENT_YES);
+	$page = new NsisWebPage($pageid,FETCH_CONTENT_YES);
 	$instance = new NsisWebInstance($page);
 }
+$pageid = $page->get_pageid();
 
 /* Handle error conditions */
 if(!$instance || !$page->is_okay()) {
@@ -112,6 +113,7 @@ edits, or Cancel to discard them and return to the page you were viewing.</p>
 	</p>
 	<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
 	  <input type="hidden" name="instanceid" value="<?= $instanceid ?>">
+	  <input type="hidden" name="pageid" value="<?= $pageid ?>">
 	  <input type="hidden" name="action" value="<?= ACTION_PREVIEW ?>">
   	<a href="Cancel" onclick="wizard.action.value=<?= ACTION_CANCEL ?>;wizard.submit();return false;">Cancel</a> |
   	<a href="Revert" onclick="wizard.action.value=<?= ACTION_REVERT ?>';wizard.submit();return false;">Revert</a> |
