@@ -58,7 +58,7 @@ if($result) {
       }
     }
     
-    $action = ($new ? 'added' : 'changed')." $diff".($diff > 1 ? "s" : "")." $units ago by ".$username;
+    $action = ($new ? 'added' : 'changed')." $diff $units".($diff > 1 ? "s" : "")." ago by ".$username;
 
     if($i == 0) {
       $i = 1;
