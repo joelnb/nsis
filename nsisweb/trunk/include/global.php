@@ -43,12 +43,7 @@ function IncludePageFooter() {
 }
 
 function _BackButton() {
-?>
-	<tr> 
-		<td width="48"><img class="center" src="images/logo.gif" width="48" height="48"></td> 
-		<td width="678"><div align="center" class="text"><a href="index.php">Back to Main Page</a></div></td> 
-	</tr> 
-<?
+	echo "<p class=\"text\" align=\"center\"><a href=\"index.php\">Back to Main Page</a></p>";
 }
 
 ?>
