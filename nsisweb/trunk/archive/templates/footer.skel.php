@@ -15,7 +15,7 @@ define('SHOW_QUERIES',FALSE);
 $query_count = count($nsisweb->executed_queries);
 ?>
 <!-- footer.skel.php: begin -->
-  <p class="center"><a href="http://sourceforge.net"><img class="centerimage" src="http://sourceforge.net/sflogo.php?group_id=22049&amp;type=1" alt="SourceForge Logo"></a></p>
+      <p class="center"><a href="http://sourceforge.net"><img class="centerimage" src="http://sourceforge.net/sflogo.php?group_id=22049&amp;type=1" alt="SourceForge Logo"></a></p>
                 </div>
               </td> 
             </tr> 

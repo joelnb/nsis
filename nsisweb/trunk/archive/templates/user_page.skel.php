@@ -35,15 +35,15 @@ if($page) {
       <span style="font-size: 20pt;"><?= $page->get_title() ?></span><br>
       <span style="font-size: 8pt;">Written by <?= $author ?> <?= $page->get_author_date() ?>
       <?
-if($page->get_author_date() != $page->get_editor_date()) {
-  if($page->get_authorid() != $page->get_editorid()) {
-    $user        = find_userid($page->get_editorid());
-    $last_author = $user->username;
-  } else {
-    $last_author = $author;
+  if($page->get_author_date() != $page->get_editor_date()) {
+    if($page->get_authorid() != $page->get_editorid()) {
+      $user        = find_userid($page->get_editorid());
+      $last_author = $user->username;
+    } else {
+      $last_author = $author;
+    }
+    print '<br>Last updated by '.$last_author.' '.$page->get_editor_date();
   }
-  print '<br>Last updated by '.$last_author.' '.$page->get_editor_date();
-}
       ?>
       </span><br>
     </td>

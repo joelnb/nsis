@@ -119,7 +119,7 @@ class NsisWebPage
     $result    = $nsisweb->query('select * from nsisweb_hierarchy where pageid='.$this->get_pageid().' order by sequence asc');
     if($result && $nsisweb->how_many_results($result) > 0) {
       while($record = $nsisweb->get_result_array($result)) {
-  $instances[] = new NsisWebInstance($record);
+        $instances[] = new NsisWebInstance($record);
       }
     }
     return $instances;

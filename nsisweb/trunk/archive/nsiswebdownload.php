@@ -12,7 +12,7 @@ if(strlen($_GET['file']) > 0) {
       header("Content-type: ".$array['type']);
       header("Content-Disposition: attachment; filename=".$array['filename']);
       if(@readfile($path)) {
-exit;
+        exit;
       }
     }
     $storage->remove_file($_GET['file']);

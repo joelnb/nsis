@@ -61,7 +61,7 @@ if($session->is_anonymous()) {
       <tr style="background-color:#eeeeee"><td align="left" valign="middle">Persistent Login</td><td align="left"><?= $user->persists() ? 'Yes' : 'No' ?></td></tr>
     </table>
   </p>
-
+  
   <span style="font-family:verdana;font-size:15pt;color:#000000;">Persistent Login</span>
   <?
   if($user->persists()) {

@@ -96,27 +96,27 @@ from scratch again. When you are finished editing press Save Changes to keep the
 edits, or Cancel to discard them and return to the page you were viewing.</p>
 <form name="editform" method="post" enctype="multipart/form-data" action="edit.php">
   <p>Edit the title of the page: (255 characters max)<br>
-  <input type="text" style="font-family:courier new;font-size:10pt;" name="title" size="79" maxlength="255" value="<?= htmlentities($title) ?>"><br>
-  <br>
-  <? if($page->get_type() == PAGETYPE_DIRECTORY) { ?>
-  Edit the description of this directory page.
-  <? } else { ?>
-  Edit the content of the page.
-  <? } ?>
-  You can use HTML although some tags that could be
-  used to attack this site will be removed from your content. Additionally you can
-  enclose text inside a [source] ... [/source] token pair which will cause that
-  text to be syntax highlighted as if the text is NSIS script code:<br>
-  <textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="25"><?= htmlentities($content) ?></textarea>
+    <input type="text" style="font-family:courier new;font-size:10pt;" name="title" size="79" maxlength="255" value="<?= htmlentities($title) ?>"><br>
+    <br>
+    <? if($page->get_type() == PAGETYPE_DIRECTORY) { ?>
+    Edit the description of this directory page.
+    <? } else { ?>
+    Edit the content of the page.
+    <? } ?>
+    You can use HTML although some tags that could be
+    used to attack this site will be removed from your content. Additionally you can
+    enclose text inside a [source] ... [/source] token pair which will cause that
+    text to be syntax highlighted as if the text is NSIS script code:<br>
+    <textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="25"><?= htmlentities($content) ?></textarea>
   </p>
   <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
     <input type="hidden" name="instanceid" value="<?= $instanceid ?>">
     <input type="hidden" name="pageid" value="<?= $pageid ?>">
     <input type="hidden" name="action" value="<?= ACTION_PREVIEW ?>">
-  <a href="Cancel" onclick="document.editform.action.value=<?= ACTION_CANCEL ?>;document.editform.submit();return false;">Cancel</a> |
-  <a href="Revert" onclick="document.editform.action.value=<?= ACTION_REVERT ?>;document.editform.submit();return false;">Revert</a> |
-  <a href="Preview" onclick="document.editform.action.value=<?= ACTION_PREVIEW ?>;document.editform.submit();return false;">Preview</a> |
-  <a href="Save Changes" onclick="document.editform.action.value=<?= ACTION_SAVE ?>;document.editform.submit();return false;">Save Changes</a>
+    <a href="Cancel" onclick="document.editform.action.value=<?= ACTION_CANCEL ?>;document.editform.submit();return false;">Cancel</a> |
+    <a href="Revert" onclick="document.editform.action.value=<?= ACTION_REVERT ?>;document.editform.submit();return false;">Revert</a> |
+    <a href="Preview" onclick="document.editform.action.value=<?= ACTION_PREVIEW ?>;document.editform.submit();return false;">Preview</a> |
+    <a href="Save Changes" onclick="document.editform.action.value=<?= ACTION_SAVE ?>;document.editform.submit();return false;">Save Changes</a>
   </p>
   </form>
 <?

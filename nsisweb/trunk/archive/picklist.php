@@ -57,9 +57,9 @@ if(count($picks)>0) {
     <input type="hidden" name="action" value="insert">
     <table width="100%" border="1" bordercolor="#dddddd" cellpadding="2" cellspacing="0" style="margin-bottom:20px;">
       <tr style="background-color:#d9d9d9;font-weight:bold;">
-  <td width="50" align="center">Select</td>
-  <td>&nbsp;Title</td>
-  <td width="70" align="center">Preview</td>
+        <td width="50" align="center">Select</td>
+        <td>&nbsp;Title</td>
+        <td width="70" align="center">Preview</td>
       </tr>
   <?
   foreach($picks as $pick) {
@@ -68,15 +68,15 @@ if(count($picks)>0) {
       $pick['pickedtype'] == PAGETYPE_DIRECTORY) {
       $pageid = $pick['pickedid'];
       if($page = find_pageid($pageid)) {
-  if(strlen($page->get_title())>0) {
-    ?>
-    <tr>
-      <td align="center" valign="middle"><input style="margin-left:10px;" type="checkbox" name="picked[]" value="<?= $pageid ?>"></td>
-      <td align="left" valign="middle">&nbsp;<?= $page->get_title() ?></td>
-      <td align="center" valign="middle"><a style="text-decoration:underline;color:#0000ff;" href="viewpage.php?pageid=<?= $pageid ?>" target="_blank">view</a></td>
-    </tr>
-    <?
-  }
+        if(strlen($page->get_title())>0) {
+          ?>
+          <tr>
+            <td align="center" valign="middle"><input style="margin-left:10px;" type="checkbox" name="picked[]" value="<?= $pageid ?>"></td>
+            <td align="left" valign="middle">&nbsp;<?= $page->get_title() ?></td>
+            <td align="center" valign="middle"><a style="text-decoration:underline;color:#0000ff;" href="viewpage.php?pageid=<?= $pageid ?>" target="_blank">view</a></td>
+          </tr>
+          <?
+        }
       }
     }
   }
@@ -87,24 +87,24 @@ if(count($picks)>0) {
     <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
       <?
       if(isset($instanceid)) {
-  $session = $nsisweb->get_session();
-  if($instanceid > 0 || $session->looks_like_admin()) {
-  ?>
-    <a href="<?= $nsisweb->get_page_url($instanceid); ?>"><< Cancel</a> |
+        $session = $nsisweb->get_session();
+        if($instanceid > 0 || $session->looks_like_admin()) {
+        ?>
+          <a href="<?= $nsisweb->get_page_url($instanceid); ?>"><< Cancel</a> |
           <a href="Delete" onclick="pickform.action.value='delete';document.pickform.submit();return false;">Delete</a> |
-    <a href="Insert" onclick="pickform.action.value='insert';document.pickform.submit();return false;">Insert >></a>
-  <?
-  }
+          <a href="Insert" onclick="pickform.action.value='insert';document.pickform.submit();return false;">Insert >></a>
+        <?
+        }
       } else {
         ?>
-    <a href="<?= $nsisweb->get_home_url() ?>"><< Home</a> |
-    <a href="Delete" onclick="pickform.action.value='delete';document.pickform.submit();return false;">Delete</a> |
-    <span style="color:#aaaaaa">Insert >></span></a>
-  <?
+          <a href="<?= $nsisweb->get_home_url() ?>"><< Home</a> |
+          <a href="Delete" onclick="pickform.action.value='delete';document.pickform.submit();return false;">Delete</a> |
+          <span style="color:#aaaaaa">Insert >></span></a>
+        <?
       }
       ?>
     </p>
-</form>
+  </form>
 <?
 } else {
 ?>

@@ -31,17 +31,17 @@ class NsisWeb
   }
   function initialise()
   {
-  if(defined('NSISWEB_ALLOW_INIT') && NSISWEB_ALLOW_INIT == TRUE) {
-    if(NSISWEB_OWNDB) {
-      $this->query('drop database if exists '.NSISWEB_DB);
-      $this->query('create database '.NSISWEB_DB);
-    }
-    initialise_user_table();
-    initialise_session_table();
-    initialise_page_table();
-    initialise_picks_table();
-    $storage = new NsisWebStorage;
-    $storage->initialise();
+    if(defined('NSISWEB_ALLOW_INIT') && NSISWEB_ALLOW_INIT == TRUE) {
+      if(NSISWEB_OWNDB) {
+        $this->query('drop database if exists '.NSISWEB_DB);
+        $this->query('create database '.NSISWEB_DB);
+      }
+      initialise_user_table();
+      initialise_session_table();
+      initialise_page_table();
+      initialise_picks_table();
+      $storage = new NsisWebStorage;
+      $storage->initialise();
     }
   }
   function record_error($error)
@@ -68,7 +68,7 @@ class NsisWeb
   }
   function start_page($title)
   {
-  $this->start_time = $this->get_micro_time();
+    $this->start_time = $this->get_micro_time();
     global $page_info;
     $nsisweb = $this;
     include(NSISWEB_HEADER_SKELETON);
@@ -81,7 +81,7 @@ class NsisWeb
   }
   function get_gen_time()
   {
-  return $this->get_micro_time()-$this->start_time;
+    return $this->get_micro_time()-$this->start_time;
   }
   function redirect($pagename)
   {
@@ -105,7 +105,7 @@ class NsisWeb
       header("Location: $url");
       exit;
     } else {
-    $instance = new NsisWebInstance((int)$pagename,FETCH_CONTENT_PP);
+      $instance = new NsisWebInstance((int)$pagename,FETCH_CONTENT_PP);
       $instance->show();
       exit;
     }
@@ -114,7 +114,7 @@ class NsisWeb
   {
     /* own database permission check */
     if(!NSISWEB_OWNDB && strstr($query,' database ')) {
-    $this->record_error('NsisWeb::query(): A query was blocked because NSISWEB_OWNDB is FALSE and the query contained " database " [query='.$query.']');
+      $this->record_error('NsisWeb::query(): A query was blocked because NSISWEB_OWNDB is FALSE and the query contained " database " [query='.$query.']');
       return FALSE;
     }
 
@@ -130,10 +130,10 @@ class NsisWeb
       /* only select the db if the query does not mention the db name and we have not already selected the database */
       $result = TRUE;
       if(!$this->db_selected) {
-      if(!stristr($query,'database '.NSISWEB_DB)) {
-        $result = mysql_select_db(NSISWEB_DB);
-        if($result) $this->db_selected = TRUE;
-      }
+        if(!stristr($query,'database '.NSISWEB_DB)) {
+          $result = mysql_select_db(NSISWEB_DB);
+          if($result) $this->db_selected = TRUE;
+        }
       }
       /* 0 means NORMAL, 1 means ABORTED and 2 means TIMEOUT */
       if($result && connection_status() == 0) {
@@ -143,36 +143,36 @@ class NsisWeb
         if($result != FALSE) {
           return $result;
         } else {
-        $this->record_error('NsisWeb::query(): mysql_query() failed: '.mysql_error()." [query=$query]");
+          $this->record_error('NsisWeb::query(): mysql_query() failed: '.mysql_error()." [query=$query]");
         }
       } else {
-      $this->record_error('NsisWeb::query(): connection_status() is not NORMAL: '.mysql_error()." [query=$query]");
+        $this->record_error('NsisWeb::query(): connection_status() is not NORMAL: '.mysql_error()." [query=$query]");
       }
     } else {
-    $this->record_error('NsisWeb::query(): mysql_pconnect() failed: '.mysql_error()." [query=$query]");
+      $this->record_error('NsisWeb::query(): mysql_pconnect() failed: '.mysql_error()." [query=$query]");
     }
     return FALSE;
   }
   function query_one($query)
   {
-  /* If you know that you are only interested in a single row of result data
-     (which is a very common case) this function performs the steps necessary
-     in one neat call. */
+    /* If you know that you are only interested in a single row of result data
+       (which is a very common case) this function performs the steps necessary
+       in one neat call. */
      $result = $this->query($query);
      if($result && $this->how_many_results($result) > 0) {
-     return $this->get_result_array($result);
+       return $this->get_result_array($result);
      }
      return FALSE;
   }
   function query_one_only($query)
   {
-  /* If you know that you are only interested in a single row of result data
-     (which is a very common case) this function performs the steps necessary
-     in one neat call. This variant will barf if more than a single row of
-     data is returned to us by the database engine. */
+    /* If you know that you are only interested in a single row of result data
+       (which is a very common case) this function performs the steps necessary
+       in one neat call. This variant will barf if more than a single row of
+       data is returned to us by the database engine. */
      $result = $this->query($query);
      if($result && $this->how_many_results($result) == 1) {
-     return $this->get_result_array($result);
+       return $this->get_result_array($result);
      }
      return FALSE;
   }
