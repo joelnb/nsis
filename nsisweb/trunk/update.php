@@ -12,6 +12,7 @@ $latest = "1.98";
 </head> 
 <body> 
 <? IncludePageHeader("NSIS Update",true); ?>
+<p>
 <?php 
 if ($version) {
 	$update = false;
@@ -22,16 +23,16 @@ if ($version) {
         $version = substr($version,0,$pos);
         if ($latest>=$version) $update = true;
 		if ($update) {
-			print "There is a new version of NSIS avaialable.  You may download NSIS ".$latest." <a href=\"http://sourceforge.net/project/showfiles.php?group_id=22049\">here</a>.";
+			print "There is a new version of NSIS avaialable. You may download NSIS ".$latest." <a href=\"http://sourceforge.net/project/showfiles.php?group_id=22049\">here</a>.";
 		}
 		else {
-			print "You are running a development version of NSIS.  No new updates are available.";
+			print "You are running a development version of NSIS. Get the latest files from CVS or download a Development Snapshot <a href=\"http://nsis.sourceforge.net/nightly/nsis.zip\">here</a>.";
 		}
 	}
 	else {
         if ($latest>$version) $update = true;
 		if ($update) {
-			print "There is a new version of NSIS avaialable.  You may download NSIS ".$latest." <a href=\"http://sourceforge.net/project/showfiles.php?group_id=22049\">here</a>.";
+			print "There is a new version of NSIS avaialable. You may download NSIS ".$latest." <a href=\"http://sourceforge.net/project/showfiles.php?group_id=22049\">here</a>.";
 		}
 		else {
 			print "You have the latest version of NSIS installed.";
@@ -43,6 +44,7 @@ else {
 }
 
 ?>
+</p>
 <? IncludePageFooter(); ?>
 </body> 
 </html> 
