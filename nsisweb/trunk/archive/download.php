@@ -1,6 +1,6 @@
 <?
-include_once('engine/nsisweb.pkg.php');
-include_once('engine/nsiswebstorage.pkg.php');
+include_once("$DOCUMENT_ROOT/engine/nsisweb.pkg.php");
+include_once("$DOCUMENT_ROOT/engine/nsiswebstorage.pkg.php");
 $nsisweb->start_page('Download Files');
 ?>
 <font style="font-family: verdana; font-size: 20pt; color: #000000;">Download</font>

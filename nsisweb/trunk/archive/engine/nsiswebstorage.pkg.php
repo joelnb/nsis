@@ -1,5 +1,5 @@
 <?
-include_once('engine/nsisweb.pkg.php');
+include_once("$DOCUMENT_ROOT/engine/nsisweb.pkg.php");
 
 class NsisWebStorage
 {

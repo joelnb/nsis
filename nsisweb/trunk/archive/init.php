@@ -4,7 +4,7 @@
   echo '<b>PHP Version: '.phpversion().'</b><br>';
   echo '<b>Installing NSISWeb:</b><br>';
   echo '<li>Loading nsisweb.pkg.php .. ';
-  include_once('engine/nsisweb.pkg.php');
+  include_once("$DOCUMENT_ROOT/engine/nsisweb.pkg.php");
   if(!$nsisweb->version_check('4.0.3')) {
 	  echo '<b><font color="red">Error!</font></b> PHP Version 4.0.3 or higher required<br>';
   } else {
