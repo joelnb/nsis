@@ -29,11 +29,14 @@ if(isset($_GET['parentid'])) {
 			<font style="font-size: 20pt;"><?= $title ?></font><br>
 			<font style="font-size: 8pt;">Written by <?= $author ?>, <?= $date ?>
 			<?
-				$page = find_pageid($pageid);
-				if($page['created'] != $page['last_updated']) {
-					$user   = find_userid($page['last_author']);
-					$author = $user->username;
-					print ' [ Last updated by '.$author.', '.$page['last_updated'].' ]';
+				if($page_info['created'] != $page_info['last_updated']) {
+					if($page_info['author'] != $page_info['last_author']) {
+						$user        = find_userid($page_info['last_author']);
+						$last_author = $user->username;
+					} else {
+						$last_author = $author;
+					}
+					print ' [ Last updated by '.$last_author.', '.$page_info['last_updated'].' ]';
 				}
 			?>
 			</font><br>

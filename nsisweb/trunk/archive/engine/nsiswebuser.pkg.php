@@ -48,13 +48,18 @@ function find_user($username)
 
 function find_userid($user_id)
 {
-  global $nsisweb;
-  $result = $nsisweb->query("select * from nsisweb_users where userid='$user_id'");
-  if($result != FALSE && $nsisweb->how_many_results($result) == 1) {
-	  $array = $nsisweb->get_result_array($result);
+  $user_id = (int)$user_id;
+  if($user_id == 0) {
+	  return new NsisWebUser(array('userid'=>0,'username'=>'anonymous'));
   } else {
-	  $array = array('userid'=>0,'username'=>'anonymous');
-  }
+	  global $nsisweb;
+	  $result = $nsisweb->query("select * from nsisweb_users where userid=$user_id");
+	  if($result != FALSE && $nsisweb->how_many_results($result) == 1) {
+		  $array = $nsisweb->get_result_array($result);
+	  } else {
+		  $array = array('userid'=>0,'username'=>'unknown');
+	  }
+	}
   return new NsisWebUser($array);
 }
 

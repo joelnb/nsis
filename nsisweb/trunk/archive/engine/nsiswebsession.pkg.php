@@ -47,13 +47,17 @@ class NsisWebSession
 	var $user_id;
 	var $created;
 	var $last_access;
+	var $last_checked;
+	var $cached_username; /* do not use this directly, call get_username() instead! */
 
 	function NsisWebSession($array)
 	{
-		$this->session_id  = $array['sessionid'];
-		$this->user_id     = $array['userid'];
-		$this->created     = $array['created'];
-		$this->last_access = $array['last_access'];
+		$this->session_id   = $array['sessionid'];
+		$this->user_id      = $array['userid'];
+		$this->created      = $array['created'];
+		$this->last_access  = $array['last_access'];
+		$this->last_checked = time();
+		unset($this->cached_username);
 	}
 	function is_legal()
 	{
@@ -65,13 +69,17 @@ class NsisWebSession
 	}
 	function get_username()
 	{
-		global $nsisweb;
-		$result = $nsisweb->query("select username from nsisweb_users where userid=$this->user_id");
-		if($result && $nsisweb->how_many_results($result) == 1) {
-			$array = $nsisweb->get_result_array($result);
-			return $array['username'];
+		if(!isset($this->cached_username)) {
+			global $nsisweb;
+			$result = $nsisweb->query("select username from nsisweb_users where userid=$this->user_id");
+			if($result && $nsisweb->how_many_results($result) == 1) {
+				$array = $nsisweb->get_result_array($result);
+				$this->cached_username = $array['username'];
+			} else {
+				$this->cached_username = "anonymous";
+			}
 		}
-		return "anonymous";
+		return $this->cached_username;
 	}
 };
 
@@ -82,8 +90,9 @@ function find_my_session()
 {
 	global $nsisweb;
 
-	$session_id = ANONYMOUS_SESSION_ID;
-	$session    = FALSE;
+	$session_id   = ANONYMOUS_SESSION_ID;
+	$session      = FALSE;
+	$session_okay = FALSE;
 
 	if(isset($_COOKIE[COOKIE_NAME])) {
 		$session_id = $_COOKIE[COOKIE_NAME];
@@ -91,32 +100,64 @@ function find_my_session()
 		$session_id = $_GET[COOKIE_NAME];
 	}
 
-	/* timeout old sessions */
-	$nsisweb->query("delete from nsisweb_sessions where (UNIX_TIMESTAMP()-UNIX_TIMESTAMP(last_access))>".SESSION_TIMEOUT);
+	/* Import saved php data (if any exists) -- this could come from a publicly
+	   accessible file depending on how php is configured, e.g. /tmp is the
+	   default location for session files to be stored. */
+  session_start();
 
-	if($session_id != ANONYMOUS_SESSION_ID) {
-		$result = $nsisweb->query("select * from nsisweb_sessions where sessionid='$session_id'");
-		if($result && $nsisweb->how_many_results($result) == 1) {
-			$session = new NsisWebSession($nsisweb->get_result_array($result));
-			if($session->is_legal()) {
-				$nsisweb->query("update nsisweb_sessions set last_access=NOW() where sessionid='$session_id'");
-				return $nsisweb->session = $session;
-			} else {
-				end_session();
+  /* Can we trust this imported data? The saved session data includes an md5'd
+	   version of the session_id plus a magic number known only to us... if we
+	   add this magic number to our session_id then md5 it and compare it to
+	   the one from the imported data we can kinda tell whether or not that data
+	   should be usable by the current user (based on their cookie data). This
+	   works on the premise that an attacker doesn't know our magic number. */
+  if(isset($_SESSION['session']) && isset($_SESSION['id'])) {
+		$check_against = md5($session_id+NSISWEB_MAGIC_NUMBER);
+		if(strcmp($check_against,$_SESSION['id']) == 0) {
+			if($session = unserialize(base64_decode($_SESSION['session']))) {
+				/* Does the session need timing out? Try not to do these checks too often
+				   so that we hit the database less frequently. */
+				if(time()-$session->last_checked > 300) {
+					$nsisweb->query("delete from nsisweb_sessions where (UNIX_TIMESTAMP()-UNIX_TIMESTAMP(last_access))>".SESSION_TIMEOUT);
+					if($session_id != ANONYMOUS_SESSION_ID) {
+						$result = $nsisweb->query("select * from nsisweb_sessions where sessionid='$session_id'");
+						if($result && $nsisweb->how_many_results($result) == 1) {
+							$session = new NsisWebSession($nsisweb->get_result_array($result));
+							if($session->is_legal()) {
+								$session->last_checked = time();
+								$session_okay = TRUE;
+							}
+						}
+					}
+				} else {
+					$session_okay = TRUE;
+				}
 			}
 		}
 	}
 
-	/* Create a new anonymous session */
-	$session_id = construct_session_id();
-	$result = $nsisweb->query("insert into nsisweb_sessions set sessionid='$session_id',userid=0,created=NOW(),last_access=NOW()");
-	if(!$result) {
-		$nsisweb->record_error(mysql_error());
+	if($session && $session->okay) {
+		$result = $nsisweb->query("update nsisweb_sessions set last_access=NOW() where sessionid='$session_id'");
+		if(!$result || mysql_affected_rows($result) != 1) {
+			$session = FALSE;
+		}
 	}
 
-	setcookie(COOKIE_NAME,$session_id,time()+86400,"/","",0);
-	$array = array('sessionid'=>$session_id,'userid'=>0);
-	return $nsisweb->session = new NsisWebSession($array);
+	if(!$session || !$session_okay) {
+		/* Create a new anonymous session */
+		$session_id = construct_session_id();
+		$session    = new NsisWebSession(array('sessionid'=>$session_id,'userid'=>0));
+		$nsisweb->query("insert into nsisweb_sessions set sessionid='$session_id',userid=0,created=NOW(),last_access=NOW()");
+		setcookie(COOKIE_NAME,$session_id,time()+86400,"/","",0);
+  }
+
+  /* Update the cached username in the session object */
+  $session->get_username();
+
+  /* Store the session data in the php session file */  
+	$_SESSION['session'] = base64_encode(serialize($session));
+	$_SESSION['id']      = md5($session_id+NSISWEB_MAGIC_NUMBER);
+	return $nsisweb->session = $session;
 }
 
 function construct_session_id()
@@ -134,7 +175,7 @@ function end_session()
 	} else if(isset($_GET[COOKIE_NAME])) {
 		$session_id = $_GET[COOKIE_NAME];
 	}
-	
+
 	if($session_id != 0) {
 		$nsisweb->query("delete from nsisweb_sessions where sessionid='$session_id'");
 		$picks = get_current_picks();
@@ -148,9 +189,12 @@ function end_session()
 		}
 		$nsisweb->query("delete from nsisweb_picks where sessionid='$session_id'");
 	}
-	
+
 	setcookie(COOKIE_NAME,"",time()-86400,"/","",0);
 	unset($_GET[COOKIE_NAME]);
+
+	session_unset();
+	session_destroy();
 }
 
 function login($username,$password)
@@ -166,8 +210,16 @@ function login($username,$password)
 			$result     = $nsisweb->query("insert into nsisweb_sessions set sessionid='$session_id',userid='$user_id',created=NOW(),last_access=NOW()");
 			if($result) {
 				setcookie(COOKIE_NAME,$session_id,time()+86400,"/","",0);
-				$array = array('sessionid'=>$session_id,'userid'=>$user_id);
-				return $nsisweb->session = new NsisWebSession($array);
+				$session = new NsisWebSession(array('sessionid'=>$session_id,'userid'=>$user_id));
+				
+				/* Update the cached username in the session object */
+  			$session->get_username();
+				
+  			session_start();
+				$_SESSION['session'] = base64_encode(serialize($session));
+				$_SESSION['id']      = md5($session_id+NSISWEB_MAGIC_NUMBER);
+				
+				return $nsisweb->session = $session;
 			} else {
 				$nsisweb->record_error(mysql_error());
 			}

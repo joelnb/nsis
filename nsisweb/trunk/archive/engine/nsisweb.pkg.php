@@ -16,13 +16,18 @@ class NsisWebSite
   var $errors;
   var $session;
   var $start_time;
+  var $executed_queries;
+  var $db_selected;
 
   function NsisWebSite()
   {
-    $this->wwwroot  = NSISWEB_WWWROOT.NSISWEB_WWWSUBDIR;
-    $this->fileroot = NSISWEB_FILEROOT.NSISWEB_FILESUBDIR;
-    $this->session  = 0;
-    $this->errors   = array();
+    $this->wwwroot          = NSISWEB_WWWROOT.NSISWEB_WWWSUBDIR;
+    $this->fileroot         = NSISWEB_FILEROOT.NSISWEB_FILESUBDIR;
+    $this->session          = 0;
+    $this->errors           = array();
+    $this->start_time       = 0;
+    $this->executed_queries = array();
+    $this->db_selected      = FALSE;
   }
   function initialise()
   {
@@ -114,13 +119,17 @@ class NsisWebSite
 
     unset($this->$last_query);
     if($link = mysql_pconnect(NSISWEB_MYSQL_HOST,NSISWEB_MYSQL_USER,NSISWEB_MYSQL_PASSWORD)) {
-      /* only select the db if the query does not mention the db name */
+      /* only select the db if the query does not mention the db name and we have not already selected the database */
       $result = TRUE;
-      if(!stristr($query,'database '.NSISWEB_DB)) {
-        $result = mysql_select_db(NSISWEB_DB);
+      if(!$this->db_selected) {
+	      if(!stristr($query,'database '.NSISWEB_DB)) {
+	        $result = mysql_select_db(NSISWEB_DB);
+	        if($result) $this->db_selected = TRUE;
+	      }
       }
       if($result && connection_status() == 0) {
         $this->last_query = $query;
+        $this->executed_queries[] = $query;
         $result = mysql_query($query);
         if($result != FALSE) {
           return $result;

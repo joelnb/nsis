@@ -32,7 +32,7 @@ function show_page($pageid,$make_whole_page)
 		if($make_whole_page) {
 			$nsisweb->start_page($page_info['title']);
 		}
-		
+
 		switch($page_info['type']) {
 			case PAGETYPE_RAW:
 				/* ------------------------
@@ -49,12 +49,12 @@ function show_page($pageid,$make_whole_page)
 				/* ------------------------ 
 		         PAGETYPE: TEMPLATED
 				   ------------------------ */
-				$result = $nsisweb->query("update nsisweb_pages set views=views+1 where pageid=$pageid");
-				$title  = &$page_info['title'];
-				$source = &$page_info['source'];
-				$user   = find_userid($page_info['author']);
-				$author = $user->username;
-				$date   = $page_info['created'];
+				$result  = $nsisweb->query("update nsisweb_pages set views=views+1 where pageid=$pageid");
+				$title   = &$page_info['title'];
+				$source  = &$page_info['source'];
+				$user    = find_userid($page_info['author']);
+				$author  = $user->username;
+				$date    = $page_info['created'];
 				render_templated_page($title,$author,$date,$source,$pageid);
 				$success = TRUE;
 				break;
@@ -62,18 +62,15 @@ function show_page($pageid,$make_whole_page)
 				/* ------------------------ 
 		         PAGETYPE: DIRECTORY
 				   ------------------------ */
-				$result = $nsisweb->query("select * from nsisweb_pages where pageid=$pageid");
-				if($result && $nsisweb->how_many_results($result) == 1) {
-					$directory_page = $nsisweb->get_result_array($result);
-					$items = find_children($pageid);
-					render_directory_page(
-						$directory_page['title'],
-						$directory_page['author'],
-						$directory_page['date'],
-						$directory_page['source'],
-						$pageid,
-						$items);
-				}
+				$directory_page = $page_info;
+				$items = find_children($pageid);
+				render_directory_page(
+					$directory_page['title'],
+					$directory_page['author'],
+					$directory_page['date'],
+					$directory_page['source'],
+					$pageid,
+					$items);
 				$success = TRUE;
 				break;
 		}
@@ -233,10 +230,9 @@ function clear_page_parents($pageid)
 function set_page_parent($pageid,$parentid)
 {
 	global $nsisweb;
-	$result = $nsisweb->query("select * from nsisweb_pages where pageid=$pageid");
-	$count  = $nsisweb->how_many_results($result);
-	if($result && $count > 0) {
-		if($count == 1) {
+	$result = $nsisweb->query("select count(*) from nsisweb_pages where pageid=$pageid");
+	if($result && $record = $nsisweb->get_result_array($result) && $record['count(*)'] > 0) {
+		if($record['count(*)'] == 1) {
 			$page = $nsisweb->get_result_array($result);
 			if($page['flags'] & PAGEFLAG_ORPHANED) {
 				$nsisweb->query("update nsisweb_pages set parentid=$parentid,flags=flags & ~".PAGEFLAG_ORPHANED." where pageid=$pageid");

@@ -21,7 +21,7 @@ if($result) {
 	if($count > 0) {
 		$i = 0;
 		while(is_array($record = $nsisweb->get_result_array($result))) {
-			$title = '<a href="'.$nsisweb->get_page_url($record['pageid']).'&parentid='.$record['parentid'].'">'.$record['title']."</a>\n";
+			$title = '<a href="'.$nsisweb->get_page_url($record['pageid']).'&parentid='.(int)($record['parentid']).'">'.$record['title']."</a>\n";
 			$views = (int)$record['views'];
 			
 			if($i == 0) {
