@@ -38,9 +38,9 @@ class HFile_nsis extends HFile{
 
 		// String characters and delimiters
 
-		$this->stringchars       	= array("\"", "'","`");
+		$this->stringchars       	= array('"', "'","`");
 		$this->delimiters        	= array("/", "!", "@", "%", "^", "&", "*", "(", ")", "+", "=", "|", "\\", "{", "}", "[", "]", ":", ";", "\"", "'", "<", ">", " ", ",", ".", "?");
-		$this->escchar           	= "\\";
+		$this->escchar           	= "";
 
 		// Comment settings
 
