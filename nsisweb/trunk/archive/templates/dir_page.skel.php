@@ -106,7 +106,7 @@ if($page = $this->get_page()) {
         if($array[0]>0 || $array[1]>0) {
 	        echo ' [';
 	        if($array[1]>0) {
-		        echo '<img src="images/folder.gif" width="16" height="16" style="vertical-align:middle;">'.$array[1];
+		        echo '<img src="images/folder.gif" width="16" height="16" hspace="1" style="vertical-align:middle;">'.$array[1];
 	        }
 	        if($array[0]>0) {
 		        if($array[1]>0) echo ' ';
