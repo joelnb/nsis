@@ -105,36 +105,35 @@ function ContributeNewPage()
     as many times as you like before continuing onto the next stage.</p>
 ENDOFHTML;
 
-  if(isset($_POST['title'])) {
-    $title = htmlentities(stripslashes($_POST['title']));
-  } else {
+  $title   = stripslashes($_POST['title']);
+  $content = stripslashes($_POST['content']);
+
+  if(strlen($title)<=0) {
     $title = "Pick a title for your page.";
   }
-      
-  if(isset($_POST['content'])) {
-    $content = htmlentities(stripslashes($_POST['content']));
-  } else {
+  if(strlen($content)<=0) {
     $content = "<p>Enter your page content here. You can remove the outer paragraph if you wish, it depends on the appearance you want for your page.\n\nYou can put NSIS source code in like this:\n\n[source]; Turn off old selected section\nSectionGetFlags $1 $0\nIntOp $0 $0 & ${SECTION_OFF}\nSectionSetFlags $1 $0\n[/source]\nAnd then carry on again...</p>";
   }
 
-  unset($_POST);
-
+  $safe_title   = htmlentities($title);
+  $safe_content = htmlentities($content);
+  
   print <<<ENDOFHTML
     <form name="editform" method="post" enctype="multipart/form-data" action="contribute.php">
       <p>
         Choose a title for your new page: (255 characters max)<br>
-        <input type="text" style="font-family:courier new;font-size:10pt;" name="title" size="79" maxlength="255" value="$title"><br>
+        <input type="text" style="font-family:courier new;font-size:10pt;" name="title" size="79" maxlength="255" value="$safe_title"><br>
         <br>
         You must now enter the content of your new page. You are allowed to use HTML although some
         tags that could be used to attack this site will be removed from your content. Additionally you
         can enclose text inside a [source] ... [/source] token pair which will cause that text to be
         syntax highlighted as if the text is NSIS script code:<br>
-        <textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="25">$content</textarea>
+        <textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="25">$safe_content</textarea>
       </p>
       <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
         <input type="hidden" name="action" value="savepage">
         <a href="contribute.php"><< Back</a> |
-        <a href="contribute.php?action=previewpage#preview">Preview</a> |
+        <a href="javascript:document.editform.action.value='previewpage';document.editform.submit();">Preview</a> |
         <a href="javascript:document.editform.submit();">Continue >></a>
       </p>
     </form>
@@ -164,12 +163,21 @@ function SavePage()
   /* When saving the page show the user every section that exists and ask them
      to choose one to insert their page in. */
   global $nsisweb;
-  $title   = htmlentities(stripslashes($_POST['title']));
-  $content = stripslashes($_POST['content']);
+
+  if(isset($_POST['title']) && isset($_POST['content'])) {
+    $savetitle   = htmlentities(stripslashes($_POST['title']));
+    $savecontent = htmlentities(stripslashes($_POST['content']));
+  } else {
+    $savetitle   = $_POST['savetitle'];
+    $savecontent = $_POST['savecontent'];
+  }
 
   if(isset($_POST['parentid']) && strlen($_POST['parentid']) >= 0) {
     $page    = new NsisWebPage();
-    $result  = $page->insert(PAGETYPE_TEMPLATED,0,$title,$content);
+    $result  = $page->insert(
+      PAGETYPE_TEMPLATED,0,
+      unhtmlentities($_POST['savetitle']),
+      unhtmlentities($_POST['savecontent']));
     $page->add_instance($_POST['parentid']);
     header('Location: '.$nsisweb->wwwroot.'/viewpage.php?pageid='.$_POST['parentid']);
     exit;
@@ -181,8 +189,8 @@ function SavePage()
     <p>From the list below please choose a section in which to insert your new page:</p>
     <form name="insertform" method="post" enctype="multipart/form-data" action="contribute.php">
       <input type="hidden" name="action" value="savepage">
-      <input type="hidden" name="title" value="$title">
-      <input type="hidden" name="content" value="$content">
+      <input type="hidden" name="savetitle" value="$savetitle">
+      <input type="hidden" name="savecontent" value="$savecontent">
       <p>
 ENDOFHTML;
 
@@ -208,6 +216,7 @@ ENDOFHTML;
       </p>
     </form>
 ENDOFHTML;
+  $nsisweb->end_page();
 }
 
 function ContributeNewSection()
@@ -222,33 +231,32 @@ function ContributeNewSection()
     the results as many times as you like before continuing onto the next stage.</p>
 ENDOFHTML;
 
-  if(isset($_POST['title'])) {
-    $title = htmlentities(stripslashes($_POST['title']));
-  } else {
-    $title = "Pick a title for your section.";
+  $title   = stripslashes($_POST['title']);
+  $content = stripslashes($_POST['content']);
+
+  if(strlen($title)<=0) {
+    $title = "Pick a title for your page.";
+  }
+  if(strlen($content)<=0) {
+    $content = "Pick a title for your section.";
   }
 
-  if(isset($_POST['content'])) {
-    $content = htmlentities(stripslashes($_POST['content']));
-  } else {
-    $content = "<p>Enter your section description here.</p>";
-  }
+  $safe_title   = htmlentities($title);
+  $safe_content = htmlentities($content);
 
-  unset($_POST);
-        
   print <<<ENDOFHTML
     <form name="editform" method="post" enctype="multipart/form-data" action="contribute.php">
       <p>
         Choose a title for your new page: (255 characters max)<br>
-        <input type="text" style="font-family:courier new;font-size:10pt;" name="title" size="79" maxlength="255" value="$title"><br>
+        <input type="text" style="font-family:courier new;font-size:10pt;" name="title" size="79" maxlength="255" value="$safe_title"><br>
         <br>
         Enter a description for your new section:<br>
-        <textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="3">$content</textarea>
+        <textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="3">$safe_content</textarea>
       </p>
       <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
         <input type="hidden" name="action" value="savesection">
         <a href="contribute.php"><< Back</a> |
-        <a href="contribute.php?action=previewsection#preview">Preview</a> |
+        <a href="javascript:document.editform.action.value='previewsection';document.editform.submit();">Preview</a> |
         <a href="javascript:document.editform.submit();">Continue >></a>
       </p>
     </form>
@@ -278,12 +286,20 @@ function SaveSection()
   /* When saving the page show the user every section that exists and ask them
      to choose one to insert their page in. */
   global $nsisweb;
-  $title   = htmlentities(stripslashes($_POST['title']));
-  $content = stripslashes($_POST['content']);
+  if(isset($_POST['title']) && isset($_POST['content'])) {
+    $savetitle   = htmlentities(stripslashes($_POST['title']));
+    $savecontent = htmlentities(stripslashes($_POST['content']));
+  } else {
+    $savetitle   = $_POST['savetitle'];
+    $savecontent = $_POST['savecontent'];
+  }
 
   if(isset($_POST['parentid']) && strlen($_POST['parentid']) >= 0) {
     $page    = new NsisWebPage();
-    $result  = $page->insert(PAGETYPE_DIRECTORY,0,$title,$content);
+    $result  = $page->insert(
+      PAGETYPE_DIRECTORY,0,
+      unhtmlentities($_POST['savetitle']),
+      unhtmlentities($_POST['savecontent']));
     $page->add_instance($_POST['parentid']);
     header('Location: '.$nsisweb->wwwroot.'/viewpage.php?pageid='.$_POST['parentid']);
     exit;
@@ -295,8 +311,8 @@ function SaveSection()
     <p>From the list below please choose a section in which to insert your new section:</p>
     <form name="insertform" method="post" enctype="multipart/form-data" action="contribute.php">
       <input type="hidden" name="action" value="savesection">
-      <input type="hidden" name="title" value="$title">
-      <input type="hidden" name="content" value="$content">
+      <input type="hidden" name="savetitle" value="$savetitle">
+      <input type="hidden" name="savecontent" value="$savecontent">
       <p>
 ENDOFHTML;
 
@@ -397,5 +413,12 @@ function UploadFile()
     }
     print "</p>";
   }*/
+}
+
+function unhtmlentities($string)
+{
+  $trans_tbl = get_html_translation_table(HTML_ENTITIES);
+  $trans_tbl = array_flip($trans_tbl);
+  return strtr($string, $trans_tbl);
 }
 ?>
