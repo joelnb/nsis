@@ -30,7 +30,6 @@ if(!$session->is_anonymous()) {
 
 <head>
 
-<script language="javascript" src="../site/media/template/nsis.js"></script>
 <title>NSIS Archive</title>
 
     <? if(!$robots_allowed) { ?>
@@ -44,17 +43,14 @@ if(!$session->is_anonymous()) {
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="init()">
 
-<!-- ###DOCUMENT_BODY### start-->
-
 <table width="778" height="100%" class="maintable" cellspacing="0" cellpadding="0" align="center">
 
 <tr><td colspan="2" height="22">
-<div class="abar">
-  <div class="auser">
-  <strong>Logged in as:</strong> <?= $logged_in_text ?>
-  </div>
-  <div class="alinks">
- <?
+ <table width="778">
+   <tr>
+     <td class="auser"><strong>Logged in as:</strong> <?= $logged_in_text ?></td>
+     <td class="alinks">
+ 	<?
           if(!$session->is_anonymous()) {
             if($session->looks_like_admin()) {
               echo '[ <a href="admin.php">Admin</a> ] ';
@@ -63,8 +59,9 @@ if(!$session->is_anonymous()) {
           }
           ?>
           [ <a href="<?= $picklist_url ?>">Pick List</a> ] [ <a href="search.php">Search</a> ] [ <a href="../index.php">NSIS Site</a> ] [ <a href="<?= $home_url ?>">Home</a> ]
-  </div>
-</div>
+     </td>
+   </tr>
+ </table>
 <tr></td>
 
   <tr>
@@ -73,7 +70,6 @@ if(!$session->is_anonymous()) {
   </tr>
 
   <tr>
-    <td class="content" id="content" colspan="2">
-    <div id="panelmenu">
+    <td class="content" colspan="2">
 
 <!-- header.skel.php: end -->
