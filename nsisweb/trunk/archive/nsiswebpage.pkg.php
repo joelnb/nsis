@@ -7,6 +7,27 @@ define('PAGETYPE_TEMPLATED', 2);
 define('PAGETYPE_DIRECTORY', 3);
 define('PAGETYPE_PARENTLINK',4);
 
+if(isset($_GET['action']) && strlen($_GET['action']) > 0) {
+	if(strcmp($_GET['action'],'delete') == 0) {
+		delete_page($_GET['pageid']);
+	}
+}
+
+function delete_page($pageid)
+{
+	global $nsisweb;
+	$session = $nsisweb->get_session();
+	$user    = find_userid($session->user_id);
+	if($pageid > 0 && $user->usertype == USERTYPE_ADMIN) {
+		/* also need to remove links to other pages in the hierarchy */
+		$result = $nsisweb->query("delete from nsisweb_pages where pageid=$pageid");
+		if($result) {
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+
 function initialise_page_table()
 {
 	global $nsisweb;
@@ -56,7 +77,7 @@ function show_page($pageid,$make_whole_page)
 				$user   = find_userid($page_info['author']);
 				$author = $user->username;
 				$date   = &$page_info['created'];
-				render_templated_page($title,$author,$date,$source);
+				render_templated_page($title,$author,$date,$source,$pageid);
 				$success = TRUE;
 				break;
 			case PAGETYPE_DIRECTORY:
@@ -66,22 +87,31 @@ function show_page($pageid,$make_whole_page)
 				$result = $nsisweb->query("select * from nsisweb_pages where pageid=$pageid");
 				if($result && $nsisweb->how_many_results($result) == 1) {
 					$directory_page = $nsisweb->get_result_array($result);
-					render_directory_page_header($directory_page['title'],$directory_page['source']);
+					$items = array();
+
 					$result = $nsisweb->query("select * from nsisweb_pages where parentid=$pageid");
 					if($result && $nsisweb->how_many_results($result) > 0) {
 						while($mapping = $nsisweb->get_result_array($result)) {
 							$result2 = $nsisweb->query("select * from nsisweb_pages where pageid=".$mapping['pageid']);
 							if($result2 && $nsisweb->how_many_results($result2) == 1 && $child_page = $nsisweb->get_result_array($result2)) {
-								render_directory_page_item($child_page['pageid'],$child_page['title']);
+								$items[] = array(
+									'pageid' => $child_page['pageid'],
+									'title' => $child_page['title']
+								);
 							}
 						}
 					}
-					render_directory_page_footer();
+					render_directory_page(
+						$directory_page['title'],
+						$directory_page['author'],
+						$directory_page['date'],
+						$directory_page['source'],
+						$pageid,$items);
 				}
 				$success = TRUE;
 				break;
 		}
-		
+
 		if($make_whole_page) {
 			$nsisweb->end_page();
 		}
@@ -137,7 +167,7 @@ function process_templated_content($content)
 	   attributes should be forcibly removed. bad_attvals replaces parts of
 	   attributes on certain tags with replacement text of our choosing.
 	   add_attr_to_tag adds attributes of our choosing to certain tags. */
- 	$tag_list             = array(true,	"font", "div", "span", "h1", "h2", "h3", "table", "tr", "td", "th", "br", "hr", "b", "a", "i", "img", "strong", "em", "p", "li", "ul", "ol");
+ 	$tag_list             = array(true,	"font", "div", "span", "h1", "h2", "h3", "table", "tr", "td", "th", "br", "hr", "b", "a", "i", "img", "strong", "em", "p", "li", "ul", "ol", "pre");
 	$rm_tags_with_content = array('script', 'style', 'applet', 'embed', 'head', 'frameset');
 	$self_closing_tags    = array('img', 'br', 'hr', 'input');
 	$force_tag_closing    = false;
@@ -271,35 +301,20 @@ function colour_source($string){
 		highlight_string("<?".$array_contents[0]."?>");
 		$array_contents[0] = ob_get_contents();
 		ob_end_clean();
-		$final .='<font face="Courier new, Courier, Mono" size=3>'.$array_contents[0]."</font>".$array_contents[1];
+		$final .= $array_contents[0].$array_contents[1];
 	}
 	return str_replace(array("&lt;?","?&gt;"),"",$final);
 }
 
-function render_templated_page($title,$author,$date,$source)
+function render_templated_page($title,$author,$date,$source,$pageid)
 {
-	print <<<ENDOFTEMPLATE
-	<font style="font-family: verdana; font-size: 20pt; color: #000000;">$title</font><br>
-	<font style="font-family: verdana; font-size: 8pt; color: #000000;">Written by $author, $date</font><br>
-	$source
-ENDOFTEMPLATE;
+	global $nsisweb;
+	include(NSISWEB_USERPAGE_SKELETON);
 }
 
-function render_directory_page_header($title,$source)
+function render_directory_page($title,$author,$date,$desc,$pageid,$items)
 {
-	print <<<ENDOFTEMPLATE
-	<font style="font-family: verdana; font-size: 20pt; color: #000000;">$title</font><br>
-	<p><i>$source</i></p>
-ENDOFTEMPLATE;
-}
-
-function render_directory_page_item($pageid,$title)
-{
-	print '<li><a href="'.$nsisweb->wwwroot.'/nsisweb.php?page='.$pageid.'">'.$title."</a>\n";
-}
-
-function render_directory_page_footer()
-{
-	print "</ul>\n";
+	global $nsisweb;
+	include(NSISWEB_DIRECTORY_SKELETON);
 }
 ?>

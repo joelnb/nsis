@@ -1,7 +1,7 @@
 <html>
 <body style="font-family:courier new;font-size:10pt;">
 <?
-  echo '<b>'PHP Version: '.phpversion().'</b><br>';
+  echo '<b>PHP Version: '.phpversion().'</b><br>';
   echo '<b>Installing NSISWeb:</b><br>';
   echo '<li>Loading nsisweb.pkg.php .. ';
   include_once('nsisweb.pkg.php');

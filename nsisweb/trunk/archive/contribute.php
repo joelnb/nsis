@@ -203,23 +203,24 @@ ENDOFHTML;
 ENDOFHTML;
 
 			if(strlen($title)>0 || strlen($content)>0) {
+				$session = $nsisweb->get_session();
 				if(strcmp($pagetype,'newpage') == 0) {
-					$session = $nsisweb->get_session();
 					$result = $nsisweb->query("select NOW()");
+					$now = $array['NOW()'];
 					if($result) {
 						$array = $nsisweb->get_result_array($result);
-						$now   = $array['NOW()'];
 						$processed = process_templated_content($content);
-						render_templated_page($title,$session->get_username(),$now,$processed);
+						render_templated_page($title,$session->get_username(),$now,$processed,0);
 					}
 				} else {
-					render_directory_page_header($title,$content);
-					render_directory_page_item(0,'dummy item one');
-					render_directory_page_item(1,'dummy item two');
-					render_directory_page_item(2,'dummy item three');
-					render_directory_page_item(3,'dummy item four');
-					render_directory_page_item(4,'dummy item five');
-					render_directory_page_footer();
+					$items = array(
+						array('pageid' => 0,'title' => 'dummy item one'),
+						array('pageid' => 1,'title' => 'dummy item two'),
+						array('pageid' => 2,'title' => 'dummy item three),
+						array('pageid' => 3,'title' => 'dummy item four'),
+						array('pageid' => 4,'title' => 'dummy item five')
+					);
+					render_directory_page($title,$session->get_username(),$now,$content,0,$items);
 				}
 			}
 		} else if(strcmp($pagetype,'newfile') == 0) {

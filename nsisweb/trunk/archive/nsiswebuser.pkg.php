@@ -4,23 +4,27 @@
 
 include_once('nsisweb.pkg.php');
 define('ANONYMOUS_USER_ID',0);
+define('USERTYPE_NORMAL',0);
+define('USERTYPE_ADMIN',1);
 
 function initialise_user_table()
 {
 	global $nsisweb;
 	$nsisweb->query("drop table if exists nsisweb_users");
-	$nsisweb->query("create table nsisweb_users (username varchar(255) not null,password varchar(255) not null,userid int auto_increment, primary key(userid), created datetime)");
+	$nsisweb->query("create table nsisweb_users (username varchar(255) not null,password varchar(255) not null,userid int auto_increment, primary key(userid), created datetime, usertype int zerofill)");
 }
 
 class NsisWebUser
 {
 	var $user_id;
 	var $username;
+	var $usertype;
 	
 	function NsisWebUser($array)
 	{
 		$this->user_id  = $array['userid'];
 		$this->username = $array['username'];
+		$this->usertype = $array['usertype'];
 	}
 };
 
@@ -60,6 +64,24 @@ function add_user($username,$password)
 	  	return $result != FALSE;
 		}
 	}
+	return FALSE;
+}
+
+/* $user must be a NsisWebUser instance */
+function change_user_type($user,$new_type)
+{
+	global $nsisweb;
+	$session = $nsisweb->get_session();
+	$this_user = find_userid($session->user_id);
+	
+	if($this_user->usertype == USERTYPE_ADMIN) {
+		$result = $nsisweb->query("update nsisweb_users set usertype=$new_type where userid=".$session->user_id);
+		if($result) {
+			$user->usertype = $new_type;
+			return TRUE;
+		}
+	}
+	
 	return FALSE;
 }
 ?>
