@@ -48,7 +48,7 @@ if(!$session->is_anonymous()) {
               echo '[ <a href="prefs.php">Preferences</a> ] ';
             }
             ?>
-            [ <a href="<?= $picklist_url ?>">Pick List</a> ] [ <a href="<?= $home_url ?>">Home</a> ]
+            [ <a href="<?= $picklist_url ?>">Pick List</a> ] [ <a href="search.php">Search</a> ] [ <a href="<?= $home_url ?>">Home</a> ]
           </td>
 				</tr>
 			</table>
