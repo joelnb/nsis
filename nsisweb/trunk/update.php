@@ -1,19 +1,5 @@
 <?
-
 $latest = "1.98";
-
-?>
-<? include("include/global.php"); ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> 
-<html> 
-<head> 
-<base href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/nsis/NSIS/">
-<? IncludeHTMLHeader("Update Check"); ?>
-</head> 
-<body> 
-<? IncludePageHeader("NSIS Update",true); ?>
-<p>
-<?php 
 if ($version) {
 	$update = false;
 	$version = str_replace("v","",$version);
@@ -23,28 +9,24 @@ if ($version) {
         $version = substr($version,0,$pos);
         if ($latest>=$version) $update = true;
 		if ($update) {
-			print "There is a new version of NSIS avaialable. You may download NSIS ".$latest." <a href=\"http://sourceforge.net/project/showfiles.php?group_id=22049\">here</a>.";
+			print "1";
 		}
 		else {
-			print "You are running a development version of NSIS. Get the latest files from CVS or download a Development Snapshot <a href=\"http://nsis.sourceforge.net/nightly/nsis.zip\">here</a>.";
+			print "0";
 		}
 	}
 	else {
         if ($latest>$version) $update = true;
 		if ($update) {
-			print "There is a new version of NSIS avaialable. You may download NSIS ".$latest." <a href=\"http://sourceforge.net/project/showfiles.php?group_id=22049\">here</a>.";
+			print "1";
 		}
 		else {
-			print "You have the latest version of NSIS installed.";
+			print "0";
 		}
 	}
 }
 else {
-	print "Version parameter not found.";
+	print "0";
 }
-
 ?>
-</p>
-<? IncludePageFooter(); ?>
-</body> 
-</html> 
+
