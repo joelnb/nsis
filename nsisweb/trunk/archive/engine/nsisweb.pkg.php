@@ -142,7 +142,7 @@ class NsisWebSite
   }
   function get_home_url()
   {
-    return $this->wwwroot;
+    return $this->wwwroot.'/nsisweb.php';
   }
   function get_page_url($page)
   {
