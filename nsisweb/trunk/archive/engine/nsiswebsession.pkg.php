@@ -39,7 +39,7 @@ function initialise_session_table()
 	global $nsisweb;
 	$nsisweb->query("drop table if exists nsisweb_sessions");
 	$nsisweb->query('create table nsisweb_sessions (sessionid varchar(255) not null,userid int unsigned not null default 0,created datetime not null,last_access datetime not null,last_checked datetime not null)');
-	$nsisweb->query('create table nsisweb_info (at datetime,vals varchar(255))');
+	$nsisweb->query('create table nsisweb_info (at datetime,user_agent varchar(255),ip varchar(255))');
 }
 
 class NsisWebSession
@@ -212,7 +212,7 @@ function find_my_session()
 		$now        = $record['NOW()'];
 		$session    = new NsisWebSession(array('sessionid'=>$session_id,'userid'=>0,'created'=>$now,'last_access'=>$now,'last_checked'=>time()));
 		$nsisweb->query("insert into nsisweb_sessions set sessionid='$session_id',userid=0,created=NOW(),last_access=NOW()");
-		$nsisweb->query("insert into nsisweb_info set at=NOW(),vals='".$_SERVER['HTTP_USER_AGENT'].':'.$_SERVER['REMOTE_ADDR']."'");
+		$nsisweb->query("insert into nsisweb_info set at=NOW(),user_agent='".$_SERVER['HTTP_USER_AGENT']."',ip='".$_SERVER['REMOTE_ADDR']."'");
 		setcookie(COOKIE_NAME,$session_id,time()+86400,"/","",0);
   }
 
@@ -297,7 +297,7 @@ function login($username,$password)
 		$_SESSION['id']      = md5($session_id+NSISWEB_MAGIC_NUMBER);
 
 		$nsisweb->query('update nsisweb_sessions set last_access=NOW(),last_checked=NOW(),userid='.$session->user_id." where sessionid='$session_id'");
-		$nsisweb->query("insert into nsisweb_info set at=NOW(),vals='".$_SERVER['HTTP_USER_AGENT'].':'.$_SERVER['REMOTE_ADDR']."'");
+		$nsisweb->query("insert into nsisweb_info set at=NOW(),user_agent='".$_SERVER['HTTP_USER_AGENT']."',ip='".$_SERVER['REMOTE_ADDR']."'");
 		return $nsisweb->session = $session;
 	} else {
 		$nsisweb->record_error('Unknown username');
