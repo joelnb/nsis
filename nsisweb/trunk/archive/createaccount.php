@@ -2,6 +2,7 @@
 include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 include_once(dirname(__FILE__)."/engine/nsiswebsession.pkg.php");
 
+$username      = "";
 $bgc_username  = "";
 $bgc_password  = "";
 $bgc_password2 = "";
