@@ -104,10 +104,15 @@ if($page = $this->get_page()) {
       if($child['type'] == PAGETYPE_DIRECTORY) {
         $array = NsisWebPage::get_children_count($child['pageid']);
         if($array[0]>0 || $array[1]>0) {
-	        echo '(';
-	        if($array[1]>0) echo '<img src="images/folder.gif" width="16" height="16" vspace="5" hspace="5" style="vertical-align:middle;">'.$array[1];
-	        if($array[0]>0) echo '<img src="images/file.gif" width="16" height="16" vspace="5" hspace="5" style="vertical-align:middle;">'.$array[0];
-	        echo ')';
+	        echo ' [';
+	        if($array[1]>0) {
+		        echo '<img src="images/folder.gif" width="16" height="16" style="vertical-align:middle;">'.$array[1];
+	        }
+	        if($array[0]>0) {
+		        if($array[1]>0) echo ' ';
+		        echo '<img src="images/file.gif" width="16" height="16" style="vertical-align:middle;">'.$array[0];
+	        }
+	        echo ']';
         }
       }
       print "<br>\n";
