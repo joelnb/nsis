@@ -102,8 +102,13 @@ if($page = $this->get_page()) {
       }
       print '<a href="'.$nsisweb->get_page_url($child['instanceid']).'&instances='.$nsisweb->get_instance_history(0).'">'.$child['title']."</a>";
       if($child['type'] == PAGETYPE_DIRECTORY) {
-        $count = NsisWebPage::get_children_count($child['pageid']);
-        print " ($count)";
+        $array = NsisWebPage::get_children_count($child['pageid']);
+        if($array[0]>0 || $array[1]>0) {
+	        echo '(';
+	        if($array[1]>0) echo '<img src="images/folder.gif" width="16" height="16" vspace="5" hspace="5" style="vertical-align:middle;">'.$array[1];
+	        if($array[0]>0) echo '<img src="images/file.gif" width="16" height="16" vspace="5" hspace="5" style="vertical-align:middle;">'.$array[0];
+	        echo ')';
+        }
       }
       print "<br>\n";
     }
