@@ -17,7 +17,9 @@ if(strlen($_POST['action']) > 0) {
 	} else if(strcmp($_POST['action'],'revert') == 0) {
 		$revert = true;
 	} else if(strcmp($_POST['action'],'save') == 0) {
-		update_templated_page($_POST['pageid'],htmlentities($_POST['title']),$_POST['content']);
+    $title   = htmlentities(stripslashes($_POST['title']));
+    $content = stripslashes($_POST['content']);
+		update_templated_page($_POST['pageid'],$title,$content);
 		$nsisweb->redirect($_POST['pageid']);
 	}
 }
