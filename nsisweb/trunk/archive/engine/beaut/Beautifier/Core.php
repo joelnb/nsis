@@ -128,11 +128,11 @@ function highlight_text($text, $contextstack=undef)
 		{
 			if ($this->context->ind>0 && $sw!="")
 			{
-				$lineout = str_repeat("    ", ($this->context->ind-1));
+				$lineout = str_repeat("&nbsp;&nbsp;", ($this->context->ind-1));
 			}
 			else
 			{
-				$lineout = str_repeat("    ", $this->context->ind);
+				$lineout = str_repeat("&nbsp;&nbsp;", $this->context->ind);
 			}
 		}
 		$ln = strlen($lineorig);
@@ -432,7 +432,7 @@ function highlight_text($text, $contextstack=undef)
 //print "17";
 				if (!$this->context->inwhitespace) 
 				{
-					$lineout .= str_repeat("    ", $this->context->ind);
+					$lineout .= str_repeat("&nbsp;&nbsp;", $this->context->ind);
 				}
 				$lineout .= $stri;
 				$this->context->ind++;
@@ -447,7 +447,7 @@ function highlight_text($text, $contextstack=undef)
 				
 				if (!$this->context->inwhitespace) 
 				{
-					$lineout .= str_repeat("    ", $this->context->ind);
+					$lineout .= str_repeat("&nbsp;&nbsp;", $this->context->ind);
 				}
 				$lineout .= $stru;
 				
