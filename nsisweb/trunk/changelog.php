@@ -6,15 +6,13 @@
 </head> 
 <body> 
 <? IncludePageHeader("NSIS Changelog",true); ?>
-<pre class="changelog">
 <?php 
-$contenta = @file('/home/groups/n/ns/nsis/htdocs/nightly/changelog.txt');
+$contenta = @file('/home/groups/n/ns/nsis/htdocs/nightly/changelog.htm');
 if ($contenta) {
 	$content = implode ('',$contenta);
 	echo $content;
 }
 ?>
-</pre> 
 <? IncludePageFooter(); ?>
 </body> 
 </html> 
