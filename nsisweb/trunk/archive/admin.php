@@ -3,7 +3,7 @@ include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 
 function how_long($seconds)
 {
-	if($seconds == 0) return "now";
+  if($seconds == 0) return "now";
   $days  = (int)($seconds/86400); $seconds %= 86400; if($days>0)    $str .= "$days days ";
   $hours = (int)($seconds/3600);  $seconds %= 3600;  if($hours>0)   $str .= "$hours hours ";
   $mins  = (int)($seconds/60);    $seconds %= 60;    if($mins>0)    $str .= "$mins mins ";
@@ -35,7 +35,7 @@ if(!$user->is_admin()) {
   
   $time_db  = 'unknown';
   $record   = $nsisweb->query_one_only("select NOW()");
-  if($record)  $time_db = $record['NOW()'];
+  if($record) $time_db = $record['NOW()'];
 
   $users = $nsisweb->query("select sessionid,a.userid,a.created,last_access,username,ip,a.flags,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(a.created)) as uptime,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(last_access)) as accessed from nsisweb_sessions as a,nsisweb_users as b where a.userid=b.userid order by ip");
   $anons = $nsisweb->query("select sessionid,userid,created,last_access,ip,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(created)) as uptime,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(last_access)) as accessed from nsisweb_sessions where userid=0 order by ip");
@@ -49,7 +49,7 @@ if(!$user->is_admin()) {
 
   <span style="font-family:verdana;font-size:15pt;color:#000000;">Web Server Info</span>
   <p>The time on the web server is $time_web. The time on the database server is
-  $time_db. PHP diagnostics can be viewed  <a href="admin.php?action=phpinfo">here</a></p>
+  $time_db. PHP diagnostics can be viewed <a href="admin.php?action=phpinfo">here</a></p>
   
   <span style="font-family:verdana;font-size:15pt;color:#000000;">Connected Sessions</span>
   <p>The following sessions are currently established: ($usercount registered users and
