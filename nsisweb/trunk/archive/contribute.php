@@ -9,6 +9,27 @@ if(strlen($_GET['action'])>0) {
   $action = $_POST['action'];
 }
 
+{
+  global $nsisweb;
+  $session = $nsisweb->get_session();
+  $user    = find_userid($session->user_id);
+
+  /* Anonymous users can't contribute thanks to a jerk that likes to spam. */
+  if($user->is_anonymous()) {
+    $nsisweb->start_page('Contribute To The Archive',FALSE);
+    print <<<ENDOFHTML
+      <p class="aboxnote">
+        Anonymous contribution is currently disabled. Please
+        <a href="login.php">login now</a>.
+        If you do not already have an account here you can
+        <a href="createaccount.php">create one for free</a>.
+      </p>
+ENDOFHTML;
+    $nsisweb->end_page();
+    exit;
+  }
+}
+
 switch($action) {
   case 'createpage':
   case 'previewpage':
@@ -42,18 +63,7 @@ function ChooseContributionType()
   $session = $nsisweb->get_session();
   $user    = find_userid($session->user_id);
 
-  /* Anonymous users can't contribute thanks to a jerk that likes to spam. */
-  if($user->is_anonymous()) {
-    print <<<ENDOFHTML
-      <p class="aboxnote">
-        Anonymous contribution is currently disabled. Please
-        <a href="login.php">login now</a>.
-        If you do not already have an account here you can
-        <a href="createaccount.php">create one for free</a>.
-      </p>
-ENDOFHTML;
-  }
-  else {
+  {
     /* Present visitors with a selection of ways that they can contribute to the
        Archive. */
     print <<<ENDOFHTML
