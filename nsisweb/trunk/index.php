@@ -1,12 +1,14 @@
 <? include("include/global.php"); ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> 
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html> 
 <head>
 <? IncludeHTMLHeader("Nullsoft (SuperPiMP|Scriptable) Install System"); ?>
 </head> 
 <body> 
 <? IncludePageHeader("Nullsoft (SuperPiMP|Scriptable) Install System"); ?>
-<p>NSIS tries to be a scriptable win32 installer/uninstaller system that doesn't suck and isn't huge.</p> 
+<p>NSIS tries to be a scriptable win32 installer/uninstaller system that doesn't suck and isn't huge.</p>
+<div class="announcement"><a href="http://sourceforge.net/project/shownotes.php?release_id=126427">
+<span class="highlight">NEW!</span> NSIS 2 beta 0</a></div>
 <ul> 
 	<li><b><a href="http://www.nullsoft.com/free/nsis/">Official Home Page</a></b>
 		<ul>

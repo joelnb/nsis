@@ -40,7 +40,19 @@ p, li {
     font-size: 8pt;
     color: #666666;
 } 
-     
+
+.announcement {
+	font-size: 16pt;
+	position: relative;
+	top: 425px;
+	left: 400px;
+}
+
+.highlight {
+	color: #376EAB;
+}
+	
+
 a:link, a:visited, a:active {
     color: #7A7272;
     text-decoration: none;
