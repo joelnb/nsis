@@ -260,8 +260,8 @@ ENDOFHTML;
 		      WIZARD PAGE 4
 		   -------------------- */
 		$pagetype = $_POST['pagetype'];
-		$title    = htmlentities(urldecode($_POST['title']));
-		$content  = urldecode($_POST['content']);
+		$title    = htmlentities(stripslashes($_POST['title']));
+		$content  = stripslashes($_POST['content']);
 
 		if(strcmp($pagetype,'newpage') == 0) {
 			$result = create_templated_page($title,$content);
