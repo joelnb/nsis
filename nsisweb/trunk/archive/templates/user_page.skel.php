@@ -16,7 +16,7 @@
 	$edit_link = '<a href="'.$nsisweb->get_home_url().'/nsisweb.php?action=edit&pageid='.$pageid.'">edit</a>';
 	$delete_link = '<a href="'.$nsisweb->get_home_url().'/nsisweb.php?action=delete&pageid='.$pageid.'">delete</a>';
 ?>
-<!-- dir_page.skel.php: begin -->
+<!-- user_page.skel.php: begin -->
 <table style="font-family:verdana;font-size:8pt;" width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
     <td>
@@ -28,6 +28,6 @@
 		</td>
 	</tr>
 </table>
-<!-- dir_page.skel.php: source -->
+<!-- user_page.skel.php: source -->
 <?= $source ?>
-<!-- dir_page.skel.php: end -->
+<!-- user_page.skel.php: end -->
