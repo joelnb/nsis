@@ -16,22 +16,22 @@ the content of this site can be searched from this page.<br></p>
 	    	<td>&nbsp;Keywords:&nbsp;</td>
 	    	<td><input type="text" name="keywords" value="<?= $keywords ?>"></td>
 	    	<td>&nbsp;Author:&nbsp;</td>
-	    	<td><input type="text" name="author" value="<?= $author ?>"></td>
+	    	<td><input type="text" name="author" value="<?= $author ?>" style="background-color:#dddddd;" disabled></td>
 	    </tr>
 		  <tr style="background-color:#eeeeee">
 		  	<td>&nbsp;Created From:&nbsp;</td>
-		  	<td><input type="text" name="created_from" value="<?= $created_from ?>"></td>
+		  	<td><input type="text" name="created_from" value="<?= $created_from ?>" style="background-color:#dddddd;" disabled></td>
 		  	<td>&nbsp;To:&nbsp;</td>
-		  	<td><input type="text" name="created_to" value="<?= $created_to ?>"></td>
+		  	<td><input type="text" name="created_to" value="<?= $created_to ?>" style="background-color:#dddddd;" disabled></td>
 		  </tr>
 		  <tr style="background-color:#eeffee">
 		  	<td>&nbsp;Modified From:&nbsp;</td>
-		  	<td><input type="text" name="modified_from" value="<?= $modified_from ?>"></td>
+		  	<td><input type="text" name="modified_from" value="<?= $modified_from ?>" style="background-color:#dddddd;" disabled></td>
 		  	<td>&nbsp;To:&nbsp;</td>
-		  	<td><input type="text" name="modified_to" value="<?= $modified_to ?>"></td>
+		  	<td><input type="text" name="modified_to" value="<?= $modified_to ?>" style="background-color:#dddddd;" disabled></td>
 		  </tr>
 		  <tr style="background-color:#eeeeee">
-		  	<td align="center" colspan="3"><input type="checkbox" name="include_orphaned" value="0">&nbsp;Include Orphaned Pages:&nbsp;</td>
+		  	<td align="center" colspan="3"><input type="checkbox" name="include_orphaned" value="0" style="background-color:#dddddd;" disabled>&nbsp;Include Orphaned Pages:&nbsp;</td>
 		  	<td align="center">&nbsp;<input type="submit" value="Search">&nbsp;</td>
 		  </tr>
 	  </table>
