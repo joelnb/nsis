@@ -216,7 +216,7 @@ ENDOFHTML;
 					$items = array(
 						array('pageid' => 0,'title' => 'dummy item one'),
 						array('pageid' => 1,'title' => 'dummy item two'),
-						array('pageid' => 2,'title' => 'dummy item three),
+						array('pageid' => 2,'title' => 'dummy item three'),
 						array('pageid' => 3,'title' => 'dummy item four'),
 						array('pageid' => 4,'title' => 'dummy item five')
 					);
