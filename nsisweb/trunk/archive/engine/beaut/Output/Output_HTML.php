@@ -21,12 +21,12 @@ class Output_HTML
 {
 	function Output_HTML()
 	{
-		$this->code		= '_WORD_';
-		$this->linecomment 	= '<font color="green">_WORD_</font>';
-		$this->blockcomment 	= '<font color="green">_WORD_</font>';
-		$this->prepro 		= '<font color="purple">_WORD_</font>';
-		$this->select 		= '<font color="red"><b>_WORD_</b></font>';
-		$this->quote 		= '<font color="blue">_WORD_</font>';
+		$this->code		      = '_WORD_';
+		$this->linecomment 	= '<font color="#888888">_WORD_</font>';
+		$this->blockcomment = '<font color="#888888">_WORD_</font>';
+		$this->prepro 		  = '<font color="#ff00ff">_WORD_</font>';
+		$this->select 	    = '<font color="#ff0000"><b>_WORD_</b></font>';
+		$this->quote 		    = '<font color="#0000ff">_WORD_</font>';
 		$this->category_1 	= '<font color="#000088">_WORD_</font>';
 		$this->category_2 	= '<font color="#008800">_WORD_</font>';
 		$this->category_3 	= '<font color="#008888">_WORD_</font>';

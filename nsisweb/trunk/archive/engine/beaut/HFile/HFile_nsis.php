@@ -15,8 +15,8 @@ class HFile_nsis extends HFile{
 		/*************************************/
 		// Flags
 
-		$this->nocase            	= "1";
-		$this->notrim            	= "1";
+		$this->nocase            	= "0";
+		$this->notrim            	= "0";
 		$this->perl              	= "0";
 
 		// Colours
@@ -30,8 +30,8 @@ class HFile_nsis extends HFile{
 
 		// Indent Strings
 
-		$this->indent            	= array("");//"Function", "Section");
-		$this->unindent          	= array("");//"FunctionEnd", "SectionEnd");
+		$this->indent            	= array("Function", "Section");
+		$this->unindent          	= array("FunctionEnd", "SectionEnd");
 
 		$this->selecton		        = "<!";
 		$this->selectoff	       	= "!>0";
@@ -39,7 +39,7 @@ class HFile_nsis extends HFile{
 		// String characters and delimiters
 
 		$this->stringchars       	= array("\"", "'","`");
-		$this->delimiters        	= array("/", "$", "!", "@", "%", "^", "&", "*", "(", ")", "+", "=", "|", "\\", "{", "}", "[", "]", ":", ";", "\"", "'", "<", ">", " ", ",", "	", ".", "?");
+		$this->delimiters        	= array("/", "!", "@", "%", "^", "&", "*", "(", ")", "+", "=", "|", "\\", "{", "}", "[", "]", ":", ";", "\"", "'", "<", ">", " ", ",", ".", "?");
 		$this->escchar           	= "\\";
 
 		// Comment settings
@@ -75,46 +75,46 @@ class HFile_nsis extends HFile{
 			"un.onUninstFailed" => "1",
 			"un.onUninstSuccess" => "1",
 			"un.onUserAbort" => "1",
-			"$INSTDIR" => "2",
-			"$OUTDIR" => "2",
-			"$0" => "2", 
-			"$1" => "2", 
-			"$2" => "2", 
-			"$3" => "2", 
-			"$4" => "2", 
-			"$5" => "2", 
-			"$6" => "2", 
-			"$7" => "2", 
-			"$8" => "2", 
-			"$9" => "2", 
-			"$R0" => "2", 
-			"$R1" => "2", 
-			"$R2" => "2", 
-			"$R3" => "2", 
-			"$R4" => "2", 
-			"$R5" => "2", 
-			"$R6" => "2", 
-			"$R7" => "2", 
-			"$R8" => "2", 
-			"$R9" => "2",
-			"$CMDLINE" => "2",
-			"$LANGUAGE" => "2",
-			"$PROGRAMFILES" => "2",
-			"$DESKTOP" => "2",
-			"$EXEDIR" => "2",
-			"${NSISDIR}" => "2",
-			"$WINDIR" => "2",
-			"$SYSDIR" => "2",
-			"$TEMP" => "2",
-			"$STARTMENU" => "2",
-			"$SMPROGRAMS" => "2",
-			"$SMSTARTUP" => "2",
-			"$QUICKLAUNCH" => "2",
-			"$HWNDPARENT" => "2",
-			"$PLUGINSDIR" => "2",
-			"$$" => "2",
-			"$\r" => "2",
-			"$\n" => "2",
+			"\$INSTDIR" => "2",
+			"\$OUTDIR" => "2",
+			"\$0" => "2", 
+			"\$1" => "2", 
+			"\$2" => "2", 
+			"\$3" => "2", 
+			"\$4" => "2", 
+			"\$5" => "2", 
+			"\$6" => "2", 
+			"\$7" => "2", 
+			"\$8" => "2", 
+			"\$9" => "2", 
+			"\$R0" => "2", 
+			"\$R1" => "2", 
+			"\$R2" => "2", 
+			"\$R3" => "2", 
+			"\$R4" => "2", 
+			"\$R5" => "2", 
+			"\$R6" => "2", 
+			"\$R7" => "2", 
+			"\$R8" => "2", 
+			"\$R9" => "2",
+			"\$CMDLINE" => "2",
+			"\$LANGUAGE" => "2",
+			"\$PROGRAMFILES" => "2",
+			"\$DESKTOP" => "2",
+			"\$EXEDIR" => "2",
+			"\${NSISDIR}" => "2",
+			"\$WINDIR" => "2",
+			"\$SYSDIR" => "2",
+			"\$TEMP" => "2",
+			"\$STARTMENU" => "2",
+			"\$SMPROGRAMS" => "2",
+			"\$SMSTARTUP" => "2",
+			"\$QUICKLAUNCH" => "2",
+			"\$HWNDPARENT" => "2",
+			"\$PLUGINSDIR" => "2",
+			"\$\$" => "2",
+			"\$\r" => "2",
+			"\$\n" => "2",
 			"Page" => "3",
 			"UninstPage" => "3",
 			"AddBrandingImage" => "4",
