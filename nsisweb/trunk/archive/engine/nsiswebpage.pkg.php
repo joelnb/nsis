@@ -268,12 +268,9 @@ function find_pageid($pageid)
 function colour_source($string){
 	$array_contenido = explode("[source]",$string);
 	$final = $array_contenido[0];
-	for($i = 1;$i <= count($array_contenido);$i++){
+	for($i = 1;$i < count($array_contenido);$i++){
 		$array_contents = explode("[/source]",$array_contenido[$i]);
-		ob_start();
-		highlight_string("<?".$array_contents[0]."?>");
-		$array_contents[0] = ob_get_contents();
-		ob_end_clean();
+		$array_contents[0] = highlight_string("<?".$array_contents[0]."?".">", TRUE);
 		$final .= $array_contents[0].$array_contents[1];
 	}
 	return str_replace(array("&lt;?","?&gt;"),"",$final);
