@@ -42,7 +42,8 @@
 	</li>
 	<li><b><a href="http://nsis.sourceforge.net/archive">The Archive</a></b>
 		<ul>
-		A repository of NSIS related information and downloads maintained by NSIS users for NSIS users.
+		Examples, related software and information<br>
+		Maintained by NSIS users for NSIS users
 		</ul>
 	</li>
 	<li><b><a href="http://nsis.sourceforge.net/changelog.php">Change Log</a></b> 
