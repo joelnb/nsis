@@ -202,7 +202,7 @@ function set_page_parent($pageid,$parentid)
 		if($count == 1) {
 			$page = $nsisweb->get_result_array($result);
 			if($page['flags'] & PAGEFLAG_ORPHANED) {
-				$nsisweb->query("update nsisweb_pages set parentid=$parentid,flags=flags & ~'.PAGEFLAG_ORPHANED.' where pageid=$pageid");
+				$nsisweb->query("update nsisweb_pages set parentid=$parentid,flags=flags & '.~PAGEFLAG_ORPHANED.' where pageid=$pageid");
 				return TRUE;
 			}
 		}

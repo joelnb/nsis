@@ -273,7 +273,7 @@ ENDOFHTML;
 		$pagetype = $_POST['pagetype'];
 		$title    = stripslashes(urldecode($_POST['title']));
 		$content  = stripslashes(urldecode($_POST['content']));
-		
+
 		if(strcmp($pagetype,'newpage') == 0) {
 			$result = create_templated_page($title,$content);
 		} else if(strcmp($pagetype,'newsection') == 0) {
@@ -284,7 +284,7 @@ ENDOFHTML;
 			header("Location: contribute.php");
 			exit;
 		}
-		
+
 		$nsisweb->start_page('Contribute');
 		print <<<ENDOFHTML
 		<font style="font-family: verdana; font-size: 20pt; color: #000000;">Contribute: Complete</font>
@@ -309,10 +309,10 @@ ENDOFHTML;
 ENDOFHTML;
 			}
 		}
-		
+
 		$home_link   = $nsisweb->get_home_url();
 		$browse_link = $nsisweb->get_page_url('browse');
-		
+
 		print <<<ENDOFHTML
 		<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
 		  <A href="$browse_link">Browse Pages</a> | 
