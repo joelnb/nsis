@@ -67,4 +67,8 @@ a:hover {
 .image { 
     border: 0px; 
 } 
-     
+
+pre {
+	font-family: Courier New,Courier;
+	font-size: 11px;
+}
