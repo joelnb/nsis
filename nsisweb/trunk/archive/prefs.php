@@ -145,8 +145,8 @@ if($session->is_anonymous()) {
 		      }
 				?>
 	      <tr style="background-color:#ffffee"><td align="center" valign="middle" colspan="2" height="20">Change Your Password</td></tr>
-	      <tr><td align="left" valign="middle" height="20">Enter your new password</td><td align="left"><input style="margin:0px;padding:1px;font-size:8pt;width:200px;<?= $passwordcolour ?>" name="password1" type="password" size="20" maxlength="255" value=""></td></tr>
-	      <tr style="background-color:#eeeeee"><td align="left" valign="middle" height="20">Conform your new password</td><td align="left"><input style="margin:0px;padding:1px;font-size:8pt;width:200px;<?= $passwordcolour ?>" name="password2" type="password" size="20" maxlength="255" value=""></td></tr>
+	      <tr style="background-color:#eeeeee"><td align="left" valign="middle" height="20">Enter your new password</td><td align="left"><input style="margin:0px;padding:1px;font-size:8pt;width:200px;<?= $passwordcolour ?>" name="password1" type="password" size="20" maxlength="255" value=""></td></tr>
+	      <tr><td align="left" valign="middle" height="20">Confirm your new password</td><td align="left"><input style="margin:0px;padding:1px;font-size:8pt;width:200px;<?= $passwordcolour ?>" name="password2" type="password" size="20" maxlength="255" value=""></td></tr>
 	    </table>
 	    <p align="center"><a href="javascript:document.settings.submit();">Click Here To Apply Changes To Your Settings</a></p>
     </form>
