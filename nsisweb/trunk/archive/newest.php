@@ -13,12 +13,24 @@ $nsisweb->start_page('Latest Additions/Changes');
 	  <th align="center"><b>&nbsp;Added / Changed&nbsp;</b></th>
     </tr>
 <?
-$result = $nsisweb->query('select p.type,p.title,p.pageid,UNIX_TIMESTAMP(p.created) as created,UNIX_TIMESTAMP(p.last_updated) as last_updated,p.last_author,u.userid,u.username from nsisweb_pages as p,nsisweb_users as u where p.type<>'.PAGETYPE_DIRECTORY.' and u.userid=p.last_author order by greatest(p.created,p.last_updated) desc limit 25');
+$result = $nsisweb->query('select type,title,pageid,UNIX_TIMESTAMP(created) as created,UNIX_TIMESTAMP(last_updated) as last_updated,last_author from nsisweb_pages as p where type<>'.PAGETYPE_DIRECTORY.' order by greatest(created,last_updated) desc limit 25');
 echo mysql_error();
 if($result) {
 	$i = 0;
 
 	while($record = $nsisweb->get_result_array($result)) {
+		$rows[] = $record;
+	}
+	
+  $user_map = array(0=>'Anonymous');
+	foreach($rows as $record) {
+		$userid = $record['last_author'];
+		if($userid > 0) {
+			if(!is_object($user_map[$userid])) {
+				$user_map[$userid] = find_userid($userid);
+			}
+	  }
+	  $username = $user_map[$userid];
 		$title = '<a href="viewpage.php?pageid='.$record['pageid'].'" target="_blank">'.$record['title']."</a>\n";
 		$new = $record['last_updated'] == $record['created'];
 		$diff = time() - ($new ? $record['created'] : $record['last_updated']);
@@ -45,7 +57,7 @@ if($result) {
 			}
 		}
 		
-		$action = ($new ? 'added' : 'changed')." $diff $units ago by ".$record['username'];
+		$action = ($new ? 'added' : 'changed')." $diff $units ago by ".$username;
 
 		if($i == 0) {
 			$i = 1;

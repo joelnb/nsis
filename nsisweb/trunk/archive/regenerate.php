@@ -14,7 +14,7 @@ if($result && $nsisweb->how_many_results($result)>0) {
 		$page = find_pageid($pageid);
 		if($page) {
 		  print '<li>Regenerating '.$page->get_title();
-			$page->save($page->get_title(),$page->get_content(),$page->get_flags());
+			$page->save($page->get_title(),$page->get_content(),$page->get_flags(),TRUE);
 			print "</li>\n";
 		}
 	}

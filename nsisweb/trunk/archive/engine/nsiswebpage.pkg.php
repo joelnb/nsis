@@ -172,7 +172,7 @@ class NsisWebPage
 	}
 
 	/* Only use this for existing pages */	
-	function save($title,$content,$flags)
+	function save($title,$content,$flags,$no_update = FALSE)
 	{
 		global $nsisweb;
 		$title    = mysql_escape_string($title);
@@ -180,7 +180,11 @@ class NsisWebPage
 		$ppsource = mysql_escape_string(preprocess($content,$this->get_pageid()));
 		$session  = $nsisweb->get_session();
 		$author   = $session->user_id;
-		$result   = $nsisweb->query("update nsisweb_pages set flags=$flags,title='$title',source='$source',ppsource='$ppsource',last_author=$author,last_updated=NOW() where pageid=".$this->get_pageid());
+		if($no_update) {
+			$result = $nsisweb->query("update nsisweb_pages set flags=$flags,title='$title',source='$source',ppsource='$ppsource',last_author=$author where pageid=".$this->get_pageid());
+	  } else {
+			$result = $nsisweb->query("update nsisweb_pages set flags=$flags,title='$title',source='$source',ppsource='$ppsource',last_author=$author,last_updated=NOW() where pageid=".$this->get_pageid());
+		}
 		if(!$result) return FALSE;
 		$record = $nsisweb->query_one_only("select NOW()");
 		$this->private_info['flags']        = $flags;
