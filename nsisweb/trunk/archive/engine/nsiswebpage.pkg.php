@@ -55,7 +55,7 @@ function show_page($pageid,$make_whole_page)
 				$user    = find_userid($page_info['author']);
 				$author  = $user->username;
 				$date    = $page_info['created'];
-				render_templated_page($title,$author,$date,colour_source($source),$pageid);
+				render_templated_page($title,$author,$date,$source,$pageid);
 				$success = TRUE;
 				break;
 			case PAGETYPE_DIRECTORY:
@@ -117,7 +117,7 @@ function create_raw_page($title,$filename)
 function create_templated_page($title,$body)
 {
 	global $nsisweb;
-	$source  = process_templated_content($body,FALSE);
+	$source = process_templated_content($body);
 	//if (!get_magic_quotes_gpc()) {
 		$source = mysql_escape_string($source);
 		$title  = mysql_escape_string($title);
@@ -131,7 +131,7 @@ function create_templated_page($title,$body)
 function update_templated_page($pageid,$title,$body)
 {
 	global $nsisweb;
-	$source  = process_templated_content($body,FALSE);
+	$source  = process_templated_content($body);
 	//if (!get_magic_quotes_gpc()) {
 		$source = mysql_escape_string($source);
 		$title  = mysql_escape_string($title);
@@ -148,7 +148,7 @@ function update_templated_page($pageid,$title,$body)
 	}
 }
 
-function process_templated_content($content,$syntax_highlight)
+function process_templated_content($content)
 {
 	/* TODO: HTML Filter is taken from Squirrel Mail -- check the license before
 	   using this in the final site implementation. This was mentioned in a user
@@ -184,10 +184,6 @@ function process_templated_content($content,$syntax_highlight)
 			)
 		)
 	);
-
-	if($syntax_highlight) {
-		$content = colour_source($content);
-	}
 
 	$trusted = sanitize(
 		$content, 
@@ -310,7 +306,7 @@ function colour_source($string){
 function render_templated_page($title,$author,$date,$source,$pageid)
 {
 	global $nsisweb;
-	//$source = colour_source($source);
+	$source = colour_source($source);
 	include(NSISWEB_USERPAGE_SKELETON);
 }
 

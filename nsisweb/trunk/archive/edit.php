@@ -112,7 +112,7 @@ if(strlen($title)>0 || strlen($content)>0) {
 	$now     = $array['NOW()'];
 	if($result) {
 		$array     = $nsisweb->get_result_array($result);
-		$processed = process_templated_content($content,TRUE);
+		$processed = process_templated_content($content);
     if($page['type'] == PAGETYPE_DIRECTORY) {
 		  $items = array(
 			  array('pageid' => 0,'title' => 'dummy item one'),
