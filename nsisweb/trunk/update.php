@@ -1,7 +1,7 @@
 <?
 $latest = "1.98";
 $betaseries = "2.0";
-$betaversion = "b2";
+$betaversion = "b1";
 $output = "";
 
 if ($version) {
