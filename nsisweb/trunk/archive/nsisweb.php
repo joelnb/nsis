@@ -14,18 +14,16 @@
   
   $okay_count = 0;
 
-  $result = $nsisweb->query("select count(*) from nsisweb_users",__FILE__,__LINE__);
-  if($result && $nsisweb->how_many_results($result) == 1) {
-    $record = $nsisweb->get_result_array($result);
-    $count  = $record['count(*)'];
+  $record = $nsisweb->query_one_only("select count(*) from nsisweb_users",__FILE__,__LINE__);
+  if($record) {
+    $count      = $record['count(*)'];
     $users_text = $count.' registered '.($count == 1 ? "user" : "users");
     $okay_count++;
   }
   
-  $result = $nsisweb->query("select count(*) from nsisweb_hierarchy as a,nsisweb_pages as b where a.pageid=b.pageid and b.type=".PAGETYPE_TEMPLATED,__FILE__,__LINE__);
-  if($result && $nsisweb->how_many_results($result) == 1) {
-    $record = $nsisweb->get_result_array($result);
-    $count  = $record['count(*)'];
+  $result = $nsisweb->query('select distinct a.pageid from nsisweb_pages as a,nsisweb_hierarchy as b where a.type='.PAGETYPE_TEMPLATED.' and a.pageid=b.pageid order by pageid',__FILE__,__LINE__);
+  if($result) {
+    $count = $nsisweb->how_many_results($result);
     $pages_text = $count.' '.($count == 1 ? "page" : "pages");
     $okay_count++;
   }
