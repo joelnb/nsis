@@ -1,6 +1,6 @@
 <?
 /* This file contains core stuff used throughout the site code, there is a global
-   instance of the NsisWebSite class named nsisweb. */
+   instance of the NsisWeb class named nsisweb. */
 include_once(dirname(__FILE__)."/nsisweb.cfg.php");
 include_once(dirname(__FILE__)."/nsiswebsession.pkg.php");
 include_once(dirname(__FILE__)."/nsiswebpage.pkg.php");
@@ -8,7 +8,7 @@ include_once(dirname(__FILE__)."/nsiswebstorage.pkg.php");
 include_once(dirname(__FILE__)."/nsiswebuser.pkg.php");
 define('ANONYMOUS_USER_ID',0);
 
-class NsisWebSite
+class NsisWeb
 {
   var $wwwroot;
   var $fileroot;
@@ -19,7 +19,7 @@ class NsisWebSite
   var $executed_queries;
   var $db_selected;
 
-  function NsisWebSite()
+  function NsisWeb()
   {
     $this->wwwroot          = NSISWEB_WWWROOT.NSISWEB_WWWSUBDIR;
     $this->fileroot         = NSISWEB_FILEROOT.NSISWEB_FILESUBDIR;
@@ -113,7 +113,8 @@ class NsisWebSite
   function query($query)
   {
     /* own database permission check */
-    if(!NSISWEB_OWNDB && strstr($query,'database ')) {
+    if(!NSISWEB_OWNDB && strstr($query,' database ')) {
+	    $this->record_error('NsisWeb::query(): A query was blocked because NSISWEB_OWNDB is FALSE and the query contained " database " [query='.$query.']');
       return FALSE;
     }
 
@@ -134,16 +135,22 @@ class NsisWebSite
 	        if($result) $this->db_selected = TRUE;
 	      }
       }
+      /* 0 means NORMAL, 1 means ABORTED and 2 means TIMEOUT */
       if($result && connection_status() == 0) {
         $this->last_query = $query;
         $this->executed_queries[] = $query;
         $result = mysql_query($query);
         if($result != FALSE) {
           return $result;
+        } else {
+	        $this->record_error('NsisWeb::query(): mysql_query() failed: '.mysql_error()." [query=$query]");
         }
+      } else {
+      	$this->record_error('NsisWeb::query(): connection_status() is not NORMAL: '.mysql_error()." [query=$query]");
       }
+    } else {
+	    $this->record_error('NsisWeb::query(): mysql_pconnect() failed: '.mysql_error()." [query=$query]");
     }
-    $this->record_error(mysql_error());
     return FALSE;
   }
   function query_one($query)
@@ -212,7 +219,7 @@ class NsisWebSite
 };
 
 if(!isset($nsisweb)) {
-  $nsisweb = new NsisWebSite;
+  $nsisweb = new NsisWeb;
 }
 $page_info = array();
 ?>
