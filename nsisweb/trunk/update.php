@@ -10,7 +10,7 @@ if ($version) {
 	if (!$pos) $pos = strpos($version,"a");
 	if ($pos) {
         $series = substr($version,0,$pos);
-		$revision = substr($version,$pos+1);
+		$revision = substr($version,$pos);
         if ($latest>=$series) print "1|".$latest;
 		else if (!strcmp($betaseries,$series)) {
 			if (!strncmp($betaversion,$revision,1)) {
