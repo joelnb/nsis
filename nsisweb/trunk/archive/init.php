@@ -44,6 +44,8 @@
 	    echo '&nbsp;&nbsp;wwwroot => '.$nsisweb->wwwroot."<br>\n";
 	  }
   }
+  print "<hr>\n";
+  phpinfo();
 ?>
 </body>
 </html>
