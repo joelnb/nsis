@@ -24,6 +24,7 @@ if(strlen($username)>0 && strlen($password)>0) {
 		  print '<a href="'.$nsisweb->get_home_url().'">Go To Archive Home >></a>';
     }
 		print '</p>';
+		$nsisweb->end_page();
 		unset($username);
 		unset($password);
 		exit;

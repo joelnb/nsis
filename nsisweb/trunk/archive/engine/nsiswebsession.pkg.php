@@ -128,8 +128,9 @@ class NsisWebSession
 function find_my_session()
 {
 	global $nsisweb;
+	define('NO_SESSION',0);
 
-	$session_id   = ANONYMOUS_SESSION_ID;
+	$session_id   = NO_SESSION;
 	$session      = FALSE;
 	$session_okay = FALSE;
 
@@ -157,9 +158,9 @@ function find_my_session()
 			$session = new NsisWebSession(base64_decode($_SESSION['session']));
 			/* Does the session need timing out? Try not to do these checks too often
 			   so that we hit the database less frequently. */
-			if(time()-$session->last_checked > 300) {
+			if((time()-$session->last_checked) > 300) {
 				$nsisweb->query("delete from nsisweb_sessions where (UNIX_TIMESTAMP()-UNIX_TIMESTAMP(last_access))>".SESSION_TIMEOUT);
-				if($session_id != ANONYMOUS_SESSION_ID) {
+				if($session_id != NO_SESSION) {
 					$record = $nsisweb->query_one_only("select * from nsisweb_sessions where sessionid='$session_id'");
 					if($record) {
 						$session = new NsisWebSession($record);
@@ -179,11 +180,8 @@ function find_my_session()
 		}
 	}
 
-	if($session && $session->okay) {
+	if($session && $session_okay) {
 		$result = $nsisweb->query("update nsisweb_sessions set last_access=NOW() where sessionid='$session_id'");
-		if(!$result || mysql_affected_rows($result) != 1) {
-			$session = FALSE;
-		}
 	}
 
 	if(!$session || !$session_okay) {
@@ -204,6 +202,7 @@ function find_my_session()
   unset($_SESSION['id']);
 	$_SESSION['session'] = base64_encode($session->to_string());
 	$_SESSION['id']      = md5($session_id+NSISWEB_MAGIC_NUMBER);
+
 	return $nsisweb->session = $session;
 }
 
@@ -241,33 +240,25 @@ function end_session()
 function login($username,$password)
 {
 	global $nsisweb;
-	$result = $nsisweb->query("select * from nsisweb_users where username='$username'");
-	if($result != FALSE && $nsisweb->how_many_results($result) == 1) {
-		$array = $nsisweb->get_result_array($result);
-		if($array != FALSE && md5($password) == $array['password']) {
-			end_session();
-			$user_id    = $array['userid'];
-			$session_id = construct_session_id();
-			$result     = $nsisweb->query("insert into nsisweb_sessions set sessionid='$session_id',userid='$user_id',created=NOW(),last_access=NOW()");
-			if($result) {
-				setcookie(COOKIE_NAME,$session_id,time()+86400,"/","",0);
-				$session = new NsisWebSession(array('sessionid'=>$session_id,'userid'=>$user_id));
+	$record = $nsisweb->query_one_only("select * from nsisweb_users where username='$username'");
+	
+	if($record && md5($password) == $record['password']) {
+		$user_id    = $record['userid'];
+		$session    = $nsisweb->get_session();
+		$session_id = $session->session_id;
+		
+		setcookie(COOKIE_NAME,$session_id,time()+86400,"/","",0);
+		$session = new NsisWebSession(array('sessionid'=>$session_id,'userid'=>$user_id));
 
-				/* Update the cached username in the session object */
-  			$session->get_username();
+		/* Update the cached username in the session object */
+		$session->get_username();
 
-				session_save_path(NSISWEB_SESSION_DIR);
-  			session_start();
-				$_SESSION['session'] = base64_encode(serialize($session));
-				$_SESSION['id']      = md5($session_id+NSISWEB_MAGIC_NUMBER);
+		session_save_path(NSISWEB_SESSION_DIR);
+		session_start();
+		$_SESSION['session'] = base64_encode($session->to_string());
+		$_SESSION['id']      = md5($session_id+NSISWEB_MAGIC_NUMBER);
 
-				return $nsisweb->session = $session;
-			} else {
-				$nsisweb->record_error(mysql_error());
-			}
-		} else {
-			$nsisweb->record_error('Bad credentials');
-		}
+		return $nsisweb->session = $session;
 	} else {
 		$nsisweb->record_error('Unknown username');
 	}

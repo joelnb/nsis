@@ -147,11 +147,20 @@ ENDOFHTML;
 		}
 
 		if(strcmp($pagetype,'newpage') == 0 || strcmp($pagetype,'newsection') == 0) {
-			$title = htmlentities(stripslashes($_POST['title']));
-			$content = stripslashes($_POST['content']);
-			// We don't want any </textarea>'s in there...
-			$content_entities = htmlentities($content);
-
+			if(isset($_POST['title'])) {
+				$title = htmlentities(stripslashes($_POST['title']));
+			} else {
+				$title = "Pick a title for your page.";
+			}
+			
+			if(isset($_POST['content'])) {
+				$content = stripslashes($_POST['content']);
+				// We don't want any </textarea>'s in there...
+				$content_entities = htmlentities($content);
+			} else {
+				$content_entities = $content = "<p>Enter your page content here. You can remove the outer paragraph if you wish, it depends on the appearance you want for your page.\n\nYou can put NSIS source code in like this:\n\n[source]; Turn off old selected section\nSectionGetFlags $1 $0\nIntOp $0 $0 & ${SECTION_OFF}\nSectionSetFlags $1 $0\n[/source]\nAnd then carry on again...</p>";
+			}
+				
 			print <<<ENDOFHTML
 			<form name="wizard" method="post" enctype="multipart/form-data" action="contribute.php">
 			<p>
