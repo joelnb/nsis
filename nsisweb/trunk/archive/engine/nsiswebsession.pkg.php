@@ -135,6 +135,7 @@ function end_session()
 	
 	if($session_id != 0) {
 		$nsisweb->query("delete from nsisweb_sessions where sessionid='$session_id'");
+		$nsisweb->query("delete from nsisweb_picks where sessionid='$session_id'");
 	}
 	
 	setcookie(COOKIE_NAME,"",time()-86400,"/","",0);

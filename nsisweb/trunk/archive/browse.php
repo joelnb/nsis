@@ -3,7 +3,9 @@ include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 include_once(dirname(__FILE__)."/engine/nsiswebpage.pkg.php");
 $nsisweb->start_page('Browse Archive');
 ?>
-<font style="font-family: verdana; font-size: 20pt; color: #000000;">Browse</font>
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td align="left"><font style="font-family: verdana; font-size: 20pt; color: #000000;">Browse</font></td>
+<td align="right"><a href="<?= $nsisweb->get_page_url('insert_pick_page') ?>?pageid=0">insert page</a></td>
 <p>Archive pages can be children of one or more other archive pages thereby forming a hierarchy. The list
 of pages you see below are those pages that are at the top of the hierarchy.</p>
 <?
