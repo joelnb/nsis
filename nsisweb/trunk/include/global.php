@@ -2,7 +2,7 @@
 
 function LocalFileDate($file) {
 	if (!file_exists($file)) return "Unknown";
-	return date("r",filemtime("nsis-snapshot-sep22.exe"));
+	return date("r",filemtime($file));
 }
 
 function IncludeHTMLHeader($title) {
