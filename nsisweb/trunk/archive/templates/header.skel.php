@@ -34,8 +34,10 @@ if(!$session->is_anonymous()) {
     <link rel="Stylesheet" type="text/css" href="/include/style.css">
     <link rel="SHORTCUT ICON" href="/favicon.ico">
     <?
-    if(!$no_robots) {
-      ?><META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW"><?
+    if($no_robots) {
+      ?>
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+      <?
     }
     ?>
   </head>
