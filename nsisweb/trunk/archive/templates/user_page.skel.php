@@ -45,10 +45,9 @@ if($page) {
     $author = $user->username;
   }
 
-  $history = '<span style="color:#888888">None</span>';
   $instances = $nsisweb->get_instance_history(-1);
   if(strlen($instances)>0) {
-    $history = '<a href="browse.php">Browse</a>';
+    $history = 'You Are In: <a href="browse.php">Browse</a>';
     $result  = $nsisweb->query("select a.instanceid,b.title from nsisweb_hierarchy as a,nsisweb_pages as b where a.instanceid in ($instances) and a.pageid=b.pageid",__FILE__,__LINE__);
     if($result && $nsisweb->how_many_results($result)>0) {
       $i = 0;
@@ -56,10 +55,21 @@ if($page) {
         $history .= ' &gt; <a href="'.$nsisweb->get_page_url($record['instanceid']).'&instances='.$nsisweb->get_instance_history($i-2).'">'.$record['title'].'</a>';
       }
     }
+  } else if($view_mode == VIEWMODE_DETACHED) {
+	  $history   = 'Parent Pages: ';
+	  $instances = $page->get_instances();
+	  $first     = 1;
+	  foreach($instances as $instance) {
+		  if($first-- < 1) $history .= ' | ';
+		  $page     = $instance->get_page();
+		  $history .= '<a href="'.$nsisweb->get_page_url($instance->get_instanceid()).'">'.$page->get_title().'</a>';
+	  }
+  } else {
+	  $history = 'Parent Pages: <span style="color:#888888">None</span>';
   }
 ?>
 <!-- user_page.skel.php: begin -->
-<span style="font-size:8pt">Parent Pages: <?= $history ?></a>
+<span style="font-size:8pt"><?= $history ?></a>
 <hr style="color:#eeeeee">
 <table style="font-family:verdana;font-size:8pt;color:#000000;" width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
