@@ -21,7 +21,7 @@
   	$okay_count++;
   }
   
-  $result = $nsisweb->query("select count(*) from nsisweb_pages where type=".PAGETYPE_TEMPLATED);
+  $result = $nsisweb->query("select count(*) from nsisweb_hierarchy as a,nsisweb_pages as b where a.pageid=b.pageid and b.type=".PAGETYPE_TEMPLATED);
   if($result && $nsisweb->how_many_results($result) == 1) {
 	  $record = $nsisweb->get_result_array($result);
 	  $count  = $record['count(*)'];
