@@ -116,7 +116,7 @@ edits, or Cancel to discard them and return to the page you were viewing.</p>
 	  <input type="hidden" name="pageid" value="<?= $pageid ?>">
 	  <input type="hidden" name="action" value="<?= ACTION_PREVIEW ?>">
   	<a href="Cancel" onclick="wizard.action.value=<?= ACTION_CANCEL ?>;wizard.submit();return false;">Cancel</a> |
-  	<a href="Revert" onclick="wizard.action.value=<?= ACTION_REVERT ?>';wizard.submit();return false;">Revert</a> |
+  	<a href="Revert" onclick="wizard.action.value=<?= ACTION_REVERT ?>;wizard.submit();return false;">Revert</a> |
   	<a href="Preview" onclick="wizard.action.value=<?= ACTION_PREVIEW ?>;wizard.submit();return false;">Preview</a> |
   	<a href="Save Changes" onclick="wizard.action.value=<?= ACTION_SAVE ?>;wizard.submit();return false;">Save Changes</a>
 	</p>
