@@ -87,7 +87,7 @@ unset($query);
    code */
 if(strcmp($has_source,'CHECKED') == 0) {
 	if(isset($query)) $query .= " and ";
-	$query .= "instr(source,'[source]')";
+	$query .= "source like '%[source]%'";
 }
 
 /* Append to the query the specific part for excluding directory pages */
@@ -101,9 +101,9 @@ if(strlen($keywords)>0) {
 	$keywords = explode(' ',$keywords);
 	if(count($keywords) > 0) {
 		if(isset($query)) $query .= " and ";
-		$query   .= "(instr(title,'".$keywords[0]."') or instr(source,'".$keywords[0]."')";
+		$query   .= "(title like '%".$keywords[0]."%' or source like '%".$keywords[0]."%'";
 		for($i=1; $i<count($keywords); $i++) {
-			$query .= " or instr(title,'".$keywords[$i]."') or instr(source,'".$keywords[$i]."')";
+			$query .= " or title like '%".$keywords[$i]."%' or source like '%".$keywords[$i]."%'";
 		}
 		$query .= ")";
 	}
