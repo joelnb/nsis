@@ -107,7 +107,7 @@ class NsisWebSite
     }
 
     unset($this->$last_query);
-    if($link = mysql_connect(NSISWEB_MYSQL_HOST,NSISWEB_MYSQL_USER,NSISWEB_MYSQL_PASSWORD)) {
+    if($link = mysql_pconnect(NSISWEB_MYSQL_HOST,NSISWEB_MYSQL_USER,NSISWEB_MYSQL_PASSWORD)) {
       /* only select the db if the query does not mention the db name */
       $result = TRUE;
       if(!stristr($query,'database '.NSISWEB_DB)) {
