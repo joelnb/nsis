@@ -204,7 +204,7 @@ ENDOFHTML;
 			}
 
 			print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
-			print '<td>&nbsp;'.$index.'&nbsp;</td>';
+			print '<td>&nbsp;'.$index++.'&nbsp;</td>';
 			print '<td>&nbsp;'.$record['user_agent'].'&nbsp;</td>';
 			print '<td>&nbsp;'.$record['cc'].'&nbsp;</td>';
 			print "</tr>\n";
