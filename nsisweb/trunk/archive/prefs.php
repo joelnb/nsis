@@ -76,9 +76,9 @@ if($session->is_anonymous()) {
 		if(strlen($errorstr)>0) {
 			echo $errorstr;
 		} else if($changes > 0) {
-			echo '<br><br><center style="border:1px solid black;padding:2px;"><b style="color:#55ff55;">Your changes have been applied successfully.</b></center>';
+			echo '<br><br><strong>Your changes have been applied successfully.</strong>';
 		} else {
-			echo '<br><br><center style="border:1px solid black;padding:2px;"><b style="color:#000000;">None of your settings needed to be updated.</b></center>';
+			echo '<br><br><strong>None of your settings needed to be updated.</strong>';
 		}
 	}
 	
@@ -113,23 +113,23 @@ if($session->is_anonymous()) {
   <p>Here you can see information about your user account and your
      contributions to the archive and you can modify some settings that
      affect the way your account behaves.</p>
-  <p style="margin-top:20px;">
+  <p>
   	<form name="settings" method="post" enctype="multipart/form-data" action="prefs.php" onkeydown="if (event.keyCode == 13) { document.settings.submit(); }">
   	  <input type="hidden" name="action" value="applychanges">
 	    <table width="80%">
-	      <tr class="aboxheader"><td align="center" valign="middle" colspan="2" height="20">Account Information</td></tr>
-	      <tr><td height="20">Your user name</td><td align="left"><b><?= $username ?></b></td></tr>
-	      <tr><td height="20">You created your account on</td><td align="left"><?= $user_created ?></td></tr>
-	      <tr><td height="20">Pages created by you</td><td align="left"><?= $pages_created ?></td></tr>
-	      <tr><td height="20">Other pages last modified by you</td><td align="left"><?= $pages_modified ?></td></tr>
-	      <tr><td height="20">Downloadable files supplied by you</td><td align="left"><?= $files_uploaded ?></td></tr>
-	      <tr><td height="20">Number of items in your pick list</td><td align="left"><?= $current_picks ?></td></tr>
-	      <tr><td height="20">Number of current sessions</td><td align="left"><?= $current_sessions ?></td></tr>
-	      <tr><td height="20">Do you have admin rights?</td><td align="left"><input type="checkbox" DISABLED <?= $user->is_admin() ? 'CHECKED' : ''; ?>></td></tr>
-	      <tr class="aboxheader"><td align="center" valign="middle" colspan="2" height="20">Configurable Settings</td></tr>
-	      <tr><td height="20">Enable persistent logins</td><td align="left"><input name="persist" type="checkbox" <?= $user->persists() ? 'CHECKED' : ''; ?>></td></tr>
-	      <tr><td height="20">Your email address</td><td align="left"><input style="margin:0px;padding:1px;font-size:8pt;width:200px;" name="email" type="text" size="20" maxlength="255" value="<?= $user->get_email() ?>"></td></tr>
-	      <tr><td height="20">Your Winamp forum userid</td><td align="left"><input style="margin:0px;padding:1px;font-size:8pt;width:200px;" name="forumid" type="text" size="20" maxlength="255" value="<?= $user->get_forumid() ?>"></td></tr>
+	      <tr class="aboxheader"><td colspan="2" height="20">Account Information</td></tr>
+	      <tr><td height="20">Your user name</td><td><b><?= $username ?></b></td></tr>
+	      <tr><td height="20">You created your account on</td><td><?= $user_created ?></td></tr>
+	      <tr><td height="20">Pages created by you</td><td><?= $pages_created ?></td></tr>
+	      <tr><td height="20">Other pages last modified by you</td><td ><?= $pages_modified ?></td></tr>
+	      <tr><td height="20">Downloadable files supplied by you</td><td><?= $files_uploaded ?></td></tr>
+	      <tr><td height="20">Number of items in your pick list</td><td><?= $current_picks ?></td></tr>
+	      <tr><td height="20">Number of current sessions</td><td><?= $current_sessions ?></td></tr>
+	      <tr><td height="20">Do you have admin rights?</td><td><input type="checkbox" DISABLED <?= $user->is_admin() ? 'CHECKED' : ''; ?>></td></tr>
+	      <tr class="aboxheader"><td colspan="2" height="20">Configurable Settings</td></tr>
+	      <tr><td height="20">Enable persistent logins</td><td><input name="persist" type="checkbox" <?= $user->persists() ? 'CHECKED' : ''; ?>></td></tr>
+	      <tr><td height="20">Your email address</td><td align="left"><input name="email" type="text" size="20" maxlength="255" value="<?= $user->get_email() ?>"></td></tr>
+	      <tr><td height="20">Your Winamp forum userid</td><td><input name="forumid" type="text" size="20" maxlength="255" value="<?= $user->get_forumid() ?>"></td></tr>
 	      <?
 				  if($user->is_admin()) {
 				    $record = $nsisweb->query_one_only('select flags from nsisweb_users where userid='.$user_id,__FILE__,__LINE__);

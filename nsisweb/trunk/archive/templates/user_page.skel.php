@@ -90,18 +90,18 @@ if($page) {
 <!-- user_page.skel.php: begin -->
 <?= $history ?></a>
 <hr class="aline">
-<table class="asmall" width="100%" cellpadding="0" cellspacing="0" border="0">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
-    <td align="left" valign="middle" style="font-size: 20pt;">
+    <td class="atitle">
       <?= $page->get_title() ?>
     </td>
-    <td align="right" valign="middle">
+    <td>
       <?= $edit_link ?> | <?= $delete_link ?> | <?= $pick_link ?> | <?= $up_link ?>
     </td>
   </tr>
 </table>
 <hr class="aline">
-<table class="" width="100%" cellpadding="0" cellspacing="0" border="0">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
     <td align="left" valign="top">
       Written by <a href="profile.php?userid=<?= $page->get_authorid() ?>"><?= $author ?></a> <?= $page->get_author_date() ?>

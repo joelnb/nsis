@@ -107,12 +107,12 @@ if(strlen($instances)>0) {
 
 if($page) {
 ?>
-<span style="asmall"><?= $history ?></span>
+<span><?= $history ?></span>
 <hr class="aline">
 <!-- dir_page.skel.php: begin -->
-<table style="asmall" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
-<td width="550" valign="middle"><span style="font-size:20pt;"><?= $page->get_title() ?></span></td>
-<td width="228" valign="middle"><?= $edit_link ?> | <?= $delete_link ?> | <?= $pick_link ?> | <?= $insert_link ?> | <?= $up_link ?></td>
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td width="550"><span class="atitle"><?= $page->get_title() ?></span></td>
+<td width="228"><?= $edit_link ?> | <?= $delete_link ?> | <?= $pick_link ?> | <?= $insert_link ?> | <?= $up_link ?></td>
 </tr></table>
 <hr class="aline">
 <p><i><?= $page->get_pp_content() ?></i></p>
@@ -122,9 +122,9 @@ if($page) {
   if(count($children) > 0) {
     foreach($children as $child) {
       if($child['type'] == PAGETYPE_DIRECTORY) {
-        print '<p class="alist"><img src="images/folder.gif" class="aicon">&nbsp;';
+        print '<p class="alist"><img src="images/folder.gif" class="aicon">';
       } else {
-        print '<p class="alist"><img src="images/file.gif" class="aicon">&nbsp;';
+        print '<p class="alist"><img src="images/file.gif" class="aicon">';
       }
       print '<a href="'.$nsisweb->get_page_url($child['instanceid']).'&instances='.$nsisweb->get_instance_history(0).'">'.$child['title']."</a>";
       if($child['type'] == PAGETYPE_DIRECTORY) {
@@ -132,11 +132,11 @@ if($page) {
         if($array[0]>0 || $array[1]>0) {
 	        echo ' [';
 	        if($array[1]>0) {
-		        echo $array[1].'<img src="images/folder.gif" width="16" height="16" hspace="2" style="vertical-align:middle;">';
+		        echo $array[1].'<img src="images/folder.gif" width="16" height="16" class="aicon">';
 	        }
 	        if($array[0]>0) {
 		        if($array[1]>0) echo ' ';
-		        echo $array[0].'<img src="images/file.gif" width="16" height="16" hspace="2" style="vertical-align:middle;">';
+		        echo $array[0].'<img src="images/file.gif" width="16" height="16" class="aicon">';
 	        }
 	        echo ']';
         }

@@ -8,14 +8,14 @@ print <<<ENDOFHTML
   <span class="atitle">Who's Who?</span><br>
   <p>Archive users ordered alphabetically. Click a username to view their profile. Administrators are highlighted in yellow. High contributors are highlighted in blue, a deeper blue indicates more contributions.<br>
   <br>
-  <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
+  <table>
 ENDOFHTML;
 
 $cols = 5;
 $i    = 0;
 while($record = $nsisweb->get_result_array($users)) {
 	if($i == 0) {
-  	print '<tr style="background-color:#eeffee;font-size:8pt;">';
+  	print '<tr>';
  	}
 
 	$pages_result = $nsisweb->query_one_only("select count(*) from nsisweb_pages where author=".$record['userid'].". order by created desc",__FILE__,__LINE__);
@@ -23,15 +23,15 @@ while($record = $nsisweb->get_result_array($users)) {
 
  	print '<td';
  	if($record['usertype'] == USERTYPE_ADMIN) {
-	 	print ' style="background-color:#ffffdd;"';
+	 	print ' class="aucolora"';
   } else if($pages_created>=20) {
-	 	print ' style="background-color:#6666ff;"';
+	 	print ' class="aucolor20"';
   } else if($pages_created>=15) {
-	 	print ' style="background-color:#8888ff;"';
+	 	print ' class="aucolor15"';
   } else if($pages_created>=10) {
-	 	print ' style="background-color:#aaaaff;"';
+	 	print ' class="aucolor10"';
   } else if($pages_created>=5) {
-	 	print ' style="background-color:#ccccff;"';
+	 	print ' class="aucolor5"';
   }
 
 	print '>&nbsp;<a href="profile.php?userid='.$record['userid'].'">'.$record['username'].'</a>&nbsp;</td>';
@@ -45,7 +45,7 @@ while($record = $nsisweb->get_result_array($users)) {
 
 if($i > 0) {
 	while($i++ != $cols) {
-		print '<td style="background-color:white;">&nbsp;</td>';
+		print '<td>&nbsp;</td>';
 	}
 	print "</tr>\n";
 }

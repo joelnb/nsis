@@ -22,7 +22,7 @@ $query_count = count($nsisweb->executed_queries);
 <?
 /*
 
-  <p class="asmall">Page generated in <?= number_format($nsisweb->get_gen_time(),3) ?> seconds (<?= $query_count.' '.($query_count == 1 ? "query" : "queries") ?>).</p>
+  <p>Page generated in <?= number_format($nsisweb->get_gen_time(),3) ?> seconds (<?= $query_count.' '.($query_count == 1 ? "query" : "queries") ?>).</p>
   <?
   $session = $nsisweb->get_session();
   $user    = $session->get_user();

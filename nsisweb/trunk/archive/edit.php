@@ -82,9 +82,7 @@ if(!$page || $pageid == 0) {
     <span class="atitle">Edit Page: <span color="red">Access Denied</span></span>
     <p>You do not have the right to edit the page entitled '<?= $page->get_title() ?>'. Click <b>Go Back</b>
     to return to the page you came from.</p>
-    <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-    <a href="Go Back" onclick="history.go(-1);return false;">Go Back >></a>
-    </p>
+    <p class="asubtitle"><a href="Go Back" onclick="history.go(-1);return false;">Go Back ></a></p>
     <?
     $nsisweb->end_page();
     exit;
@@ -131,7 +129,7 @@ edits, or Cancel to discard them and return to the page you were viewing.</p>
     text to be syntax highlighted as if the text is NSIS script code:<br>
     <textarea name="content" class="afixfont" cols="79" rows="25"><?=htmlentities($content)?></textarea>
   </p>
-  <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+  <p>
     <input type="hidden" name="pageid" value="<?= $pageid ?>">
     <input type="hidden" name="instances" value="<?= $instances ?>">
     <input type="hidden" name="action" value="<?= ACTION_PREVIEW ?>">

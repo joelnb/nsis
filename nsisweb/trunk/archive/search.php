@@ -44,30 +44,30 @@ doesn't work but 25 December 2002 does). The native date format used is yyyy-mm-
 <p>
   <form name="searchform" method="post" enctype="multipart/form-data" action="search.php" onkeydown="if (event.keyCode == 13) {document.searchform.submit()}">
     <input type="hidden" name="action" value="search">
-    <table border="1" bordercolor="#aaaaaa" cellpadding="3" cellspacing="0">
-      <tr style="background-color:#eeeeee">
+    <table>
+      <tr>
         <td>&nbsp;Keywords:&nbsp;</td>
         <td colspan="3"><input type="text" name="keywords" size="56" value="<?= $keywords ?>"></td>
       </tr>
-      <tr style="background-color:#ffffff">
+      <tr>
         <td>&nbsp;Author:&nbsp;</td>
         <td><input type="text" name="author" value="<?= $author ?>"></td>
         <td>&nbsp;Editor:&nbsp;</td>
         <td><input type="text" name="editor" value="<?= $editor ?>"></td>
       </tr>
-      <tr style="background-color:#eeeeee">
+      <tr>
         <td>&nbsp;Created: From&nbsp;</td>
         <td><input type="text" name="created_since" value="<?= $created_since ?>">
         <td>&nbsp;To&nbsp;</td>
         <td><input type="text" name="created_until" value="<?= $created_until ?>"></td>
       </tr>
-      <tr style="background-color:#ffffff">
+      <tr>
         <td>&nbsp;Modified: From&nbsp;</td>
         <td><input type="text" name="modified_since" value="<?= $modified_since ?>"></td>
         <td>&nbsp;To&nbsp;</td>
         <td><input type="text" name="modified_until" value="<?= $modified_until ?>"></td>
       </tr>
-      <tr style="background-color:#eeeeee">
+      <tr>
         <td colspan="4" align="center">
           <input type="checkbox" name="anon_author" value="CHECKED" <?= $anon_author ?>>&nbsp;Anonymous Author&nbsp;
           <input type="checkbox" name="anon_editor" value="CHECKED" <?= $anon_editor ?>>&nbsp;Anonymous Editor&nbsp;<br>
@@ -237,8 +237,8 @@ if($do_search) {
     }
     print "<br><br>";
     print <<<END_OF_HTML
-      <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
-        <tr style="background-color:#eeeeff">
+      <table>
+        <tr>
           <td align="center"><b>#</b></td>
           <td align="center"><b>Author</b></td>
           <td align="center"><b>Title</b></td>
@@ -249,9 +249,9 @@ END_OF_HTML;
     $user_map = array();
     while($record = $nsisweb->get_result_array($result)) {
       if($i == 0) {
-        print '<tr style="background-color:#eeffee;">';
+        print '<tr>';
       } else {
-        print '<tr style="background-color:#eeeeee;">';
+        print '<tr>';
       }
       $userid = $record['author'];
       print '<td align="center">&nbsp;'.$index++.'&nbsp;</td>';

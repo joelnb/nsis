@@ -33,15 +33,15 @@ if(!isset($_GET['userid'])) {
 		if($record) $files_uploaded = $record['count(*)'];
 		?>
 		<p>Here you can see information about the username you clicked on:</p>
-		<p style="margin-top:20px;">
-			<table width="80%" style="border-style:solid;border-color:black;border-width:1px;" cellpadding="2" cellspacing="1">
-				<tr style="background-color:#eeeeee"><td align="left" valign="middle">User name</td><td align="left"><?= $username ?></td></tr>
-				<tr><td align="left" valign="middle">Account created on</td><td align="left"><?= $user_created ?></td></tr>
-				<tr style="background-color:#eeeeee"><td align="left" valign="middle">Pages created by user</td><td align="left"><?= $pages_created ?></td></tr>
-				<tr><td align="left" valign="middle">Other pages last modified by user</td><td align="left"><?= $pages_modified ?></td></tr>
-				<tr style="background-color:#eeeeee"><td align="left" valign="middle">Downloadable files supplied by user</td><td align="left"><?= $files_uploaded ?></td></tr>
-				<tr><td align="left" valign="middle">Is user an administrator?</td><td align="left"><?= $user->is_admin() ? 'Yes' : 'No' ?></td></tr>
-				<tr style="background-color:#eeeeee"><td align="left" valign="middle">Winamp forum userid</td><td align="left"><?= $user->get_forumid()>0 ? $user->get_forumid() : 'Not specified' ?></td></tr>
+		<p>
+			<table width="80%">
+				<tr><t>User name</td><td><?= $username ?></td></tr>
+				<tr><td>Account created on</td><td><?= $user_created ?></td></tr>
+				<tr><td>Pages created by user</td><td><?= $pages_created ?></td></tr>
+				<tr><td>Other pages last modified by user</td><td><?= $pages_modified ?></td></tr>
+				<tr><td>Downloadable files supplied by user</td><td><?= $files_uploaded ?></td></tr>
+				<tr><td>Is user an administrator?</td><td><?= $user->is_admin() ? 'Yes' : 'No' ?></td></tr>
+				<tr><td>Winamp forum userid</td><td><?= $user->get_forumid()>0 ? $user->get_forumid() : 'Not specified' ?></td></tr>
 			</table>
 		</p>
 		<br>
@@ -69,15 +69,15 @@ if(!isset($_GET['userid'])) {
 		<?
 		if($pages_created > 0) {
 		?>
-		<p style="margin-top:20px;">
+		<p>
 		  Pages created by this user (most recent first):-<br>
 		  <br>
-			<table width="80%" style="border-style:solid;border-color:black;border-width:1px;" cellpadding="2" cellspacing="1">
+			<table width="80%">
 				<?
 				  $toggle = 0;
 				  while($record = $nsisweb->get_result_array($pages_result)) {
-					  if($toggle) $bgcolour = '#ffffff'; else $bgcolour = '#eeeeee';
-						print '<tr style="background-color:'.$bgcolour.'">';
+					  if($toggle) $bgcolour = 'acolor1'; else $bgcolour = 'acolor2';
+						print '<tr class="'.$bgcolour.'">';
 						print '<td align="left" valign="middle"><a href="viewpage.php?pageid='.$record['pageid'].'" target="_blank">'.$record['title'].'</a></td>';
 						print '<td align="left" valign="middle" width="150">'.$record['created'].'</td>';
 						print '</tr>';

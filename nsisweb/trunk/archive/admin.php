@@ -78,9 +78,9 @@ ENDOFHTML;
             Archive Engine when a database SQL query failed to execute
             correctly. Push the big red button to clear the log.<br>
             <br>
-            <div style="text-align:center;"><a href="admin.php?action=dbinfo&subaction=clearlog" onclick="return checkclearlog();"><img style="border:none;" src="images/bigred.jpg"></a><div>
+            <a href="admin.php?action=dbinfo&subaction=clearlog" onclick="return checkclearlog();"><img border="0" src="images/bigred.jpg"></a>
             <br>
-            <table border="1">
+            <table>
               <tr class="aboxheader">
                 <td>&nbsp;<strong>#</strong>&nbsp;</td>
                 <td colspan="4">&nbsp;<b>Log Message</b>&nbsp;</td>

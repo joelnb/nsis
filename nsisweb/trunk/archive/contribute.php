@@ -60,7 +60,7 @@ ENDOFHTML;
       <span class="atitle">Contribute To The Archive</span>
       <p>I want to contribute:</p>
       <form name="choiceform" method="post" enctype="multipart/form-data" action="contribute.php">
-        <p style="margin-left:20px;">
+        <p>
           <input type="radio" name="action" value="createpage" checked>a page of content of my design.<br>
           <input type="radio" name="action" value="createsection">a new section that can contain other pages.<br>
 ENDOFHTML;
@@ -85,7 +85,7 @@ ENDOFHTML;
 ENDOFHTML;
 
     print <<<ENDOFHTML
-      <p style="aboxnote">
+      <p class="aboxnote">
         Please do <b>not </b> post bug reports and patches here. Post both at the
         <a href="http://sourceforge.net/projects/nsis">SourceForge project page</a>.
       </p>
@@ -423,7 +423,7 @@ function UploadFile()
       print <<<ENDOFHTML
       Your file was succesfully uploaded to the Archive.<br>
       <br>
-      <span style="color:red">Warning:</span> If you think that the icon for
+      <strong>Warning:</strong> If you think that the icon for
       your file on the download page is incorrect, or it is a question, you
       will need to contact a developer and get them to upload a new image
       for the mime type of your file, and to associate the type with your
@@ -434,9 +434,7 @@ ENDOFHTML;
   }
 
   print <<<ENDOFHTML
-    <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-      <a href="download.php">Open Downloads Page</a> | <a href="nsisweb.php">Return To Home >></a>
-    </p>
+    <p class="asubtitle"><a href="download.php">Open Downloads Page</a> | <a href="nsisweb.php">Return To Home ></a></p>
 ENDOFHTML;
   $nsisweb->end_page();
 }

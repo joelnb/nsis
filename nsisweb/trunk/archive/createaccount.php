@@ -41,8 +41,8 @@ if(strcmp($_POST['action'],'createaccount') == 0) {
         $nsisweb->start_page('Create Account',FALSE);
         print '<span class="atitle">Create Account</span>';
         print '<p><b>Congratulations!</b> Your user account has been created and you have been logged in!</p>';
-        print '<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">';
-        print '<a href="'.$nsisweb->get_home_url().'">Continue >></a>';
+        print '<p class="asubtitle">';
+        print '<a href="'.$nsisweb->get_home_url().'">Continue ></a>';
         print '</p>';
         exit;
       }

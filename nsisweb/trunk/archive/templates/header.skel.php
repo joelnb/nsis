@@ -48,6 +48,7 @@ if(!$session->is_anonymous()) {
 
 <table width="778" height="100%" class="maintable" cellspacing="0" cellpadding="0" align="center">
 
+<tr><td colspan="2" height="22">
 <div class="abar">
   <div class="auser">
   <strong>Logged in as:</strong> <?= $logged_in_text ?>
@@ -64,6 +65,7 @@ if(!$session->is_anonymous()) {
           [ <a href="<?= $picklist_url ?>">Pick List</a> ] [ <a href="search.php">Search</a> ] [ <a href="../index.php">NSIS Site</a> ] [ <a href="<?= $home_url ?>">Home</a> ]
   </div>
 </div>
+<tr></td>
 
   <tr>
     <td width="150" height="100"><img src="../site/media/template/left.jpg" width="150" height="100"></td>
