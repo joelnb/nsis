@@ -32,7 +32,7 @@ switch($view_mode) {
       $edit_link   = '<a href="edit.php?instanceid='.$this->get_instanceid().'">'.get_image('edit2','Edit this page').'</a>';
     }
 
-    if($this->get_instanceid() == 0 && $session->looks_like_admin()) {
+    if($this->get_instanceid() != 0 || $session->looks_like_admin()) {
       $insert_link = '<a href="picklist.php?instanceid='.$this->get_instanceid().'">'.get_image('paste2','Insert a page from your pick list into this section').'</a>';
     } else {
       $insert_link = get_image('paste','You need admin rights to insert pages into this section');
@@ -56,7 +56,7 @@ switch($view_mode) {
       $edit_link   = '<a href="edit.php?instanceid='.$this->get_instanceid().'">'.get_image('edit2','Edit this page').'</a>';
     }
 
-    if($this->get_instanceid() == 0 && $session->looks_like_admin()) {
+    if($this->get_instanceid() != 0 || $session->looks_like_admin()) {
       $insert_link = '<a href="picklist.php?instanceid='.$this->get_instanceid().'">'.get_image('paste2','Insert a page from your pick list into this section').'</a>';
     } else {
       $insert_link = get_image('paste','You need admin rights to insert pages into this section');
