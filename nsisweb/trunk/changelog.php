@@ -6,7 +6,7 @@
 <? IncludeHTMLHeader("Changelog"); ?>
 <style type="text/css">
 <!--
-p, li {
+span, li {
 	font-size: 11px; 
     font-family: Verdana, Arial, Helvetica, sans-serif; 
 }
