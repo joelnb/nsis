@@ -33,7 +33,7 @@ $query_count = count($nsisweb->executed_queries);
 if(defined('SHOW_QUERIES') && SHOW_QUERIES == TRUE) {
 	print "<pre>Executed Queries:\n";
 	foreach($nsisweb->executed_queries as $query) {
-		print "Query: $query\n";
+		print "Query: ".htmlentities($query)."\n";
 	}
 	print "</pre>";
 }

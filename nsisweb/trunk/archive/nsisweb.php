@@ -3,9 +3,9 @@
 	include_once(dirname(__FILE__)."/engine/nsiswebpage.pkg.php");
   
   if(isset($_GET['page']) && strlen($_GET['page']) >= 0) {
-	  $page = $_GET['page'];
+	  $instanceid = $_GET['page'];
 	  unset($_GET['page']);
-  	$nsisweb->redirect($page);
+  	$nsisweb->redirect($instanceid);
   }
 
   unset($_GET['page']);
@@ -21,7 +21,7 @@
   	$okay_count++;
   }
   
-  $result = $nsisweb->query("select count(*) from nsisweb_pages where type=".PAGETYPE_TEMPLATED." and flags & ".PAGEFLAG_ORPHANED." = 0");
+  $result = $nsisweb->query("select count(*) from nsisweb_pages where type=".PAGETYPE_TEMPLATED);
   if($result && $nsisweb->how_many_results($result) == 1) {
 	  $record = $nsisweb->get_result_array($result);
 	  $count  = $record['count(*)'];

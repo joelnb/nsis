@@ -38,7 +38,7 @@ function initialise_session_table()
 {
 	global $nsisweb;
 	$nsisweb->query("drop table if exists nsisweb_sessions");
-	$nsisweb->query('create table nsisweb_sessions (sessionid varchar(255) not null,userid int not null,created datetime not null,last_access datetime not null)');
+	$nsisweb->query('create table nsisweb_sessions (sessionid varchar(255) not null,userid int unsigned not null default 0,created datetime not null,last_access datetime not null)');
 }
 
 class NsisWebSession
@@ -183,15 +183,6 @@ function end_session()
 
 	if($session_id != 0) {
 		$nsisweb->query("delete from nsisweb_sessions where sessionid='$session_id'");
-		$picks = get_current_picks();
-		foreach($picks as $pick) {
-			if($pick['pickedtype'] == PICKTYPE_PAGE) {
-				$page = find_pageid($pick['pickedid']);
-				if($page['flags'] & PAGEFLAG_ORPHANED) {
-					$nsisweb->query("delete from nsisweb_pages where pageid=".$pick['pickedid']);
-				}
-			}
-		}
 		$nsisweb->query("delete from nsisweb_picks where sessionid='$session_id'");
 	}
 

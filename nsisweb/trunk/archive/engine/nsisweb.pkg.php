@@ -101,7 +101,8 @@ class NsisWebSite
       header("Location: $url");
       exit;
     } else {
-      show_page($pagename,TRUE);
+	    $instance = new NsisWebInstance((int)$pagename,FETCH_CONTENT_PP);
+      $instance->show();
       exit;
     }
   }
@@ -140,6 +141,29 @@ class NsisWebSite
     }
     $this->record_error(mysql_error());
     return FALSE;
+  }
+  function query_one($query)
+  {
+	  /* If you know that you are only interested in a single row of result data
+	     (which is a very common case) this function performs the steps necessary
+	     in one neat call. */
+     $result = $this->query($query);
+     if($result && $this->how_many_results($result) > 0) {
+	     return $this->get_result_array($result);
+     }
+     return FALSE;
+  }
+  function query_one_only($query)
+  {
+	  /* If you know that you are only interested in a single row of result data
+	     (which is a very common case) this function performs the steps necessary
+	     in one neat call. This variant will barf if more than a single row of
+	     data is returned to us by the database engine. */
+     $result = $this->query($query);
+     if($result && $this->how_many_results($result) == 1) {
+	     return $this->get_result_array($result);
+     }
+     return FALSE;
   }
   function how_many_results($result)
   {

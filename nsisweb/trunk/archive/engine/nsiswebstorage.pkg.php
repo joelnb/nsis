@@ -7,7 +7,7 @@ class NsisWebStorage
 	{
 	  global $nsisweb;
 		$nsisweb->query("drop table if exists nsisweb_files");
-		$nsisweb->query("create table nsisweb_files (filename varchar(255) not null,type varchar(255) not null,size int zerofill,userid int zerofill)");
+		$nsisweb->query("create table nsisweb_files (filename varchar(255) not null,type varchar(255) not null,size int unsigned not null default 0,userid int unsigned not null default 0)");
 	}
   function get_files()
   {

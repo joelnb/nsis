@@ -1,51 +1,50 @@
 <?
-	/* This file is a template. It is included by the NSISWeb core when it needs
-	   to display a page of user created content. The properties of the user page
-	   (such as the author, creation date, etc) and the actual content are
-	   variables available to us. We are expected to use these in this file
-	   thereby "filling" the template.
-	   
-	   We receive:-
-			 + $title   : user document title
-			 + $author  : original author of the document
-			 + $date    : original creation date of the document
-			 + $source  : the document content
-			 + $pageid  : the NSISWeb internal id of the user document
-			 + $nsisweb : the NSISWeb core object instance
-*/
-$edit_link = '<a href="'.$nsisweb->get_page_url('edit').'&pageid='.$pageid.'">edit</a>';
-if(isset($_GET['parentid'])) {
-  $delete_link = '<a href="'.$nsisweb->get_page_url('delete').'&pageid='.$pageid.'&parentid='.$_GET['parentid'].'">delete</a>';
-  $up_link     = '<a href="'.$nsisweb->get_page_url($_GET['parentid']).'">up</a>';
+if($this->get_instanceid() == 0) {
+	$edit_link   = '<font color="#aaaaaa">edit</a>';
+	$pick_link   = '<font color="#aaaaaa">pick</a>';
+	$delete_link = '<font color="#aaaaaa">delete</a>';
+	$up_link     = '<font color="#aaaaaa">up</a>';
 } else {
-  $delete_link = '<font color="#aaaaaa">delete</font>';
-  $up_link = '<a href="'.$nsisweb->get_home_url().'">up</a>';
+	$edit_link   = '<a href="'.$nsisweb->get_page_url('edit').'&instanceid='.$this->get_instanceid().'">edit</a>';
+	$pick_link   = '<a href="picklist.php?action=pick&instanceid='.$this->get_instanceid().'">pick</a>';
+	$delete_link = '<a href="'.$nsisweb->get_page_url('delete').'&instanceid='.$this->get_instanceid().'">delete</a>';
+	$up_link     = '<a href="'.$nsisweb->get_page_url($this->get_parentid()).'">up</a>';
 }
+
+$page = $this->get_page();
+if($page) {
+	if($page->get_authorid() == 0) {
+		$author = "anonymous";
+	} else {
+		$user = find_userid($page->get_authorid());
+		$author = $user->username;
+	}
 ?>
 <!-- user_page.skel.php: begin -->
 <table style="font-family:verdana;font-size:8pt;color:#000000;" width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
     <td>
-			<font style="font-size: 20pt;"><?= $title ?></font><br>
+			<font style="font-size: 20pt;"><?= $page->get_title() ?></font><br>
 			<font style="font-size: 8pt;">Written by <?= $author ?>, <?= $date ?>
 			<?
-				if($page_info['created'] != $page_info['last_updated']) {
-					if($page_info['author'] != $page_info['last_author']) {
-						$user        = find_userid($page_info['last_author']);
+				if($page->get_author_date() != $page->get_editor_date()) {
+					if($page->get_authorid() != $page->get_editorid()) {
+						$user        = find_userid($page->get_editorid());
 						$last_author = $user->username;
 					} else {
 						$last_author = $author;
 					}
-					print ' [ Last updated by '.$last_author.', '.$page_info['last_updated'].' ]';
+					print ' [ Last updated by '.$last_author.', '.$page->get_editor_date().' ]';
 				}
 			?>
 			</font><br>
 		</td>
 		<td align="right" valign="top">
-		  <?= $edit_link ?> | <?= $delete_link ?> | <?= $up_link ?><br>
+		  <?= $edit_link ?> | <?= $pick_link ?> | <?= $delete_link ?> | <?= $up_link ?><br>
 		</td>
 	</tr>
 </table>
 <!-- user_page.skel.php: source -->
-<?= $source ?>
+<?= $page->get_pp_content() ?>
 <!-- user_page.skel.php: end -->
+<? } ?>

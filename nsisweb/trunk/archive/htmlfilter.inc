@@ -818,11 +818,11 @@ function fixatts($tagname,
  * $add_attr_to_tag = Array(
  *   "/^a$/si" => 
  *     Array(
- *           'target'=>'"_new"'
+ *           'target'=>'"_blank"'
  *          )
  *   );
  * 
- * This will change all <a> tags and add target="_new" to them so all links
+ * This will change all <a> tags and add target="_blank" to them so all links
  * open in a new window.
  *
  *

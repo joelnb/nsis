@@ -4,55 +4,65 @@ include_once(dirname(__FILE__)."/engine/nsiswebuser.pkg.php");
 include_once(dirname(__FILE__)."/engine/nsiswebsession.pkg.php");
 include_once(dirname(__FILE__)."/engine/nsiswebpage.pkg.php");
 
+$instanceid = 0;
+if(isset($_GET['instanceid'])) {
+	$instanceid = $_GET['instanceid'];
+}
+
+if($instanceid > 0) {
+	$instance = new NsisWebInstance($instanceid);
+	if(!$instance->is_okay()) show_delete_error('Page Not Found','You cannot remove a page that does not exist!');
+}
+
+/* Does the user have the right to delete this instance? To delete an instance
+   the user must have the right to delete pages in the section the instance is
+   contained in... the user has to be an administrator or the last person to
+   edit the section (because they take over ownership). The root section, 0,
+   is special in that only administrators can modify it's contents. */
+$session = $nsisweb->get_session();
+$user    = find_userid($session->user_id);
+
+if($instance->get_parentid() == 0 && !$user->is_admin()) {
+	show_delete_error('Access Denied','Only an administrator can modify the contents of the root section!');
+}
+
+$directory      = new NsisWebInstance($instance->get_parentid());
+$directory_page = $directory->get_page();
+$author         = $directory_page->get_editorid();
+
+if(!$user->is_admin() && $author != ANONYMOUS_USER_ID && $author != $session->user_id) {
+	show_delete_error('Access Denied','You must be an administrator or the owner of the section in order to remove a page within it!');
+}
+
+if(!$instance->delete()) {
+	show_delete_error('Delete Failed','The page you wanted to remove could not be removed from the section containing it!');
+}
+
+$page = $instance->get_page();
+add_to_current_picks($page->get_pageid(),$page->get_type());
 $nsisweb->start_page('Delete');
-if(strlen($_GET['pageid']) <= 0 || FALSE == ($page = find_pageid($_GET['pageid']))) {
+?>
+<font style="font-family: verdana; font-size: 20pt; color: #000000;">Delete Page:</font>
+<p>The instance of the page in that section has now been removed.<br><br>Click <b>Go To Section</b> to return to the section that contained the deleted page.</p>
+<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+	<a href="picklist.php?instanceid=<?= $instanceid ?>">View Your Pick List</a> |
+	<a href="<?= $nsisweb->get_page_url($instance->get_parentid) ?>">Go To Section >></a>
+</p>
+<?
+$nsisweb->end_page();
+
+function show_delete_error($summary,$message)
+{
+	global $nsisweb;
+	$nsisweb->start_page('Delete');
 	?>
-	<font style="font-family: verdana; font-size: 20pt; color: #000000;">Delete Page: <font color="red">Invalid Page ID</font></font>
-	<p>You cannot delete a page that does not exist! Click <b>Go Back</b>
-	to return to the page you came from.</p>
+	<font style="font-family: verdana; font-size: 20pt; color: #000000;">Delete Page: <font color="red"><?= $summary ?></font></font>
+	<p><?= $message ?> Click <b>Go Back</b> to return to the page you came from.</p>
 	<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
   	<a href="Go Back" onclick="history.go(-1);return false;">Go Back >></a>
 	</p>
 	<?
-} else {
-	// make sure that user can delete this post
-	$session = $nsisweb->get_session();
-  $user    = find_userid($session->user_id);
-	$author  = $page['last_author'];
-
-  if(!$user->is_admin() && $author != ANONYMOUS_USER_ID && $author != $session->user_id) {
-		?>
-		<font style="font-family: verdana; font-size: 20pt; color: #000000;">Delete Page: <font color="red">Access Denied</font></font>
-		<p>You do not have the right to delete the page entitled '<?= $page['title'] ?>'. Click <b>Go Back</b>
-		to return to the page you came from.</p>
-		<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-	  	<a href="Go Back" onclick="history.go(-1);return false;">Go Back >></a>
-		</p>
-		<?
-	} else if(!delete_page_from_section($_GET['pageid'],$_GET['parentid'])) {
-		?>
-		<font style="font-family: verdana; font-size: 20pt; color: #000000;">Delete Page: <font color="red">Delete Failed</font></font>
-		<p>The page entitled '<?= $page['title'] ?>' could not be deleted. Click <b>Go Back</b>
-		to return to the page you came from.</p>
-		<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-	  	<a href="Go Back" onclick="history.go(-1);return false;">Go Back >></a>
-		</p>
-		<?
-	} else {
-    if($_GET['parentid'] == 0) {
-      $section = array('title' => 'Browse');
-    } else {
-      $section = find_pageid($_GET['parentid']);
-    }
-		?>
-		<font style="font-family: verdana; font-size: 20pt; color: #000000;">Delete Page:</font>
-		<p>The page entitled '<b><?= $page['title'] ?></b>' has been removed from section '<b><?= $section['title'] ?></b>'. It now exists only in your <a href="<?= $nsisweb->get_page_url("picklist") ?>">pick list</a>.<br><br>You can forcibly erase the page completely from within your pick list, or you can just leave it there and when you logout it will be erased anyway. Finally, you can save the page by inserting it into a section within the archive.<br><br>Click <b>Go To Section</b> to return to the section that contained the deleted page.</p>
-		<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-	  	<a href="<?= $nsisweb->get_page_url('picklist') ?>">View Your Pick List</a> |
-	  	<a href="<?= $nsisweb->get_page_url((int)$page['parentid']) ?>">Go To Section >></a>
-		</p>
-		<?
-	}
+	$nsisweb->end_page();
+	exit;
 }
-$nsisweb->end_page();
 ?>

@@ -3,29 +3,38 @@ include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 include_once(dirname(__FILE__)."/engine/nsiswebpage.pkg.php");
 include_once(dirname(__FILE__)."/engine/nsiswebpicks.pkg.php");
 
-unset($parentid);
-if(strlen($_POST['parentid'])>0) {
-	$parentid = $_POST['parentid'];
-} else if(strlen($_GET['parentid'])>0) {
-	$parentid = $_GET['parentid'];
+if(strlen($_POST['instanceid'])>0) {
+	$instanceid = $_POST['instanceid'];
+} else if(strlen($_GET['instanceid'])>0) {
+	$instanceid = $_GET['instanceid'];
 }
 
-if(count($_POST)>0 && count($_POST['picked'])>0 && strlen($_POST['action'])>0) {
-	foreach($_POST['picked'] as $pickpageid) {
+if(strcmp($_GET['action'],'pick') == 0) {
+	$instance = new NsisWebInstance($instanceid);
+	$page = new NsisWebPage($instance->get_pageid());
+	if($instance->is_okay() && $page->is_okay()) {
+		add_to_current_picks($page->get_pageid(),$page->get_type());
+	}
+} else if(strlen($_POST['action'])>0 && count($_POST['picked'])>0) {
+	foreach($_POST['picked'] as $pageid) {
     if(strcmp($_POST['action'],'insert') == 0) {
-		  set_page_parent($pickpageid,$parentid);
-		  remove_from_current_picks($pickpageid);
+	    if($page = find_pageid($pageid)) {
+		    $page->add_instance($instanceid);
+		  	remove_from_current_picks($pageid);
+	  	}
     } else if(strcmp($_POST['action'],'delete') == 0) {
-		  remove_from_current_picks($pickpageid);
+		  remove_from_current_picks($pageid);
     }
 	}
-  unset($_POST['picked']);
-  unset($_POST['parentid']);
-  unset($_GET['parentid']);
 
-  if(strcmp($_POST['action'],'insert') == 0 ||
-     strcmp($_POST['action'],'delete') == 0) {
-	  $nsisweb->redirect($parentid);
+	unset($_POST['picked']);
+  unset($_POST['instanceid']);
+  unset($_GET['instanceid']);
+
+  if(strcmp($_POST['action'],'insert') == 0) {
+	  $nsisweb->redirect($instanceid);
+  } else if(Strcmp($_POST['action'],'delete') == 0) {
+    unset($instanceid);
   }
 }
 
@@ -42,7 +51,7 @@ $picks = get_current_picks();
 if(count($picks)>0) {
   ?>
   <form name="pickform" method="post" enctype="multipart/form-data" action="picklist.php">
-	  <input type="hidden" name="parentid" value="<?=$parentid?>">
+	  <input type="hidden" name="instanceid" value="<?= $instanceid ?>">
     <input type="hidden" name="action" value="insert">
 	  <table width="100%" border="1" bordercolor="#dddddd" cellpadding="2" cellspacing="0" style="margin-bottom:20px;">
 	    <tr style="background-color:#d9d9d9;font-weight:bold;">
@@ -52,19 +61,20 @@ if(count($picks)>0) {
 	    </tr>
   <?
   foreach($picks as $pick) {
-    /* Add support for other page types as needed */
+	  /* Add support for other page types as needed */
 	  if($pick['pickedtype'] == PAGETYPE_TEMPLATED || 
        $pick['pickedtype'] == PAGETYPE_DIRECTORY) {
-	  	$pageid = $pick['pickedid'];
-	  	$page   = find_pageid($pageid);
-	  	if($page && strlen($page['title'])>0) {
-	  		?>
-	  		<tr>
-	  		  <td align="center" valign="middle"><input style="margin-left:10px;" type="checkbox" name="picked[]" value="<?=$pageid?>"></td>
-	  		  <td align="left" valign="middle">&nbsp;<?=$page['title']?></td>
-	  		  <td align="center" valign="middle"><a style="text-decoration:underline;color:#0000ff;" href="<?= $nsisweb->get_page_url($pageid) ?>" target="preview">view</a></td>
-	  		</tr>
-	  		<?
+	    $pageid = $pick['pickedid'];
+	    if($page = find_pageid($pageid)) {
+		  	if(strlen($page->get_title())>0) {
+		  		?>
+		  		<tr>
+		  		  <td align="center" valign="middle"><input style="margin-left:10px;" type="checkbox" name="picked[]" value="<?= $pageid ?>"></td>
+		  		  <td align="left" valign="middle">&nbsp;<?= $page->get_title() ?></td>
+		  		  <td align="center" valign="middle"><a style="text-decoration:underline;color:#0000ff;" href="viewpage.php?pageid=<?= $pageid ?>" target="_blank">view</a></td>
+		  		</tr>
+		  		<?
+	  		}
   		}
   	}
   }
@@ -73,12 +83,12 @@ if(count($picks)>0) {
     <p>Press Cancel to return to the page you were viewing before, or Insert to add
     the ticked pages as children of the page you were viewing.</p>
 		<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-      <? if(isset($parentid)) { ?>
-		  <a href="<?= $nsisweb->get_page_url($parentid); ?>"><< Cancel</a> |
+      <? if(isset($instanceid)) { ?>
+		  <a href="<?= $nsisweb->get_page_url($instanceid); ?>"><< Cancel</a> |
       <a href="Delete" onclick="pickform.action.value='delete';pickform.submit();return false;">Delete</a> |
 		  <a href="Insert" onclick="pickform.action.value='insert';pickform.submit();return false;">Insert >></a>
       <? } else { ?>
-		  <a href="Cancel" onclick="history.go(-1);return false;"><< Cancel</a> |
+		  <a href="<?= $nsisweb->get_home_url() ?>"><< Home</a> |
       <a href="Delete" onclick="pickform.action.value='delete';pickform.submit();return false;">Delete</a> |
       <font color="#aaaaaa">Insert >></a>
       <? } ?>
@@ -89,10 +99,10 @@ if(count($picks)>0) {
 	?>
   <ul><li>There are no pages in your pick list at this time.</ul>
 	<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-    <? if(isset($parentid)) { ?>
-	  <a href="<?= $nsisweb->get_page_url($parentid); ?>"><< Cancel</a>
+    <? if(isset($instanceid)) { ?>
+	  <a href="<?= $nsisweb->get_page_url($instanceid); ?>"><< Cancel</a>
     <? } else { ?>
-		<a href="Cancel" onclick="history.go(-1);return false;"><< Cancel</a>
+	  <a href="<?= $nsisweb->get_home_url() ?>"><< Home</a>
     <? } ?>
 	</p>
 	<?

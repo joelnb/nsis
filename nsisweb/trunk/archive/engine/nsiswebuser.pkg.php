@@ -12,7 +12,7 @@ function initialise_user_table()
 {
 	global $nsisweb;
 	$nsisweb->query("drop table if exists nsisweb_users");
-	$nsisweb->query("create table nsisweb_users (username varchar(255) not null,password varchar(255) not null,userid int auto_increment, primary key(userid), created datetime, usertype int zerofill)");
+	$nsisweb->query("create table nsisweb_users (username varchar(255) not null,password varchar(255) not null,userid int unsigned auto_increment, primary key(userid), created datetime not null, usertype int unsigned not null default 0)");
 }
 
 class NsisWebUser

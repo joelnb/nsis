@@ -6,7 +6,6 @@ $keywords       = ""; if(strlen($_POST['keywords'])>0)       { $keywords       =
 $author         = ""; if(strlen($_POST['author'])>0)         { $author         = $_POST['author'];        }
 $anon_author    = ""; if(strlen($_POST['anon_author'])>0)    { $anon_author    = $_POST['anon_author'];   }
 $anon_editor    = ""; if(strlen($_POST['anon_editor'])>0)    { $anon_editor    = $_POST['anon_editor'];   }
-$allow_orphans  = ""; if(strlen($_POST['allow_orphans'])>0)  { $allow_orphans  = $_POST['allow_orphans']; }
 $has_source     = ""; if(strlen($_POST['has_source'])>0)     { $has_source     = $_POST['has_source'];    }
 $created_since  = ""; if(strlen($_POST['created_since'])>0)  { $date = strtotime($_POST['created_since']);  if($date != -1) { $created_since  = date('Y-m-d H:i:s',$date); } }
 $created_until  = ""; if(strlen($_POST['created_until'])>0)  { $date = strtotime($_POST['created_until']);  if($date != -1) { $created_until  = date('Y-m-d H:i:s',$date); } }
@@ -19,10 +18,9 @@ if(strcmp($_POST['action'],'search') == 0) {
 	$do_search = FALSE;
 }
 
-if(strcmp($anon_author,'CHECKED') != 0)   $anon_author = '';
-if(strcmp($anon_editor,'CHECKED') != 0)   $anon_editor = '';
-if(strcmp($allow_orphans,'CHECKED') != 0) $allow_orphans = '';
-if(strcmp($has_source,'CHECKED') != 0)    $has_source = '';
+if(strcmp($anon_author,'CHECKED') != 0)   $anon_author   = '';
+if(strcmp($anon_editor,'CHECKED') != 0)   $anon_editor   = '';
+if(strcmp($has_source,'CHECKED') != 0)    $has_source    = '';
 
 $nsisweb->start_page('Search');
 
@@ -37,9 +35,6 @@ Separate multiple authors/editors with commas, and separate multiple keywords
 with spaces. The date fields understand many types of date string, if it doesn't
 do what you expected try writing the date another way (e.g. 25th December 2002
 doesn't work but 25 December 2002 does). The native date format used is yyyy-mm-dd hh:mm:ss.<br>
-<br>
-Orphaned pages are pages that for one reason or another are in the database but
-not in the page hierarchy (and therefore not normally accessible).<br>
 <br>
 </p>
 <br>
@@ -72,8 +67,7 @@ not in the page hierarchy (and therefore not normally accessible).<br>
 		  <tr style="background-color:#eeeeee">
 		  	<td colspan="4" align="center">
 			  	<input type="checkbox" name="anon_author" value="CHECKED" <?= $anon_author ?>>&nbsp;Anonymous Author&nbsp;
-			  	<input type="checkbox" name="anon_editor" value="CHECKED" <?= $anon_editor ?>>&nbsp;Anonymous Editor&nbsp;<br>
-			  	<input type="checkbox" name="allow_orphans" value="CHECKED" <?= $allow_orphans ?>>&nbsp;Include Orphans&nbsp;
+			  	<input type="checkbox" name="anon_editor" value="CHECKED" <?= $anon_editor ?>>&nbsp;Anonymous Editor&nbsp;
 			  	<input type="checkbox" name="has_source" value="CHECKED" <?= $has_source ?>>&nbsp;Contains Source Code&nbsp;
 		  	</td>
 		  </tr>
@@ -85,12 +79,6 @@ not in the page hierarchy (and therefore not normally accessible).<br>
 <?
 $query_base = "select pageid,author,title from nsisweb_pages";
 unset($query);
-
-/* Append to the query the specific part for including orphaned pages */
-if(strcmp($allow_orphans,'CHECKED') != 0) {
-	if(isset($query)) $query .= " and ";
-	$query .= "flags & ".PAGEFLAG_ORPHANED." = 0";
-}
 
 /* Append to the query the specific part for matching pages containing source
    code */
@@ -249,7 +237,7 @@ END_OF_HTML;
 		  } else {
 			  print '<td align="center">&nbsp;Anonymous&nbsp;</td>';
 		  }
-			print '<td align="left">&nbsp;<a href="'.$nsisweb->get_page_url($record['pageid']).'">'.$record['title'].'</a>&nbsp;</td>';
+			print '<td align="left">&nbsp;<a href="viewpage.php?pageid='.$record['pageid'].'" target="_blank">'.$record['title'].'</a>&nbsp;</td>';
 			print '</tr>';
 			$i = 1-$i;
 		}

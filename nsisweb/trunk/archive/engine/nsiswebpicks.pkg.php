@@ -17,7 +17,7 @@ function initialise_picks_table()
 {
 	global $nsisweb;
 	$nsisweb->query("drop table if exists nsisweb_picks");
-	$nsisweb->query("create table nsisweb_picks (sessionid varchar(255) not null,pickedid int not null,pickedtype int not null)");
+	$nsisweb->query("create table nsisweb_picks (sessionid varchar(255) not null,pickedid int unsigned not null default 0,pickedtype int unsigned not null default 0)");
 }
 
 function get_current_picks()

@@ -194,24 +194,15 @@ ENDOFHTML;
 
 			if(strlen($title)>0 || strlen($content)>0) {
 				$session = $nsisweb->get_session();
+				$fake_page_details = array('title'=>$title,'source'=>$content,'author'=>$session->user_id);
 				if(strcmp($pagetype,'newpage') == 0) {
-					$result = $nsisweb->query("select NOW()");
-					$now = $array['NOW()'];
-					if($result) {
-						$array = $nsisweb->get_result_array($result);
-						$processed = process_templated_content($content);
-						render_templated_page($title,$session->get_username(),$now,$processed,0);
-					}
+					$fake_page_details['type'] = PAGETYPE_TEMPLATED;
 				} else {
-					$items = array(
-						array('pageid' => 0,'title' => 'dummy item one'),
-						array('pageid' => 1,'title' => 'dummy item two'),
-						array('pageid' => 2,'title' => 'dummy item three'),
-						array('pageid' => 3,'title' => 'dummy item four'),
-						array('pageid' => 4,'title' => 'dummy item five')
-					);
-					render_directory_page($title,$session->get_username(),$now,$content,0,$items);
+					$fake_page_details['type'] = PAGETYPE_DIRECTORY;
 				}
+				$page = new NsisWebPage($fake_page_details);
+				$instance = new NsisWebInstance($page);
+				$instance->show_inline();
 			}
 		} else if(strcmp($pagetype,'newfile') == 0) {
 			$max_upload_bytes = get_max_upload();
@@ -264,9 +255,11 @@ ENDOFHTML;
 		$content  = stripslashes($_POST['content']);
 
 		if(strcmp($pagetype,'newpage') == 0) {
-			$result = create_templated_page($title,$content);
+			$page = new NsisWebPage();
+			$result = $page->insert(PAGETYPE_TEMPLATED,0,$title,$content);
 		} else if(strcmp($pagetype,'newsection') == 0) {
-			$result = create_directory_page($title,$content);
+			$page = new NsisWebPage();
+			$result = $page->insert(PAGETYPE_DIRECTORY,0,$title,$content);
 		} else {
 			/* Error, go back a step */
 			$_POST['stage'] = 2;
@@ -279,11 +272,11 @@ ENDOFHTML;
 		<font style="font-family: verdana; font-size: 20pt; color: #000000;">Contribute: Complete</font>
 ENDOFHTML;
 
-		if($result > 0) {
+		if($result) {
 		  if(strcmp($pagetype,'newpage') == 0) {
-			  add_to_current_picks($result,PAGETYPE_TEMPLATED);
+			  add_to_current_picks($page->get_pageid(),PAGETYPE_TEMPLATED);
 		  } else if(strcmp($pagetype,'newsection') == 0) {
-			  add_to_current_picks($result,PAGETYPE_DIRECTORY);
+			  add_to_current_picks($page->get_pageid(),PAGETYPE_DIRECTORY);
       }
 			print <<<ENDOFHTML
 			<p>The new page that you have created has been added to your pick list.
