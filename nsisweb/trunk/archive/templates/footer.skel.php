@@ -32,11 +32,18 @@ $query_count = count($nsisweb->executed_queries);
   $session = $nsisweb->get_session();
   $user    = $session->get_user();
   if($user->get_flags() & USERFLAG_SHOWQUERIES) {
-    print "<code>Executed Queries:<hr>\n";
+    print "<b>Executed Queries:</b><ol>\n";
     foreach($nsisweb->executed_queries as $query) {
-      print "".htmlentities($query)."<hr>\n";
+      print "<li>".htmlentities($query)."</li>\n";
     }
-    print "</code>";
+    print "</ol>";
+    if (count($nsisweb->errors)) {
+      print "<b>Errors:</b><ol>\n";
+      foreach($nsisweb->errors as $error) {
+        print "<li>".htmlentities($error)."</li>\n";
+      }
+      print "</ol>";
+    }
   }
 ?>
 </body> 
