@@ -152,10 +152,12 @@ ENDOFHTML;
       /* Make sure the session data we print is the most upto date */
       timeout_sessions();
 
-      $users = $nsisweb->query("select sessionid,a.userid,a.created,last_access,username,ip,a.flags,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(a.created)) as uptime,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(last_access)) as accessed from nsisweb_sessions as a,nsisweb_users as b where a.userid=b.userid order by ip",__FILE__,__LINE__);
-      $anons = $nsisweb->query("select sessionid,userid,created,last_access,ip,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(created)) as uptime,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(last_access)) as accessed from nsisweb_sessions where userid=0 order by ip",__FILE__,__LINE__);
-      $usercount = $users ? $nsisweb->how_many_results($users) : 0;
-      $anoncount = $anons ? $nsisweb->how_many_results($anons) : 0;
+      $unique_u  = $nsisweb->query("select distinct userid from nsisweb_sessions",__FILE__,__LINE__);
+      $unique_a  = $nsisweb->query("select distinct ip from nsisweb_sessions where userid=0",__FILE__,__LINE__);
+      $users     = $nsisweb->query("select sessionid,a.userid,a.created,last_access,username,ip,a.flags,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(a.created)) as uptime,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(last_access)) as accessed from nsisweb_sessions as a,nsisweb_users as b where a.userid=b.userid order by ip",__FILE__,__LINE__);
+      $anons     = $nsisweb->query("select sessionid,userid,created,last_access,ip,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(created)) as uptime,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(last_access)) as accessed from nsisweb_sessions where userid=0 order by ip",__FILE__,__LINE__);
+      $usercount = $users ? $nsisweb->how_many_results($unique_u) : 0;
+      $anoncount = $anons ? $nsisweb->how_many_results($unique_a) : 0;
 
       print <<<ENDOFHTML
         <span style="font-family:verdana;font-size:20pt;color:#000000;">Connected Sessions</span><br>
