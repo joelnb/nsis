@@ -237,7 +237,7 @@ ENDOFHTML;
         $nsisweb->query('update nsisweb_users set usertype='.USERTYPE_ADMIN.' where userid='.$_GET['userid'],__FILE__,__LINE__);
       }
 
-      $users     = $nsisweb->query("select userid,username,created,usertype,flags from nsisweb_users",__FILE__,__LINE__);
+      $users     = $nsisweb->query("select userid,username,created,usertype,flags,email,forumid from nsisweb_users",__FILE__,__LINE__);
       $usercount = $users ? $nsisweb->how_many_results($users) : 0;
 
       print <<<ENDOFHTML
@@ -252,6 +252,9 @@ ENDOFHTML;
               <td>&nbsp;<b>Created</b>&nbsp;</td>
               <td>&nbsp;<b>Persistent Login</b>&nbsp;</td>
               <td>&nbsp;<b>Is Admin</b>&nbsp;</td>
+							<td>&nbsp;<b>Email</b>&nbsp;</td>
+							<td>&nbsp;<b>Profile</b>&nbsp;</td>
+							<td>&nbsp;<b>PM</b>&nbsp;</td>
             </tr>
 ENDOFHTML;
 
@@ -277,6 +280,21 @@ ENDOFHTML;
           } else {
             print '<td>&nbsp;No [ <a href="admin.php?action=users&subaction=grant&userid='.$record['userid'].'">grant</a> ]&nbsp;</td>';
           }
+					
+					print '<td>&nbsp;';
+					if(strlen($record['email']) > 0) {
+						print '<a href="mailto:'.$record['email'].'">email</a>';
+					} else {
+						print '-';
+					}
+					print '&nbsp;</td>';
+					if($record['forumid'] > 0) {
+						print '<td>&nbsp;<a href="http://forums.winamp.com/member.php?action=getinfo&userid='.$record['forumid'].'">profile</a>&nbsp;</td>';
+						print '<td>&nbsp;<a href="http://forums.winamp.com/private.php?action=newmessage&userid='.$record['forumid'].'">PM</a>&nbsp;</td>';
+					} else {
+						print '<td>&nbsp;-&nbsp</td>';
+						print '<td>&nbsp;-&nbsp</td>';
+					}
           print "</tr>\n";
         }
       }

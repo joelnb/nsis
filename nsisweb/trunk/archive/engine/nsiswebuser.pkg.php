@@ -14,7 +14,7 @@ function initialise_user_table()
 {
   global $nsisweb;
   $nsisweb->query("drop table if exists nsisweb_users",__FILE__,__LINE__);
-  $nsisweb->query("create table nsisweb_users (username varchar(255) not null,password varchar(255) not null,userid int unsigned auto_increment,primary key(userid),created datetime not null,usertype int unsigned not null default 0,flags int unsigned default 0)",__FILE__,__LINE__);
+  $nsisweb->query("create table nsisweb_users (username varchar(255) not null,password varchar(255) not null,userid int unsigned auto_increment,primary key(userid),created datetime not null,usertype int unsigned not null default 0,flags int unsigned default 0,email varchar(255),forumid int default 0)",__FILE__,__LINE__);
 }
 
 class NsisWebUser
@@ -23,6 +23,8 @@ class NsisWebUser
   var $username;
   var $usertype;
   var $flags;
+  var $email;
+  var $forumid; /* as in userid in this link: http://forums.winamp.com/member.php?action=getinfo&userid=70214 */
   
   function NsisWebUser($array)
   {
@@ -30,6 +32,8 @@ class NsisWebUser
     $this->username = $array['username'];
     $this->usertype = $array['usertype'];
     $this->flags    = $array['flags'];
+    $this->email    = $array['email'];
+    $this->forumid  = $array['forumid'];
   }
   function is_admin()
   {
@@ -47,6 +51,22 @@ class NsisWebUser
   {
     return $this->flags;
   }
+  function get_email()
+  {
+	  return $this->email;
+  }
+	function get_forumid()
+	{
+		return $this->forumid;
+	}
+	function update($email,$forumid)
+	{
+		if($this->user_id != ANONYMOUS_USER_ID && is_int($forumid)) {
+			$email = mysql_escape_string($email);
+			global $nsisweb;
+			$nsisweb->query("update nsisweb_users set email='$email', forumid='$forumid' where userid=".$this->user_id);
+		}
+	}
 };
 
 function find_user($username)
