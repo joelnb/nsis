@@ -30,6 +30,9 @@ NSIS users for NSIS users.</p>
   <li><b><a href="<?= $nsisweb->get_page_url('popular') ?>">Most Popular</a></b>
     <ul>See which pages are visited most and which files are downloaded most frequently</ul>
   </li>
+  <li><b><a href="<?= $nsisweb->get_page_url('search') ?>">Search</a></b>
+    <ul>Need to find something or can't remember where you saw something before? Try this...</ul>
+  </li>
 <?
 $session = $nsisweb->get_session();
 if ($session->is_anonymous()) {
