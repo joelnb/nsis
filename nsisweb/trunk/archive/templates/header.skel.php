@@ -32,13 +32,13 @@ if((isset($page_info) || isset($_GET['page']) || isset($_GET['pageid'])) && isse
 }
 $page_browsing_depth = "You are viewing archive page <b>$title</b>";
 $home_url            = $nsisweb->get_home_url();
-$picklist_url        = $nsisweb->get_page_url('picklist');
-$logged_in_text      = '<i>not logged in</i> ( <a style="color:#0000ff;text-decoration:underline;" href="'.$nsisweb->get_page_url('login').$login_url_ext.'">login</a> )';
+$picklist_url        = 'picklist.php';
+$logged_in_text      = '<i>not logged in</i> ( <a style="color:#0000ff;text-decoration:underline;" href="login.php'.$login_url_ext.'">login</a> )';
 
 $session = $nsisweb->get_session();
 
 if(!$session->is_anonymous()) {
-	$logged_in_text = $session->get_username().' ( <a style="color:#0000ff;text-decoration:underline;" href="'.$nsisweb->get_page_url('logout').$login_url_ext.'">logout</a> )';
+	$logged_in_text = $session->get_username().' ( <a style="color:#0000ff;text-decoration:underline;" href="logout.php'.$login_url_ext.'">logout</a> )';
 }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> 
@@ -56,9 +56,14 @@ if(!$session->is_anonymous()) {
 				<tr>
 				  <td align="left" style="font-size:8pt;padding-bottom:2px;"><b>Logged in as:</b> <?= $logged_in_text ?></td>
 				  <td align="right" style="font-size:8pt;padding-bottom:2px;">
-            <? if(!$session->is_anonymous()) { ?>
-              [ <a href="<?= $nsisweb->get_page_url('prefs').$login_url_ext ?>">Preferences</a> ]
-            <? } ?>
+            <?
+            if(!$session->is_anonymous()) {
+              if($session->looks_like_admin()) {
+              	echo '[ <a href="admin.php">Admin</a> ] ';
+              }
+              echo '[ <a href="prefs.php">Preferences</a> ] ';
+            }
+            ?>
             [ <a href="<?= $picklist_url ?>">Pick List</a> ] [ <a href="<?= $home_url ?>">Home</a> ]
           </td>
 				</tr>

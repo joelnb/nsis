@@ -56,7 +56,7 @@ if(!$instance || !$page->is_okay()) {
 } else {
 	$session = $nsisweb->get_session();
 	$author  = $page->get_authorid();
-	if($author != ANONYMOUS_USER_ID && $author != $session->user_id) {
+	if(!$page->can_modify()) {
 		$nsisweb->start_page('Edit');
 		?>
 		<font style="font-family: verdana; font-size: 20pt; color: #000000;">Edit Page: <font color="red">Access Denied</font></font>
@@ -70,7 +70,7 @@ if(!$instance || !$page->is_okay()) {
 		exit;
 	}
 }
-	
+
 /* Do action specific stuff */
 switch($action) {
 	case ACTION_SAVE:

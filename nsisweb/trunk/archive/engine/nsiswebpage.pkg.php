@@ -136,6 +136,14 @@ class NsisWebPage
 		if($sequence < 0) return FALSE;
 		
 		global $nsisweb;
+		$session = $nsisweb->get_session();
+		
+		if($parentid == 0) {
+			if(!$session->looks_like_admin()) return FALSE;
+			$user = find_userid($session->user_id);
+			if(!$user->is_admin()) return FALSE;
+		}
+		
 		$instances = array();
 		$result    = $nsisweb->query("select * from nsisweb_hierarchy where parentid=$parentid order by sequence asc");
 		if($result && $nsisweb->how_many_results($result) > 0) {
@@ -217,6 +225,19 @@ class NsisWebPage
 		if($this->get_pageid() > 0) {
 			$nsisweb->query('update nsisweb_pages set views=views+1 where pageid='.$this->get_pageid());
 		}
+	}
+	function can_modify()
+	{
+		if($this->get_authorid() == ANONYMOUS_USER_ID) return TRUE;
+
+		global $nsisweb;
+		$session = $nsisweb->get_session();
+		if($this->get_authorid() == $session->user_id) return TRUE;
+		
+		$user = find_userid($session->user_id);
+		if($user->is_admin()) return TRUE;
+		
+		return FALSE;
 	}
 };
 

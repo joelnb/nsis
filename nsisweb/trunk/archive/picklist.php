@@ -83,15 +83,24 @@ if(count($picks)>0) {
     <p>Press Cancel to return to the page you were viewing before, or Insert to add
     the ticked pages as children of the page you were viewing.</p>
 		<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-      <? if(isset($instanceid)) { ?>
-		  <a href="<?= $nsisweb->get_page_url($instanceid); ?>"><< Cancel</a> |
-      <a href="Delete" onclick="pickform.action.value='delete';document.pickform.submit();return false;">Delete</a> |
-		  <a href="Insert" onclick="pickform.action.value='insert';document.pickform.submit();return false;">Insert >></a>
-      <? } else { ?>
-		  <a href="<?= $nsisweb->get_home_url() ?>"><< Home</a> |
-      <a href="Delete" onclick="pickform.action.value='delete';document.pickform.submit();return false;">Delete</a> |
-      <font color="#aaaaaa">Insert >></a>
-      <? } ?>
+      <?
+      if(isset($instanceid)) {
+	      $session = $nsisweb->get_session();
+	      if($instanceid > 0 || $session->looks_like_admin()) {
+		      ?>
+				  <a href="<?= $nsisweb->get_page_url($instanceid); ?>"><< Cancel</a> |
+		      <a href="Delete" onclick="pickform.action.value='delete';document.pickform.submit();return false;">Delete</a> |
+				  <a href="Insert" onclick="pickform.action.value='insert';document.pickform.submit();return false;">Insert >></a>
+				  <?
+      	}
+      } else {
+	      ?>
+			  <a href="<?= $nsisweb->get_home_url() ?>"><< Home</a> |
+	      <a href="Delete" onclick="pickform.action.value='delete';document.pickform.submit();return false;">Delete</a> |
+	      <font color="#aaaaaa">Insert >></a>
+      	<?
+      }
+      ?>
 		</p>
 	</form>
 	<?

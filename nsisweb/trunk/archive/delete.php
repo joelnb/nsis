@@ -24,15 +24,17 @@ $user    = find_userid($session->user_id);
 
 if($instance->get_parentid() == 0 && !$user->is_admin()) {
 	show_delete_error('Access Denied','Only an administrator can modify the contents of the root section!');
+} else if($instance->get_parentid() != 0) {
+	$directory      = new NsisWebInstance($instance->get_parentid());
+	$directory_page = $directory->get_page();
+	$author         = $directory_page->get_editorid();
+
+	if(!$directory_page->can_modify()) {
+		show_delete_error('Access Denied','You must be an administrator or the owner of the section in order to remove a page within it!');
+	}
 }
 
-$directory      = new NsisWebInstance($instance->get_parentid());
-$directory_page = $directory->get_page();
-$author         = $directory_page->get_editorid();
-
-if(!$user->is_admin() && $author != ANONYMOUS_USER_ID && $author != $session->user_id) {
-	show_delete_error('Access Denied','You must be an administrator or the owner of the section in order to remove a page within it!');
-}
+$returnid = $instance->get_parentid();
 
 if(!$instance->delete()) {
 	show_delete_error('Delete Failed','The page you wanted to remove could not be removed from the section containing it!');
@@ -45,8 +47,8 @@ $nsisweb->start_page('Delete');
 <font style="font-family: verdana; font-size: 20pt; color: #000000;">Delete Page:</font>
 <p>The instance of the page in that section has now been removed.<br><br>Click <b>Go To Section</b> to return to the section that contained the deleted page.</p>
 <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-	<a href="picklist.php?instanceid=<?= $instanceid ?>">View Your Pick List</a> |
-	<a href="<?= $nsisweb->get_page_url($instance->get_parentid) ?>">Go To Section >></a>
+	<a href="picklist.php?instanceid=<?= $returnid ?>">View Your Pick List</a> |
+	<a href="<?= $nsisweb->get_page_url($returnid) ?>">Go To Section >></a>
 </p>
 <?
 $nsisweb->end_page();

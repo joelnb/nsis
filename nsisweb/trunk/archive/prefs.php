@@ -8,7 +8,9 @@ include_once(dirname(__FILE__)."/engine/nsiswebpicks.pkg.php");
 $session    = $nsisweb->get_session();
 $session_id = $session->session_id;
 $user_id    = $session->user_id;
-$username   = $session->get_username();
+
+$user     = find_userid($user_id);
+$username = $user->username;
 
 $user_created     = 'Unknown';
 $pages_created    = 'Unknown';
@@ -48,6 +50,7 @@ $nsisweb->start_page('Your Preferences');
     <tr style="background-color:#eeeeee"><td align="left" valign="middle">Downloadable files supplied by you</td><td align="left"><?= $files_uploaded ?></td></tr>
     <tr><td align="left" valign="middle">Number of items in your pick list</td><td align="left"><?= $current_picks ?></td></tr>
     <tr style="background-color:#eeeeee"><td align="left" valign="middle">Number of current sessions</td><td align="left"><?= $current_sessions ?></td></tr>
+    <tr><td align="left" valign="middle">Do you have admin rights?</td><td align="left"><?= $user->is_admin() ? 'Yes' : 'No' ?></td></tr>
   </table>
 </p>
 <?
