@@ -178,6 +178,7 @@ ENDOFHTML;
 	</p>
 ENDOFHTML;
 
+	print <<<ENDOFHTML
 	<font style="font-family:verdana;font-size:15pt;color:#000000;">Browsers By IP</font>
 	<p>This table shows the number of distinct ip addresses associated with each browser type:<br>
 	  <br>
