@@ -89,7 +89,7 @@ if(strlen($title)>0 || strlen($content)>0) {
 	$now     = $array['NOW()'];
 	if($result) {
 		$array     = $nsisweb->get_result_array($result);
-		$processed = process_templated_content($content);
+		$processed = process_templated_content($content,TRUE);
 		render_templated_page($title,$session->get_username(),$now,$processed,0);
 	}
 }

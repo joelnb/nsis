@@ -122,7 +122,7 @@ function create_raw_page($title,$filename)
 function create_templated_page($title,$body)
 {
 	global $nsisweb;
-	$source  = process_templated_content($body);
+	$source  = process_templated_content($body,FALSE);
 	if (!get_magic_quotes_gpc()) {
 		$source = mysql_escape_string($source);
 		$title  = mysql_escape_string($title);
@@ -136,7 +136,7 @@ function create_templated_page($title,$body)
 function update_templated_page($pageid,$title,$body)
 {
 	global $nsisweb;
-	$source  = process_templated_content($body);
+	$source  = process_templated_content($body,FALSE);
 	if (!get_magic_quotes_gpc()) {
 		$source = mysql_escape_string($source);
 		$title  = mysql_escape_string($title);
@@ -153,7 +153,7 @@ function update_templated_page($pageid,$title,$body)
 	}
 }
 
-function process_templated_content($content)
+function process_templated_content($content,$syntax_highlight)
 {
 	/* TODO: HTML Filter is taken from Squirrel Mail -- check the license before
 	   using this in the final site implementation. This was mentioned in a user
@@ -199,7 +199,12 @@ function process_templated_content($content)
 		$bad_attvals,
 		$add_attr_to_tag
 	);
-	return colour_source($trusted);
+	
+	if($syntax_highlight) {
+		return colour_source($trusted);
+	}
+	
+	return $trusted;
 }
 
 /* Returns the pageid of the newly created page (should be a positive non-zero integer). */
