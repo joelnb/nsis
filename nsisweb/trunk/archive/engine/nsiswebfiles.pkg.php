@@ -2,6 +2,7 @@
 include_once(dirname(__FILE__)."/nsisweb.pkg.php");
 
 define('USE_UNIX_FILE_COMMAND',TRUE);
+define('UPLOAD_SPACE_ALLOWED',50); /* in megabytes */
 
 function initialise_files_table()
 {
@@ -42,12 +43,15 @@ class NsisWebFile
   function get_image_url()
   {
     global $nsisweb;
+    $base_path = $nsisweb->get_base_url().'/images/';
+    $image     = 'question.gif';
     switch($this->get_mime_type()) {
       case 'application/x-zip-compressed':
       case 'application/zip':
-        return $nsisweb->get_base_url().'/images/zip.gif'; break;
+        $image = 'zip.gif';
+        break;
     }
-    return '';
+    return $base_path.$image;
   }
 
   function delete()
@@ -95,7 +99,7 @@ function find_file($filename)
 function add_file($filename,$mime_type,$description)
 {
   $file = find_file($filename);
-  if(!$file) {
+  if(!$file->is_okay()) {
     global $nsisweb;
     $size        = @filesize($nsisweb->fileroot.'/uploads/'.$filename);
     $filename    = mysql_escape_string($filename);
@@ -123,7 +127,7 @@ function determine_file_type($filename,$proposed_type)
 
 /* Returns 0 if no files were uploaded, 1 if some were uploaded, and 2 if all were
    uploaded. */
-function process_uploaded_files($form_field_name)
+function process_uploaded_files($form_field_name,$about_field_name)
 {
   global $nsisweb;
   $store_folder = $nsisweb->fileroot.'/uploads';
@@ -187,8 +191,10 @@ function process_uploaded_files($form_field_name)
       for($i=0; $i<$count; $i++) {
         $uploaded_name = $store_folder.'/'.$_FILES[$form_field_name]['name'][$i];
         if(@move_uploaded_file($_FILES[$form_field_name]['tmp_name'],$uploaded_name)) {
-          if($this->add_file($_FILES[$form_field_name]['name'][$i],
-            $_FILES[$form_field_name]['type'][$i])) {
+          if(add_file(
+            $_FILES[$form_field_name]['name'][$i],
+            $_FILES[$form_field_name]['type'][$i],
+            $_POST[$about_field_name][$i])) {
             $stored_files++;
           } else {
             $nsisweb->record_error('upload failure: add_file() failed (file='.$_FILES[$form_field_name]['name'][$i].')',__FILE__,__LINE__);
@@ -201,8 +207,10 @@ function process_uploaded_files($form_field_name)
     } else {
       $uploaded_name = $store_folder.'/'.$_FILES[$form_field_name]['name'];
       if(@move_uploaded_file($_FILES[$form_field_name]['tmp_name'],$uploaded_name)) {
-        if($this->add_file($_FILES[$form_field_name]['name'],
-          $_FILES[$form_field_name]['type'])) {
+        if(add_file(
+          $_FILES[$form_field_name]['name'],
+          $_FILES[$form_field_name]['type'],
+          $_POST[$about_field_name])) {
           $stored_files++;
         } else {
           $nsisweb->record_error('upload failure: add_file() failed (file='.$_FILES[$form_field_name]['name'].')',__FILE__,__LINE__);
@@ -242,6 +250,22 @@ function sync()
   }
 }
 
+function get_real_size($size)
+{
+  if ($size=="") { return 0; }
+  $scan['MB'] = 1048576;
+  $scan['M'] = 1048576;
+  $scan['KB'] = 1024;
+  $scan['K'] = 1024;
+  while (list($key) = each($scan)) {
+   if ((strlen($size)>strlen($key))&&(substr($size, strlen($size) - strlen($key))==$key)) {
+     $size = substr($size, 0, strlen($size) - strlen($key)) * $scan[$key];
+     break;
+   }
+  }
+  return $size;
+}
+
 function get_single_upload_limit() {
   if(!ini_get("file_uploads")) {
     return FALSE;
@@ -279,5 +303,13 @@ function get_human_readable_size($size)
     }
   }
   return $size;
+}
+
+/* returns space assigned for uploads, and amount of that space used */
+function get_storage_space()
+{
+  global $nsisweb;
+  $path = $nsisweb->get_base_url().'/uploads';
+  return array(UPLOAD_SPACE_ALLOWED*1024*1024,(int)(`du -b $path`));
 }
 ?>

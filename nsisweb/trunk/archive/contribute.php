@@ -40,7 +40,7 @@ function ChooseContributionType()
   /* Present visitors with a selection of ways that they can contribute to the
      Archive. */
   global $nsisweb;
-  $nsisweb->start_page('Contribute To The Archive');
+  $nsisweb->start_page('Contribute To The Archive',FALSE);
   print <<<ENDOFHTML
     <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute To The Archive</span>
     <p>I want to contribute:</p>
@@ -55,7 +55,7 @@ ENDOFHTML;
   $session = $nsisweb->get_session();
   $user    = find_userid($session->user_id);
   if($user->is_admin()) {
-    echo '<input type="radio" name="action" value="specifyupload" DISABLED>one or more files that others can download.';
+    echo '<input type="radio" name="action" value="specifyupload">one or more files that others can download.';
   }
 
   print <<<ENDOFHTML
@@ -96,7 +96,7 @@ ENDOFHTML;
 function ContributeNewPage()
 {
   global $nsisweb;
-  $nsisweb->start_page('Contribute New Page');
+  $nsisweb->start_page('Contribute New Page',FALSE);
   print <<<ENDOFHTML
     <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute New Page</span>
     <p>A new page requires three things, a title, some content and a place to
@@ -183,7 +183,7 @@ function SavePage()
     exit;
   }
 
-  $nsisweb->start_page('Contribute New Page');
+  $nsisweb->start_page('Contribute New Page',FALSE);
   print <<<ENDOFHTML
     <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute New Page</span>
     <p>From the list below please choose a section in which to insert your new page:</p>
@@ -222,7 +222,7 @@ ENDOFHTML;
 function ContributeNewSection()
 {
   global $nsisweb;
-  $nsisweb->start_page('Contribute New Section');
+  $nsisweb->start_page('Contribute New Section',FALSE);
   print <<<ENDOFHTML
     <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute New Section</span>
     <p>A new section requires three things, a title, a description of what kind of pages should be contained
@@ -305,7 +305,7 @@ function SaveSection()
     exit;
   }
 
-  $nsisweb->start_page('Contribute New Section');
+  $nsisweb->start_page('Contribute New Section',FALSE);
   print <<<ENDOFHTML
     <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute New Section</span>
     <p>From the list below please choose a section in which to insert your new section:</p>
@@ -342,30 +342,33 @@ ENDOFHTML;
 function ContributeNewFile()
 {
   global $nsisweb;
-  $nsisweb->start_page('Contribute New File');
+  
+  list($total_space,$space_used) = get_storage_space();
+  $space_left = $total_space-$space_used;
+  $alloc_meg  = ($total_space/1024/1024).' Mb';
+  $left_meg   = ($space_left/1024/1024).' Mb';
+  
+  $nsisweb->start_page('Contribute New File',FALSE);
   print <<<ENDOFHTML
     <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute New File</span>
-    <p>We encourage upload of files to this archive and try to make this as
-    easy as possible. However, the automatic scripts that power this site
-    cannot determine whether or not uploaded files are safe for others to
-    download and as such uploaded files must be approved before they appear as
-    downloadable files on this site. This approval process requires a real
-    person and will be done as quickly as possible.<br>
+    <p>Your admin status gives you the right to upload files to the Archive.
+    Please do not abuse this facility, and please remember that these files
+    will be stored in the SourceForge webspace where we have a 100 Mb
+    limit.<br>
     <br>
-    The site also enforces a limit on the amount of disk space that can be
-    used by uploads. At this time the scripts that power the site are not
-    capable of using more than one server as a file repository and so
-    automatic uploads are limited to the space available to us on this
-    server.<br>
+    For NSIS installers and example scripts you should create pages in the
+    Archive rather than provide them as downloads. Suitable downloads are
+    things like NSIS plugins and if the author approves in some cases it might
+    make sense to host certain tools related to NSIS, for example if the
+    normal host is unreliable or slow.<br>
     <br>
-    Each time you press <b>upload</b> there will be a delay whilst the file is
-    transmitted to this server, and then you will be returned to this screen
-    so that you may upload another file. If there were any problems with the
-    last file you uploaded these will be shown to you on this page after your
-    upload finishes.</p>
+    When you press upload there will be a delay whilst the file is transmitted
+    to this server. Of the $alloc_meg of available storage space $left_meg
+    remains.</p>
 ENDOFHTML;
 
   $max_upload_bytes = get_single_upload_limit();
+  $max_upload_bytes = ($max_upload_bytes > $space_left) ? $space_left : $max_upload_bytes;
   $max_upload_mb    = $max_upload_bytes/1024.0/1024.0;
 
   if(isset($_POST['content'])) {
@@ -377,7 +380,7 @@ ENDOFHTML;
   print <<<ENDOFHTML
     <form name="uploadform" method="post" enctype="multipart/form-data" action="contribute.php">
       <p>
-        Enter a description for your new section:<br>
+        Enter a description for your new file:<br>
         <textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="3">$content</textarea>
         <br>
         Choose the file that you wish to upload: (max single upload: $max_upload_mb Mb)<br>
@@ -396,23 +399,42 @@ ENDOFHTML;
 
 function UploadFile()
 {
-/*  if(count($_FILES) > 0) {
-    //$storage = new NsisWebStorage;
-    //$result = $storage->process_uploaded_files('nsiswebfile');
+  global $nsisweb;
+  
+  $nsisweb->start_page('Contribute New File',FALSE);
+  print '<span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute New File</span>';
+  
+  if(count($_FILES) > 0) {
+    $result = process_uploaded_files('nsiswebfile','content');
 
     print "<p>";
     if(strlen($upload_error)>0 || $result == 0) {
-      print '<b><span style="color:red">Last upload failed</span></b>';
+      print 'Your file could not be uploaded. The problem seems to be: ';
       if(strlen($upload_error)>0) {
-        print " [$upload_error]";
+        print $upload_error;
       } else if(strlen($nsisweb->errors)>0) {
-        print " [".$nsisweb->errors[0]."]";
+        print $nsisweb->errors[0];
       }
     } else {
-      print "<b>Upload succeeded</b>";
+      print <<<ENDOFHTML
+      Your file was succesfully uploaded to the Archive.<br>
+      <br>
+      <span style="color:red">Warning:</span> If you think that the icon for
+      your file on the download page is incorrect, or it is a question, you
+      will need to contact a developer and get them to upload a new image
+      for the mime type of your file, and to associate the type with your
+      chosen image.
+ENDOFHTML;
     }
     print "</p>";
-  }*/
+  }
+
+  print <<<ENDOFHTML
+    <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+      <a href="download.php">Open Downloads Page</a> | <a href="nsisweb.php">Return To Home >></a>
+    </p>
+ENDOFHTML;
+  $nsisweb->end_page();
 }
 
 function unhtmlentities($string)
