@@ -27,11 +27,10 @@ if($revert || $_GET['pageid'] > 0) {
 } else if($_POST['pageid'] > 0) {
 	$pageid  = $_POST['pageid'];
 	if (get_magic_quotes_gpc()) {
-		$title   = stripslashes($_POST['title']);
+		$title   = stripslashes(htmlentities($_POST['title']));
 		$content = stripslashes($_POST['content']);
 	}
 }
-$title = htmlentities($title);
 
 $nsisweb->start_page('Edit');
 ?>
