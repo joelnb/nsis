@@ -10,6 +10,7 @@
 <?php 
 $contenta = @file('/home/groups/n/ns/nsis/htdocs/nightly/changelog.txt');
 if ($contenta) {
+	$content = implode ('',$contenta);
 	echo $content;
 }
 ?>
