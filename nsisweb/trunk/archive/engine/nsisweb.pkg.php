@@ -79,7 +79,7 @@ class NsisWebSite
 			  } else {
 				  $url .= '&';
 			  }
-			  $url .= urlencode($key.'='.$value);
+			  $url .= urlencode($key).'='.urlencode($value);
 		  }
 	  	header("Location: $url");
 	  	exit;
