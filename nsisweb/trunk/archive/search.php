@@ -66,7 +66,7 @@ END_OF_HTML;
 			$userid = $record['author'];
 			if($userid > 0) {
 				$user = find_userid($userid);
-				print '<td align="center">&nbsp;'.$user->$username.'&nbsp;</td>';
+				print '<td align="center">&nbsp;'.$user->username.'&nbsp;</td>';
 		  } else {
 			  print '<td align="center">&nbsp;Anonymous&nbsp;</td>';
 		  }
