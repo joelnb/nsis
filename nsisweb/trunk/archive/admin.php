@@ -155,7 +155,7 @@ ENDOFHTML;
 	    </tr>
 ENDOFHTML;
 
-	$result = $nsisweb->query("select count(ip) as cc,user_agent from nsisweb_info group by ip order by cc desc,user_agent asc");
+	$result = $nsisweb->query("select count(ip) as cc,user_agent from nsisweb_info group by user_agent order by cc desc,user_agent asc");
 	if($result && $nsisweb->how_many_results($result) > 0) {
 		$i     = 0;
 		$index = 1;
