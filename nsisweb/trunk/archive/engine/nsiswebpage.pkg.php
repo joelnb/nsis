@@ -7,21 +7,6 @@ define('PAGETYPE_TEMPLATED', 2);
 define('PAGETYPE_DIRECTORY', 3);
 define('PAGETYPE_PARENTLINK',4);
 
-function delete_page($pageid)
-{
-	global $nsisweb;
-	$session = $nsisweb->get_session();
-	$user    = find_userid($session->user_id);
-	if($pageid > 0 && $user->usertype == USERTYPE_ADMIN) {
-		/* also need to remove links to other pages in the hierarchy */
-		$result = $nsisweb->query("delete from nsisweb_pages where pageid=$pageid");
-		if($result) {
-			return TRUE;
-		}
-	}
-	return FALSE;
-}
-
 function initialise_page_table()
 {
 	global $nsisweb;
@@ -310,5 +295,20 @@ function render_directory_page($title,$author,$date,$desc,$pageid,$items)
 {
 	global $nsisweb;
 	include(NSISWEB_DIRECTORY_SKELETON);
+}
+
+function delete_page($pageid)
+{
+	global $nsisweb;
+	$session = $nsisweb->get_session();
+	$user    = find_userid($session->user_id);
+	if($pageid > 0 && $user->usertype == USERTYPE_ADMIN) {
+		/* also need to remove links to other pages in the hierarchy */
+		$result = $nsisweb->query("delete from nsisweb_pages where pageid=$pageid");
+		if($result) {
+			return TRUE;
+		}
+	}
+	return FALSE;
 }
 ?>
