@@ -20,13 +20,7 @@ $nsisweb->start_page('Download Files');
 user that contributed the file to the archive.</p>
 <br>
 <center>
-  <table width="90%" cellpadding="2" cellspacing="0" border="0">
-    <tr style="background-color:#ddffdd;color:black;font-family:verdana;font-size:10pt;">
-      <th style="background-color:transparent;" align="left">&nbsp;</th>
-      <th align="left"><b>&nbsp;File&nbsp;</b></th>
-      <th align="left"><b>&nbsp;Size&nbsp;</b></th>
-      <th align="left"><b>&nbsp;Contributor&nbsp;</b></th>
-    </tr>
+  <table style="border-style:none;font-size:10pt;" cellpadding="2" cellspacing="0">
 <?
 $result = $nsisweb->query("select * from nsisweb_files");
 if($result) {
@@ -38,32 +32,30 @@ if($result) {
       $grab_link = 'download.php?file='.urlencode($file->get_filename());
       $size      = sprintf("%d Kb",$file->get_size()/1024.0);
       $username  = $user->username;
+      $downloads = 'Download Count: '.$record['downloads'];
+      $about     = $record['about'];
+      if($about == '') $about = 'No description has been provided for this file.';
       
       if($user->is_anonymous()) $username = 'Anonymous';
 
       if($i == 0) {
         $i = 1;
-        $bgcolour = '#eeeeee';
+        $bgcolour = '#eeffee';
       } else {
         $i = 0;
-        $bgcolour = '#ddddff';
+        $bgcolour = '#eeeeee';
       }
 
       ?>
-        <tr style="background-color:$bgcolour;">
-          <td align="right" valign="middle" style="font-family:tahoma;font-size:8pt;background-color:transparent;">
-            <a style="color:black;text-decoration:underline;" href="<?= $grab_link ?>"><img src="<?= $file->get_image_url() ?>" border="0"></a> &nbsp;
-          </td>
-          <td align="left" valign="middle" style="font-family:verdana;font-size:10pt;">
-            &nbsp;<?= $file->get_filename() ?>&nbsp;
-          </td>
-          <td align="left" valign="middle" style="font-family:verdana;font-size:10pt;">
-            &nbsp;<?= $size ?>&nbsp;
-          </td>
-          <td align="left" valign="middle" style="font-family:verdana;font-size:10pt;">
-            &nbsp;<?= $username ?>&nbsp;
-          </td>
+        <tr style="background-color:#eeeeff;">
+          <td style="text-align:center;border:solid 1px #aaaaaa;padding:4px;border-bottom:none;"><a href="<?= $grab_link ?>"><img style="vertical-align:middle;" src="<?= $file->get_image_url() ?>" border="0"> <?= $file->get_filename() ?></a> (<?= $size ?>)</td>
+          <td style="text-align:center;border:solid 1px #aaaaaa;padding:4px;border-bottom:none;border-left:none;"><?= $downloads ?></td>
+          <td style="text-align:center;border:solid 1px #aaaaaa;padding:4px;border-bottom:none;border-left:none;">Uploaded by <?= $username ?></td>
         </tr>
+        <tr style="text-align:justify;background-color:#ffffff;border-style:none;">
+          <td colspan="3" style="border:solid 1px #aaaaaa;padding:10px;"><?= $about ?></td>
+        </tr>
+        <tr style="background-color:#ffffff;height:20pt;"><td></td></tr>
       <?
     }
   }
