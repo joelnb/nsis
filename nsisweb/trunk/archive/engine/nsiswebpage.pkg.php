@@ -181,7 +181,7 @@ class NsisWebPage
 		$session  = $nsisweb->get_session();
 		$author   = $session->user_id;
 		if($no_update) {
-			$result = $nsisweb->query("update nsisweb_pages set flags=$flags,title='$title',source='$source',ppsource='$ppsource',last_author=$author where pageid=".$this->get_pageid());
+			$result = $nsisweb->query("update nsisweb_pages set flags=$flags,title='$title',source='$source',ppsource='$ppsource' where pageid=".$this->get_pageid());
 	  } else {
 			$result = $nsisweb->query("update nsisweb_pages set flags=$flags,title='$title',source='$source',ppsource='$ppsource',last_author=$author,last_updated=NOW() where pageid=".$this->get_pageid());
 		}
