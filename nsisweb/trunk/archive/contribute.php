@@ -105,7 +105,7 @@ function ContributeNewPage()
     as many times as you like before continuing onto the next stage.</p>
 ENDOFHTML;
 
-  $title   = stripslashes($_POST['title']);
+  $title   = htmlentities(stripslashes($_POST['title']));
   $content = stripslashes($_POST['content']);
 
   if(strlen($title)<=0) {
@@ -115,14 +115,13 @@ ENDOFHTML;
     $content = "<p>Enter your page content here. You can remove the outer paragraph if you wish, it depends on the appearance you want for your page.\n\nYou can put NSIS source code in like this:\n\n[source]; Turn off old selected section\nSectionGetFlags $1 $0\nIntOp $0 $0 & ${SECTION_OFF}\nSectionSetFlags $1 $0\n[/source]\nAnd then carry on again...</p>";
   }
 
-  $safe_title   = htmlentities($title);
   $safe_content = htmlentities($content);
   
   print <<<ENDOFHTML
     <form name="editform" method="post" enctype="multipart/form-data" action="contribute.php">
       <p>
         Choose a title for your new page: (255 characters max)<br>
-        <input type="text" style="font-family:courier new;font-size:10pt;" name="title" size="79" maxlength="255" value="$safe_title"><br>
+        <input type="text" style="font-family:courier new;font-size:10pt;" name="title" size="79" maxlength="255" value="$title"><br>
         <br>
         You must now enter the content of your new page. You are allowed to use HTML although some
         tags that could be used to attack this site will be removed from your content. Additionally you
@@ -168,16 +167,17 @@ function SavePage()
     $savetitle   = htmlentities(stripslashes($_POST['title']));
     $savecontent = htmlentities(stripslashes($_POST['content']));
   } else {
-    $savetitle   = $_POST['savetitle'];
-    $savecontent = $_POST['savecontent'];
+    $savetitle   = htmlentities($_POST['savetitle']);
+    $savecontent = htmlentities($_POST['savecontent']);
   }
 
   if(isset($_POST['parentid']) && strlen($_POST['parentid']) >= 0) {
     $page    = new NsisWebPage();
     $result  = $page->insert(
       PAGETYPE_TEMPLATED,0,
-      unhtmlentities($_POST['savetitle']),
-      unhtmlentities($_POST['savecontent']));
+      stripslashes(htmlentities($_POST['savetitle'])),
+      stripslashes($_POST['savecontent'])
+    );
     $page->add_instance($_POST['parentid']);
     header('Location: '.$nsisweb->wwwroot.'/viewpage.php?pageid='.$_POST['parentid']);
     exit;
@@ -231,7 +231,7 @@ function ContributeNewSection()
     the results as many times as you like before continuing onto the next stage.</p>
 ENDOFHTML;
 
-  $title   = stripslashes($_POST['title']);
+  $title   = htmlentities(stripslashes($_POST['title']));
   $content = stripslashes($_POST['content']);
 
   if(strlen($title)<=0) {
@@ -241,14 +241,13 @@ ENDOFHTML;
     $content = "Pick a title for your section.";
   }
 
-  $safe_title   = htmlentities($title);
   $safe_content = htmlentities($content);
 
   print <<<ENDOFHTML
     <form name="editform" method="post" enctype="multipart/form-data" action="contribute.php">
       <p>
         Choose a title for your new page: (255 characters max)<br>
-        <input type="text" style="font-family:courier new;font-size:10pt;" name="title" size="79" maxlength="255" value="$safe_title"><br>
+        <input type="text" style="font-family:courier new;font-size:10pt;" name="title" size="79" maxlength="255" value="$title"><br>
         <br>
         Enter a description for your new section:<br>
         <textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="3">$safe_content</textarea>
@@ -290,16 +289,17 @@ function SaveSection()
     $savetitle   = htmlentities(stripslashes($_POST['title']));
     $savecontent = htmlentities(stripslashes($_POST['content']));
   } else {
-    $savetitle   = $_POST['savetitle'];
-    $savecontent = $_POST['savecontent'];
+    $savetitle   = htmlentities($_POST['savetitle']);
+    $savecontent = htmlentities($_POST['savecontent']);
   }
 
   if(isset($_POST['parentid']) && strlen($_POST['parentid']) >= 0) {
     $page    = new NsisWebPage();
     $result  = $page->insert(
       PAGETYPE_DIRECTORY,0,
-      stripslashes(unhtmlentities($_POST['savetitle'])),
-      stripslashes(unhtmlentities($_POST['savecontent'])));
+      stripslashes(htmlentities($_POST['savetitle'])),
+      stripslashes($_POST['savecontent'])
+    );
     $page->add_instance($_POST['parentid']);
     header('Location: '.$nsisweb->wwwroot.'/viewpage.php?pageid='.$_POST['parentid']);
     exit;

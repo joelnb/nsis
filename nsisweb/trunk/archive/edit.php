@@ -73,12 +73,12 @@ if(!$instance || !$page) {
 /* Do action specific stuff */
 switch($action) {
   case ACTION_SAVE:
-    $page->save(stripslashes($_POST['title']),stripslashes($_POST['content']),$page->get_flags());
+    $page->save(htmlentities(stripslashes($_POST['title'])),stripslashes($_POST['content']),$page->get_flags());
     $nsisweb->redirect($instanceid);
     break;
   case ACTION_PREVIEW:
     $title   = htmlentities(stripslashes($_POST['title']));
-    $content = htmlentities(stripslashes($_POST['content']));
+    $content = stripslashes($_POST['content']);
     break;
   case ACTION_REVERT:
   default:
@@ -97,7 +97,7 @@ from scratch again. When you are finished editing press Save Changes to keep the
 edits, or Cancel to discard them and return to the page you were viewing.</p>
 <form name="editform" method="post" enctype="multipart/form-data" action="edit.php">
   <p>Edit the title of the page: (255 characters max)<br>
-    <input type="text" style="font-family:courier new;font-size:10pt;" name="title" size="79" maxlength="255" value="<?= htmlentities($title) ?>"><br>
+    <input type="text" style="font-family:courier new;font-size:10pt;" name="title" size="79" maxlength="255" value="<?=$title?>"><br>
     <br>
     <? if($page->get_type() == PAGETYPE_DIRECTORY) { ?>
     Edit the description of this directory page.
@@ -108,7 +108,7 @@ edits, or Cancel to discard them and return to the page you were viewing.</p>
     used to attack this site will be removed from your content. Additionally you can
     enclose text inside a [source] ... [/source] token pair which will cause that
     text to be syntax highlighted as if the text is NSIS script code:<br>
-    <textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="25"><?= htmlentities($content) ?></textarea>
+    <textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="25"><?=htmlentities($content)?></textarea>
   </p>
   <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
     <input type="hidden" name="instanceid" value="<?= $instanceid ?>">
