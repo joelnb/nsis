@@ -60,6 +60,8 @@ class HFile_nsis extends HFile{
 		//   8 - MUI Commands
 
 		$this->keywords = array(
+		  "Function" => "1",
+		  "FunctionEnd" => "1",
 			".onGUIInit" => "1",
 			".onInit" => "1",
 			".onInstFailed" => "1",
