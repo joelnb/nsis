@@ -6,6 +6,7 @@ define('PAGETYPE_TEMPLATED',  2);
 define('PAGETYPE_DIRECTORY',  3);
 define('PAGETYPE_PARENTLINK', 4);
 define('PAGEFLAG_ORPHANED',   1);
+define('USE_BEAUTIFIER',      TRUE);
 
 function initialise_page_table()
 {
@@ -173,7 +174,7 @@ function process_templated_content($content,$syntax_highlight)
 	   add_attr_to_tag adds attributes of our choosing to certain tags. */
  	$tag_list             = array(true,	"font", "div", "span", "h1", "h2", "h3", "table", "tr", "td", "th", "br", "hr", "b", "a", "i", "img", "strong", "em", "p", "li", "ul", "ol", "pre");
 	$rm_tags_with_content = array('script', 'style', 'applet', 'embed', 'head', 'frameset');
-	$self_closing_tags    = array('img', 'br', 'hr', 'input');
+	$self_closing_tags    = array(); //array('img', 'br', 'hr', 'input');
 	$force_tag_closing    = false;
 	$rm_attnames          = array('/.*/' => array('/target/i', '/^on.*/i', '/^dynsrc/i', '/^datasrc/i', '/^data.*/i'));
 	$add_attr_to_tag      = array('/^a$/i' => array('target' => '"_new"'));
@@ -189,6 +190,11 @@ function process_templated_content($content,$syntax_highlight)
 			)
 		)
 	);
+	
+	if($syntax_highlight) {
+		$content = colour_source($content);
+	}
+
 	$trusted = sanitize(
 		$content, 
 		$tag_list, 
@@ -199,11 +205,7 @@ function process_templated_content($content,$syntax_highlight)
 		$bad_attvals,
 		$add_attr_to_tag
 	);
-	
-	if($syntax_highlight) {
-		return colour_source($trusted);
-	}
-	
+
 	return $trusted;
 }
 
@@ -280,15 +282,39 @@ function find_pageid($pageid)
 function colour_source($string){
 	$array_contenido = explode("[source]",$string);
 	$final = $array_contenido[0];
-	for($i = 1;$i < count($array_contenido);$i++){
-		$array_contents = explode("[/source]",$array_contenido[$i]);
-		ob_start();
-		highlight_string("<?".$array_contents[0]."?".">");
-		$array_contents[0] = ob_get_contents();
-		ob_end_clean();
-		$final .= $array_contents[0].$array_contents[1];
-	}
-	return str_replace(array("&lt;?","?&gt;"),"",$final);
+	$count = count($array_contenido);
+
+	if($count > 0) {	
+		if(USE_BEAUTIFIER == TRUE) {
+			global $BEAUT_PATH;
+			$BEAUT_PATH = dirname(__FILE__)."/beaut";
+			include_once($BEAUT_PATH."/Beautifier/Init.php");
+			include_once($BEAUT_PATH."/HFile/HFile_nsis.php");
+			include_once($BEAUT_PATH."/Output/Output_HTML.php");
+	  	$highlighter = new Core(new HFile_nsis(),new Output_HTML());
+	 	}
+
+	  for($i = 1;$i < $count;$i++){
+			$array_contents = explode("[/source]",$array_contenido[$i]);
+			if(USE_BEAUTIFIER == TRUE) {
+		    $array_contents[0] = $highlighter->highlight_text($array_contents[0]);
+	    } else {
+				ob_start();
+				highlight_string("<?".$array_contents[0]."?".">");
+				$array_contents[0] = ob_get_contents();
+				ob_end_clean();
+		  }
+			$final .= "<pre>".$array_contents[0]."</pre>".$array_contents[1];
+		}
+
+		if(USE_BEAUTIFIER == TRUE) {
+			return $final;
+	  } else {
+			return str_replace(array("&lt;?","?&gt;"),"",$final);
+	  }
+ 	}
+
+ 	return $string;
 }
 
 function render_templated_page($title,$author,$date,$source,$pageid)

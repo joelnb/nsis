@@ -165,7 +165,7 @@ ENDOFHTML;
 				You must now enter the content of your new page. You are allowed to use HTML although some
 				tags that could be used to attack this site will be removed from your content. Additionally you
 				can enclose text inside a [source] ... [/source] token pair which will cause that text to be
-				syntax highlighted as if the text is PHP code:<br>
+				syntax highlighted as if the text is NSIS script code:<br>
 				<textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="25">$content_entities</textarea>
 ENDOFHTML;
 			} else if(strcmp($pagetype,'newfile') == 0) {

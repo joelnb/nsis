@@ -92,7 +92,7 @@ edits, or Cancel to discard them and return to the page you were viewing.</p>
   You can use HTML although some tags that could be
 	used to attack this site will be removed from your content. Additionally you can
 	enclose text inside a [source] ... [/source] token pair which will cause that
-	text to be syntax highlighted as if the text is PHP code:<br>
+	text to be syntax highlighted as if the text is NSIS script code:<br>
 	<textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="25"><?=htmlentities($content)?></textarea>
 	</p>
 	<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
