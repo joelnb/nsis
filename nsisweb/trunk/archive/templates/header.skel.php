@@ -60,8 +60,11 @@ if(!$session->is_anonymous()) {
         <td>
           <table width="720" border="0" cellpadding="0" cellspacing="0" class="innertable" style="background-image:none;">
             <tr class="header"> 
-              <td style="vertical-align:top"><a href="http://nsis.sourceforge.net/index.php"><img class="centerimage" src="http://nsis.sourceforge.net/images/logo.gif" width="48" height="48" alt="" /></a></td> 
-              <td><div class="header">NSIS Archive<br><span style="font-size:8pt;"><?= $page_browsing_depth ?></span></div>
+              <td><a href="http://nsis.sourceforge.net/index.php"><img class="centerimage" src="http://nsis.sourceforge.net/images/logo.gif" width="48" height="48" alt="" /></a></td> 
+              <td><div class="header">NSIS Archive<br><span style="font-size:8pt;"><?= $page_browsing_depth ?></span></div></td>
+            </tr>
+            <tr>
+              <td colspan="2">
                 <p style="font-size:8pt;color:#FF0000;">Please note that the archive is still under development. If you have any suggestions, find any bugs,
                 or have problems working with the archive come chat with us at <a href="irc://irc.landoleet.org/nsis">#nsis @ irc.landoleet.org</a> or send
                 a PM to <a href="http://forums.winamp.com/private.php?s=&action=newmessage&userid=19620">KiCHiK</a> or
