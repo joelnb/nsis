@@ -47,7 +47,7 @@ class NsisWeb
       initialise_page_table();
       initialise_picks_table();
       $storage = new NsisWebStorage;
-      $storage->
+      $storage->initialise();
     }
   }
   function record_error($error)
