@@ -17,8 +17,8 @@ if(strcmp($_POST['action'],'search') == 0) {
 	$do_search = TRUE;
 } else {
 	$do_search = FALSE;
-	$anon_author = 'CHECKED';
-	$anon_editor = 'CHECKED';
+//	$anon_author = 'CHECKED';
+//	$anon_editor = 'CHECKED';
 }
 
 if(strcmp($anon_author,'CHECKED') != 0)  $anon_author  = '';
