@@ -250,7 +250,6 @@ function login($username,$password)
 		$session_id = $session->session_id;
 		
 		setcookie(COOKIE_NAME,$session_id,time()+86400,"/","",0);
-		$session->session_id   = $session_id;
 		$session->user_id      = $user_id;
 		$session->last_checked = time();
 		unset($session->cached_username);
@@ -263,7 +262,7 @@ function login($username,$password)
 		$_SESSION['session'] = base64_encode($session->to_string());
 		$_SESSION['id']      = md5($session_id+NSISWEB_MAGIC_NUMBER);
 
-		$nsisweb->query('update nsisweb_sessions set last_access=NOW(),userid='.$session->user_id);
+		$nsisweb->query('update nsisweb_sessions set last_access=NOW(),userid='.$session->user_id." where sessionid=$session_id");
 		return $nsisweb->session = $session;
 	} else {
 		$nsisweb->record_error('Unknown username');
