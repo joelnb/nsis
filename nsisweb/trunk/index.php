@@ -14,7 +14,7 @@
 		</ul> 
 	<li class="text"><b><a href="http://sourceforge.net/projects/nsis/">Project page</a></b> 
 		<ul>
-			Latest development information and downloads
+			Latest development info and downloads
 		</ul> 
 	<li class="text"><b><a href="http://forums.winamp.com/forumdisplay.php?s=&forumid=65">Forum</a></b>  
 		<ul>
