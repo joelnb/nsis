@@ -3,9 +3,10 @@ include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 include_once(dirname(__FILE__)."/engine/nsiswebpage.pkg.php");
 include_once(dirname(__FILE__)."/engine/nsiswebpicks.pkg.php");
 
-if(count($_POST)>0 && count($_POST['picked'])>0 && strlen($_GET['parentid'])>0) {
+if(count($_POST)>0 && count($_POST['picked'])>0 && strlen($_POST['parentid'])>0) {
 	foreach($_POST['picked'] as $pickpageid) {
-		set_page_parent($pickpageid,$_GET['parentid']);
+		set_page_parent($pickpageid,$_POST['parentid']);
+		remove_from_current_picks($pickpageid,$_POST['parentid']);
 	}
 }
 
