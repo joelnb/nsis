@@ -1,7 +1,16 @@
 <?
 include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
-$nsisweb->start_page('Admin',FALSE);
 
+function how_long($seconds)
+{
+	if($seconds == 0) return "now";
+  $days  = (int)($seconds/86400); $seconds %= 86400; if($days>0)    $str .= "$days days ";
+  $hours = (int)($seconds/3600);  $seconds %= 3600;  if($hours>0)   $str .= "$hours hours ";
+  $mins  = (int)($seconds/60);    $seconds %= 60;    if($mins>0)    $str .= "$mins mins ";
+  return "$str ago";
+}
+
+$nsisweb->start_page('Admin',FALSE);
 echo '<span style="font-family:verdana;font-size:20pt;color:#000000;">NSIS Archive Admin Options</span>';
 
 $session = $nsisweb->get_session();
@@ -28,6 +37,11 @@ if(!$user->is_admin()) {
   $record   = $nsisweb->query_one_only("select NOW()");
   if($record)  $time_db = $record['NOW()'];
 
+  $users = $nsisweb->query("select sessionid,a.userid,a.created,last_access,username,ip,a.flags,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(a.created)) as uptime,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(last_access)) as accessed from nsisweb_sessions as a,nsisweb_users as b where a.userid=b.userid order by ip");
+  $anons = $nsisweb->query("select sessionid,userid,created,last_access,ip,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(created)) as uptime,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(last_access)) as accessed from nsisweb_sessions where userid=0 order by ip");
+  $usercount = $users ? $nsisweb->how_many_results($users) : 0;
+  $anoncount = $anons ? $nsisweb->how_many_results($anons) : 0;
+
   print <<<ENDOFHTML
   <p>Administrator status gives you the right to modify any page stored in the
   database no  matter who created it, and the right to grant admin rights to
@@ -38,7 +52,8 @@ if(!$user->is_admin()) {
   $time_db. PHP diagnostics can be viewed  <a href="admin.php?action=phpinfo">here</a></p>
   
   <span style="font-family:verdana;font-size:15pt;color:#000000;">Connected Sessions</span>
-  <p>The following sessions are currently established:<br>
+  <p>The following sessions are currently established: ($usercount registered users and
+  $anoncount guests)<br>
     <br>
     <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
       <tr style="background-color:#eeeeff">
@@ -52,9 +67,8 @@ if(!$user->is_admin()) {
 ENDOFHTML;
 
   $i = 0;
-  $result = $nsisweb->query("select sessionid,a.userid,a.created,last_access,username,ip,a.flags from nsisweb_sessions as a,nsisweb_users as b where a.userid=b.userid order by ip");
-  if($result && $nsisweb->how_many_results($result) > 0) {
-    while($record = $nsisweb->get_result_array($result)) {
+  if($usercount > 0) {
+    while($record = $nsisweb->get_result_array($users)) {
       if($i == 0) {
         $i = 1;
         $bgcolour = '#eeffee';
@@ -63,7 +77,10 @@ ENDOFHTML;
         $bgcolour = '#eeeeee';
       }
 
-      print '<tr style="background-color:'.$bgcolour.';font-size:8pt;" title="Session ID: '.$record['sessionid'].'">';
+      $uptime   = how_long($record['uptime']);
+      $accessed = how_long($record['accessed']);
+
+      print "<tr style=\"background-color:$bgcolour;font-size:8pt;\" title=\"Session ID: ".$record['sessionid'].", session created $uptime, last accessed $accessed\">";
       print '<td>&nbsp;'.$record['userid'].'&nbsp;</td>';
       print '<td>&nbsp;'.$record['username'].'&nbsp;</td>';
       print '<td>&nbsp;'.$record['created'].'&nbsp;</td>';
@@ -75,9 +92,8 @@ ENDOFHTML;
     }
   }
 
-  $result = $nsisweb->query("select sessionid,userid,created,last_access,ip from nsisweb_sessions where userid=0 order by ip");
-  if($result && $nsisweb->how_many_results($result) > 0) {
-    while($record = $nsisweb->get_result_array($result)) {
+  if($anoncount > 0) {
+    while($record = $nsisweb->get_result_array($anons)) {
       if($i == 0) {
         $i = 1;
         $bgcolour = '#eeffee';
@@ -85,8 +101,11 @@ ENDOFHTML;
         $i = 0;
         $bgcolour = '#eeeeee';
       }
+      
+      $uptime   = how_long($record['uptime']);
+      $accessed = how_long($record['accessed']);
 
-      print '<tr style="background-color:'.$bgcolour.';font-size:8pt;" title="Session ID: '.$record['sessionid'].'">';
+      print "<tr style=\"background-color:$bgcolour;font-size:8pt;\" title=\"Session ID: ".$record['sessionid'].", session created $uptime, last accessed $accessed\">";
       print '<td>&nbsp;0&nbsp;</td>';
       print '<td>&nbsp;Anonymous&nbsp;</td>';
       print '<td>&nbsp;'.$record['created'].'&nbsp;</td>';
@@ -97,11 +116,15 @@ ENDOFHTML;
 ENDOFHTML;
     }
   }
+
+  $users     = $nsisweb->query("select userid,username,created,usertype,flags from nsisweb_users");
+  $usercount = $users ? $nsisweb->how_many_results($users) : 0;
+  
   print <<<ENDOFHTML
     </table>
   </p>
   <span style="font-family:verdana;font-size:15pt;color:#000000;">Registered Users</span>
-  <p>The following users are registered on this site:<br>
+  <p>The following $usercount users are registered on this site:<br>
     <br>
     <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
       <tr style="background-color:#eeeeff">
@@ -113,10 +136,9 @@ ENDOFHTML;
       </tr>
 ENDOFHTML;
 
-  $result = $nsisweb->query("select userid,username,created,usertype,flags from nsisweb_users");
-  if($result && $nsisweb->how_many_results($result) > 0) {
+  if($usercount > 0) {
     $i = 0;
-    while($record = $nsisweb->get_result_array($result)) {
+    while($record = $nsisweb->get_result_array($users)) {
       if($i == 0) {
         $i = 1;
         $bgcolour = '#eeffee';
