@@ -9,11 +9,10 @@ function get_image($img)
 }
 
 $insert_link = '<a href="picklist.php?instanceid='.$this->get_instanceid().'" '.get_rollover('paste').'>'.get_image('paste').'</a>';
+$edit_link   = '<a href="edit.php?instanceid='.$this->get_instanceid().'" '.get_rollover('edit').'>'.get_image('edit').'</a>';
 if($this->get_parentid() == 0) {
-  $edit_link   = get_image('edit');
   $delete_link = get_image('cut');
 } else {
-  $edit_link   = '<a href="edit.php?instanceid='.$this->get_instanceid().'" '.get_rollover('edit').'>'.get_image('edit').'</a>';
   $delete_link = '<a href="delete.php?instanceid='.$this->get_instanceid().'" '.get_rollover('cut').'>'.get_image('cut').'</a>';
 }
 if($this->get_instanceid() == 0) {
