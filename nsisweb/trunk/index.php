@@ -33,8 +33,8 @@
 		<p>Some frequently asked questions</p>
 		</li>
 	<li><b><a href="http://nsis.sourceforge.net/Docs/">Documentation</a></b>
-		<p>Browse the latest NSIS documentation</p>
-		</li>
+		<p>Browse the latest NSIS documentation (latest CVS version)</p>
+    </li>
 	<li><b><a href="http://nsis.sourceforge.net/changelog.php">Change Log</a></b>
 		<p>See what's cooking<br />
 		<span class="smalltext">Updated: <?=LocalFileDate("nightly/changelog.htm")?></span></p>
