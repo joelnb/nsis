@@ -21,10 +21,10 @@ $record = $nsisweb->query_one_only("select created from nsisweb_users where user
 if($record) $user_created = $record['created'];
 
 $record = $nsisweb->query_one_only("select count(*) from nsisweb_pages where author=$user_id");
-if($record) $pages_modified = $record['count(*)'];
+if($record) $pages_created = $record['count(*)'];
 
 $record = $nsisweb->query_one_only("select count(*) from nsisweb_pages where author<>$user_id and last_author=$user_id");
-if($record) $pages_created = $record['count(*)'];
+if($record) $pages_modified = $record['count(*)'];
 
 $record = $nsisweb->query_one_only("select count(*) from nsisweb_files where userid=$user_id");
 if($record) $files_uploaded = $record['count(*)'];
