@@ -19,7 +19,7 @@ switch($view_mode) {
     $insert_link = get_image('paste','This page is in view only mode and therefore pages cannot be pasted into it');
     break;
   case VIEWMODE_DETACHED:
-    $edit_link   = '<a href="'.$nsisweb->get_page_url('edit').'&instanceid='.$this->get_instanceid().'">'.get_image('edit2','Edit this page').'</a>';
+    $edit_link   = '<a href="edit.php?pageid='.$this->get_pageid().'&instances='.$nsisweb->get_instance_history(0).'">'.get_image('edit2','Edit this page').'</a>';
     $pick_link   = '<a href="picklist.php?action=pick&instanceid='.$this->get_instanceid().'">'.get_image('copy2','Add this page to your pick list').'</a>';
     $delete_link = get_image('cut','You are viewing this page without reference to a parent page and so it cannot be removed as a child of that parent');
     $up_link     = get_image('up','You are viewing this page without reference to a parent page and so you cannot move up to the parent');
@@ -29,7 +29,7 @@ switch($view_mode) {
       $edit_link   = get_image('edit','This page cannot be edited');
     } else {
       $pick_link   = '<a href="picklist.php?action=pick&instanceid='.$this->get_instanceid().'">'.get_image('copy2','Add this page to your pick list').'</a>';
-      $edit_link   = '<a href="edit.php?instanceid='.$this->get_instanceid().'">'.get_image('edit2','Edit this page').'</a>';
+      $edit_link   = '<a href="edit.php?pageid='.$this->get_pageid().'&instances='.$nsisweb->get_instance_history(0).'">'.get_image('edit2','Edit this page').'</a>';
     }
 
     if($this->get_instanceid() != 0 || $session->looks_like_admin()) {
@@ -53,7 +53,7 @@ switch($view_mode) {
     } else {
       $up_link     = '<a href="'.$nsisweb->get_up_url().'">'.get_image('up2','View the parent of this page').'</a>';
       $pick_link   = '<a href="picklist.php?action=pick&instanceid='.$this->get_instanceid().'">'.get_image('copy2','Add this page to your pick list').'</a>';
-      $edit_link   = '<a href="edit.php?instanceid='.$this->get_instanceid().'">'.get_image('edit2','Edit this page').'</a>';
+      $edit_link   = '<a href="edit.php?pageid='.$this->get_pageid().'&instances='.$nsisweb->get_instance_history(0).'">'.get_image('edit2','Edit this page').'</a>';
     }
 
     if($this->get_instanceid() != 0 || $session->looks_like_admin()) {

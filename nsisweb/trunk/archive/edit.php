@@ -1,13 +1,43 @@
 <?
 include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
-include_once(dirname(__FILE__)."/engine/nsiswebpage.pkg.php");
+
+function return_to_caller($instances,$pageid)
+{
+  global $nsisweb;
+  $instanceid = 0;
+
+  /* Ultra cautious */
+  if(strlen($instances)>0) {
+    $array = explode(',',$instances);
+    if(is_array($array) && count($array)>0) {
+      $int = array_pop($array);
+      if(is_integer($int)) {
+        $instanceid = (int)$int;
+      }
+    }
+  }
+
+  if($instanceid > 0) {
+    $nsisweb->redirect($instanceid);
+  } else {
+    header("Location: ".$nsisweb->get_base_url()."/viewpage.php?pageid=$pageid");
+    exit;
+  }
+}
 
 /* Handle GET and POST arguments */
-unset($instanceid);
-if(isset($_GET['instanceid'])) {
-  $instanceid = $_GET['instanceid'];
-} else if(isset($_POST['instanceid'])) {
-  $instanceid = $_POST['instanceid'];
+unset($pageid);
+if(isset($_GET['pageid'])) {
+  $pageid = $_GET['pageid'];
+} else if(isset($_POST['pageid'])) {
+  $pageid = $_POST['pageid'];
+}
+
+unset($instances);
+if(isset($_GET['instances'])) {
+  $instances = $_GET['instances'];
+} else if(isset($_POST['instances'])) {
+  $instances = $_POST['instances'];
 }
 
 unset($action);
@@ -22,7 +52,7 @@ define('ACTION_SAVE',   3);
 
 /* Obey form actions */
 if($action == ACTION_CANCEL) {
-  $nsisweb->redirect($instanceid);
+  return_to_caller($instances,$pageid);
 }
 
 /* All other actions require edit rights, and for that we need to lookup the
@@ -30,26 +60,20 @@ if($action == ACTION_CANCEL) {
    which part of the page hierarchy the user is trying to edit. From the
    instanceid we can determine which page it is an instance of and then work
    with that actual page. */
-$instance = new NsisWebInstance($instanceid,FETCH_CONTENT_YES);
-$page     = $instance->get_page();
-$pageid   = $page->get_pageid();
-$session  = $nsisweb->get_session();
+$page    = new NsisWebPage($pageid);
+$session = $nsisweb->get_session();
 
 /* Handle error conditions */
-if(!$instance || !$page) {
+if(!$page || $pageid == 0) {
   $nsisweb->start_page('Edit',FALSE);
   echo '<span style="font-family: verdana; font-size: 20pt; color: #000000;">Edit Page: <span color="red">Access Denied</span></span>';
-  echo '<p>Page '.$instanceid.' not found!<br><br></p>';
+  echo '<p>Page '.$pageid.' not found!<br><br></p>';
   $nsisweb->end_page();
   exit;
 } else if($page->get_type() != PAGETYPE_TEMPLATED && $page->get_type() != PAGETYPE_DIRECTORY) {
   $nsisweb->start_page('Edit',FALSE);
   echo '<span style="font-family: verdana; font-size: 20pt; color: #000000;">Edit Page: <span color="red">Access Denied</span></span>';
-  if($pageid == 0) {
-  	echo '<p>You need admin rights in order to edit the root directory page of the Archive.<br><br></p>';
-	} else {
-	  echo '<p>Page '.$pageid.' cannot be edited!<br><br></p>';
-  }
+  echo '<p>Internal Error: The type of page is not recognised (type='.$page->get_type().'<br><br></p>';
   $nsisweb->end_page();
   exit;
 } else {
@@ -74,7 +98,7 @@ if(!$instance || !$page) {
 switch($action) {
   case ACTION_SAVE:
     $page->save(htmlentities(stripslashes($_POST['title'])),stripslashes($_POST['content']),$page->get_flags());
-    $nsisweb->redirect($instanceid);
+    return_to_caller($instances,$pageid);
     break;
   case ACTION_PREVIEW:
     $title   = htmlentities(stripslashes($_POST['title']));
@@ -111,8 +135,8 @@ edits, or Cancel to discard them and return to the page you were viewing.</p>
     <textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="25"><?=htmlentities($content)?></textarea>
   </p>
   <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-    <input type="hidden" name="instanceid" value="<?= $instanceid ?>">
-    <input type="hidden" name="instances" value="<?= $nsisweb->get_instance_history(0) ?>">
+    <input type="hidden" name="pageid" value="<?= $pageid ?>">
+    <input type="hidden" name="instances" value="<?= $instances ?>">
     <input type="hidden" name="action" value="<?= ACTION_PREVIEW ?>">
     <a href="Cancel" onclick="document.editform.action.value=<?= ACTION_CANCEL ?>;document.editform.submit();return false;">Cancel</a> |
     <a href="Revert" onclick="document.editform.action.value=<?= ACTION_REVERT ?>;document.editform.submit();return false;">Revert</a> |
@@ -130,7 +154,7 @@ if(strlen($title)>0 || strlen($content)>0) {
   } else {
     $fake_page_details['type'] = PAGETYPE_DIRECTORY;
   }
-  $page = new NsisWebPage($fake_page_details);
+  $page     = new NsisWebPage($fake_page_details);
   $instance = new NsisWebInstance($page);
   $instance->show_inline(VIEWMODE_NOBUTTONS);
 }
