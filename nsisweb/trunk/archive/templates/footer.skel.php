@@ -12,6 +12,7 @@
 /* Change this to TRUE to see the queries exected, never set it to true on the
    release site though because this sensitive data, debug purposes only! */
 define('SHOW_QUERIES',FALSE); 
+$query_count = count($nsisweb->executed_queries);
 ?>
 <!-- footer.skel.php: begin -->
 										<br><br><center><a href="http://sourceforge.net"><img class="image" src="http://sourceforge.net/sflogo.php?group_id=22049&amp;type=1" alt="SourceForge Logo"></a>
@@ -24,7 +25,7 @@ define('SHOW_QUERIES',FALSE);
 			</table> 
 			<table width="750" cellpadding="0" cellspacing="0" border="0" style="background-color:#F0F0F0">
 				<tr>
-				  <td align="left" style="font-size:8pt;padding-bottom:2px;"><i>Page generated in <?= number_format($nsisweb->get_gen_time(),3) ?> seconds (<?= count($nsisweb->executed_queries) ?> queries).</i></td>
+				  <td align="left" style="font-size:8pt;padding-bottom:2px;"><i>Page generated in <?= number_format($nsisweb->get_gen_time(),3) ?> seconds (<?= $query_count.' '.($query_count == 1 ? "query" : "queries") ?>).</i></td>
 				</tr>
 			</table>
 		</div>
