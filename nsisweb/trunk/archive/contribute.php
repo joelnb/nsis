@@ -3,6 +3,7 @@ $upload_error = $php_errormsg;
 
 include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 include_once(dirname(__FILE__)."/engine/nsiswebpage.pkg.php");
+include_once(dirname(__FILE__)."/engine/nsiswebpicks.pkg.php");
 
 function get_max_upload() {
 	if(!ini_get("file_uploads")) {
@@ -267,31 +268,6 @@ ENDOFHTML;
 	  break;
 	case 3:
 		/* --------------------
-		      WIZARD PAGE 3
-		   -------------------- */
-		$pagetype = $_POST['pagetype'];
-		$title    = urlencode($_POST['title']);
-		$content  = urlencode($_POST['content']);
-
-		$nsisweb->start_page('Contribute');
-		print <<<ENDOFHTML
-		<font style="font-family: verdana; font-size: 20pt; color: #000000;">Contribute: Stage Three</font>
-		<p>The final stage, choosing where to insert the page into the hierarchy, has not been implemented
-		at this time.</p>
-		<form name="wizard" method="post" enctype="multipart/form-data" action="contribute.php">
-		<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-		  <input type="hidden" name="stage" value="4">
-		  <input type="hidden" name="pagetype" value="$pagetype">
-		  <input type="hidden" name="title" value="$title">
-		  <input type="hidden" name="content" value="$content">
-	  	<a href="javascript:wizard.stage.value=2;wizard.submit();"><< Back</a> |
-		  <a href="javascript:wizard.submit();">Create New Page >></a>
-		</p>
-		</form>
-ENDOFHTML;
-	  break;
-	case 4:
-		/* --------------------
 		      WIZARD PAGE 4
 		   -------------------- */
 		$pagetype = $_POST['pagetype'];
@@ -304,18 +280,42 @@ ENDOFHTML;
 			$result = create_directory_page($title,$content);
 		} else {
 			/* Error, go back a step */
-			$_POST['stage'] = 3;
+			$_POST['stage'] = 2;
 			header("Location: contribute.php");
 			exit;
 		}
 		
-		$home_link = $nsisweb->get_home_url();
-		
 		$nsisweb->start_page('Contribute');
 		print <<<ENDOFHTML
 		<font style="font-family: verdana; font-size: 20pt; color: #000000;">Contribute: Complete</font>
-		<p>That's it, your page has been added to the <b>NSISWeb</b> database!</p>
+ENDOFHTML;
+
+		if($result) {
+			$pageid = $nsisweb->get_created_id();
+			if($pageid > 0) {
+				add_to_current_picks($pageid,PICKTYPE_PAGE);
+				print <<<ENDOFHTML
+				<p>The new page that you have created has been added to your pick list.
+				You should now browse through the archive until you find somewhere that
+				you want to insert your new page. You may find that you do not have
+				permission to insert the page at some locations.<br>
+				<br>
+				Once you have found a section to insert the page in click the insert pages
+				link on the browse page and you will be able to select which pages you wish
+				to insert from your pick list.<br>
+				<br>
+				If you do not insert the page in your current session the new page will be
+				deleted.</p>
+ENDOFHTML;
+			}
+		}
+		
+		$home_link   = $nsisweb->get_home_url();
+		$browse_link = $nsisweb->get_page_url('browse');
+		
+		print <<<ENDOFHTML
 		<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+		  <A href="$browse_link">Browse Pages</a> | 
 		  <a href="$home_link">Return To Home</a>
 		</p>
 ENDOFHTML;
