@@ -30,7 +30,7 @@ table {
 	background-position: 370px 140px;
 }
 
-.text { 
+p, li { 
     margin: 12px; 
     font-size: 10pt; 
     font-family: Verdana, Arial, Helvetica, sans-serif; 
