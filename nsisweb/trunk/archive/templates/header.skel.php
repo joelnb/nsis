@@ -18,8 +18,8 @@ if(!$session->is_anonymous()) {
 	$logged_in_text = $session->get_username().' ( <a style="color:#0000ff;text-decoration:underline;" href="'.$nsisweb->get_page_url('logout').'">logout</a> )';
 }
 ?>
-<!-- header.skel.php: begin -->
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> 
+<!-- header.skel.php: begin -->
 <html> 
 	<head>
 		<title>Nullsoft (SuperPiMP|Scriptable) Install System // NSIS Archive Site</title>
