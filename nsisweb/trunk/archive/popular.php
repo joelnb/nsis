@@ -16,8 +16,9 @@ $nsisweb->start_page('Most Popular');
 <?
 $result = $nsisweb->query("select title,views from nsisweb_pages where views>0 and not flags & ".PAGEFLAG_ORPHANED." order by views desc");
 if($result) {
-  $rank = $nsisweb->how_many_results($result);
-	if($rank > 0) {
+  $count = $nsisweb->how_many_results($result);
+  $rank  = 1;
+	if($count > 0) {
 		$i = 0;
 		while(is_array($record = $nsisweb->get_result_array($result))) {
 			$title = $record['title'];
@@ -44,7 +45,7 @@ if($result) {
 			  </td>
 			</tr>
 ENDOFHTML;
-    $rank--;
+    $rank++;
 		}
 	}
 }
