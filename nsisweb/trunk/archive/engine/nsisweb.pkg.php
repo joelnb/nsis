@@ -68,6 +68,10 @@ class NsisWebSite
 	}
 	function redirect($pagename)
 	{
+		if(strcmp($pagename,'0') == 0) {
+			$pagename = 'browse';
+		}
+		
 		if(file_exists($this->fileroot.'/'.$pagename.'.php')) {
 		  $url = $this->wwwroot.'/'.$pagename.'.php';
 		  // encode get args into $url
