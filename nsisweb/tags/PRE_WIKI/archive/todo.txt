@@ -1,0 +1,9 @@
+* Make the buttons 'Edit this page' and 'Remove this page' grey and unclickable when you're not allowed to edit the page, like at the 'Browse' page. As a first time user of the archive, I think I've clicked those buttons about a dozen times on different pages before I found out that it is only usefull at my own pages. 
+
+* Ask for an e-mail adress when signing up for the Archive. Now, when someone loses his/her password, he/she cannot retrieve it. 
+
+* There is a typing error somewhere at your archive. Something like 'a a download', but I cannot find it anymore. 
+
+* The description text above the Download page still says that the downloads are presented in a simple list. 
+
+* Change date format to something with letters to seperate month from day
