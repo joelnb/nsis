@@ -18,6 +18,11 @@
 					</td>
 				</tr> 
 			</table> 
+			<table width="750" cellpadding="0" cellspacing="0" border="0" style="background-color:#F0F0F0">
+				<tr>
+				  <td align="left" style="font-size:8pt;padding-bottom:2px;"><i>Page generated in <?= number_format($nsisweb->get_gen_time(),3) ?> seconds.</i></td>
+				</tr>
+			</table>
 		</div> 
 	</body> 
 </html>

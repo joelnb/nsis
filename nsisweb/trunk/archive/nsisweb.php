@@ -33,11 +33,11 @@ NSIS users for NSIS users.</p>
 <?
 $session = $nsisweb->get_session();
 if ($session->is_anonymous()) {
-        $url = $nsisweb->get_page_url('createaccount');
-        print <<<ENDOFHTML
-                        <li><b><a href="$url">Your Account</a></b>
-                          <ul>Get your free account with us and get the credit for your contributions</ul>
-                        </li>
+  $url = $nsisweb->get_page_url('createaccount');
+  print <<<ENDOFHTML
+    <li><b><a href="$url">Your Account</a></b>
+      <ul>Get your free account with us and get the credit for your contributions</ul>
+    </li>
 ENDOFHTML;
 }
 

@@ -15,6 +15,7 @@ class NsisWebSite
   var $last_query;
   var $errors;
   var $session;
+  var $start_time;
 
   function NsisWebSite()
   {
@@ -56,6 +57,7 @@ class NsisWebSite
   }
   function start_page($title)
   {
+	  $this->start_time = $this->get_micro_time();
     global $page_info;
     $nsisweb = $this;
     include(NSISWEB_HEADER_SKELETON);
@@ -65,6 +67,10 @@ class NsisWebSite
     global $page_info;
     $nsisweb = $this;
     include(NSISWEB_FOOTER_SKELETON);
+  }
+  function get_gen_time()
+  {
+	  return $this->get_micro_time()-$this->start_time;
   }
   function redirect($pagename)
   {
@@ -158,6 +164,11 @@ class NsisWebSite
     $minver = str_replace(".","", $vercheck);
     $curver = str_replace(".","", phpversion());
     return ($curver >= $minver) ? TRUE : FALSE;
+  }
+  function get_micro_time()
+  {
+   list($usec, $sec) = explode(" ",microtime()); 
+   return ((float)$usec + (float)$sec); 
   }
 };
 
