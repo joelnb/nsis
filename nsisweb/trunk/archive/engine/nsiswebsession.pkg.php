@@ -226,27 +226,35 @@ function construct_session_id()
 function end_session()
 {
 	global $nsisweb;
-	
-	$session_id = 0;
-	if(isset($_COOKIE[COOKIE_NAME])) {
-		$session_id = $_COOKIE[COOKIE_NAME];
-	} else if(isset($_GET[COOKIE_NAME])) {
-		$session_id = $_GET[COOKIE_NAME];
+
+	if($nsisweb->session != 0) {	
+		$session_id = 0;
+		if(isset($_COOKIE[COOKIE_NAME])) {
+			$session_id = $_COOKIE[COOKIE_NAME];
+		} else if(isset($_GET[COOKIE_NAME])) {
+			$session_id = $_GET[COOKIE_NAME];
+		}
+
+		if($session_id != 0) {
+			$nsisweb->query("delete from nsisweb_sessions where sessionid='$session_id'");
+			$nsisweb->query("delete from nsisweb_picks where sessionid='$session_id'");
+		}
+
+		setcookie(COOKIE_NAME,"",time()-86400,"/","",0);
+		setcookie(session_name(),"",time()-86400,"/","",0);
+		unset($_GET[COOKIE_NAME]);
+
+		@session_start();
+		$_SESSION = array();
+		@session_unset();
+		@session_destroy();
+		
+		$session = $nsisweb->session;
+		$session->user_id = 0;
+		$session->looks_like_admin = FALSE;
+		unset($session->cached_username);
+		unset($_SESSION['session']);
 	}
-
-	if($session_id != 0) {
-		$nsisweb->query("delete from nsisweb_sessions where sessionid='$session_id'");
-		$nsisweb->query("delete from nsisweb_picks where sessionid='$session_id'");
-	}
-
-	setcookie(COOKIE_NAME,"",time()-86400,"/","",0);
-	setcookie(session_name(),"",time()-86400,"/","",0);
-	unset($_GET[COOKIE_NAME]);
-
-	@session_start();
-	$_SESSION = array();
-	@session_unset();
-	@session_destroy();
 }
 
 function login($username,$password)

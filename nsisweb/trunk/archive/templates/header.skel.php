@@ -8,28 +8,12 @@
      + $page_info
      + $title
 */
+global $instance;
 $login_url_ext = '';
-if((isset($page_info) || isset($_GET['page']) || isset($_GET['pageid'])) && isset($_GET['parentid'])) {
-  unset($our_pageid);
-  unset($our_parentid);
-  if(isset($page_info)) {
-    $our_pageid   = (int)$page_info['pageid'];
-    $our_parentid = (int)$page_info['parentid'];
-  } else {
-    $our_parentid = (int)$_GET['parentid'];
-    if(isset($_GET['pageid'])) {
-      $our_pageid = (int)$_GET['pageid'];
-    } else {
-      $page = find_pageid($_GET['page']);
-      if(isset($page['pageid'])) {
-        $our_pageid = $page['pageid'];
-      }
-    }
-  }
-  if(isset($our_pageid) && isset($our_parentid)) {
-    $login_url_ext = '&pageid='.$our_pageid.'&parentid='.$our_parentid;
-  }
+if(isset($instance) && strcmp(get_class($instance),'nsiswebinstance') == 0) {
+	$login_url_ext = '?page='.$instance->get_instanceid();
 }
+
 $page_browsing_depth = "You are viewing archive page <b>$title</b>";
 $home_url            = $nsisweb->get_home_url();
 $picklist_url        = 'picklist.php';

@@ -341,6 +341,8 @@ class NsisWebInstance
 	function show()
 	{
 		global $nsisweb;
+		global $instance;
+		$instance = $this;
 		$page = $this->get_page();
 		$nsisweb->start_page($page->get_title());
 		$success = $this->show_inline();
