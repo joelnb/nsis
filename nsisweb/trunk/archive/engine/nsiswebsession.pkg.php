@@ -220,10 +220,10 @@ function find_my_session()
      if($record) {
        $user = find_userid($record['userid']);
        if(!$user->is_anonymous() && $user->persists()) {
-        $record     = $nsisweb->query_one_only("select NOW()");
-        $now        = $record['NOW()'];
+        $now_record = $nsisweb->query_one_only("select NOW()");
+        $now        = $now_record['NOW()'];
         $session    = new NsisWebSession(array('sessionid'=>$session_id,'userid'=>$user->user_id,'created'=>$now,'last_access'=>$now,'last_checked'=>time(),'ip'=>$_SERVER['REMOTE_ADDR']));
-        $session->looks_like_admin = ($record['usertype'] == USERTYPE_ADMIN) ? TRUE : FALSE;
+        $session->looks_like_admin = $user->is_admin();
         $session->persist          = TRUE;
         track_user_agent();
        }
