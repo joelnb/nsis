@@ -191,9 +191,9 @@ ENDOFHTML;
 ENDOFHTML;
 
   /* There must be a way to do this with SQL and joins */
-  $agents[] = array();
-  $counts[] = array();
-  
+  $agents = array();
+  $counts = array();
+
 	$result = $nsisweb->query("select user_agent from nsisweb_info group by user_agent,ip order by user_agent desc");
 	if($result && $nsisweb->how_many_results($result) > 0) {
 		$last_agent = '';
@@ -220,10 +220,10 @@ ENDOFHTML;
 		$agents[] = $last_agent;
 		$counts[] = $count;
 	}
-	
+
 	$count = count($agents);
 	if($count > 0) {
-		array_multisort($agents,SORT_DESC,$counts);
+		array_multisort($counts,SORT_DESC,$agents);
 
 		$i = 0;
 		for($index=1; $index<=$count; $index++) {
