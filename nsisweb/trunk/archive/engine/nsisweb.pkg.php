@@ -198,7 +198,7 @@ class NsisWeb
     /* If you know that you are only interested in a single row of result data
        (which is a very common case) this function performs the steps necessary
        in one neat call. */
-     $result = $this->query($query,$file,$line);
+     $result = $this->query($query,$file,$line,0);
      if($result && $this->how_many_results($result) > 0) {
        return $this->get_result_array($result);
      }
@@ -210,7 +210,7 @@ class NsisWeb
        (which is a very common case) this function performs the steps necessary
        in one neat call. This variant will barf if more than a single row of
        data is returned to us by the database engine. */
-     $result = $this->query($query,$file,$line);
+     $result = $this->query($query,$file,$line,0);
      if($result && $this->how_many_results($result) == 1) {
        return $this->get_result_array($result);
      }
