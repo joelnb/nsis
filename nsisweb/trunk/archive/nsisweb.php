@@ -42,7 +42,7 @@ The Archive currently contains <?= $pages_text ?> and has <?= $users_text ?>.
     <p>General information about the NSIS Archive</p>
   </li>
   <li><b><a href="<?= $nsisweb->get_page_url('contribute') ?>">Contribute</a></b>
-    <p>Help the archive grow by uploading your stuff to the archive</p>
+    <p>Help the archive grow by authoring your own content</p>
   </li>
   <li><b><a href="<?= $nsisweb->get_page_url('browse') ?>">Browse</a></b>
     <p>Dive right in and start browsing the archive for goodies!</p>
@@ -54,10 +54,13 @@ The Archive currently contains <?= $pages_text ?> and has <?= $users_text ?>.
     <p>See the latest additions and modifications</p>
   </li>
   <li><b><a href="<?= $nsisweb->get_page_url('popular') ?>">Most Popular</a></b>
-    <p>See which pages are visited most and which files are downloaded most frequently</p>
+    <p>See which pages are visited the most</p>
   </li>
   <li><b><a href="<?= $nsisweb->get_page_url('search') ?>">Search</a></b>
     <p>Need to find something or can't remember where you saw something before? Try this...</p>
+  </li>
+  <li><b><a href="<?= $nsisweb->get_page_url('whoswho') ?>">Who's Who?</a></b>
+    <p>Scan the list of registered users and find out who the admins are</p>
   </li>
 <?
 $session = $nsisweb->get_session();
