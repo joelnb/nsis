@@ -164,8 +164,8 @@ class NsisWeb
            strstr($query,'insert') ||
            strstr($query,'delete')) {
           global $nsisweb;
-          if($nsisweb->session > 0) {
-            $session = $nsisweb->get_session();
+          if($nsisweb->session != 0) {
+            $session = $nsisweb->session;
             $user    = $session->user_id;
             $ip      = $session->ip;
           } else {
