@@ -17,10 +17,21 @@ while($record = $nsisweb->get_result_array($users)) {
 	if($i == 0) {
   	print '<tr style="background-color:#eeffee;font-size:8pt;">';
  	}
- 	
+
+	$pages_result = $nsisweb->query_one_only("select count(*) from nsisweb_pages where author=".$record['user_id']". order by created desc",__FILE__,__LINE__);
+	if($pages_result) $pages_created = $pages_result['count(*)'];
+
  	print '<td';
  	if($record['usertype'] == USERTYPE_ADMIN) {
 	 	print ' style="background-color:#ffffdd;"';
+  } else if($pages_created>20) {
+	 	print ' style="background-color:#6666ff;"';
+  } else if($pages_created>15) {
+	 	print ' style="background-color:#8888ff;"';
+  } else if($pages_created>10) {
+	 	print ' style="background-color:#aaaaff;"';
+  } else if($pages_created>5) {
+	 	print ' style="background-color:#ccccff;"';
   }
 
 	print '>&nbsp;<a href="profile.php?userid='.$record['userid'].'">'.$record['username'].'</a>&nbsp;</td>';
