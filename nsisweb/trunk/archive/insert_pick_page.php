@@ -23,7 +23,8 @@ $nsisweb->start_page('Insert Pages');
 ?>
 <font style="font-family: verdana; font-size: 20pt; color: #000000;">Insert Pages</font>
 <p>You have chosen to insert one or more pages from your currently picked pages into
-the section you were browsing.<br>
+the section you were browsing. Pages <a style="text-decoration:underline;color:#0000ff;" href="<?= $nsisweb->get_page_url('contribute') ?>">created by you</a> will appear in your pick list so
+that you can insert them into the archive where you feel they belong.<br>
 <br>
 Select the pages you wish to insert from the pages in your pick list:<br>
 <?
