@@ -1,5 +1,5 @@
 <?
-include_once("$DOCUMENT_ROOT/engine/nsisweb.pkg.php");
+include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 if(strlen($_GET['file']) > 0) {
 	include_once("engine/nsiswebstorage.pkg.php");
 

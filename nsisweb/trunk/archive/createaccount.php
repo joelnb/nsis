@@ -1,5 +1,5 @@
 <?
-include_once("$DOCUMENT_ROOT/engine/nsisweb.pkg.php");
+include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 $nsisweb->start_page('Create Account');
 ?>
 <font style="font-family: verdana; font-size: 20pt; color: #000000;">Create Account</font>

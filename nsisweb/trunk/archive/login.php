@@ -1,6 +1,6 @@
 <?
-include_once("$DOCUMENT_ROOT/engine/nsisweb.pkg.php");
-include_once("$DOCUMENT_ROOT/engine/nsiswebsession.pkg.php");
+include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
+include_once(dirname(__FILE__)."/engine/nsiswebsession.pkg.php");
 
 $login_failed = FALSE;
 

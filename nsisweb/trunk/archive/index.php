@@ -1,4 +1,4 @@
 <?
-include_once("$DOCUMENT_ROOT/engine/nsisweb.pkg.php");
+include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 $nsisweb->redirect('nsisweb');
 ?>

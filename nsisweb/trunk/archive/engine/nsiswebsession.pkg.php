@@ -27,7 +27,7 @@
    one and higher).
 */
 
-include_once("$DOCUMENT_ROOT/engine/nsisweb.pkg.php");
+include_once(dirname(__FILE__)."/../engine/nsisweb.pkg.php");
 define('COOKIE_NAME','nsiswebid');
 define('ANONYMOUS_USER_ID',0);
 define('SESSION_TIMEOUT',60*30); /* seconds */

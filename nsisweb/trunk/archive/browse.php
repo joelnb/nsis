@@ -1,6 +1,6 @@
 <?
-include_once("$DOCUMENT_ROOT/engine/nsisweb.pkg.php");
-include_once("$DOCUMENT_ROOT/engine/nsiswebpage.pkg.php");
+include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
+include_once(dirname(__FILE__)."/engine/nsiswebpage.pkg.php");
 $nsisweb->start_page('Browse Archive');
 ?>
 <font style="font-family: verdana; font-size: 20pt; color: #000000;">Browse</font>
