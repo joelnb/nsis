@@ -21,7 +21,7 @@ $contenta = @file('/home/groups/n/ns/nsis/htdocs/nightly/changelog.txt');
 if ($contenta) {
 	$content = implode ('',$contenta);
 	for ($i = 0; $i < count($_AUTHORS); $i++) {
-		$content = str_replace($_AUTHORS[$i][0],$_AUTHORS[$i][1],$content);
+		$content = str_replace($_AUTHORS[$i][0],$_AUTHORS[$i][1]." (".$_AUTHORS[$i][0].")",$content);
 	}
 	echo $content;
 }
