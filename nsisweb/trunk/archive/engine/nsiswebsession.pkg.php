@@ -57,7 +57,7 @@ class NsisWebSession
 			$this->user_id      = $param['userid'];
 			$this->created      = $param['created'];
 			$this->last_access  = $param['last_access'];
-			$this->last_checked = time();
+			$this->last_checked = $param['last_checked'];
 			unset($this->cached_username);
 		} else if(is_string($param)) {
 			$this->from_string($param);
@@ -187,7 +187,9 @@ function find_my_session()
 	if(!$session || !$session_okay) {
 		/* Create a new anonymous session */
 		$session_id = construct_session_id();
-		$session    = new NsisWebSession(array('sessionid'=>$session_id,'userid'=>0));
+		$record     = $nsisweb->query_one_only("select NOW()");
+		$now        = $record['NOW()'];
+		$session    = new NsisWebSession(array('sessionid'=>$session_id,'userid'=>0,'created'=>$now,'last_access'=>$now,'last_checked'=>time()));
 		$nsisweb->query("insert into nsisweb_sessions set sessionid='$session_id',userid=0,created=NOW(),last_access=NOW()");
 		setcookie(COOKIE_NAME,$session_id,time()+86400,"/","",0);
   }
@@ -248,7 +250,10 @@ function login($username,$password)
 		$session_id = $session->session_id;
 		
 		setcookie(COOKIE_NAME,$session_id,time()+86400,"/","",0);
-		$session = new NsisWebSession(array('sessionid'=>$session_id,'userid'=>$user_id));
+		$session->session_id   = $session_id;
+		$session->user_id      = $user_id;
+		$session->last_checked = time();
+		unset($session->cached_username);
 
 		/* Update the cached username in the session object */
 		$session->get_username();
@@ -258,6 +263,7 @@ function login($username,$password)
 		$_SESSION['session'] = base64_encode($session->to_string());
 		$_SESSION['id']      = md5($session_id+NSISWEB_MAGIC_NUMBER);
 
+		$nsisweb->query('update nsisweb_sessions set last_access=NOW(),userid='.$session->user_id);
 		return $nsisweb->session = $session;
 	} else {
 		$nsisweb->record_error('Unknown username');
