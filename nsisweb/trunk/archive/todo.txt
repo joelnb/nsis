@@ -6,6 +6,4 @@
 
 * The description text above the Download page still says that the downloads are presented in a simple list. 
 
-* Pre that works on IE5
-
 * Change date format to something with letters to seperate month from day
