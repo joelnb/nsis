@@ -67,7 +67,7 @@ switch($view_mode) {
 unset($history);
 $instances = $nsisweb->get_instance_history(-1);
 if(strlen($instances)>0) {
-  $history = '<a href="'.$nsisweb->get_page_url(0).'">Browse</a>';
+  $history = 'Navigation: <a href="'.$nsisweb->get_page_url(0).'">Browse</a>';
   $result  = $nsisweb->query("select a.instanceid,b.title from nsisweb_hierarchy as a,nsisweb_pages as b where a.instanceid in ($instances) and a.pageid=b.pageid",__FILE__,__LINE__);
   if($result && $nsisweb->how_many_results($result)>0) {
     $i = 0;
@@ -75,13 +75,32 @@ if(strlen($instances)>0) {
       $history .= ' &gt; <a href="'.$nsisweb->get_page_url($record['instanceid']).'&instances='.$nsisweb->get_instance_history($i-2).'">'.$record['title'].'</a>';
     }
   }
+} else if($view_mode == VIEWMODE_DETACHED) {
+  $history       = 'Parent Pages: ';
+  $instances     = $page->get_instances();
+  $num_instances = count($instances);
+  if($num_instances == 1 && $instances[0]->get_parentid() == 0) {
+	  $history2 .= '<a href="browse.php">Browse</a>';
+  } else if($num_instances > 0) {
+	  $first = 1;
+	  foreach($instances as $instance) {
+		  if($first-- < 1) $history2 .= ' | ';
+		  $parent    = $instance->get_parentid();
+		  $parent_p  = new NsisWebPage($parent,FETCH_CONTENT_NO);
+		  $history2 .= '<a href="viewpage.php?pageid='.$parent.'">'.$parent_p->get_title().'</a>';
+	  }
+  }
+  if($history2 == "") {
+	  $history2 = '<span style="color:#888888">This page has been removed from all sections in the Archive</span>';
+  }
+  $history .= $history2;
 } else {
-  $history = '<span style="color:#888888">None</span>';
+  $history = 'Navigation: <span style="color:#888888">You are viewing the top level of the Archive</span>';
 }
 
 if($page = $this->get_page()) {
 ?>
-<span style="font-size:8pt;">Parent Pages: <?= $history ?></span>
+<span style="font-size:8pt;"><?= $history ?></span>
 <hr style="color:#eeeeee">
 <!-- dir_page.skel.php: begin -->
 <table style="font-family:verdana;font-size:8pt;color:#000000;" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
@@ -106,11 +125,11 @@ if($page = $this->get_page()) {
         if($array[0]>0 || $array[1]>0) {
 	        echo ' [';
 	        if($array[1]>0) {
-		        echo '<img src="images/folder.gif" width="16" height="16" hspace="1" style="vertical-align:middle;">'.$array[1];
+		        echo $array[1].'<img src="images/folder.gif" width="16" height="16" hspace="2" style="vertical-align:middle;">';
 	        }
 	        if($array[0]>0) {
 		        if($array[1]>0) echo ' ';
-		        echo '<img src="images/file.gif" width="16" height="16" style="vertical-align:middle;">'.$array[0];
+		        echo $array[0].'<img src="images/file.gif" width="16" height="16" hspace="2" style="vertical-align:middle;">';
 	        }
 	        echo ']';
         }

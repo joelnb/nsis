@@ -47,7 +47,7 @@ if($page) {
 
   $instances = $nsisweb->get_instance_history(-1);
   if(strlen($instances)>0) {
-    $history = 'You Are In: <a href="browse.php">Browse</a>';
+    $history = 'Navigation: <a href="browse.php">Browse</a>';
     $result  = $nsisweb->query("select a.instanceid,b.title from nsisweb_hierarchy as a,nsisweb_pages as b where a.instanceid in ($instances) and a.pageid=b.pageid",__FILE__,__LINE__);
     if($result && $nsisweb->how_many_results($result)>0) {
       $i = 0;
@@ -56,16 +56,24 @@ if($page) {
       }
     }
   } else if($view_mode == VIEWMODE_DETACHED) {
-	  $history   = 'Parent Pages: ';
-	  $instances = $page->get_instances();
-	  $first     = 1;
-	  foreach($instances as $instance) {
-		  if($first-- < 1) $history .= ' | ';
-		  $page     = $instance->get_page();
-		  $history .= '<a href="'.$nsisweb->get_page_url($instance->get_instanceid()).'">'.$page->get_title().'</a>';
+	  $history       = 'Parent Pages: ';
+	  $instances     = $page->get_instances();
+	  $num_instances = count($instances);
+	  if($num_instances > 0) {
+		  $first = 1;
+		  foreach($instances as $instance) {
+			  if($first-- < 1) $history2 .= ' | ';
+			  $parent    = $instance->get_parentid();
+			  $parent_p  = new NsisWebPage($parent,FETCH_CONTENT_NO);
+			  $history2 .= '<a href="viewpage.php?pageid='.$parent.'">'.$parent_p->get_title().'</a>';
+		  }
 	  }
+	  if($history2 == "") {
+		  $history2 = '<span style="color:#888888">This page has been removed from all sections in the Archive</span>';
+	  }
+	  $history .= $history2;
   } else {
-	  $history = 'Parent Pages: <span style="color:#888888">None</span>';
+	  $history = 'Navigation: <span style="color:#888888">You are viewing the top level of the Archive</span>';
   }
 ?>
 <!-- user_page.skel.php: begin -->
