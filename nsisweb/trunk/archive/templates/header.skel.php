@@ -58,7 +58,8 @@ if(!$session->is_anonymous()) {
           <table width="720" border="0" cellpadding="0" cellspacing="0" class="innertable" style="background-image:none;">
             <tr class="header">
               <td width="70"><a href="/index.php"><div class="center"><img  border="0" src="/images/logo.gif" width="48" height="48"></div></a></td>
-              <td width="650"><div class="header" style="font-size:25pt;">NSIS Archive<br><span style="font-size:8pt;"><?= $page_browsing_depth ?></span></div></td>
+              <td width="650"><div class="header" style="font-size:25pt;">NSIS Archive<br><span style="font-size:8pt;"><?= $page_browsing_depth ?><br><br>
+			  <font color="red">Please note that the archive is still under development. If you have any suggestions, found any bugs, or having problems working with the archive come chat with us at <a href="irc://irc.landoleet.org/nsis">#nsis @ irc.landoleet.org</a> or send a PM to <a href="http://forums.winamp.com/private.php?s=&action=newmessage&userid=19620">KiCHiK</a> or <a href="http://forums.winamp.com/private.php?s=&action=newmessage&userid=70214">Sunjammer</a></font></span></div></td>
             </tr>
             <tr>
               <td colspan="2">
