@@ -162,6 +162,7 @@ class NsisWeb
 
         $session = $this->get_session();
         $user    = $session->user_id;
+        $ip      = $session->ip;
         $logline = "modification detected: user=$user ip=$ip query=$query";
         if($fp = fopen(NSISWEB_LOGSDIR.'/dbmods.log', 'a')) {
           fwrite($fp,"#dbmod#".basename($file)."#$line#".date('d-M-Y G:i:s T').'#'.$_SERVER['REQUEST_URI'].'#'.$logline."\n");
