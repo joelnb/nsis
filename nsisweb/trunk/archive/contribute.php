@@ -291,10 +291,10 @@ function SaveSection()
 
   $nsisweb->start_page('Contribute New Section');
   print <<<ENDOFHTML
-    <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute New Page</span>
+    <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute New Section</span>
     <p>From the list below please choose a section in which to insert your new section:</p>
     <form name="insertform" method="post" enctype="multipart/form-data" action="contribute.php">
-      <input type="hidden" name="action" value="savepage">
+      <input type="hidden" name="action" value="savesection">
       <input type="hidden" name="title" value="$title">
       <input type="hidden" name="content" value="$content">
       <p>
@@ -317,8 +317,7 @@ ENDOFHTML;
   print <<<ENDOFHTML
       </p>
       <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-        <input type="hidden" name="action" value="savepage">
-        <a href="javascript:document.insertform.submit();">Insert Your Page >></a>
+        <a href="javascript:document.insertform.submit();">Insert Your Section >></a>
       </p>
     </form>
 ENDOFHTML;
