@@ -11,7 +11,7 @@ if ($version) {
 	if ($pos) {
         $series = substr($version,0,$pos);
 		$revision = substr($version,$pos+1);
-        if ($version>=$series) print "1|".$latest;
+        if ($latest>=$series) print "1|".$latest;
 		else if (!strcmp($betaseries,$series)&&$betaversion>$revision) print "1|".$betaseries.$betaversion;
 		else print "0";
 	}
