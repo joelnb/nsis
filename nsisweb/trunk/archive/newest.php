@@ -36,20 +36,20 @@ if($result) {
     $diff = time() - ($new ? $record['created'] : $record['last_updated']);
 
     $units = 'second';
-    if ($diff > 60) {
+    if ($diff >= 60) {
       $diff = (int)($diff / 60);
       $units = 'minute';
-      if ($diff > 60) {
+      if ($diff >= 60) {
         $diff = (int)($diff / 60);
         $units = 'hour';
-        if ($diff > 24) {
+        if ($diff >= 24) {
           $diff = (int)($diff / 24);
           $units = 'day';
-          if ($diff > 365) {
+          if ($diff >= 365) {
             $diff = (int)($diff / 365);
             $units = 'year';
           }
-          else if ($diff > 30) {
+          else if ($diff >= 30) {
             $diff = (int)($diff / 30);
             $units = 'month';
           }
