@@ -14,15 +14,15 @@ $nsisweb->start_page('Most Popular');
       <th align="center"><b>&nbsp;Views&nbsp;</b></th>
     </tr>
 <?
-$result = $nsisweb->query("select title,views from nsisweb_pages where views>0 and not flags & ".PAGEFLAG_ORPHANED." order by views desc");
+$result = $nsisweb->query("select title,views,parentid,pageid from nsisweb_pages where views>0 and not flags & ".PAGEFLAG_ORPHANED." order by views desc");
 if($result) {
-  $count = $nsisweb->how_many_results($result);
-  $rank  = 1;
+	$count = $nsisweb->how_many_results($result);
+	$rank  = 1;
 	if($count > 0) {
 		$i = 0;
 		while(is_array($record = $nsisweb->get_result_array($result))) {
-			$title = $record['title'];
-      $views = (int)$record['views'];
+			$title = '<a href="'.$nsisweb->get_page_url($record['pageid']).'&parentid='.$record['parentid'].'">'.$record['title']."</a>\n";
+			$views = (int)$record['views'];
 			
 			if($i == 0) {
 				$i = 1;
@@ -45,7 +45,7 @@ if($result) {
 			  </td>
 			</tr>
 ENDOFHTML;
-    $rank++;
+			$rank++;
 		}
 	}
 }
