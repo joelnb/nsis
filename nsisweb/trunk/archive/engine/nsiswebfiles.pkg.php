@@ -1,7 +1,7 @@
 <?
 include_once(dirname(__FILE__)."/nsisweb.pkg.php");
 
-define('USE_UNIX_FILE_COMMAND',TRUE);
+define('USE_UNIX_FILE_COMMAND',FALSE); /* sf doesn't seem to allow us :(, we'll be able to use apache mime types on browser uploads but nothing on edits :( */
 define('UPLOAD_SPACE_ALLOWED',50); /* in megabytes */
 
 function initialise_files_table()
