@@ -39,7 +39,7 @@ function show_page($pageid,$make_whole_page)
 				   ------------------------ */
 				$filename = $nsisweb->fileroot.'/'.$page_info['source'];
 				if(file_exists($filename)) {
-					$result = $nsisweb->query("update nsisweb_pages set views=views+1");
+					$result = $nsisweb->query("update nsisweb_pages set views=views+1 where pageid=$pageid");
 					@include($filename);
 					$success = TRUE;
 				}
