@@ -110,7 +110,7 @@ function create_raw_page($title,$filename)
 	if(strlen($filename)>0 && strlen($title)>0 && file_exists($nsisweb->fileroot.'/'.$filename)) {
 		$session = $nsisweb->get_session();
 		$author  = $session->user_id;
-		$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_RAW.",flags=0,parentid=0,source='$filename',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
+		$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_RAW.",flags=0,parentid=-1,source='$filename',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
 		return $nsisweb->get_created_id();
 	}
 	return FALSE;
@@ -124,7 +124,7 @@ function create_templated_page($title,$body)
 	$source  = mysql_escape_string($source);
 	$session = $nsisweb->get_session();
 	$author  = $session->user_id;
-	$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_TEMPLATED.",flags=0,parentid=0,source='$source',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
+	$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_TEMPLATED.",flags=0,parentid=-1,source='$source',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
 	return $nsisweb->get_created_id();
 }
 
@@ -183,7 +183,7 @@ function create_directory_page($title,$description)
 	global $nsisweb;
 	$session = $nsisweb->get_session();
 	$author  = $session->user_id;
-	$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_DIRECTORY.",flags=0,parentid=0,source='$description',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
+	$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_DIRECTORY.",flags=0,parentid=-1,source='$description',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
 	return $nsisweb->get_created_id();
 }
 
@@ -257,12 +257,13 @@ function get_top_level_pages()
 function make_safe_page($page)
 {
 	$safe = array(
-		'pageid' => $page['pageid'],
-		'title'  => $page['title'],
-		'type'   => $page['type'],
-		'views'  => $page['views'],
-		'rating' => $page['rating'],
-		'votes'  => $page['votes']);
+		'pageid'   => $page['pageid'],
+		'title'    => $page['title'],
+		'type'     => $page['type'],
+		'views'    => $page['views'],
+		'rating'   => $page['rating'],
+		'votes'    => $page['votes']);
+		'parentid' => $page['parentid'];
 	if($page['type'] == PAGETYPE_DIRECTORY) {
 		$safe['description'] = $page['source'];
 	}

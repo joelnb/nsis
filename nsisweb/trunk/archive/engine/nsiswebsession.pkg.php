@@ -28,6 +28,8 @@
 */
 
 include_once(dirname(__FILE__)."/nsisweb.pkg.php");
+include_once(dirname(__FILE__)."/nsiswebpage.pkg.php");
+include_once(dirname(__FILE__)."/nsiswebpicks.pkg.php");
 define('COOKIE_NAME','nsiswebid');
 define('ANONYMOUS_USER_ID',0);
 define('SESSION_TIMEOUT',60*30); /* seconds */
@@ -135,6 +137,15 @@ function end_session()
 	
 	if($session_id != 0) {
 		$nsisweb->query("delete from nsisweb_sessions where sessionid='$session_id'");
+		$picks = get_current_picks();
+		foreach($picks as $pick) {
+			if($pick['pickedtype'] == PICKTYPE_PAGE) {
+				$page = find_pageid($pick['pickedid']);
+				if($page['parentid' == -1) {
+					$nsisweb->query("delete from nsisweb_pages where pageid=".$pick['pickedid']);
+				}
+			}
+		}
 		$nsisweb->query("delete from nsisweb_picks where sessionid='$session_id'");
 	}
 	
