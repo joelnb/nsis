@@ -20,7 +20,7 @@
   <tr>
     <td>
 			<font style="font-family: verdana; font-size: 20pt; color: #000000;"><?= $title ?></font><br>
-			<font style="font-family: verdana; font-size: 8pt; color: #000000;">Written by <?= $author ?>, $<?= date ?></font><br>
+			<font style="font-family: verdana; font-size: 8pt; color: #000000;">Written by <?= $author ?>, <?= $date ?></font><br>
 		</td>
 		<td align="right">
 		  <?= $edit_link ?> | <?= $delete_link ?><br>
