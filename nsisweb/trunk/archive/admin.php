@@ -225,8 +225,8 @@ ENDOFHTML;
 	if($count > 0) {
 		array_multisort($agents,SORT_DESC,$counts);
 
-		$index = 1;
-		for($index=1; $i<=$count; $index++) {
+		$i = 0;
+		for($index=1; $index<=$count; $index++) {
 			if($i == 0) {
 				$i = 1;
 				$bgcolour = '#eeffee';
