@@ -7,6 +7,7 @@ $author         = ""; if(strlen($_POST['author'])>0)         { $author         =
 $anon_author    = ""; if(strlen($_POST['anon_author'])>0)    { $anon_author    = $_POST['anon_author'];   }
 $anon_editor    = ""; if(strlen($_POST['anon_editor'])>0)    { $anon_editor    = $_POST['anon_editor'];   }
 $has_source     = ""; if(strlen($_POST['has_source'])>0)     { $has_source     = $_POST['has_source'];    }
+$exclude_dirs   = ""; if(strlen($_POST['exclude_dirs'])>0)   { $exclude_dirs   = $_POST['exclude_dirs'];  }
 $created_since  = ""; if(strlen($_POST['created_since'])>0)  { $date = strtotime($_POST['created_since']);  if($date != -1) { $created_since  = date('Y-m-d H:i:s',$date); } }
 $created_until  = ""; if(strlen($_POST['created_until'])>0)  { $date = strtotime($_POST['created_until']);  if($date != -1) { $created_until  = date('Y-m-d H:i:s',$date); } }
 $modified_since = ""; if(strlen($_POST['modified_since'])>0) { $date = strtotime($_POST['modified_since']); if($date != -1) { $modified_since = date('Y-m-d H:i:s',$date); } }
@@ -18,9 +19,10 @@ if(strcmp($_POST['action'],'search') == 0) {
 	$do_search = FALSE;
 }
 
-if(strcmp($anon_author,'CHECKED') != 0)   $anon_author   = '';
-if(strcmp($anon_editor,'CHECKED') != 0)   $anon_editor   = '';
-if(strcmp($has_source,'CHECKED') != 0)    $has_source    = '';
+if(strcmp($anon_author,'CHECKED') != 0)  $anon_author  = '';
+if(strcmp($anon_editor,'CHECKED') != 0)  $anon_editor  = '';
+if(strcmp($has_source,'CHECKED') != 0)   $has_source   = '';
+if(strcmp($exclude_dirs,'CHECKED') != 0) $exclude_dirs = '';
 
 $nsisweb->start_page('Search');
 
@@ -67,8 +69,9 @@ doesn't work but 25 December 2002 does). The native date format used is yyyy-mm-
 		  <tr style="background-color:#eeeeee">
 		  	<td colspan="4" align="center">
 			  	<input type="checkbox" name="anon_author" value="CHECKED" <?= $anon_author ?>>&nbsp;Anonymous Author&nbsp;
-			  	<input type="checkbox" name="anon_editor" value="CHECKED" <?= $anon_editor ?>>&nbsp;Anonymous Editor&nbsp;
+			  	<input type="checkbox" name="anon_editor" value="CHECKED" <?= $anon_editor ?>>&nbsp;Anonymous Editor&nbsp;<br>
 			  	<input type="checkbox" name="has_source" value="CHECKED" <?= $has_source ?>>&nbsp;Contains Source Code&nbsp;
+			  	<input type="checkbox" name="exclude_dirs" value="CHECKED" <?= $exclude_dirs ?>>&nbsp;Exclude Directory Pages&nbsp;
 		  	</td>
 		  </tr>
 	  </table>
@@ -85,6 +88,12 @@ unset($query);
 if(strcmp($has_source,'CHECKED') == 0) {
 	if(isset($query)) $query .= " and ";
 	$query .= "instr(source,'[source]')";
+}
+
+/* Append to the query the specific part for excluding directory pages */
+if(strcmp($exclude_dirs,'CHECKED') == 0) {
+	if(isset($query)) $query .= " and ";
+	$query .= 'type<>'.PAGETYPE_DIRECTORY;
 }
 
 /* Append to the query the specific part for keyword matching */
@@ -211,15 +220,21 @@ if($do_search) {
 	$result = $nsisweb->query($query);
 
 	/* Process the results */
-	if($result && $nsisweb->how_many_results($result) > 0) {
+	$count = $nsisweb->how_many_results($result);
+	if($result && $count > 0) {
+		print "Your search returned $count result";
+		if($count != 1) print 's';
+		print ".<br><br>";
 		print <<<END_OF_HTML
 	<table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
 	  <tr style="background-color:#eeeeff">
+	    <td align="center"><b>#</b></td>
 	  	<td align="center"><b>Author</b></td>
 	  	<td align="center"><b>Title</b></td>
 	  </tr>
 END_OF_HTML;
 	  $i = 0;
+	  $index = 0;
 	  $user_map = array();
 		while($record = $nsisweb->get_result_array($result)) {
 			if($i == 0) {
@@ -228,6 +243,7 @@ END_OF_HTML;
 				print '<tr style="background-color:#eeeeee;">';
 			}
 			$userid = $record['author'];
+			print '<td align="center">&nbsp;'.$index++.'&nbsp;</td>';
 			if($userid > 0) {
 				if(!is_object($user_map[$userid])) {
 					$user_map[$userid] = find_userid($userid);
