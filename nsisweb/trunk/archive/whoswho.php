@@ -24,13 +24,13 @@ while($record = $nsisweb->get_result_array($users)) {
  	print '<td';
  	if($record['usertype'] == USERTYPE_ADMIN) {
 	 	print ' style="background-color:#ffffdd;"';
-  } else if($pages_created>20) {
+  } else if($pages_created>=20) {
 	 	print ' style="background-color:#6666ff;"';
-  } else if($pages_created>15) {
+  } else if($pages_created>=15) {
 	 	print ' style="background-color:#8888ff;"';
-  } else if($pages_created>10) {
+  } else if($pages_created>=10) {
 	 	print ' style="background-color:#aaaaff;"';
-  } else if($pages_created>5) {
+  } else if($pages_created>=5) {
 	 	print ' style="background-color:#ccccff;"';
   }
 
