@@ -1,5 +1,3 @@
-	<font style="font-family: verdana; font-size: 20pt; color: #000000;">$title</font><br>
-	<p><i>$source</i></p>
 <?
 	/* This file is a template. It is included by the NSISWeb core when it needs
 	   to display a page that is a container for other pages. The properties of
@@ -23,8 +21,16 @@
 <p><i><?= $desc ?></i></p>
 <p>
 	<ul>
-		<? foreach($items as $item) { ?>
-		<li><a href="<?= $nsisweb->wwwroot.'/nsisweb.php?page='.$item['pageid'] ?>"><?= $item['title'] ?></a>
-		<? } ?>
+    <?
+		if(count($items) > 0) {
+			foreach($items as $item) {
+				?>
+				<li><a href="<?= $nsisweb->wwwroot.'/nsisweb.php?page='.$item['pageid'] ?>"><?= $item['title'] ?></a>
+				<?
+			}
+		} else {
+			<? There are no pages in this section.<br> ?>
+		}
+		?>
 	</ul>
 </p>
