@@ -66,7 +66,7 @@ class NsisWebFile
         if(@readfile($this->get_path())) {
           global $nsisweb;
           $this->private_info['downloads']++;
-          $nsisweb->query("update nsisweb_files set downloads=downloads+1 where filename='".mysql_escape_string($this->get_filename()));
+          $nsisweb->query("update nsisweb_files set downloads=downloads+1 where filename='".mysql_escape_string($this->get_filename())."'");
           exit;
         }
       }
