@@ -55,7 +55,7 @@ function show_page($pageid,$make_whole_page)
 				$user    = find_userid($page_info['author']);
 				$author  = $user->username;
 				$date    = $page_info['created'];
-				render_templated_page($title,$author,$date,$source,$pageid);
+				render_templated_page($title,$author,$date,colour_source($source),$pageid);
 				$success = TRUE;
 				break;
 			case PAGETYPE_DIRECTORY:
