@@ -25,7 +25,7 @@ if($page) {
   <tr>
     <td>
 			<font style="font-size: 20pt;"><?= $page->get_title() ?></font><br>
-			<font style="font-size: 8pt;">Written by <?= $author ?>, <?= $date ?>
+			<font style="font-size: 8pt;">Written by <?= $author ?> <?= $page->get_author_date() ?>
 			<?
 				if($page->get_author_date() != $page->get_editor_date()) {
 					if($page->get_authorid() != $page->get_editorid()) {
@@ -34,7 +34,7 @@ if($page) {
 					} else {
 						$last_author = $author;
 					}
-					print ' [ Last updated by '.$last_author.', '.$page->get_editor_date().' ]';
+					print ' [ Last updated by '.$last_author.' '.$page->get_editor_date().' ]';
 				}
 			?>
 			</font><br>
