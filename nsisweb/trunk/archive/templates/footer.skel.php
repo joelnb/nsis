@@ -9,6 +9,7 @@
      + $title
 */
 ?>
+<!-- footer.skel.php: begin -->
 										<br><br><center><a href="http://sourceforge.net"><img class="image" src="http://sourceforge.net/sflogo.php?group_id=22049&amp;type=1" alt="SourceForge Logo"></a>
 									</div>
 								</td> 
@@ -20,3 +21,4 @@
 		</div> 
 	</body> 
 </html>
+<!-- footer.skel.php: end -->
