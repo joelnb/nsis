@@ -97,8 +97,7 @@ ENDOFHTML;
 ENDOFHTML;
       } else {
         print <<<ENDOFHTML
-        <p>As an admin you have the option to debug option of viewing every query that is
-           executed to create every page you see in the archive. <a href="prefs.php?action=showqueries">Click here</a> to enable this option.</p>
+        <p>As an admin you have the option to show below each page the sql queries used to generate it to assist you when investigating bugs in the archive. <a href="prefs.php?action=showqueries">Click here</a> to enable this option.</p>
 ENDOFHTML;
       }
     }
