@@ -262,7 +262,7 @@ function login($username,$password)
 		$_SESSION['session'] = base64_encode($session->to_string());
 		$_SESSION['id']      = md5($session_id+NSISWEB_MAGIC_NUMBER);
 
-		$nsisweb->query('update nsisweb_sessions set last_access=NOW(),userid='.$session->user_id." where sessionid=$session_id");
+		$nsisweb->query('update nsisweb_sessions set last_access=NOW(),userid='.$session->user_id." where sessionid='$session_id'");
 		return $nsisweb->session = $session;
 	} else {
 		$nsisweb->record_error('Unknown username');
