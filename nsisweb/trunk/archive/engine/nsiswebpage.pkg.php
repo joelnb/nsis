@@ -91,13 +91,10 @@ function find_children($parentid)
 {
 	global $nsisweb;
 	$items  = array();
-	$result = $nsisweb->query("select * from nsisweb_pages where parentid=$parentid and not flags & ".PAGEFLAG_ORPHANED);
+	$result = $nsisweb->query("select pageid from nsisweb_pages where parentid=$parentid and not flags & ".PAGEFLAG_ORPHANED);
 	if($result && $nsisweb->how_many_results($result) > 0) {
-		while($mapping = $nsisweb->get_result_array($result)) {
-			$result2 = $nsisweb->query("select * from nsisweb_pages where pageid=".$mapping['pageid']);
-			if($result2 && $nsisweb->how_many_results($result2) == 1) {
-				$items[] = $nsisweb->get_result_array($result2);
-			}
+		while($record = $nsisweb->get_result_array($result)) {
+			$items[] = $record['pageid'];
 		}
 	}
 	return $items;
