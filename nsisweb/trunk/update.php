@@ -21,15 +21,21 @@ if ($version) {
 	if ($pos) {
         $version = substr($version,0,$pos);
         if ($latest>=$version) $update = true;
+		if ($update) {
+			print "There is a new version of NSIS avaialable.  You may download it <a href=\"http://sourceforge.net/project/showfiles.php?group_id=22049\">here</a>.";
+		}
+		else {
+			print "You are running a development version of NSIS.  No new updates are available.";
+		}
 	}
 	else {
         if ($latest>$version) $update = true;
-	}
-	if ($update) {
-		print "There is a new version of NSIS avaialable.  You may download it <a href=\"http://sourceforge.net/project/showfiles.php?group_id=22049\">here</a>.";
-	}
-	else {
-		print "You have the latest version of NSIS installed.";
+		if ($update) {
+			print "There is a new version of NSIS avaialable.  You may download it <a href=\"http://sourceforge.net/project/showfiles.php?group_id=22049\">here</a>.";
+		}
+		else {
+			print "You have the latest version of NSIS installed.";
+		}
 	}
 }
 else {
