@@ -141,7 +141,7 @@ function end_session()
 		foreach($picks as $pick) {
 			if($pick['pickedtype'] == PICKTYPE_PAGE) {
 				$page = find_pageid($pick['pickedid']);
-				if($page['parentid' == -1) {
+				if($page['parentid'] == -1) {
 					$nsisweb->query("delete from nsisweb_pages where pageid=".$pick['pickedid']);
 				}
 			}
