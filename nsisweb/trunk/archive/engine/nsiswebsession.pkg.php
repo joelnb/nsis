@@ -38,7 +38,7 @@ function initialise_session_table()
 {
 	global $nsisweb;
 	$nsisweb->query("drop table if exists nsisweb_sessions");
-	$nsisweb->query('create table nsisweb_sessions (sessionid varchar(255) not null,userid int unsigned not null default 0,created datetime not null,last_access datetime not null)');
+	$nsisweb->query('create table nsisweb_sessions (sessionid varchar(255) not null,userid int unsigned not null default 0,created datetime not null,last_access datetime not null,last_checked datetime not null)');
 }
 
 class NsisWebSession
@@ -160,7 +160,9 @@ function find_my_session()
 			   so that we hit the database less frequently. */
 			if((time()-$session->last_checked) > 300) {
 				$nsisweb->query("delete from nsisweb_sessions where (UNIX_TIMESTAMP()-UNIX_TIMESTAMP(last_access))>".SESSION_TIMEOUT);
+				$nsisweb->query("update nsisweb_sessions set last_checked=NOW() where sessionid='$session_id'");
 				if($session_id != NO_SESSION) {
+					$record
 					$record = $nsisweb->query_one_only("select * from nsisweb_sessions where sessionid='$session_id'");
 					if($record) {
 						$session = new NsisWebSession($record);
@@ -262,7 +264,7 @@ function login($username,$password)
 		$_SESSION['session'] = base64_encode($session->to_string());
 		$_SESSION['id']      = md5($session_id+NSISWEB_MAGIC_NUMBER);
 
-		$nsisweb->query('update nsisweb_sessions set last_access=NOW(),userid='.$session->user_id." where sessionid='$session_id'");
+		$nsisweb->query('update nsisweb_sessions set last_access=NOW(),last_checked=NOW(),userid='.$session->user_id." where sessionid='$session_id'");
 		return $nsisweb->session = $session;
 	} else {
 		$nsisweb->record_error('Unknown username');
