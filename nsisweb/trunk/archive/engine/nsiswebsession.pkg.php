@@ -34,12 +34,13 @@ define('COOKIE_NAME','nsiswebid');
 define('ANONYMOUS_USER_ID',0);
 define('SESSION_TIMEOUT',30*60);        /* seconds */
 define('TIMEOUT_CHECK_FREQUENCY',5*60); /* seconds, no need to check too often */
+define('SESSIONFLAG_PERSIST',1);
 
 function initialise_session_table()
 {
   global $nsisweb;
   $nsisweb->query("drop table if exists nsisweb_sessions");
-  $nsisweb->query('create table nsisweb_sessions (sessionid varchar(255) not null,userid int unsigned not null default 0,created datetime not null,last_access datetime not null,last_checked datetime not null,ip varchar(16))');
+  $nsisweb->query('create table nsisweb_sessions (sessionid varchar(255) not null,userid int unsigned not null default 0,created datetime not null,last_access datetime not null,last_checked datetime not null,ip varchar(16),flags int unsigned default 0)');
   $nsisweb->query('create table nsisweb_info (at datetime,user_agent varchar(255),ip varchar(255))');
 }
 
@@ -372,7 +373,12 @@ function login($username,$password)
     $_SESSION['session'] = base64_encode($session->to_string());
     $_SESSION['id']      = md5($session_id+NSISWEB_MAGIC_NUMBER);
 
-    $nsisweb->query('update nsisweb_sessions set last_access=NOW(),last_checked=NOW(),userid='.$session->user_id." where sessionid='$session_id'");
+    $persist_sql = '';
+    if($session->persist) {
+      $persist_sql = ',flags='.SESSIONFLAG_PERSIST;
+    }
+    
+    $nsisweb->query('update nsisweb_sessions set last_access=NOW(),last_checked=NOW(),userid='.$session->user_id.$persistsql" where sessionid='$session_id'");
     return $nsisweb->session = $session;
   } else {
     $nsisweb->record_error('Unknown username');
@@ -383,7 +389,7 @@ function login($username,$password)
 function timeout_sessions()
 {
   global $nsisweb;
-  $nsisweb->query("delete from nsisweb_sessions where (UNIX_TIMESTAMP()-UNIX_TIMESTAMP(last_access))>".SESSION_TIMEOUT);
+  $nsisweb->query("delete from nsisweb_sessions where (UNIX_TIMESTAMP()-UNIX_TIMESTAMP(last_access))>".SESSION_TIMEOUT.' and flags & '.SESSIONFLAG_PERSIST.'=0');
 }
 
 function track_user_agent()
