@@ -9,36 +9,21 @@
 <p class="text">NSIS tries to be a scriptable win32 installer/uninstaller system that doesn't suck and isn't huge.</p> 
 <ul> 
 	<li class="text"><b><a href="http://www.nullsoft.com/free/nsis/" title="General information about NSIS">Official Home Page</a></b></li>
-	<li class="text"><b><a href="http://sourceforge.net/projects/nsis/">Project page</a></b> 
+	<li class="text"><b><a href="http://sourceforge.net/projects/nsis/" title="Latest development info and downloads">Project page</a></b></li>
+	<li class="text"><b><a href="http://forums.winamp.com/forumdisplay.php?s=&forumid=65" title="Talk to other NSIS users">Forum</a></b>  
+	<li class="text"><b><a href="http://forums.winamp.com/showthread.php?s=&threadid=102650" title="Some frequently asked questions">FAQ</a></b></li>
+	<li class="text"><b><a href="http://nsis.sourceforge.net/Docs/" title="Browse the latest NSIS documentation">Documentation</a></b></li>
+	<li class="text"><b><a href="http://nsis.sourceforge.net/changelog.php" title="See what's cooking">Change Log</a></b> 
 		<ul>
-			Latest development info and downloads
-		</ul> 
-	<li class="text"><b><a href="http://forums.winamp.com/forumdisplay.php?s=&forumid=65">Forum</a></b>  
-		<ul>
-			Talk to other NSIS users
-		</ul> 
-	<li class="text"><b><a href="http://forums.winamp.com/showthread.php?s=&threadid=102650">FAQ</a></b> 
-		<ul>
-			Some frequently asked questions
-		</ul> 
-	<li class="text"><b><a href="http://nsis.sourceforge.net/Docs/">Documentation</a></b> 
-		<ul>
-			Browse the latest NSIS documentation
-		</ul> 
-	<li class="text"><b><a href="http://nsis.sourceforge.net/changelog.php">Change Log</a></b> 
-		<ul>
-			See what's cooking<br> 
 			<span class="smalltext">Updated: <?=LocalFileDate("nightly/changelog.htm")?> </span> 
-		</ul> 
-	<li class="text"><b><a href="http://nsis.sourceforge.net/nightly/nsis.zip">Development Snapshot</a></b> 
-		<ul> 
-			NSIS CVS directory zipped up<br> 
+		</ul>
+	</li>
+	<li class="text"><b><a href="http://nsis.sourceforge.net/nightly/nsis.zip" title="NSIS CVS directory zipped up">Development Snapshot</a></b> 
+		<ul>
 			<span class="smalltext">Updated: <?=LocalFileDate("nightly/nsis.zip")?> </span> 
 		</ul>
-	<li class="text"><b><a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/nsis/NSIS/">Browse CVS</a></b> 
-		<ul>
-			Browse the files of the latest version
-		</ul> 
+	</li>
+	<li class="text"><b><a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/nsis/NSIS/" title="Browse the files of the latest version">Browse CVS</a></b></li>
 </ul> 
 <? IncludePageFooter(); ?>
 </body> 

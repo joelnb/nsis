@@ -30,7 +30,7 @@ function IncludePageHeader($title,$showback=false) {
 
 function IncludePageFooter() {
 ?>
-        <a href="http://sourceforge.net"><img class="image" src="http://sourceforge.net/sflogo.php?group_id=22049&amp;type=1" alt="SourceForge Logo"></a> 
+        <p>&nbsp;<br><a href="http://sourceforge.net"><img class="image" src="http://sourceforge.net/sflogo.php?group_id=22049&amp;type=1" alt="SourceForge Logo"></a> 
 		</div>
 		</td> 
 	</tr> 
