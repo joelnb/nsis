@@ -8,13 +8,12 @@ function get_image($img)
 	return '<img src="images/'.$img.'.png" name="'.$img.'" width="20" height="20" border="0" alt="'.$img.'">';
 }
 
+$edit_link = '<a href="'.$nsisweb->get_page_url('edit').'&instanceid='.$this->get_instanceid().'&pageid='.$this->get_pageid().'" '.get_rollover('edit').'>'.get_image('edit').'</a>';
 if($this->get_instanceid() == 0) {
-	$edit_link   = get_image('edit');
 	$pick_link   = get_image('copy');
 	$delete_link = get_image('cut');
 	$up_link     = get_image('up');
 } else {
-	$edit_link   = '<a href="'.$nsisweb->get_page_url('edit').'&instanceid='.$this->get_instanceid().'" '.get_rollover('edit').'>'.get_image('edit').'</a>';
 	$pick_link   = '<a href="picklist.php?action=pick&instanceid='.$this->get_instanceid().'" '.get_rollover('copy').'>'.get_image('copy').'</a>';
 	$delete_link = '<a href="'.$nsisweb->get_page_url('delete').'&instanceid='.$this->get_instanceid().'" '.get_rollover('cut').'>'.get_image('cut').'</a>';
 	$up_link     = '<a href="'.$nsisweb->get_page_url($this->get_parentid()).'" '.get_rollover('up').'>'.get_image('up').'</a>';

@@ -32,13 +32,19 @@ if($action == ACTION_CANCEL) {
    which part of the page hierarchy the user is trying to edit. From the
    instanceid we can determine which page it is an instance of and then work
    with that actual page. */
-$instance = new NsisWebInstance($instanceid,FETCH_CONTENT_YES);
-$page = $instance->get_page();
+if($instanceid != 0) {
+	$instance = new NsisWebInstance($instanceid,FETCH_CONTENT_YES);
+	$page = $instance->get_page();
+} else {
+	$page = new NsisWebPage($_GET['pageid'],FETCH_CONTENT_YES);
+	$instance = new NsisWebInstance($page);
+}
 
 /* Handle error conditions */
-if(!$page) {
+if(!$instance || !$page->is_okay()) {
 	$nsisweb->start_page('Edit');
-	echo '<b><font color="red">Page '.$instance->get_pageid().' not found!</font></b>';
+	$pageid = $instance ? $instance->get_pageid() : $page->get_pageid();
+	echo '<b><font color="red">Page '.$pageid.' not found!</font></b>';
 	$nsisweb->end_page();
 	exit;
 } else if($page->get_type() != PAGETYPE_TEMPLATED && $page->get_type() != PAGETYPE_DIRECTORY) {

@@ -9,7 +9,7 @@ function get_image($img)
 }
 
 $insert_link = '<a href="picklist.php?instanceid='.$this->get_instanceid().'" '.get_rollover('paste').'>'.get_image('paste').'</a>';
-$edit_link   = '<a href="edit.php?instanceid='.$this->get_instanceid().'" '.get_rollover('edit').'>'.get_image('edit').'</a>';
+$edit_link   = '<a href="edit.php?instanceid='.$this->get_instanceid().'&pageid='.$this->get_pageid().'" '.get_rollover('edit').'>'.get_image('edit').'</a>';
 if($this->get_parentid() == 0) {
   $delete_link = get_image('cut');
 } else {
