@@ -18,6 +18,10 @@ if($session->is_anonymous()) {
   } else if(strcmp($_GET['action'],'persist') == 0) {
     $nsisweb->query('update nsisweb_users set flags=flags | '.USERFLAG_PERSIST." where userid=$user_id");
     $nsisweb->query('update nsisweb_sessions set flags=flags | '.SESSIONFLAG_PERSIST." where userid=$user_id");
+  } else if(strcmp($_GET['action'],'showqueries') == 0) {
+    $nsisweb->query('update nsisweb_users set flags=flags | '.USERFLAG_SHOWQUERIES." where userid=$user_id");
+  } else if(strcmp($_GET['action'],'dontshowqueries') == 0) {
+    $nsisweb->query('update nsisweb_users set flags=flags & '.~USERFLAG_SHOWQUERIES." where userid=$user_id");
   }
   
   $user     = find_userid($user_id);
@@ -80,6 +84,24 @@ ENDOFHTML;
        permanently logged in <a href="prefs.php?action=persist">click here</a>
        to activate the persistent login feature.</p>
 ENDOFHTML;
+  }
+  
+  if($user->is_admin()) {
+    ?><span style="font-family:verdana;font-size:15pt;color:#000000;">Show queries</span><?
+    $record = $nsisweb->query_one_only('select flags from nsisweb_users where userid='.$user_id);
+    if($record) {
+      if ($record['flags'] & USERFLAG_SHOWQUERIES) {
+        //? 'dontshowqueries' : 'showqueries';
+        print <<<ENDOFHTML
+        <p>Your preferences indicate that you have chosen to show every query that is executed to create pages. <a href="prefs.php?action=dontshowqueries">Click here</a> to disable this option.</p>
+ENDOFHTML;
+      } else {
+        print <<<ENDOFHTML
+        <p>As an admin you have the option to debug option of viewing every query that is
+           executed to create every page you see in the archive. <a href="prefs.php?action=showqueries">Click here</a> to enable this option.</p>
+ENDOFHTML;
+      }
+    }
   }
 }
 $nsisweb->end_page();

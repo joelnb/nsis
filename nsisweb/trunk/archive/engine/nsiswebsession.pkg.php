@@ -51,7 +51,7 @@ class NsisWebSession
   var $created;
   var $last_access;
   var $last_checked;
-  var $cached_username; /* do not use this directly, call get_username() instead! */
+  var $cached_user; /* do not use this directly, call get_username() instead! */
   var $looks_like_admin;
   var $persist;
   var $ip; /* not necessarily the real ip if a proxy is in the middle */
@@ -68,7 +68,7 @@ class NsisWebSession
       $this->last_access  = $param['last_access'];
       $this->last_checked = $param['last_checked'];
       $this->ip = $param['ip'];
-      unset($this->cached_username);
+      unset($this->cached_user);
     } else if(is_string($param)) {
       $this->from_string($param);
     }
@@ -81,19 +81,17 @@ class NsisWebSession
   {
     return ($this->user_id == ANONYMOUS_USER_ID) ? TRUE : FALSE;
   }
+  function get_user()
+  {
+    if(!isset($this->cached_user)) {
+      $this->cached_user = find_userid($this->user_id);
+    }
+    return $this->cached_user;
+  }
   function get_username()
   {
-    if(!isset($this->cached_username)) {
-      global $nsisweb;
-      $result = $nsisweb->query("select username from nsisweb_users where userid=$this->user_id");
-      if($result && $nsisweb->how_many_results($result) == 1) {
-        $array = $nsisweb->get_result_array($result);
-        $this->cached_username = $array['username'];
-      } else {
-        $this->cached_username = "anonymous";
-      }
-    }
-    return $this->cached_username;
+    $user = $this->get_user();
+    return $user->username;
   }
   function get_ip()
   {

@@ -11,7 +11,6 @@
 
 /* Change this to TRUE to see the queries exected, never set it to true on the
    release site though because this sensitive data, debug purposes only! */
-define('SHOW_QUERIES',FALSE); 
 $query_count = count($nsisweb->executed_queries);
 ?>
 <!-- footer.skel.php: begin -->
@@ -30,13 +29,15 @@ $query_count = count($nsisweb->executed_queries);
     </table>
   </div>
   <?
-  if(defined('SHOW_QUERIES') && SHOW_QUERIES == TRUE) {
-    print "<pre>Executed Queries:\n";
+  $session = $nsisweb->get_session();
+  $user    = $session->get_user();
+  if($user->get_flags() & USERFLAG_SHOWQUERIES) {
+    print "<code>Executed Queries:<hr>\n";
     foreach($nsisweb->executed_queries as $query) {
-    print "Query: ".htmlentities($query)."\n";
+      print "".htmlentities($query)."<hr>\n";
+    }
+    print "</code>";
   }
-  print "</pre>";
-}
 ?>
 </body> 
 </html>

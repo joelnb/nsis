@@ -3,11 +3,12 @@
 /* User id zero is the anonymous user */
 
 include_once(dirname(__FILE__)."/nsisweb.pkg.php");
-define('ANONYMOUS_USER_ID', 0);
-define('SYSTEM_USER_ID',   -1);
-define('USERTYPE_NORMAL',   0);
-define('USERTYPE_ADMIN',    1);
-define('USERFLAG_PERSIST',  1);
+define('ANONYMOUS_USER_ID',    0);
+define('SYSTEM_USER_ID',      -1);
+define('USERTYPE_NORMAL',      0);
+define('USERTYPE_ADMIN',       1);
+define('USERFLAG_PERSIST',     1);
+define('USERFLAG_SHOWQUERIES', 2);
 
 function initialise_user_table()
 {
@@ -41,6 +42,10 @@ class NsisWebUser
   function is_anonymous()
   {
     return ($this->user_id == 0) ? TRUE : FALSE;
+  }
+  function get_flags()
+  {
+    return $this->flags;
   }
 };
 
