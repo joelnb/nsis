@@ -27,9 +27,9 @@ table {
     margin: auto; 
     background-image: url('../images/back.gif'); 
     background-repeat: no-repeat; 
-    background-position: right center 
-} 
-     
+	background-position: 370px 120px;
+}
+
 .text { 
     margin: 12px; 
     font-size: 10pt; 
