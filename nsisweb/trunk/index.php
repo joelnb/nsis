@@ -9,7 +9,7 @@
 <p>NSIS tries to be a scriptable win32 installer/uninstaller system that doesn't suck and isn't huge.</p>
 <table class="contenttable">
 <tr>
-<td>
+<td rowspan="3">
 	<ul><li><b><a href="http://www.nullsoft.com/free/nsis/">Official Home Page</a></b>
 		<p>General information about NSIS</p>
 		</li>
@@ -45,8 +45,14 @@
 		</li>
 	</ul>
 </td>
-<td class="announcement"><a href="http://sourceforge.net/forum/forum.php?forum_id=255937">
-<span class="highlight">NEW!</span> NSIS 2 beta 2</a>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td class="announcement"><a href="http://sourceforge.net/forum/forum.php?forum_id=260881">
+<span class="highlight">NEW!</span> NSIS 2 beta 3</a>
 </td>
 </tr>
 </table>

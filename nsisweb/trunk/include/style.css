@@ -28,12 +28,12 @@ table {
     margin: auto;
     background-image: url('http://nsis.sourceforge.net/images/back.gif');
     background-repeat: no-repeat;
-	background-position: 370px 140px;
+    background-position: 370px 140px;
 }
 
 .contenttable {
-	background-color: transparent;
-	margin: 0px;
+    background-color: transparent;
+    margin: 0px;
 }
 
 p, li {
@@ -47,14 +47,11 @@ p, li {
 } 
 
 .announcement {
-	font-size: 16pt;
-	vertical-align: top;
-	position: relative;
-	top: 450px;
+    font-size: 16pt;
 }
 
 .highlight {
-	color: #376EAB;
+    color: #376EAB;
 }
 	
 
