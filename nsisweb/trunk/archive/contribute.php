@@ -189,8 +189,8 @@ ENDOFHTML;
 			<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
 			  <input type="hidden" name="stage" value="3">
 			  <input type="hidden" name="pagetype" value="$pagetype">
-		  	<a href="javascript:document.wizard.stage.value=1;wizard.submit();"><< Back</a> |
-		  	<a href="javascript:document.wizard.stage.value=2;wizard.submit();">Preview</a> |
+		  	<a href="javascript:document.wizard.stage.value=1;document.wizard.submit();"><< Back</a> |
+		  	<a href="javascript:document.wizard.stage.value=2;document.wizard.submit();">Preview</a> |
 			  <a href="javascript:document.wizard.submit();">Continue >></a>
 			</p>
 			</form>
@@ -242,8 +242,8 @@ ENDOFHTML;
 			<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
 			  <input type="hidden" name="stage" value="2">
 			  <input type="hidden" name="pagetype" value="$pagetype">
-		  	<a href="javascript:document.wizard.stage.value=1;wizard.submit();"><< Back</a> |
-		  	<a href="javascript:document.wizard.stage.value=2;wizard.submit();">Upload</a> |
+		  	<a href="javascript:document.wizard.stage.value=1;document.wizard.submit();"><< Back</a> |
+		  	<a href="javascript:document.wizard.stage.value=2;document.wizard.submit();">Upload</a> |
 			  <a href="$home_link">Finished >></a>
 			</p>
 			</form>
