@@ -3,9 +3,9 @@ include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 include_once(dirname(__FILE__)."/engine/nsiswebsession.pkg.php");
 end_session();
 if(isset($_GET['page'])) {
-  $nsisweb->redirect($_GET['page']);
+  header("Location: ".$nsisweb->get_page_url($_GET['page']));
 } else {
-  $nsisweb->redirect($nsisweb->get_home_url());
+  header("Location: ".$nsisweb->get_home_url());
 }
 exit;
 ?>
