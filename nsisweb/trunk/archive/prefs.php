@@ -14,8 +14,10 @@ if($session->is_anonymous()) {
 
   if(strcmp($_GET['action'],'stoppersist') == 0) {
     $nsisweb->query('update nsisweb_users set flags=flags & '.~USERFLAG_PERSIST." where userid=$user_id");
+    $nsisweb->query('update nsisweb_sessions set flags=flags & '.~SESSIONFLAG_PERSIST." where userid=$user_id");
   } else if(strcmp($_GET['action'],'persist') == 0) {
     $nsisweb->query('update nsisweb_users set flags=flags | '.USERFLAG_PERSIST." where userid=$user_id");
+    $nsisweb->query('update nsisweb_sessions set flags=flags | '.SESSIONFLAG_PERSIST." where userid=$user_id");
   }
   
   $user     = find_userid($user_id);
