@@ -13,10 +13,6 @@
 include_once(dirname(__FILE__)."/nsisweb.pkg.php");
 include_once(dirname(__FILE__)."/nsiswebuser.pkg.php");
 
-define('PICKTYPE_PAGE',0);
-define('PICKTYPE_FILE',1);
-define('PICKTYPE_USER',2);
-
 function initialise_picks_table()
 {
 	global $nsisweb;
