@@ -56,7 +56,7 @@ if(isset($parentid)) {
 				}
 				print '<li><a href="'.$nsisweb->get_page_url($child_pageid).'&parentid='.$pageid.'">'.$child_title."</a>\n";
 				if($item['type'] == PAGETYPE_DIRECTORY) {
-					$children = find_children($item['pageid']);
+					$children = find_children($child_pageid);
 					print ' ('.count($children).')';
 				}
 			}
