@@ -32,6 +32,7 @@ class NsisWebSite
 		initialise_user_table();
 		initialise_session_table();
 		initialise_page_table();
+		initialise_picks_table();
 		$storage = new NsisWebStorage;
 		$storage->initialise();
 	}
