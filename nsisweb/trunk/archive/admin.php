@@ -127,7 +127,7 @@ ENDOFHTML;
             }
 
             print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
-            print '<td rowspan="4" style="text-align:center;">'.$index++.'</td>';
+            print '<td rowspan="2" style="text-align:center;">'.$index++.'</td>';
             print '<td style="text-align:center">'.$datetime.'</td><td>'.$file.'</td>';
             print '<td style="text-align:center">Line '.$line.'</td><td>'.$request.'</td>';
             print '</tr><tr style="background-color:#ffffff;font-size:8pt;">';
