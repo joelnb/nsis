@@ -112,8 +112,10 @@ if(strlen($keywords)>0) {
 
 /* Append to the query the specific part for author matching, get matching
 author user ids first... */
+$author_count = -1;
 if(strlen($author)>0) {
-  $authors = explode(',',$author);
+  $author_count = 0;
+  $authors      = explode(',',$author);
   if(count($authors) > 0) {
     $temp_query = "select userid from nsisweb_users where username like '%".$authors[0]."%'";
     for($i=1; $i<count($authors); $i++) {
@@ -121,7 +123,9 @@ if(strlen($author)>0) {
     }
 
     $result = $nsisweb->query($temp_query);
-    if($result && $nsisweb->how_many_results($result)>0) {
+    if($result) $author_count = $nsisweb->how_many_results($result);
+    
+    if($result && $author_count>0) {
       if(isset($query)) $query .= " and ";
       $query .= "author in (";
       $first = TRUE;
@@ -225,7 +229,13 @@ if($do_search) {
   if($result && $count > 0) {
     print "Your search returned $count result";
     if($count != 1) print 's';
-    print ".<br><br>";
+    print ". ";
+    if($author_count > 0) {
+	    print "Your entered username(s) matched $author_count users.";
+    } else if($author_count == 0) {
+	    print "Your entered username(s) did not match any known users, no filtering by user was done.";
+    }
+    print "<br><br>";
     print <<<END_OF_HTML
       <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
         <tr style="background-color:#eeeeff">
@@ -234,8 +244,8 @@ if($do_search) {
           <td align="center"><b>Title</b></td>
         </tr>
 END_OF_HTML;
-    $i = 0;
-    $index = 1;
+    $i        = 0;
+    $index    = 1;
     $user_map = array();
     while($record = $nsisweb->get_result_array($result)) {
       if($i == 0) {
@@ -260,7 +270,11 @@ END_OF_HTML;
     }
     print "</table>";
   } else {
-    print "Your search returned no results.";
+    if($author_count == 0) {
+      print "No user names matched the name or names that you entered.";
+    } else {
+      print "Your search returned no results.";
+    }
   }
 
   print "</p>";
