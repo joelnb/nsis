@@ -8,7 +8,7 @@ function LocalFileDate($file) {
 function IncludeHTMLHeader($title) {
 	echo "<title>".$title." // NSIS Developer Site</title>\n".
 		"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\n".
-		"<link rel=\"Stylesheet\" type=\"text/css\" href=\"include/style.css\">\n";
+		"<link rel=\"Stylesheet\" type=\"text/css\" href=\"http://nsis.sourceforge.net/include/style.css\">\n";
 }
 function IncludePageHeader($title,$showback=false) {
 ?>
