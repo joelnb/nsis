@@ -298,6 +298,54 @@ function end_session()
 	unset($_SESSION['session']);
 }
 
+function end_sessions()
+{
+	global $nsisweb;
+
+	$session_id = 0;
+	if(isset($_COOKIE[COOKIE_NAME])) {
+		$session_id = $_COOKIE[COOKIE_NAME];
+	} else if(isset($_GET[COOKIE_NAME])) {
+		$session_id = $_GET[COOKIE_NAME];
+	}
+
+	$blurb[] = "***ENDING SESSIONS: session_id=$session_id<br>";
+	if($session_id != 0) {
+		$blurb[] = "***ENDING SESSIONS: 2<br>";
+		$record = $nsisweb->query_one_only("select userid from nsisweb_sessions where sessionid='$session_id'");
+		if($record) {
+			$user_id = $record['userid'];
+			$result  = $nsisweb->query("select sessionid from nsisweb_sessions where userid=$user_id");
+			if($result && $nsisweb->how_many_results($result)>0) {
+				while($record = $nsisweb->get_result_array($result)) {
+					$session_id = $record['sessionid'];
+					$nsisweb->query("delete from nsisweb_picks where sessionid='$session_id'");
+				}
+			}
+		}
+		$nsisweb->query("delete from nsisweb_sessions where userid=$user_id");
+	}
+
+	setcookie(COOKIE_NAME,"",time()-86400,"/","",0);
+	setcookie(session_name(),"",time()-86400,"/","",0);
+	unset($_GET[COOKIE_NAME]);
+
+	@session_start();
+	$_SESSION = array();
+	@session_unset();
+	@session_destroy();
+
+	if($nsisweb->session != 0) {	
+		$session = $nsisweb->session;
+		$session->user_id = 0;
+		$session->looks_like_admin = FALSE;
+		$session->persist          = FALSE;
+		unset($session->cached_username);
+	}
+
+	unset($_SESSION['session']);
+}
+
 function login($username,$password)
 {
 	global $nsisweb;
