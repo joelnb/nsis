@@ -75,7 +75,7 @@ if($page) {
 <table style="font-family:verdana;font-size:8pt;color:#000000;" width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
     <td align="left" valign="top">
-      Written by <?= $author ?> <?= $page->get_author_date() ?>
+      Written by <a href="profile.php?userid=<?= $page->get_authorid() ?>"><?= $author ?></a> <?= $page->get_author_date() ?>
     </td>
     <td align="right" valign="top">
       <?
@@ -86,7 +86,7 @@ if($page) {
         } else {
           $last_author = $author;
         }
-        print 'Last updated by '.$last_author.' '.$page->get_editor_date();
+        print 'Last updated by <a href="profile.php?userid='.$page->get_editorid().'">'.$last_author.'</a> '.$page->get_editor_date();
       }
       ?>
     </td>

@@ -57,7 +57,7 @@ if($result) {
       }
     }
     
-    $action = ($new ? 'added' : 'changed')." $diff $units".($diff > 1 ? "s" : "")." ago by ".$username;
+    $action = ($new ? 'added' : 'changed')." $diff $units".($diff > 1 ? "s" : "")." ago by <a href=\"profile.php?userid=".$userid."\">.$username."</a>";
 
     if($i == 0) {
       $i = 1;
