@@ -27,9 +27,14 @@ class Output_HTML
 		$this->prepro 		= '<font color="purple">_WORD_</font>';
 		$this->select 		= '<font color="red"><b>_WORD_</b></font>';
 		$this->quote 		= '<font color="blue">_WORD_</font>';
-		$this->category_1 	= '<font color="blue">_WORD_</font>';
-		$this->category_2 	= '<font color="blue">_WORD_</font>';
-		$this->category_3 	= '<font color="blue">_WORD_</font>';
+		$this->category_1 	= '<font color="#000088">_WORD_</font>';
+		$this->category_2 	= '<font color="#008800">_WORD_</font>';
+		$this->category_3 	= '<font color="#008888">_WORD_</font>';
+		$this->category_4 	= '<font color="#880000">_WORD_</font>';
+		$this->category_5 	= '<font color="#880088">_WORD_</font>';
+		$this->category_6 	= '<font color="#888800">_WORD_</font>';
+		$this->category_7 	= '<font color="#0000ff">_WORD_</font>';
+		$this->category_8 	= '<font color="#00ff00">_WORD_</font>';
 	}
 }
 ?>
