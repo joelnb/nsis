@@ -339,7 +339,7 @@ class NsisWebInstance
 				$page->increment_views();
 				include(NSISWEB_DIRECTORY_SKELETON);
 				break;
-			not null default:
+			default:
 				return FALSE;
 		}
 		return TRUE;
