@@ -17,7 +17,7 @@ if(strlen($username)>0 && strlen($password)>0) {
     if(isset($_POST['page'])) {
       header("Location: ".$nsisweb->get_page_url($_POST['page']));
     } else {
-      header("Location: ".$nsisweb->get_home_url());
+      header("Location: ".$nsisweb->get_base_url().'/prefs.php?action=loggedin');
     }
   }
 }
