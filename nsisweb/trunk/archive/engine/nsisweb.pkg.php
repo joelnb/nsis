@@ -160,20 +160,24 @@ class NsisWeb
         $this->executed_queries[] = $query;
         $result = mysql_query($query);
 
-        global $nsisweb;
-        if($nsisweb->session > 0) {
-          $session = $nsisweb->get_session();
-          $user    = $session->user_id;
-          $ip      = $session->ip;
-        } else {
-          $user = $ip = 'unknown';
+        if(strstr($query,'update') || 
+           strstr($query,'insert') ||
+           strstr($query,'delete')) {
+          global $nsisweb;
+          if($nsisweb->session > 0) {
+            $session = $nsisweb->get_session();
+            $user    = $session->user_id;
+            $ip      = $session->ip;
+          } else {
+            $user = $ip = 'unknown';
+          }
+          $logline = "modification detected: user=$user ip=$ip query=$query";
+          if($fp = fopen(NSISWEB_LOGSDIR.'/dbmods.log', 'a')) {
+            fwrite($fp,"#dbmod#".basename($file)."#$line#".date('d-M-Y G:i:s T').'#'.$_SERVER['REQUEST_URI'].'#'.$logline."\n");
+            fclose($fp);
+          }
         }
-        $logline = "modification detected: user=$user ip=$ip query=$query";
-        if($fp = fopen(NSISWEB_LOGSDIR.'/dbmods.log', 'a')) {
-          fwrite($fp,"#dbmod#".basename($file)."#$line#".date('d-M-Y G:i:s T').'#'.$_SERVER['REQUEST_URI'].'#'.$logline."\n");
-          fclose($fp);
-        }
-        
+          
         if($result != FALSE) {
           return $result;
         } else {
