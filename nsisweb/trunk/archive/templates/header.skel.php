@@ -41,7 +41,7 @@ if(!$session->is_anonymous()) {
 
 </head>
 
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="init()">
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 
 <table width="778" height="100%" class="maintable" cellspacing="0" cellpadding="0" align="center">
 

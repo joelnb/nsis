@@ -17,8 +17,8 @@ $query_count = count($nsisweb->executed_queries);
     </td>
   </tr>
   <tr>
-    <td colspan="2" class="alogo">
-      <p class="alogo"><a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=22049&amp;type=1" alt="SourceForge Logo" border="0"></a></p>
+    <td colspan="2" height="40" class="alogo">
+      <a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=22049&amp;type=1" alt="SourceForge Logo" border="0"></a>
     </td>
   </tr> 
 </table>
