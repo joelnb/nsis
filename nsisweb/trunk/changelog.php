@@ -1,3 +1,3 @@
 <?
-header("Location: /site/Changelog.24.0.html"); 
+header("Location: /development/changelog"); 
 ?>
