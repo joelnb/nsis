@@ -47,7 +47,7 @@ if($result) {
       }
 
       ?>
-        <tr style="background-color:$bgcolour;">
+        <tr style="background-color:<?= $bgcolour ?>;">
           <td style="text-align:center;border:solid 1px #aaaaaa;padding:4px;border-bottom:none;"><a href="<?= $grab_link ?>"><img style="vertical-align:middle;" src="<?= $file->get_image_url() ?>" border="0"> <?= $file->get_filename() ?></a> (<?= $size ?>)</td>
           <td style="text-align:center;border:solid 1px #aaaaaa;padding:4px;border-bottom:none;border-left:none;"><?= $downloads ?></td>
           <td style="text-align:center;border:solid 1px #aaaaaa;padding:4px;border-bottom:none;border-left:none;">Uploaded by <?= $username ?></td>
