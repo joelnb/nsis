@@ -14,7 +14,7 @@ function get_param($param_name)
 
 $latest = "1.98";
 $modernseries = "2.0";
-$modernversion = "rc3";
+$modernversion = "rc4";
 $output = "";
 $version = get_param("version");
 $cvs = get_param("cvs");
