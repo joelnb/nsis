@@ -65,8 +65,8 @@ if(!$session->is_anonymous()) {
 <tr></td>
 
   <tr>
-    <td width="150" height="100"><img src="../site/media/template/left.jpg" width="150" height="100"></td>
-    <td width="628" height="100" class="top"><div class="header">NSIS Archive</div></td>
+    <td width="150" height="100" class="top"><a href="../site/index.php"><img src="../site/media/template/left.gif" width="150" height="100" border="0"></a></td>
+    <td width="628" height="100" class="top"><h1 class="header">NSIS Archive</h1></td>
   </tr>
 
   <tr>
