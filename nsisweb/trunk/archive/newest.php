@@ -1,6 +1,5 @@
 <?
 include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
-include_once(dirname(__FILE__)."/engine/nsiswebstorage.pkg.php");
 $nsisweb->start_page('Latest Additions/Changes');
 ?>
 <span style="font-family: verdana; font-size: 20pt; color: #000000;">Latest Additions/Changes</span>
