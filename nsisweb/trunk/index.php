@@ -2,10 +2,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
-<? IncludeHTMLHeader("Nullsoft (SuperPiMP|Scriptable) Install System"); ?>
+<? IncludeHTMLHeader("Nullsoft Scriptable Install System"); ?>
 </head> 
 <body> 
-<? IncludePageHeader("Nullsoft (SuperPiMP|Scriptable) Install System"); ?>
+<? IncludePageHeader("Nullsoft Scriptable Install System"); ?>
 <p>NSIS tries to be a scriptable win32 installer/uninstaller system that doesn't suck and isn't huge.</p>
 <table class="contenttable">
 <tr>
