@@ -26,9 +26,12 @@ if($revert || $_GET['pageid'] > 0) {
 	$content = $page['source'];
 } else if($_POST['pageid'] > 0) {
 	$pageid  = $_POST['pageid'];
-	$title   = stripslashes($_POST['title']);
-	$content = stripslashes($_POST['content']);
+	if (get_magic_quotes_gpc()) {
+		$title   = stripslashes($_POST['title']);
+		$content = stripslashes($_POST['content']);
+	}
 }
+$title = htmlentities($title);
 
 $nsisweb->start_page('Edit');
 ?>
@@ -46,7 +49,7 @@ edits, or Cancel to discard them and return to the page you were viewing.</p>
 	used to attack this site will be removed from your content. Additionally you can
 	enclose text inside a [source] ... [/source] token pair which will cause that
 	text to be syntax highlighted as if the text is PHP code:<br>
-	<textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="25"><?=$content?></textarea>
+	<textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="25"><?=htmlentities($content)?></textarea>
 	</p>
 	<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
 	  <input type="hidden" name="pageid" value="<?=$pageid?>">

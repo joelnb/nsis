@@ -147,8 +147,10 @@ ENDOFHTML;
 		}
 
 		if(strcmp($pagetype,'newpage') == 0 || strcmp($pagetype,'newsection') == 0) {
-			$title = stripslashes($_POST['title']);
+			$title = htmlentities(stripslashes($_POST['title']));
 			$content = stripslashes($_POST['content']);
+			// We don't want any </textarea>'s in there...
+			$content_entities = htmlentities($content);
 
 			print <<<ENDOFHTML
 			<form name="wizard" method="post" enctype="multipart/form-data" action="contribute.php">
@@ -164,7 +166,7 @@ ENDOFHTML;
 				tags that could be used to attack this site will be removed from your content. Additionally you
 				can enclose text inside a [source] ... [/source] token pair which will cause that text to be
 				syntax highlighted as if the text is PHP code:<br>
-				<textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="25">$content</textarea>
+				<textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="25">$content_entities</textarea>
 ENDOFHTML;
 			} else if(strcmp($pagetype,'newfile') == 0) {
 				print <<<ENDOFHTML
@@ -174,7 +176,7 @@ ENDOFHTML;
 			} else if(strcmp($pagetype,'newsection') == 0) {
 				print <<<ENDOFHTML
 				Enter a description for your new section:<br>
-				<textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="3">$content</textarea>
+				<textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="3">$content_entities</textarea>
 ENDOFHTML;
 			}
 			
@@ -258,8 +260,8 @@ ENDOFHTML;
 		      WIZARD PAGE 4
 		   -------------------- */
 		$pagetype = $_POST['pagetype'];
-		$title    = stripslashes(urldecode($_POST['title']));
-		$content  = stripslashes(urldecode($_POST['content']));
+		$title    = htmlentities(urldecode($_POST['title']));
+		$content  = urldecode($_POST['content']);
 
 		if(strcmp($pagetype,'newpage') == 0) {
 			$result = create_templated_page($title,$content);

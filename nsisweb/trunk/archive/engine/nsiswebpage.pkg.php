@@ -123,8 +123,10 @@ function create_templated_page($title,$body)
 {
 	global $nsisweb;
 	$source  = process_templated_content($body);
-	$source  = mysql_escape_string($source);
-	$title   = mysql_escape_string($title);
+	if (!get_magic_quotes_gpc()) {
+		$source = mysql_escape_string($source);
+		$title  = mysql_escape_string($title);
+	}
 	$session = $nsisweb->get_session();
 	$author  = $session->user_id;
 	$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_TEMPLATED.",flags=".PAGEFLAG_ORPHANED.",parentid=0,source='$source',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
@@ -135,8 +137,10 @@ function update_templated_page($pageid,$title,$body)
 {
 	global $nsisweb;
 	$source  = process_templated_content($body);
-	$source  = mysql_escape_string($source);
-	$title   = mysql_escape_string($title);
+	if (!get_magic_quotes_gpc()) {
+		$source = mysql_escape_string($source);
+		$title  = mysql_escape_string($title);
+	}
 	$session = $nsisweb->get_session();
 	$author  = $session->user_id;
 	$nsisweb->query("update nsisweb_pages set source='$source',title='$title',last_author=$author,last_updated=NOW() where pageid=$pageid");
@@ -197,8 +201,10 @@ function create_directory_page($title,$description)
 	global $nsisweb;
 	$session     = $nsisweb->get_session();
 	$author      = $session->user_id;
-	$title       = mysql_escape_string($title);
-	$description = mysql_escape_string($description);
+	if (!get_magic_quotes_gpc()) {
+		$title       = mysql_escape_string($title);
+		$description = mysql_escape_string($description);
+	}
 	$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_DIRECTORY.",flags=".PAGEFLAG_ORPHANED.",parentid=0,source='$description',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
 	return $nsisweb->get_created_id();
 }
