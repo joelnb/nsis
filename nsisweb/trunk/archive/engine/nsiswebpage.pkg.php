@@ -294,7 +294,7 @@ function colour_source($string){
 				$array_contents[0] = ob_get_contents();
 				ob_end_clean();
 		  }
-			$final .= "<pre>".$array_contents[0]."</pre>".$array_contents[1];
+			$final .= '<pre style="margin: 12px;">'.$array_contents[0]."</pre>".$array_contents[1];
 		}
 
 		if(USE_BEAUTIFIER == TRUE) {
