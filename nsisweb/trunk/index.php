@@ -32,12 +32,12 @@
 		<ul>
 			Browse the files of the latest version
 		</ul> 
-	<li class="text"><b><a href="changelog.php">Change log</a></b> 
+	<li class="text"><b><a href="http://nsis.sourceforge.net/changelog.php">Change log</a></b> 
 		<ul>
 			See what's cooking<br> 
 			<span class="smalltext">Updated: <?=LocalFileDate("nightly/changelog.htm")?> </span> 
 		</ul> 
-	<li class="text"><b><a href="nightly/nsis.zip">Nightly CVS snapshot</a></b> 
+	<li class="text"><b><a href="http://nsis.sourceforge.net/nightly/nsis.zip">Nightly CVS snapshot</a></b> 
 		<ul> 
 			NSIS CVS directory zipped up<br> 
 			<span class="smalltext">Updated: <?=LocalFileDate("nightly/nsis.zip")?> </span> 

@@ -43,7 +43,7 @@ function IncludePageFooter() {
 }
 
 function _BackButton() {
-	echo "<p class=\"text\" align=\"center\"><a href=\"index.php\">Back to Main Page</a></p>";
+	echo "<p class=\"text\" align=\"center\"><a href=\"http://nsis.sourceforge.net/index.php\">Back to Main Page</a></p>";
 }
 
 ?>
