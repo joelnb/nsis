@@ -12,92 +12,99 @@ function get_param($param_name)
   return $param_value;
 }
 
-$latest = "2.0";
-$modernseries = "2.0";
-$modernversion = "rc4";
-$output = "";
+$TYPES = array(
+  "a" => 0,
+  "b" => 1,
+  "rc" => 2,
+  "" => 3
+);
+
+$RTYPES = array(
+  "a",
+  "b",
+  "rc",
+  ""
+);
+
+$output = "0";
+
+$latest_stable_version = "2.0";
+$latest_version = "2.0";
+$latest_type = $TYPES[""];
+$latest_build = "";
+
 $version = get_param("version");
 $cvs = get_param("cvs");
 
+function splitVersion($version) {
+  $t = "";
+
+  $p = strpos($version, "a");
+  if ($p != FALSE)
+    $t = "a";
+
+  $p = strpos($version, "b");
+  if ($p != FALSE)
+    $t = "b";
+
+  $p = strpos($version, "rc");
+  if ($p != FALSE)
+    $t = "rc";
+
+  if ($t == "") {
+    return array(
+      "version" => $version,
+      "type" => "",
+      "build" => ""
+    );
+  }
+
+  return array(
+    "version" => substr($version, 0, strpos($version, $t)),
+    "type" => $t,
+    "build" => substr($version, strpos($version, $t) + strlen($t))
+  );
+}
+
 if ($version) {
-  $update = false;
   $version = str_replace("v", "", $version);
-  $pos = strpos($version, "b");
-  $prerelease = "b";
-  if (!$pos)
-  {
-    $pos = strpos($version, "a");
-    $prerelease = "a";
-  }
-  if (!$pos) 
-  {
-    $pos = strpos($version, "rc");
-    $prerelease = "rc";
-  }
-  if ($pos) 
-  {
-    $series = substr($version, 0, $pos);
-    $revision = substr($version, $pos);
-    if ($modernseries > $series) 
-    {
-      $output = "2|" . $modernseries . $modernversion;
-    } else if ($modernseries < $series) {
-      $output = "0";
-    } else {
-      if($prerelease == "a")
-      {
-        if(strpos($modernversion, "b") !== FALSE || strpos($modernversion, "rc") !== FALSE)
-        {
-          $output = "2|" . $modernseries . $modernversion;
-        }else{
-          if(substr($revision, 1) < substr($modernversion, 1))
-          {
-            $output = "2|" . $modernseries . $modernversion;
-          }
-        }
-      } else if($prerelease == "b") {
-        if(strpos($modernversion, "rc") !== FALSE)
-        {
-          $output = "2|" . $modernseries . $modernversion;
-        }else{
-          if(strpos($modernversion, $prerelease) !== FALSE)
-          {
-            if(substr($revision, 1) < substr($modernversion, 1))
-            {
-              $output = "2|" . $modernseries . $modernversion;
-            } else {
-              $output = "0";
-            }
-          }else{
-            $output = "0";
-          }
-        }
-      } else if($prerelease == "rc") {
-        if(strpos($modernversion, $prerelease) !== FALSE)
-        {
-          if(substr($revision, 2) < substr($modernversion, 2))
-          {
-            $output = "2|" . $modernseries . $modernversion;
-          } else {
-            $output = "0";
-          }
-        }else{
-          $output = "0";
+  $v = splitVersion($version);
+  $version = $v["version"];
+  $type = $TYPES[$v["type"]];
+  $build =  $v["build"];
+
+  if ($latest_stable_version > $version) {
+    // our stable version is newer than the user's
+    $output = "1|".$latest_stable_version;
+  } elseif ($latest_stable_version == $version && $type != $TYPES[""]) {
+    // the user is using a pre-release of the stable version
+    $output = "1|".$latest_stable_version;
+  } else {
+    // the user is using a pre-release version
+    $update = false;
+
+    if ($latest_version > $version) {
+      // a pre-release for a newer version is available
+      $update = true;
+    } elseif ($latest_version == $version) {
+      // same pre-release major version
+      if ($latest_type > $type) {
+        // we have a newer type
+        $update = true;
+      } elseif ($latest_type == $type) {
+        // same type
+        if ($latest_build > $build) {
+          // newer build
+          $update = true;
+        } elseif ($latest_build == $build && $cvs) {
+          // user's build is from cvs
+          $update = true;
         }
       }
     }
-  } else {
-    if($version == $modernseries)
-    {
-      if($modernrevision != "")
-      {
-        $output = "2|" . $modernseries . $modernversion;
-      }else{
-        $output = "0";
-      }
-    }else if ($latest >= $series)
-    {
-      $output = "1|".$latest;
+
+    if ($update) {
+      $output = "2|".$latest_version.$RTYPES[$latest_type].$latest_build;
     }
   }
 }
