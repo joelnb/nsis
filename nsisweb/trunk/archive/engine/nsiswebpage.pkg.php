@@ -184,9 +184,9 @@ function process_templated_content($content,$syntax_highlight)
 			)
 		)
 	);
-	
+
 	if($syntax_highlight) {
-		$content = colour_source(str_replace("\n",'<br>',$content));
+		$content = colour_source($content);
 	}
 
 	$trusted = sanitize(
@@ -270,7 +270,7 @@ function find_pageid($pageid)
 /* Based on a function provided in the PHP Manual from php.net, in a user
    comment by 'webmaster AT solophp.com' on the 30-Jul-2002 09:05. */
 function colour_source($string){
-	$array_contenido = explode("[source]",$string);
+	$array_contenido = explode("[source]",str_replace("\n",'<br>',$string));
 	$final = $array_contenido[0];
 	$count = count($array_contenido);
 
@@ -287,7 +287,7 @@ function colour_source($string){
 	  for($i = 1;$i < $count;$i++){
 			$array_contents = explode("[/source]",$array_contenido[$i]);
 			if(USE_BEAUTIFIER == TRUE) {
-		    $array_contents[0] = $highlighter->highlight_text(str_replace('<br>',"\n",$array_contents[0]));
+		    $array_contents[0] = $highlighter->highlight_text(str_replace("<br>","\n",$array_contents[0]));
 	    } else {
 				ob_start();
 				highlight_string("<?".$array_contents[0]."?".">");
@@ -310,7 +310,7 @@ function colour_source($string){
 function render_templated_page($title,$author,$date,$source,$pageid)
 {
 	global $nsisweb;
-	$source = colour_source($source);
+	//$source = colour_source($source);
 	include(NSISWEB_USERPAGE_SKELETON);
 }
 
