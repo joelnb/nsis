@@ -24,6 +24,10 @@
 		<ul>
 			Some frequently asked questions
 		</ul> 
+	<li class="text"><b><a href="http://nsis.sourceforge.net/Docs/">Documentation</a></b> 
+		<ul>
+			Browse the latest NSIS documentation.
+		</ul> 
 	<li class="text"><b><a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/nsis/NSIS/">Browse CVS</a></b> 
 		<ul>
 			Browse the files of the latest version
