@@ -33,13 +33,9 @@ if(!$session->is_anonymous()) {
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <link rel="Stylesheet" type="text/css" href="/include/style.css">
     <link rel="SHORTCUT ICON" href="/favicon.ico">
-    <?
-    if(!$robots_allowed) {
-      ?>
-      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-      <?
-    }
-    ?>
+    <? if(!$robots_allowed) { ?>
+    <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    <? } ?>
   </head>
 <body>
   <div class="center">

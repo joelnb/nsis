@@ -18,6 +18,7 @@ class NsisWeb
   var $start_time;
   var $executed_queries;
   var $db_selected;
+  var $instance_history;
 
   function NsisWeb()
   {
@@ -28,6 +29,11 @@ class NsisWeb
     $this->start_time       = 0;
     $this->executed_queries = array();
     $this->db_selected      = FALSE;
+    if(strlen($_GET['instances'])>0) {
+      $this->instance_history = explode(',',$_GET['instances']);
+    } else {
+      $this->instance_history = array(0);
+    }
   }
   function initialise()
   {
@@ -41,7 +47,7 @@ class NsisWeb
       initialise_page_table();
       initialise_picks_table();
       $storage = new NsisWebStorage;
-      $storage->initialise();
+      $storage->
     }
   }
   function record_error($error)
@@ -53,6 +59,10 @@ class NsisWeb
         fclose($fp);
       }
     }
+  }
+  function reset_instance_history()
+  {
+    $this->instance_history = array();
   }
   function get_session()
   {
@@ -105,10 +115,31 @@ class NsisWeb
       header("Location: $url");
       exit;
     } else {
+      if(end($this->instance_history) != (int)$pagename) {
+        $this->instance_history[] = (int)$pagename;
+      }
       $instance = new NsisWebInstance((int)$pagename,FETCH_CONTENT_PP);
       $instance->show();
       exit;
     }
+  }
+  function get_instance_history($up_depth)
+  {
+    if($up_depth > 0) {
+      return 0;
+    } else if($up_depth == 0) {
+      return implode(',',$this->instance_history);
+    } else {
+      return implode(',',array_slice($this->instance_history,0,$up_depth));
+    }
+  }
+  function get_last_history_page()
+  {
+    return $this->instance_history[count($this->instance_history)-2];
+  }
+  function get_up_url()
+  {
+    return $this->get_page_url($this->get_last_history_page()).'&instances='.urlencode($this->get_instance_history(-2));
   }
   function query($query)
   {

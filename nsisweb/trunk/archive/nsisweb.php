@@ -9,10 +9,11 @@
   }
 
   unset($_GET['page']);
+  $nsisweb->reset_instance_history();
   $nsisweb->start_page('Home');
   
   $okay_count = 0;
-  
+
   $result = $nsisweb->query("select count(*) from nsisweb_users");
   if($result && $nsisweb->how_many_results($result) == 1) {
     $record = $nsisweb->get_result_array($result);

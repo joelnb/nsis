@@ -258,7 +258,7 @@ class NsisWebPage
     /* Use a join to the nsisweb_pages table to return the page details. */ 
     global $nsisweb;
     $children = array();
-    $result   = $nsisweb->query('select a.instanceid,a.pageid,b.type,b.title from nsisweb_hierarchy as a,nsisweb_pages as b where a.parentid='.$parentid.' and b.pageid=a.pageid');
+    $result   = $nsisweb->query('select a.instanceid,a.pageid,b.type,b.title from nsisweb_hierarchy as a,nsisweb_pages as b where a.parentid='.$parentid.' and b.pageid=a.pageid order by a.sequence');
     if($result && $nsisweb->how_many_results($result) > 0) {
       while($record = $nsisweb->get_result_array($result)) {
         $children[] = $record;
@@ -387,8 +387,14 @@ class NsisWebInstance
     $nsisweb->end_page();
     return $success;
   }
-  function show_inline()
+  function show_inline($view_only = FALSE)
   {
+    if(strlen($_GET['instances']) > 0) {
+      $instances = $_GET['instances'].','.$this->get_instanceid();
+    } else {
+      $instances = $this->get_instanceid();
+    }
+    
     global $nsisweb; /* Used by the template pages */
     $page = $this->get_page();
     switch($page->get_type()) {

@@ -1,325 +1,402 @@
 <?
 $upload_error = $php_errormsg;
-
 include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
-include_once(dirname(__FILE__)."/engine/nsiswebpage.pkg.php");
-include_once(dirname(__FILE__)."/engine/nsiswebpicks.pkg.php");
 
-function get_max_upload() {
-  if(!ini_get("file_uploads")) {
-    return FALSE;
-  }
-  $upload_max_filesize = get_real_size(ini_get("upload_max_filesize"));
-  $post_max_size = get_real_size(ini_get("post_max_size"));
-  $memory_limit = round(get_real_size(ini_get("memory_limit")) / 2);
-  if($upload_max_filesize>$post_max_size) {
-    $max = $post_max_size;
-  } else {
-    $max = $upload_max_filesize;
-  }
-  if(($memory_limit!="")&&($memory_limit<$max)) {
-    $max = $memory_limit;
-  }
-  if(NSISWEB_MAXSINGLEUPLOAD < $max) {
-    $max = NSISWEB_MAXSINGLEUPLOAD;
-  }
-  return $max;
+unset($action);
+if(strlen($_GET['action'])>0) {
+  $action = $_GET['action'];
+} else if(strlen($_POST['action'])>0) {
+  $action = $_POST['action'];
 }
-function get_real_size($size)
+
+switch($action) {
+  case 'createpage':
+  case 'previewpage':
+    ContributeNewPage();
+    break;
+  case 'savepage':
+    SavePage();
+    break;
+  case 'createsection':
+  case 'previewsection':
+    ContributeNewSection();
+    break;
+  case 'savesection':
+    SaveSection();
+    break;
+  case 'specifyupload':
+    ContributeNewFile();
+    break;
+  case 'uploadfile':
+    UploadFile();
+    break;
+  default:
+    ChooseContributionType();
+    break;
+}
+
+function ChooseContributionType()
 {
-  if ($size=="") { return 0; }
-  $scan['MB'] = 1048576;
-  $scan['M'] = 1048576;
-  $scan['KB'] = 1024;
-  $scan['K'] = 1024;
-  while (list($key) = each($scan)) {
-    if ((strlen($size)>strlen($key))&&(substr($size, strlen($size) - strlen($key))==$key)) {
-      $size = substr($size, 0, strlen($size) - strlen($key)) * $scan[$key];
-      break;
-    }
+  /* Present visitors with a selection of ways that they can contribute to the
+     Archive. */
+  global $nsisweb;
+  $nsisweb->start_page('Contribute To The Archive');
+  print <<<ENDOFHTML
+    <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute To The Archive</span>
+    <p>I want to contribute:</p>
+    <form name="choiceform" method="post" enctype="multipart/form-data" action="contribute.php">
+      <p style="margin-left:20px;">
+        <input type="radio" name="action" value="createpage" checked>a page of content of my design.<br>
+        <input type="radio" name="action" value="createsection">a new section that can contain other pages.<br>
+ENDOFHTML;
+
+  /* Only present the option to upload files to users that have admin
+     rights. */
+  $session = $nsisweb->get_session();
+  $user    = find_userid($session->user_id);
+  if($user->is_admin()) {
+    echo '<input type="radio" name="action" value="specifyupload" DISABLED>one or more files that others can download.';
   }
-  return $size;
-}
- 
-$stage = 1;
-if(strlen($_POST['stage'])>0) {
-  $stage = $_POST['stage'];
-}
 
-if($stage == 2 && strcmp($_POST['pagetype'],'newpage') != 0 &&
-  strcmp($_POST['pagetype'],'newsection') != 0 &&
-  strcmp($_POST['pagetype'],'newfile') != 0) {
-  /* Bad input, go back a stage */
-  $stage = 1;
-}
+  print <<<ENDOFHTML
+      </p>
+      <p>
+        When you have made your choice press continue to move on to the next stage:
+      </p>
+      <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+        <input type="hidden" name="stage" value="2">
+        <a href="javascript:document.choiceform.submit();">Continue >></a>
+      </p>
+    </form>
+    </p>
+ENDOFHTML;
 
-switch($stage) {
-  case 1:
-    /* --------------------
-    WIZARD PAGE 1
-       -------------------- */
-    $nsisweb->start_page('Contribute');
+  /* Warn anonymous users that they will not receive credit for their
+     contributions. */
+  if($user->is_anonymous()) {
     print <<<ENDOFHTML
-      <span style="font-family: verdana; font-size: 20pt; color: #000000;">Contribute: Stage One</span>
-      <p>I want to contribute:</p>
-      <form name="wizard" method="post" enctype="multipart/form-data" action="contribute.php">
-        <p style="margin-left:20px;">
-          <input type="radio" name="pagetype" value="newpage" checked>a page of content of my design.<br>
-          <input type="radio" name="pagetype" value="newsection">a new section that can contain other pages.<br>
-          <!--<input type="radio" name="pagetype" value="newfile" DISABLED>one or more files that others can download.-->
-        </p>
-        <p>
-          When you have made your choice press continue to move on to the next stage:
-        </p>
-        <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-          <input type="hidden" name="stage" value="2">
-          <a href="javascript:document.wizard.submit();">Continue >></a>
-        </p>
-      </form>
+      <p style="border:solid 2px red;padding:5px;margin-top:20px;margin-bottom:20px;">
+        You are <b>not</b> logged in which means that any contribution you make
+        to the archive will be credited to the anonymous user. If you wish to
+        gain the credit for this contribution you should
+        <a style="text-decoration:underline;" href="login.php">login now</a>.
+        If you do not already have an account here you can
+        <a style="text-decoration:underline;" href="createaccount.php">create
+        one for free</a>.<br>
+        <br>
+        Pages created by the anonymous user can be edited by anyone. Pages
+        created when you are logged in however can only be edited by you or an
+        administrator.
       </p>
 ENDOFHTML;
-    $session = $nsisweb->get_session();  
-    if($session->user_id == ANONYMOUS_USER_ID) {
-      $login_url  = $nsisweb->get_page_url('login');
-      $create_url = $nsisweb->get_page_url('createaccount');
-      
-      print <<<ENDOFHTML
-        <p style="border:solid 2px red;padding:5px;margin-top:20px;margin-bottom:20px;">You are <b>not</b> logged in which means that any contribution you make
-        to the archive will be credited to the anonymous user. If you wish to gain the credit for
-        this contribution you should <a style="text-decoration:underline;" href="$login_url">login now</a>. If you do not
-        already have an account here you can <a style="text-decoration:underline;" href="$create_url">create one for free</a>.<br>
-        <br>
-        Pages created by the anonymous user can be edited by anyone. Pages created when you are logged in however
-        can only be edited by you or an administrator.</p>
-ENDOFHTML;
-    }
-    break;
-  case 2:
-    /* --------------------
-    WIZARD PAGE 2
-       -------------------- */
-    $pagetype = $_POST['pagetype'];
+  }
+  $nsisweb->end_page();
+}
 
-    if(strcmp($pagetype,'newpage') == 0) {
-      $nsisweb->start_page('Contribute');
-      print <<<ENDOFHTML
-        <span style="font-family: verdana; font-size: 20pt; color: #000000;">Contribute: Stage Two</span>
-        <p>A new page requires three things, a title, some content and a place to exist in the page hierarchy.
-        At this stage you must choose the title and the content. You can edit the title and content and preview
-        the results as many times as you like before continuing onto the next stage.</p>
+function ContributeNewPage()
+{
+  global $nsisweb;
+  $nsisweb->start_page('Contribute New Page');
+  print <<<ENDOFHTML
+    <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute New Page</span>
+    <p>A new page requires three things, a title, some content and a place to
+    exist in the page hierarchy. At this stage you must choose the title and
+    the content. You can edit the title and content and preview the results
+    as many times as you like before continuing onto the next stage.</p>
 ENDOFHTML;
-    } else if(strcmp($pagetype,'newsection') == 0) {
-      $nsisweb->start_page('Contribute');
-      print <<<ENDOFHTML
-        <span style="font-family: verdana; font-size: 20pt; color: #000000;">Contribute: Stage Two</span>
-        <p>A new section requires three things, a title, a description of what kind of pages should be contained
-        within the section, and a place for the section to exist in the page hierarchy. At this stage you must
-        choose the title and the description. You can edit the title and description and preview
-        the results as many times as you like before continuing onto the next stage.</p>
-ENDOFHTML;
-    } else if(strcmp($pagetype,'newfile') == 0) {
-      $nsisweb->start_page('Contribute');
-      print <<<ENDOFHTML
-        <span style="font-family: verdana; font-size: 20pt; color: #000000;">Contribute: Stage Two</span>
-        <p>We encourage upload of files to this archive and try to make this as easy as possible. However, the
-        automatic scripts that power this site cannot determine whether or not uploaded files are safe for others
-        to download and as such uploaded files must be approved before they appear as downloadable files on this
-        site. This approval process requires a real person and will be done as quickly as possible.<br>
-        <br>
-        The site also enforces a limit on the amount of disk space that can be used by uploads. At this time
-        the scripts that power the site are not capable of using more than one server as a file repository and
-        so automatic uploads are limited to the space available to us on this server.<br>
-        <br>
-        Each time you press <b>upload</b> there will be a delay whilst the file is transmitted to this server,
-        and then you will be returned to this screen so that you may upload another file. If there were any
-        problems with the last file you uploaded these will be shown to you on this page after your upload
-        finishes.</p>
-ENDOFHTML;
-    } else {
-      /* Error, go back a step */
-      $_POST['stage'] = 1;
-      header("Location: contribute.php");
-      exit;
-    }
 
-    if(strcmp($pagetype,'newpage') == 0 || strcmp($pagetype,'newsection') == 0) {
-      if(isset($_POST['title'])) {
-        $title = htmlentities(stripslashes($_POST['title']));
-      } else {
-        $title = "Pick a title for your page.";
-      }
+  if(isset($_POST['title'])) {
+    $title = htmlentities(stripslashes($_POST['title']));
+  } else {
+    $title = "Pick a title for your page.";
+  }
       
-      if(isset($_POST['content'])) {
-        $content = stripslashes($_POST['content']);
-        // We don't want any </textarea>'s in there...
-        $content_entities = htmlentities($content);
-      } else {
-        $content_entities = $content = "<p>Enter your page content here. You can remove the outer paragraph if you wish, it depends on the appearance you want for your page.\n\nYou can put NSIS source code in like this:\n\n[source]; Turn off old selected section\nSectionGetFlags $1 $0\nIntOp $0 $0 & ${SECTION_OFF}\nSectionSetFlags $1 $0\n[/source]\nAnd then carry on again...</p>";
-      }
-        
-      print <<<ENDOFHTML
-        <form name="wizard" method="post" enctype="multipart/form-data" action="contribute.php">
-        <p>
+  if(isset($_POST['content'])) {
+    $content = htmlentities(stripslashes($_POST['content']));
+  } else {
+    $content = "<p>Enter your page content here. You can remove the outer paragraph if you wish, it depends on the appearance you want for your page.\n\nYou can put NSIS source code in like this:\n\n[source]; Turn off old selected section\nSectionGetFlags $1 $0\nIntOp $0 $0 & ${SECTION_OFF}\nSectionSetFlags $1 $0\n[/source]\nAnd then carry on again...</p>";
+  }
+
+  unset($_POST);
+
+  print <<<ENDOFHTML
+    <form name="editform" method="post" enctype="multipart/form-data" action="contribute.php">
+      <p>
         Choose a title for your new page: (255 characters max)<br>
         <input type="text" style="font-family:courier new;font-size:10pt;" name="title" size="79" maxlength="255" value="$title"><br>
         <br>
+        You must now enter the content of your new page. You are allowed to use HTML although some
+        tags that could be used to attack this site will be removed from your content. Additionally you
+        can enclose text inside a [source] ... [/source] token pair which will cause that text to be
+        syntax highlighted as if the text is NSIS script code:<br>
+        <textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="25">$content</textarea>
+      </p>
+      <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+        <input type="hidden" name="action" value="savepage">
+        <a href="contribute.php"><< Back</a> |
+        <a href="contribute.php?action=previewpage#preview">Preview</a> |
+        <a href="javascript:document.editform.submit();">Continue >></a>
+      </p>
+    </form>
+    <a name="preview">
 ENDOFHTML;
 
-      if(strcmp($pagetype,'newpage') == 0) {
-        print <<<ENDOFHTML
-          You must now enter the content of your new page. You are allowed to use HTML although some
-          tags that could be used to attack this site will be removed from your content. Additionally you
-          can enclose text inside a [source] ... [/source] token pair which will cause that text to be
-          syntax highlighted as if the text is NSIS script code:<br>
-          <textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="25">$content_entities</textarea>
-ENDOFHTML;
-      } else if(strcmp($pagetype,'newfile') == 0) {
-        print <<<ENDOFHTML
-          You must now enter the description of your new section: (255 characters max)<br>
-          <input type="text" style="font-family:courier new;font-size:10pt;" name="content" size="79" maxlength="255" value="$title"><br>
-ENDOFHTML;
-      } else if(strcmp($pagetype,'newsection') == 0) {
-        print <<<ENDOFHTML
-          Enter a description for your new section:<br>
-          <textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="3">$content_entities</textarea>
-ENDOFHTML;
-      }
-      
-      print <<<ENDOFHTML
-        </p>
-        <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-          <input type="hidden" name="stage" value="3">
-          <input type="hidden" name="pagetype" value="$pagetype">
-        <a href="javascript:document.wizard.stage.value=1;document.wizard.submit();"><< Back</a> |
-        <a href="javascript:document.wizard.stage.value=2;document.wizard.submit();">Preview</a> |
-          <a href="javascript:document.wizard.submit();">Continue >></a>
-        </p>
-        </form>
+  /* Construct a preview of the content supplied */
+  if(strlen($title)>0 || strlen($content)>0) {
+    $session = $nsisweb->get_session();
+    $created = date('Y-m-d H:i:s',time());
+    $preview_detail = array(
+      'title'        => $title,
+      'source'       => $content,
+      'author'       => $session->user_id,
+      'created'      => $created,
+      'last_updated' => $created,
+      'type'         => PAGETYPE_TEMPLATED);
+    $preview  = new NsisWebPage($preview_detail);
+    $instance = new NsisWebInstance($preview);
+    $instance->show_inline(TRUE);
+  }
+  $nsisweb->end_page();
+}
+
+function SavePage()
+{
+  /* When saving the page show the user every section that exists and ask them
+     to choose one to insert their page in. */
+  global $nsisweb;
+  $title   = htmlentities(stripslashes($_POST['title']));
+  $content = stripslashes($_POST['content']);
+
+  if(isset($_POST['parentid']) && strlen($_POST['parentid']) >= 0) {
+    $page    = new NsisWebPage();
+    $result  = $page->insert(PAGETYPE_TEMPLATED,0,$title,$content);
+    $page->add_instance($_POST['parentid']);
+    header('Location: '.$nsisweb->wwwroot.'/viewpage.php?pageid='.$_POST['parentid']);
+    exit;
+  }
+
+  $nsisweb->start_page('Contribute New Page');
+  print <<<ENDOFHTML
+    <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute New Page</span>
+    <p>From the list below please choose a section in which to insert your new page:</p>
+    <form name="insertform" method="post" enctype="multipart/form-data" action="contribute.php">
+      <input type="hidden" name="action" value="savepage">
+      <input type="hidden" name="title" value="$title">
+      <input type="hidden" name="content" value="$content">
+      <p>
 ENDOFHTML;
 
-      if(strlen($title)>0 || strlen($content)>0) {
-        $session = $nsisweb->get_session();
-        $fake_page_details = array('title'=>$title,'source'=>$content,'author'=>$session->user_id);
-        if(strcmp($pagetype,'newpage') == 0) {
-          $fake_page_details['type'] = PAGETYPE_TEMPLATED;
-        } else {
-          $fake_page_details['type'] = PAGETYPE_DIRECTORY;
-        }
-        $page = new NsisWebPage($fake_page_details);
-        $instance = new NsisWebInstance($page);
-        $instance->show_inline();
-      }
-    } else if(strcmp($pagetype,'newfile') == 0) {
-      $max_upload_bytes = get_max_upload();
-      $max_upload_mb    = $max_upload_bytes/1024.0/1024.0;
-      
-      if(count($_FILES) > 0) {
-        //$storage = new NsisWebStorage;
-        //$result = $storage->process_uploaded_files('nsiswebfile');
+  $session = $nsisweb->get_session();
+  if($session->looks_like_admin) {
+    echo '<input type="radio" name="parentid" value="0"> The Archive Root (only admins can insert pages here)<br><br>';
+  }
 
-        print "<p>";
-        if(strlen($upload_error)>0 || $result == 0) {
-          print '<b><span style="color:red">Last upload failed</span></b>';
-          if(strlen($upload_error)>0) {
-            print " [$upload_error]";
-          } else if(strlen($nsisweb->errors)>0) {
-            print " [".$nsisweb->errors[0]."]";
-          }
-        } else {
-          print "<b>Upload succeeded</b>";
-        }
-        print "</p>";
-      }
+  $result = $nsisweb->query('select pageid,title from nsisweb_pages where type='.PAGETYPE_DIRECTORY);
+  if($result && $nsisweb->how_many_results($result)>0) {
+    while($record = $nsisweb->get_result_array($result)) {
+      echo '<input type="radio" name="parentid" value="'.$record['pageid'].'"> '.$record['title']."<br>\n";
+    }
+  } else if(!$session->looks_like_admin) {
+    echo 'There are no sections for you to insert your page into!';
+  }
 
-      $home_link = $nsisweb->get_home_url();
-      
-      print <<<ENDOFHTML
-        <form name="wizard" method="post" enctype="multipart/form-data" action="contribute.php">
-        <p>
+  print <<<ENDOFHTML
+      </p>
+      <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+        <input type="hidden" name="action" value="savepage">
+        <a href="javascript:document.insertform.submit();">Insert Your Page >></a>
+      </p>
+    </form>
+ENDOFHTML;
+}
+
+function ContributeNewSection()
+{
+  global $nsisweb;
+  $nsisweb->start_page('Contribute New Section');
+  print <<<ENDOFHTML
+    <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute New Section</span>
+    <p>A new section requires three things, a title, a description of what kind of pages should be contained
+    within the section, and a place for the section to exist in the page hierarchy. At this stage you must
+    choose the title and the description. You can edit the title and description and preview
+    the results as many times as you like before continuing onto the next stage.</p>
+ENDOFHTML;
+
+  if(isset($_POST['title'])) {
+    $title = htmlentities(stripslashes($_POST['title']));
+  } else {
+    $title = "Pick a title for your section.";
+  }
+
+  if(isset($_POST['content'])) {
+    $content = htmlentities(stripslashes($_POST['content']));
+  } else {
+    $content = "<p>Enter your page content here. You can remove the outer paragraph if you wish, it depends on the appearance you want for your page.\n\nYou can put NSIS source code in like this:\n\n[source]; Turn off old selected section\nSectionGetFlags $1 $0\nIntOp $0 $0 & ${SECTION_OFF}\nSectionSetFlags $1 $0\n[/source]\nAnd then carry on again...</p>";
+  }
+
+  unset($_POST);
+        
+  print <<<ENDOFHTML
+    <form name="editform" method="post" enctype="multipart/form-data" action="contribute.php">
+      <p>
+        Choose a title for your new page: (255 characters max)<br>
+        <input type="text" style="font-family:courier new;font-size:10pt;" name="title" size="79" maxlength="255" value="$title"><br>
+        <br>
+        Enter a description for your new section:<br>
+        <textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="3">$content</textarea>
+      </p>
+      <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+        <input type="hidden" name="action" value="savesection">
+        <a href="contribute.php"><< Back</a> |
+        <a href="contribute.php?action=previewsection#preview">Preview</a> |
+        <a href="javascript:document.editform.submit();">Continue >></a>
+      </p>
+    </form>
+    <a name="preview">
+ENDOFHTML;
+
+  /* Construct a preview of the content supplied */
+  if(strlen($title)>0 || strlen($content)>0) {
+    $session = $nsisweb->get_session();
+    $created = date('Y-m-d H:i:s',time());
+    $preview_detail = array(
+      'title'        => $title,
+      'source'       => $content,
+      'author'       => $session->user_id,
+      'created'      => $created,
+      'last_updated' => $created,
+      'type'         => PAGETYPE_DIRECTORY);
+    $preview  = new NsisWebPage($preview_detail);
+    $instance = new NsisWebInstance($preview);
+    $instance->show_inline(TRUE);
+  }
+  $nsisweb->end_page();
+}
+
+function SaveSection()
+{
+  /* When saving the page show the user every section that exists and ask them
+     to choose one to insert their page in. */
+  global $nsisweb;
+  $title   = htmlentities(stripslashes($_POST['title']));
+  $content = stripslashes($_POST['content']);
+
+  if(isset($_POST['parentid']) && strlen($_POST['parentid']) >= 0) {
+    $page    = new NsisWebPage();
+    $result  = $page->insert(PAGETYPE_DIRECTORY,0,$title,$content);
+    $page->add_instance($_POST['parentid']);
+    header('Location: '.$nsisweb->wwwroot.'/viewpage.php?pageid='.$_POST['parentid']);
+    exit;
+  }
+
+  $nsisweb->start_page('Contribute New Section');
+  print <<<ENDOFHTML
+    <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute New Page</span>
+    <p>From the list below please choose a section in which to insert your new section:</p>
+    <form name="insertform" method="post" enctype="multipart/form-data" action="contribute.php">
+      <input type="hidden" name="action" value="savepage">
+      <input type="hidden" name="title" value="$title">
+      <input type="hidden" name="content" value="$content">
+      <p>
+ENDOFHTML;
+
+  $session = $nsisweb->get_session();
+  if($session->looks_like_admin) {
+    echo '<input type="radio" name="parentid" value="0"> The Archive Root (only admins can insert pages here)<br><br>';
+  }
+
+  $result = $nsisweb->query('select pageid,title from nsisweb_pages where type='.PAGETYPE_DIRECTORY);
+  if($result && $nsisweb->how_many_results($result)>0) {
+    while($record = $nsisweb->get_result_array($result)) {
+      echo '<input type="radio" name="parentid" value="'.$record['pageid'].'"> '.$record['title']."<br>\n";
+    }
+  } else if(!$session->looks_like_admin) {
+    echo 'There are no sections for you to insert your page into!';
+  }
+
+  print <<<ENDOFHTML
+      </p>
+      <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+        <input type="hidden" name="action" value="savepage">
+        <a href="javascript:document.insertform.submit();">Insert Your Page >></a>
+      </p>
+    </form>
+ENDOFHTML;
+}
+
+function ContributeNewFile()
+{
+  global $nsisweb;
+  $nsisweb->start_page('Contribute New File');
+  print <<<ENDOFHTML
+    <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute New File</span>
+    <p>We encourage upload of files to this archive and try to make this as
+    easy as possible. However, the automatic scripts that power this site
+    cannot determine whether or not uploaded files are safe for others to
+    download and as such uploaded files must be approved before they appear as
+    downloadable files on this site. This approval process requires a real
+    person and will be done as quickly as possible.<br>
+    <br>
+    The site also enforces a limit on the amount of disk space that can be
+    used by uploads. At this time the scripts that power the site are not
+    capable of using more than one server as a file repository and so
+    automatic uploads are limited to the space available to us on this
+    server.<br>
+    <br>
+    Each time you press <b>upload</b> there will be a delay whilst the file is
+    transmitted to this server, and then you will be returned to this screen
+    so that you may upload another file. If there were any problems with the
+    last file you uploaded these will be shown to you on this page after your
+    upload finishes.</p>
+ENDOFHTML;
+
+  $max_upload_bytes = get_single_upload_limit();
+  $max_upload_mb    = $max_upload_bytes/1024.0/1024.0;
+
+  if(isset($_POST['content'])) {
+    $content = htmlentities(stripslashes($_POST['content']));
+  } else {
+    $content = "Describe the file you are uploading here.";
+  }
+
+  print <<<ENDOFHTML
+    <form name="uploadform" method="post" enctype="multipart/form-data" action="contribute.php">
+      <p>
+        Enter a description for your new section:<br>
+        <textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="3">$content</textarea>
+        <br>
         Choose the file that you wish to upload: (max single upload: $max_upload_mb Mb)<br>
         <input name="MAX_FILE_SIZE" type="hidden" value="$max_upload_bytes">
         <input name="nsiswebfile" type="file" size="72"><br>
-        </p>
-        <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-          <input type="hidden" name="stage" value="2">
-          <input type="hidden" name="pagetype" value="$pagetype">
-        <a href="javascript:document.wizard.stage.value=1;document.wizard.submit();"><< Back</a> |
-        <a href="javascript:document.wizard.stage.value=2;document.wizard.submit();">Upload</a> |
-          <a href="$home_link">Finished >></a>
-        </p>
-        </form>
+      </p>
+      <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+        <input type="hidden" name="action" value="uploadfile">
+        <a href="contribute.php"><< Back</a> |
+        <a href="javascript:document.uploadform.submit();">Continue >></a>
+      </p>
+    </form>
 ENDOFHTML;
-    }
-    break;
-  case 3:
-    /* --------------------
-    WIZARD PAGE 4
-       -------------------- */
-    $pagetype = $_POST['pagetype'];
-    $title    = htmlentities(stripslashes($_POST['title']));
-    $content  = stripslashes($_POST['content']);
-
-    if(strcmp($pagetype,'newpage') == 0) {
-      $page = new NsisWebPage();
-      $result = $page->insert(PAGETYPE_TEMPLATED,0,$title,$content);
-    } else if(strcmp($pagetype,'newsection') == 0) {
-      $page = new NsisWebPage();
-      $result = $page->insert(PAGETYPE_DIRECTORY,0,$title,$content);
-    } else {
-      /* Error, go back a step */
-      $_POST['stage'] = 2;
-      header("Location: contribute.php");
-      exit;
-    }
-
-    $nsisweb->start_page('Contribute');
-    print <<<ENDOFHTML
-      <span style="font-family: verdana; font-size: 20pt; color: #000000;">Contribute: Complete</span>
-ENDOFHTML;
-
-    if($result) {
-      if(strcmp($pagetype,'newpage') == 0) {
-        add_to_current_picks($page->get_pageid(),PAGETYPE_TEMPLATED);
-      } else if(strcmp($pagetype,'newsection') == 0) {
-        add_to_current_picks($page->get_pageid(),PAGETYPE_DIRECTORY);
-      }
-      print <<<ENDOFHTML
-        <p>The new page that you have created has been added to your pick list.
-        You should now browse through the archive until you find somewhere that
-        you want to insert your new page. You may find that you do not have
-        permission to insert the page at some locations.<br>
-        <br>
-        Once you have found a section to insert the page in click the insert pages
-        link on the browse page and you will be able to select which pages you wish
-        to insert from your pick list.<br>
-        <br>
-        If you do not insert the page in your current session the new page will be
-        deleted.</p>
-ENDOFHTML;
-    } else {
-      $query = $nsisweb->last_query;
-      print <<<ENDOFHTML
-        <p>An error has occured, your page could not be created.<br>
-        <br>
-        The last query executed was:<br>
-        <span style="font-family:courier new;">$query</span><br>
-        <br>
-        Errors that we know of are:<br>
-ENDOFHTML;
-      print_r($nsisweb->errors);
-      print "</p>";
-    }
-
-    $home_link   = $nsisweb->get_home_url();
-    $browse_link = $nsisweb->get_page_url('browse');
-
-    print <<<ENDOFHTML
-    <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-      <A href="$browse_link">Browse Pages</a> | 
-      <a href="$home_link">Return To Home</a>
-    </p>
-ENDOFHTML;
-    break;
+  $nsisweb->end_page();
 }
-$nsisweb->end_page();
+
+function UploadFile()
+{
+/*  if(count($_FILES) > 0) {
+    //$storage = new NsisWebStorage;
+    //$result = $storage->process_uploaded_files('nsiswebfile');
+
+    print "<p>";
+    if(strlen($upload_error)>0 || $result == 0) {
+      print '<b><span style="color:red">Last upload failed</span></b>';
+      if(strlen($upload_error)>0) {
+        print " [$upload_error]";
+      } else if(strlen($nsisweb->errors)>0) {
+        print " [".$nsisweb->errors[0]."]";
+      }
+    } else {
+      print "<b>Upload succeeded</b>";
+    }
+    print "</p>";
+  }*/
+}
 ?>

@@ -153,7 +153,7 @@ class NsisWebSession
   }
 };
 
-/* This function examines your cookie and GET data and decides if you have a session
+/* This function examines your cookie data and decides if you have a session
    already or not. If not, or your session has timed out, a new anonymous session is
    returned. */
 function find_my_session()
@@ -167,8 +167,6 @@ function find_my_session()
 
   if(isset($_COOKIE[COOKIE_NAME])) {
     $session_id = $_COOKIE[COOKIE_NAME];
-  } else if(isset($_GET[COOKIE_NAME])) {
-    $session_id = $_GET[COOKIE_NAME];
   }
 
   /* Import saved php data (if any exists) -- this could come from a publicly
@@ -271,8 +269,6 @@ function end_session()
   $session_id = 0;
   if(isset($_COOKIE[COOKIE_NAME])) {
     $session_id = $_COOKIE[COOKIE_NAME];
-  } else if(isset($_GET[COOKIE_NAME])) {
-    $session_id = $_GET[COOKIE_NAME];
   }
   
   if($session_id != 0) {
@@ -307,8 +303,6 @@ function end_sessions()
   $session_id = 0;
   if(isset($_COOKIE[COOKIE_NAME])) {
     $session_id = $_COOKIE[COOKIE_NAME];
-  } else if(isset($_GET[COOKIE_NAME])) {
-    $session_id = $_GET[COOKIE_NAME];
   }
 
   $blurb[] = "***ENDING SESSIONS: session_id=$session_id<br>";
@@ -358,7 +352,6 @@ function login($username,$password)
     $session    = $nsisweb->get_session();
     $session_id = $session->session_id;
 
-    setcookie(COOKIE_NAME,$session_id,time()+86400,"/","",0);
     $session->user_id          = $user_id;
     $session->last_checked     = time();
     $session->looks_like_admin = ($record['usertype'] == USERTYPE_ADMIN) ? TRUE : FALSE;

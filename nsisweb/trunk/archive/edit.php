@@ -30,25 +30,26 @@ if($action == ACTION_CANCEL) {
    which part of the page hierarchy the user is trying to edit. From the
    instanceid we can determine which page it is an instance of and then work
    with that actual page. */
-if($instanceid != 0) {
-  $instance = new NsisWebInstance($instanceid,FETCH_CONTENT_YES);
-  $page = $instance->get_page();
-} else {
-  $page = new NsisWebPage($pageid,FETCH_CONTENT_YES);
-  $instance = new NsisWebInstance($page);
-}
-$pageid = $page->get_pageid();
+$instance = new NsisWebInstance($instanceid,FETCH_CONTENT_YES);
+$page     = $instance->get_page();
+$pageid   = $page->get_pageid();
+$session  = $nsisweb->get_session();
 
 /* Handle error conditions */
-if(!$instance || !$page->is_okay()) {
+if(!$instance || !$page) {
   $nsisweb->start_page('Edit',FALSE);
-  $pageid = $instance ? $instance->get_pageid() : $page->get_pageid();
-  echo '<b><span style="color:red">Page '.$pageid.' not found!</span></b>';
+  echo '<span style="font-family: verdana; font-size: 20pt; color: #000000;">Edit Page: <span color="red">Access Denied</span></span>';
+  echo '<p>Page '.$instanceid.' not found!<br><br></p>';
   $nsisweb->end_page();
   exit;
 } else if($page->get_type() != PAGETYPE_TEMPLATED && $page->get_type() != PAGETYPE_DIRECTORY) {
   $nsisweb->start_page('Edit',FALSE);
-  echo '<b><span style="color:red">Page '.$instance->get_pageid().' cannot be edited!</span></b>';
+  echo '<span style="font-family: verdana; font-size: 20pt; color: #000000;">Edit Page: <span color="red">Access Denied</span></span>';
+  if($pageid == 0) {
+  	echo '<p>You need admin rights in order to edit the root directory page of the Archive.<br><br></p>';
+	} else {
+	  echo '<p>Page '.$pageid.' cannot be edited!<br><br></p>';
+  }
   $nsisweb->end_page();
   exit;
 } else {
@@ -111,7 +112,7 @@ edits, or Cancel to discard them and return to the page you were viewing.</p>
   </p>
   <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
     <input type="hidden" name="instanceid" value="<?= $instanceid ?>">
-    <input type="hidden" name="pageid" value="<?= $pageid ?>">
+    <input type="hidden" name="instances" value="<?= $nsisweb->get_instance_history(0) ?>">
     <input type="hidden" name="action" value="<?= ACTION_PREVIEW ?>">
     <a href="Cancel" onclick="document.editform.action.value=<?= ACTION_CANCEL ?>;document.editform.submit();return false;">Cancel</a> |
     <a href="Revert" onclick="document.editform.action.value=<?= ACTION_REVERT ?>;document.editform.submit();return false;">Revert</a> |
