@@ -91,10 +91,10 @@ function find_children($parentid)
 {
 	global $nsisweb;
 	$items  = array();
-	$result = $nsisweb->query("select pageid from nsisweb_pages where parentid=$parentid and not flags & ".PAGEFLAG_ORPHANED);
+	$result = $nsisweb->query("select * from nsisweb_pages where parentid=$parentid and not flags & ".PAGEFLAG_ORPHANED);
 	if($result && $nsisweb->how_many_results($result) > 0) {
 		while($record = $nsisweb->get_result_array($result)) {
-			$items[] = $record['pageid'];
+			$items[] = $record;
 		}
 	}
 	return $items;

@@ -47,16 +47,16 @@ if(isset($parentid)) {
 	<ul>
     <?
 		if(count($items) > 0) {
-			foreach($items as $child_pageid) {
-				$result = $nsisweb->query("select title from nsisweb_pages where pageid=$child_pageid and type<>".PAGETYPE_PARENTLINK);
+			foreach($items as $child) {
+				$result = $nsisweb->query("select title from nsisweb_pages where pageid=".$child['pageid']." and type<>".PAGETYPE_PARENTLINK);
 				$child_title = 'Unknown';
 				if($result && $nsisweb->how_many_results($result) == 1) {
 					$record      = $nsisweb->get_result_array($result);
 					$child_title = $record['title'];
 				}
-				print '<li><a href="'.$nsisweb->get_page_url($child_pageid).'&parentid='.$pageid.'">'.$child_title."</a>\n";
-				if($item['type'] == PAGETYPE_DIRECTORY) {
-					$children = find_children($child_pageid);
+				print '<li><a href="'.$nsisweb->get_page_url($child['pageid']).'&parentid='.$pageid.'">'.$child_title."</a>\n";
+				if($child['type'] == PAGETYPE_DIRECTORY) {
+					$children = find_children($child['pageid']);
 					print ' ('.count($children).')';
 				}
 			}
