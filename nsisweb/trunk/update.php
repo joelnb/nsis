@@ -1,6 +1,6 @@
 <?
 
-$latest = "2.0b0";
+$latest = "1.98";
 
 ?>
 <? include("include/global.php"); ?>
@@ -8,10 +8,10 @@ $latest = "2.0b0";
 <html> 
 <head> 
 <base href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/nsis/NSIS/">
-<? IncludeHTMLHeader("Changelog"); ?>
+<? IncludeHTMLHeader("Update Check"); ?>
 </head> 
 <body> 
-<? IncludePageHeader("NSIS Changelog",true); ?>
+<? IncludePageHeader("NSIS Update",true); ?>
 <?php 
 if ($version) {
 	$update = false;
