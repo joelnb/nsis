@@ -203,7 +203,7 @@ class NsisWebPage
     return TRUE;
   }
   function insert($type,$flags,$title,$content)
-  {
+  {    
     global $nsisweb;
     $title    = mysql_escape_string($title);
     $source   = mysql_escape_string($content);
@@ -471,6 +471,8 @@ function preprocess($content,$pageid)
     )
   );
 
+  $content = colour_source($content,$pageid);
+  
   $trusted = sanitize(
     $content, 
     $tag_list, 
@@ -482,7 +484,7 @@ function preprocess($content,$pageid)
     $add_attr_to_tag
   );
 
-  return colour_source($trusted,$pageid);
+  return $trusted;
 }
 
 /* Based on a function provided in the PHP Manual from php.net, in a user
@@ -513,7 +515,17 @@ function colour_source($string,$pageid){
     for($i = 1;$i < $count;$i++){
       $array_contents = explode("[/source]",$array_contenido[$i]);
       if(USE_BEAUTIFIER == TRUE) {
-        $array_contents[0] = $highlighter->highlight_text(str_replace("<br>","\n",$array_contents[0]));
+        $lines = preg_split("/\n/",str_replace("<br>","\n",$array_contents[0]));
+        $shortened = '';
+        foreach($lines as $line) {
+          if(strlen($line)>78) {
+            $shortened .= substr($line,0,78)."\n";
+            $shortened .= substr($line,78)."\n";
+          } else {
+            $shortened .= $line."\n";
+          }
+        }
+        $array_contents[0] = $highlighter->highlight_text($shortened);
       } else {
         ob_start();
         highlight_string("<?".$array_contents[0]."?".">");
