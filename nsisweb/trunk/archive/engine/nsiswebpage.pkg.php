@@ -7,7 +7,7 @@ function initialise_page_table()
 	global $nsisweb;
 	$nsisweb->query("drop table if exists nsisweb_pages");
 	$nsisweb->query("create table nsisweb_pages (pageid int unsigned auto_increment,type int unsigned not null default 0,flags int unsigned not null default 0,source text not null,ppsource text not null,title varchar(255),author int unsigned not null default 0,created datetime not null,last_author int unsigned not null default 0,last_updated datetime not null,views int unsigned not null default 0,rating float unsigned default 0,votes int unsigned not null default 0,primary key (pageid))");
-	$nsisweb->query("create table nsisweb_hierarchy (instanceid int unsigned auto_increment,pageid int unsigned not null default 0,parentid int unsigne not null default 0,sequence int unsigned not null default 0,primary key (instanceid))");
+	$nsisweb->query("create table nsisweb_hierarchy (instanceid int unsigned auto_increment,pageid int unsigned not null default 0,parentid int unsigned not null default 0,sequence int unsigned not null default 0,primary key (instanceid))");
 }
 
 define('FETCH_CONTENT_NO',  1); // page details only
