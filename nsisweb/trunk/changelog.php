@@ -4,8 +4,6 @@
 <head> 
 <base href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/nsis/NSIS/">
 <? IncludeHTMLHeader("Changelog"); ?>
-"<link rel=\"Stylesheet\" type=\"text/css\" href=\"http://nsis.sourceforge.net/include/style.css\">\n";
-</head>
 <style type="text/css">
 <!--
 p, li {
@@ -14,6 +12,7 @@ p, li {
 }
 -->
 </style>
+</head>
 <body> 
 <? IncludePageHeader("NSIS Changelog",true); ?>
 <?php 
