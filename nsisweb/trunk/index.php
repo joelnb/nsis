@@ -8,23 +8,51 @@
 <? IncludePageHeader("Nullsoft (SuperPiMP|Scriptable) Install System"); ?>
 <p class="text">NSIS tries to be a scriptable win32 installer/uninstaller system that doesn't suck and isn't huge.</p> 
 <ul> 
-	<li class="text"><b><a href="http://www.nullsoft.com/free/nsis/" title="General information about NSIS">Official Home Page</a></b></li>
-	<li class="text"><b><a href="http://sourceforge.net/projects/nsis/" title="Latest development info and downloads">Project page</a></b></li>
-	<li class="text"><b><a href="http://sourceforge.net/tracker/?group_id=22049&atid=373085" title="Found a bug?">Submit Bug</a></b></li>
-	<li class="text"><b><a href="http://forums.winamp.com/forumdisplay.php?s=&forumid=65" title="Talk to other NSIS users">Forum</a></b>  
-	<li class="text"><b><a href="http://forums.winamp.com/showthread.php?s=&threadid=102650" title="Some frequently asked questions">FAQ</a></b></li>
-	<li class="text"><b><a href="http://nsis.sourceforge.net/Docs/" title="Browse the latest NSIS documentation">Documentation</a></b></li>
-	<li class="text"><b><a href="http://nsis.sourceforge.net/changelog.php" title="See what's cooking">Change Log</a></b> 
+	<li class="text"><b><a href="http://www.nullsoft.com/free/nsis/">Official Home Page</a></b>
 		<ul>
-			<span class="smalltext">Updated: <?=LocalFileDate("nightly/changelog.htm")?> </span> 
+		<span class="smalltext">General information about NSIS</span>
+		</ul>
+	</li>
+	<li class="text"><b><a href="http://sourceforge.net/projects/nsis/">Project page</a></b>
+		<ul>
+		<span class="smalltext">Latest development info and downloads</span>
+		</ul>
+	</li>
+	<li class="text"><b><a href="http://sourceforge.net/tracker/?group_id=22049&atid=373085">Submit Bug</a></b>
+		<ul>
+		<span class="smalltext">Found a bug?</span>
+		</ul>
+	</li>
+	<li class="text"><b><a href="http://forums.winamp.com/forumdisplay.php?s=&forumid=65">Forum</a></b>
+		<ul>
+		<span class="smalltext">Talk to other NSIS users</span>
+		</ul>
+	</li>
+	<li class="text"><b><a href="http://forums.winamp.com/showthread.php?s=&threadid=102650">FAQ</a></b>
+		<ul>
+		<span class="smalltext">Some frequently asked questions</span>
+		</ul>
+	</li>
+	<li class="text"><b><a href="http://nsis.sourceforge.net/Docs/">Documentation</a></b>
+		<ul>
+		<span class="smalltext">Browse the latest NSIS documentation</span>
+		</ul>
+	</li>
+	<li class="text"><b><a href="http://nsis.sourceforge.net/changelog.php">Change Log</a></b> 
+		<ul>
+		<span class="smalltext">See what's cooking<br>Updated: <?=LocalFileDate("nightly/changelog.htm")?></span> 
 		</ul>
 	</li>
 	<li class="text"><b><a href="http://nsis.sourceforge.net/nightly/nsis.zip" title="NSIS CVS directory zipped up">Development Snapshot</a></b> 
 		<ul>
-			<span class="smalltext">Updated: <?=LocalFileDate("nightly/nsis.zip")?> </span> 
+		<span class="smalltext">Updated: <?=LocalFileDate("nightly/nsis.zip")?></span> 
 		</ul>
 	</li>
-	<li class="text"><b><a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/nsis/NSIS/" title="Browse the files of the latest version">Browse CVS</a></b></li>
+	<li class="text"><b><a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/nsis/NSIS/">Browse CVS</a></b>
+		<ul>
+		<span class="smalltext">Browse the files of the latest version</span>
+		</ul>
+	</li>
 </ul> 
 <? IncludePageFooter(); ?>
 </body> 
