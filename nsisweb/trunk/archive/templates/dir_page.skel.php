@@ -3,24 +3,24 @@ function get_rollover($img)
 {
 	return 'onMouseOver="'.$img.'.src=\'images/'.$img.'2.png\'" onMouseOut="'.$img.'.src=\'images/'.$img.'.png\'"';
 }
-function get_image($img)
+function get_image($img,$tooltip)
 {
-	return '<img src="images/'.$img.'.png" name="'.$img.'" width="20" height="20" border="0" alt="'.$img.'">';
+	return '<img src="images/'.$img.'.png" name="'.$img.'" width="20" height="20" border="0" alt="'.$tooltip.'">';
 }
 
-$insert_link = '<a href="picklist.php?instanceid='.$this->get_instanceid().'" '.get_rollover('paste').'>'.get_image('paste').'</a>';
-$edit_link   = '<a href="edit.php?instanceid='.$this->get_instanceid().'&pageid='.$this->get_pageid().'" '.get_rollover('edit').'>'.get_image('edit').'</a>';
+$insert_link = '<a href="picklist.php?instanceid='.$this->get_instanceid().'" '.get_rollover('paste').'>'.get_image('paste','Insert a page from your pick list into this section').'</a>';
+$edit_link   = '<a href="edit.php?instanceid='.$this->get_instanceid().'&pageid='.$this->get_pageid().'" '.get_rollover('edit').'>'.get_image('edit','Edit this page').'</a>';
 if($this->get_parentid() == 0) {
-  $delete_link = get_image('cut');
+  $delete_link = get_image('cut','This page instance cannot be removed from the Archive');
 } else {
-  $delete_link = '<a href="delete.php?instanceid='.$this->get_instanceid().'" '.get_rollover('cut').'>'.get_image('cut').'</a>';
+  $delete_link = '<a href="delete.php?instanceid='.$this->get_instanceid().'" '.get_rollover('cut').'>'.get_image('cut','Remove this page instance from the Archive').'</a>';
 }
 if($this->get_instanceid() == 0) {
-	$up_link   = '<a href="'.$nsisweb->get_home_url().'" '.get_rollover('up').'>'.get_image('up').'</a>';
-	$pick_link = get_image('copy');
+	$up_link   = '<a href="'.$nsisweb->get_home_url().'" '.get_rollover('up').'>'.get_image('up','Return to the Archive home page').'</a>';
+	$pick_link = get_image('copy','This page cannot be added to your pick list');
 } else {
-	$up_link   = '<a href="'.$nsisweb->get_page_url($this->get_parentid()).'" '.get_rollover('up').'>'.get_image('up').'</a>';
-	$pick_link = '<a href="picklist.php?action=pick&instanceid='.$this->get_instanceid().'" '.get_rollover('copy').'>'.get_image('copy').'</a>';
+	$up_link   = '<a href="'.$nsisweb->get_page_url($this->get_parentid()).'" '.get_rollover('up').'>'.get_image('up','View the parent of this page').'</a>';
+	$pick_link = '<a href="picklist.php?action=pick&instanceid='.$this->get_instanceid().'" '.get_rollover('copy').'>'.get_image('copy','Add this page to your pick list').'</a>';
 }
 
 if($page = $this->get_page()) {
