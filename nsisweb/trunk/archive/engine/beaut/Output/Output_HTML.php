@@ -19,22 +19,22 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 class Output_HTML
 {
-	function Output_HTML()
-	{
-		$this->code		      = '_WORD_';
-		$this->linecomment 	= '<font color="#888888">_WORD_</font>';
-		$this->blockcomment = '<font color="#888888">_WORD_</font>';
-		$this->prepro 		  = '<font color="#ff00ff">_WORD_</font>';
-		$this->select 	    = '<font color="#ff0000"><b>_WORD_</b></font>';
-		$this->quote 		    = '<font color="#0000ff">_WORD_</font>';
-		$this->category_1 	= '<font color="#000088">_WORD_</font>';
-		$this->category_2 	= '<font color="#008800">_WORD_</font>';
-		$this->category_3 	= '<font color="#008888">_WORD_</font>';
-		$this->category_4 	= '<font color="#880000">_WORD_</font>';
-		$this->category_5 	= '<font color="#880088">_WORD_</font>';
-		$this->category_6 	= '<font color="#888800">_WORD_</font>';
-		$this->category_7 	= '<font color="#0000ff">_WORD_</font>';
-		$this->category_8 	= '<font color="#00ff00">_WORD_</font>';
-	}
+  function Output_HTML()
+  {
+    $this->code		= '_WORD_';
+    $this->linecomment 	= '<span style="color:#888888">_WORD_</span>';
+    $this->blockcomment = '<span style="color:#888888">_WORD_</span>';
+    $this->prepro 	= '<span style="color:#ff00ff">_WORD_</span>';
+    $this->select 	= '<span style="color:#ff0000"><b>_WORD_</b></span>';
+    $this->quote 	= '<span style="color:#0000ff">_WORD_</span>';
+    $this->category_1 	= '<span style="color:#000088">_WORD_</span>';
+    $this->category_2 	= '<span style="color:#008800">_WORD_</span>';
+    $this->category_3 	= '<span style="color:#008888">_WORD_</span>';
+    $this->category_4 	= '<span style="color:#880000">_WORD_</span>';
+    $this->category_5 	= '<span style="color:#880088">_WORD_</span>';
+    $this->category_6 	= '<span style="color:#888800">_WORD_</span>';
+    $this->category_7 	= '<span style="color:#0000ff">_WORD_</span>';
+    $this->category_8 	= '<span style="color:#00ff00">_WORD_</span>';
+  }
 }
 ?>

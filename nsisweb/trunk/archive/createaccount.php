@@ -29,20 +29,20 @@ if(strcmp($_POST['action'],'createaccount') == 0) {
   } else if(strcmp($password,$_POST['password2']) != 0) {
     $error_msg = 'The passwords entered must match';
   } else {
-	  if(!add_user($username,$password)) {
+    if(!add_user($username,$password)) {
       $error_msg = 'Please try another username and/or password';
-	  } else {
+    } else {
       $session = login($username,$password);
 	
       if($session->is_anonymous()) {
-		    $error_msg = 'Please try another username and/or password';
-	    } else {
+	$error_msg = 'Please try another username and/or password';
+      } else {
         $nsisweb->start_page('Create Account');
-        print '<font style="font-family: verdana; font-size: 20pt; color: #000000;">Create Account</font>';
-		    print '<p><b>Congratulations!</b> Your user account has been created and you have been logged in!</p>';
-		    print '<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">';
-		    print '<a href="'.$nsisweb->get_home_url().'">Continue >></a>';
-		    print '</p>';
+        print '<span style="font-family: verdana; font-size: 20pt; color: #000000;">Create Account</span>';
+	print '<p><b>Congratulations!</b> Your user account has been created and you have been logged in!</p>';
+	print '<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">';
+	print '<a href="'.$nsisweb->get_home_url().'">Continue >></a>';
+	print '</p>';
         exit;
       }
     }
@@ -50,7 +50,7 @@ if(strcmp($_POST['action'],'createaccount') == 0) {
 }
 $nsisweb->start_page('Create Account');
 ?>
-<font style="font-family: verdana; font-size: 20pt; color: #000000;">Create Account</font>
+<span style="font-family: verdana; font-size: 20pt; color: #000000;">Create Account</span>
 <p>This page allows you to create a user account on <b>NSISWeb</b> which can then be used to get credit for
 your contributions to the site. You also need an account if you want to be an administrator or have any other
 kind of special rights.</p>
@@ -58,7 +58,7 @@ kind of special rights.</p>
   <input type="hidden" name="action" value="createaccount">
   <p align=center>
     <? if(isset($error_msg)) { ?>
-    <font style="text-align:center;color:#ff0000;font-weight:bold;"><?= $error_msg ?></font><br><br>
+    <span style="text-align:center;color:#ff0000;font-weight:bold;"><?= $error_msg ?></span><br><br>
     <? } ?>
     <table>
       <tr><td>Please choose a user name:</td></tr>

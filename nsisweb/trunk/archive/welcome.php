@@ -3,7 +3,7 @@ include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 include_once(dirname(__FILE__)."/engine/nsiswebstorage.pkg.php");
 $nsisweb->start_page('Welcome');
 ?>
-<font style="font-family:verdana;font-size:20pt;color:#000000;">Welcome to the NSIS Archive</font>
+<span style="font-family:verdana;font-size:20pt;color:#000000;">Welcome to the NSIS Archive</span>
 <p style="text-align:justify;">
 Welcome to the official archive of information relating to NSIS. Resources
 have been and will continue to be collected here so that you have a good
@@ -22,7 +22,7 @@ Start contributing right now.. <a href="contribute.php">click here</a></span></p
 mind that this first incarnation of the site has only been tested on Internet
 Explorer 6 and uses some cascading style sheet features that may not be
 supported in yet in other browsers.</p>
-<font style="font-family:verdana;font-size:15pt;color:#000000;">How is the site organised?</font>
+<span style="font-family:verdana;font-size:15pt;color:#000000;">How is the site organised?</span>
 <p>There are three types of content, the bulk of which can be accessed by
 clicking Browse or Search on the main page. The remaining content is in the
 form of downloadable files.</p>
@@ -45,7 +45,7 @@ Why would you want to have the same page more than once? Well sometimes
 content is hard to classify, being able to put it in more than one place
 rather than being forced to choose where it best belongs helps in those
 cases where it really does belong in <i>both</i> places.</p>
-<font style="font-family:verdana;font-size:15pt;color:#000000;">What features aren't ready yet?</font>
+<span style="font-family:verdana;font-size:15pt;color:#000000;">What features aren't ready yet?</span>
 <p>At present you can't vote to indicate the worth of a page of content, and
 you can't comment on content written by others. Both of these will be available
 shortly.<br>

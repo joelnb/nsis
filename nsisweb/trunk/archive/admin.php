@@ -2,7 +2,7 @@
 include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 $nsisweb->start_page('Admin');
 
-echo '<font style="font-family:verdana;font-size:20pt;color:#000000;">NSIS Archive Admin Options</font>';
+echo '<span style="font-family:verdana;font-size:20pt;color:#000000;">NSIS Archive Admin Options</span>';
 
 $session = $nsisweb->get_session();
 $user    = find_userid($session->user_id);
@@ -33,11 +33,11 @@ if(!$user->is_admin()) {
 	database no	matter who created it, and the right to grant admin rights to
 	other users.</p>
 	
-	<font style="font-family:verdana;font-size:15pt;color:#000000;">Web Server Info</font>
+	<span style="font-family:verdana;font-size:15pt;color:#000000;">Web Server Info</span>
 	<p>The time on the web server is $time_web. The time on the database server is
 	$time_db. PHP diagnostics can be viewed	<a href="admin.php?action=phpinfo">here</a></p>
 	
-	<font style="font-family:verdana;font-size:15pt;color:#000000;">Connected Sessions</font>
+	<span style="font-family:verdana;font-size:15pt;color:#000000;">Connected Sessions</span>
 	<p>The following sessions are currently established:<br>
 	  <br>
 	  <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
@@ -97,7 +97,7 @@ ENDOFHTML;
 	print <<<ENDOFHTML
 	  </table>
 	</p>
-	<font style="font-family:verdana;font-size:15pt;color:#000000;">Registered Users</font>
+	<span style="font-family:verdana;font-size:15pt;color:#000000;">Registered Users</span>
 	<p>The following users are registered on this site:<br>
 	  <br>
 	  <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
@@ -144,7 +144,7 @@ ENDOFHTML;
 ENDOFHTML;
 
 	print <<<ENDOFHTML
-	<font style="font-family:verdana;font-size:15pt;color:#000000;">Browsers By IP</font>
+	<span style="font-family:verdana;font-size:15pt;color:#000000;">Browsers By IP</span>
 	<p>This table shows the number of distinct ip addresses associated with each browser type:<br>
 	  <br>
 	  <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">

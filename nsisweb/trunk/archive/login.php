@@ -10,16 +10,16 @@ unset($_POST['username']);
 unset($_POST['password']);
 
 if(strlen($username)>0 && strlen($password)>0) {
-	$session = login($username,$password);
-	if($session->is_anonymous()) {
-		$login_failed = TRUE;
-	} else {
+  $session = login($username,$password);
+  if($session->is_anonymous()) {
+    $login_failed = TRUE;
+  } else {
     if(isset($_POST['page'])) {
-		  header("Location: ".$nsisweb->get_page_url($_POST['page']));
+      header("Location: ".$nsisweb->get_page_url($_POST['page']));
     } else {
-		  header("Location: ".$nsisweb->get_home_url());
+      header("Location: ".$nsisweb->get_home_url());
     }
-	}
+  }
 }
 unset($username);
 unset($password);
@@ -27,12 +27,12 @@ unset($password);
 $create_url = $nsisweb->get_page_url('createaccount');
 $nsisweb->start_page('Login');
 ?>
-<font style="font-family: verdana; font-size: 20pt; color: #000000;">Login</font>
+<span style="font-family: verdana; font-size: 20pt; color: #000000;">Login</span>
 <p>This page allows you to login to the <b>Archive</b> using your user account. If you do not have a user account you can
 <a href="<?= $create_url ?>">create a a free account</a> now.</p>
 <?
 if($login_failed) {
-	print '<p><b><font color="red">You could not be logged in, please try again.</font></b></p>';
+  print '<p><b><span color="red">You could not be logged in, please try again.</span></b></p>';
 }
 ?>
 <form name="wizard" method="post" enctype="multipart/form-data" action="login.php">
