@@ -50,14 +50,18 @@ class NsisWebSession
 	var $last_checked;
 	var $cached_username; /* do not use this directly, call get_username() instead! */
 
-	function NsisWebSession($array)
+	function NsisWebSession($param)
 	{
-		$this->session_id   = $array['sessionid'];
-		$this->user_id      = $array['userid'];
-		$this->created      = $array['created'];
-		$this->last_access  = $array['last_access'];
-		$this->last_checked = time();
-		unset($this->cached_username);
+		if(is_array($param)) {
+			$this->session_id   = $param['sessionid'];
+			$this->user_id      = $param['userid'];
+			$this->created      = $param['created'];
+			$this->last_access  = $param['last_access'];
+			$this->last_checked = time();
+			unset($this->cached_username);
+		} else if(is_string($param)) {
+			$this->from_string($param);
+		}
 	}
 	function is_legal()
 	{
@@ -80,6 +84,41 @@ class NsisWebSession
 			}
 		}
 		return $this->cached_username;
+	}
+	function to_string()
+	{
+		/* No I don't trust serialize/unserialize!!! */
+		$string = sprintf(
+			"%3d%3d%3d%3d%3d%3d%s%s%s%s%s%s",
+			strlen($this->session_id),
+			strlen($this->user_id),
+			strlen($this->created),
+			strlen($this->last_access),
+			strlen($this->last_checked),
+			isset($this->cached_username) ? strlen($this->cached_username) : 0,
+			"$this->session_id",
+			"$this->user_id",
+			"$this->created",
+			"$this->last_access",
+			"$this->last_checked",
+			isset($this->cached_username) ? "$this->cached_username" : "");
+		return $string;
+	}
+	function from_string($string)
+	{
+		$format_string      = "%3d%3d%3d%3d%3d%3d";
+		$skipcount          = strlen($format_string);
+		$lengths            = sscanf($string,$format_string);
+		$this->session_id   = substr($string,$skipcount,$lengths[0]); $skipcount += $lengths[0];
+		$this->user_id      = substr($string,$skipcount,$lengths[1]); $skipcount += $lengths[1];
+		$this->created      = substr($string,$skipcount,$lengths[2]); $skipcount += $lengths[2];
+		$this->last_access  = substr($string,$skipcount,$lengths[3]); $skipcount += $lengths[3];
+		$this->last_checked = substr($string,$skipcount,$lengths[4]); $skipcount += $lengths[4];
+		if($lengths[5] > 0) {
+			$this->cached_username = substr($string,$skipcount,$lengths[5]);
+		} else {
+			unset($this->cached_username);
+		}
 	}
 };
 
@@ -115,24 +154,23 @@ function find_my_session()
   if(isset($_SESSION['session']) && isset($_SESSION['id'])) {
 		$check_against = md5($session_id+NSISWEB_MAGIC_NUMBER);
 		if(strcmp($check_against,$_SESSION['id']) == 0) {
-			if($session = unserialize(base64_decode($_SESSION['session']))) {
-				/* Does the session need timing out? Try not to do these checks too often
-				   so that we hit the database less frequently. */
-				if(time()-$session->last_checked > 300) {
-					$nsisweb->query("delete from nsisweb_sessions where (UNIX_TIMESTAMP()-UNIX_TIMESTAMP(last_access))>".SESSION_TIMEOUT);
-					if($session_id != ANONYMOUS_SESSION_ID) {
-						$result = $nsisweb->query("select * from nsisweb_sessions where sessionid='$session_id'");
-						if($result && $nsisweb->how_many_results($result) == 1) {
-							$session = new NsisWebSession($nsisweb->get_result_array($result));
-							if($session->is_legal()) {
-								$session->last_checked = time();
-								$session_okay = TRUE;
-							}
+			$session = new NsisWebSession(base64_decode($_SESSION['session']));
+			/* Does the session need timing out? Try not to do these checks too often
+			   so that we hit the database less frequently. */
+			if(time()-$session->last_checked > 300) {
+				$nsisweb->query("delete from nsisweb_sessions where (UNIX_TIMESTAMP()-UNIX_TIMESTAMP(last_access))>".SESSION_TIMEOUT);
+				if($session_id != ANONYMOUS_SESSION_ID) {
+					$result = $nsisweb->query("select * from nsisweb_sessions where sessionid='$session_id'");
+					if($result && $nsisweb->how_many_results($result) == 1) {
+						$session = new NsisWebSession($nsisweb->get_result_array($result));
+						if($session->is_legal()) {
+							$session->last_checked = time();
+							$session_okay = TRUE;
 						}
 					}
-				} else {
-					$session_okay = TRUE;
 				}
+			} else {
+				$session_okay = TRUE;
 			}
 		}
 	}
@@ -160,7 +198,7 @@ function find_my_session()
      instead of a base64 encoded stream I end up with a pure object!! */
   unset($_SESSION['session']);
   unset($_SESSION['id']);
-	$_SESSION['session'] = base64_encode(serialize($session));
+	$_SESSION['session'] = base64_encode($session->to_string());
 	$_SESSION['id']      = md5($session_id+NSISWEB_MAGIC_NUMBER);
 	return $nsisweb->session = $session;
 }
