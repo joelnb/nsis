@@ -66,7 +66,7 @@ class NsisWebSession
 	function get_username()
 	{
 		global $nsisweb;
-		$result = $nsisweb->query("select username from nsisweb_users where userid='$this->user_id'");
+		$result = $nsisweb->query("select username from nsisweb_users where userid=$this->user_id");
 		if($result && $nsisweb->how_many_results($result) == 1) {
 			$array = $nsisweb->get_result_array($result);
 			return $array['username'];
