@@ -13,6 +13,7 @@ p, li {
     font-family: Verdana, Arial, Helvetica, sans-serif; 
 }
 -->
+</style>
 <body> 
 <? IncludePageHeader("NSIS Changelog",true); ?>
 <?php 
