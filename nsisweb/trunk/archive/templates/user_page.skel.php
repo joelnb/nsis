@@ -92,7 +92,7 @@ if($page) {
     </td>
   </tr>
   <tr><td><br><br></td></tr>
-  <tr><td colspan="2" align="left" valign="top" style="background-color:#eeeeff;border-width:1px;border-style:solid;padding:10px;">
+  <tr><td colspan="2" align="left" valign="top" style="background-color:#eeeeff;border-width:1px;border-style:solid;padding:10px;font-size:12px;">
 <!-- user_page.skel.php: source -->
 <?= $page->get_pp_content() ?>
 <!-- user_page.skel.php: end -->
