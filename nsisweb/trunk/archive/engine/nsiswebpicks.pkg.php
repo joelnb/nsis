@@ -54,11 +54,11 @@ function add_to_current_picks($pickedid,$pickedtype)
 	$nsisweb->query("insert into nsisweb_picks set sessionid='$session_id', pickedid=$pickedid, pickedtype=$pickedtype");
 }
 
-function remove_from_current_picks($pickedid,$pickedtype)
+function remove_from_current_picks($pickedid)
 {
 	global $nsisweb;
 	$session    = $nsisweb->get_session();
 	$session_id = $session->session_id;
-	$nsisweb->query("delete from nsisweb_picks where sessionid='$session_id' and pickedid=$pickedid and pickedtype=$pickedtype");
+	$nsisweb->query("delete from nsisweb_picks where sessionid='$session_id' and pickedid=$pickedid");
 }
 ?>

@@ -201,8 +201,8 @@ function set_page_parent($pageid,$parentid)
 	if($result && $count > 0) {
 		if($count == 1) {
 			$page = $nsisweb->get_result_array($result);
-			if($page['parentid'] == ANONYMOUS_PAGE_ID) {
-				$nsisweb->query("update nsisweb_pages set parentid=$parentid,flags=flags & ~'.PAGE_FLAG_ORPHANED.' where pageid=$pageid and type in (1,2,3)");
+			if($page['flags'] & PAGEFLAG_ORPHANED) {
+				$nsisweb->query("update nsisweb_pages set parentid=$parentid,flags=flags & ~'.PAGE_FLAG_ORPHANED.' where pageid=$pageid");
 				return TRUE;
 			}
 		}
