@@ -27,7 +27,7 @@ if ($version) {
 	else {
         if ($latest>$version) $update = true;
 		if ($update) {
-			print "1".$latest;
+			print "1|".$latest;
 		}
 		else {
 			print "0";
