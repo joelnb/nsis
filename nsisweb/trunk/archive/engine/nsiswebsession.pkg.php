@@ -189,8 +189,8 @@ function end_session()
 	setcookie(COOKIE_NAME,"",time()-86400,"/","",0);
 	unset($_GET[COOKIE_NAME]);
 
-	session_unset();
-	session_destroy();
+	@session_unset();
+	@session_destroy();
 }
 
 function login($username,$password)
