@@ -35,7 +35,7 @@ if($login_failed) {
   print '<p><b><span color="red">You could not be logged in, please try again.</span></b></p>';
 }
 ?>
-<form name="wizard" method="post" enctype="multipart/form-data" action="login.php">
+<form name="loginform" method="post" enctype="multipart/form-data" action="login.php" onkeydown="if (event.keyCode == 13) {document.loginform.submit()}">
   <? if(isset($_GET['page'])) { ?>
     <input type="hidden" name="page" value="<?= $_GET['page'] ?>">
   <? } ?>
@@ -45,8 +45,7 @@ if($login_failed) {
   Password: <input type="password" style="font-family:courier new;font-size:10pt;" name="password" size="25" maxlength="255"><br>
   </p>
   <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-    <input type="submit" style="color:white;background-color:white;border-style:none">
-    <a href="javascript:document.wizard.submit();">Login >></a>
+    <a href="javascript:document.loginform.submit();">Login >></a>
   </p>
 </form>
 <?

@@ -34,7 +34,7 @@ if(strlen($_POST['method']) > 0) {
       <span style="font-family:verdana;font-size:20pt;color:#000000;">Logout</span>
       <p>Which sessions would you like to logout?<br>
       <br>
-      <form name="logout" method="post" enctype="multipart/form-data" action="logout.php">
+      <form name="logoutform" method="post" enctype="multipart/form-data" action="logout.php">
 ENDOFHTML;
 
       if(isset($_GET['page'])) {
@@ -46,7 +46,7 @@ ENDOFHTML;
 	<input type="radio" name="method" value="all">Logout all sessions<br>
 	<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
 	  <input type="submit" style="color:white;background-color:white;border-style:none">
-	  <a href="javascript:document.logout.submit();">Logout >></a>
+	  <a href="javascript:document.logoutform.submit();">Logout >></a>
 	</p>
       </form>
       </p>

@@ -1,6 +1,5 @@
 <?
 include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
-include_once(dirname(__FILE__)."/engine/nsiswebstorage.pkg.php");
 
 $keywords       = ""; if(strlen($_POST['keywords'])>0)       { $keywords       = $_POST['keywords'];      }
 $author         = ""; if(strlen($_POST['author'])>0)         { $author         = $_POST['author'];        }
@@ -43,7 +42,7 @@ doesn't work but 25 December 2002 does). The native date format used is yyyy-mm-
 </p>
 <br>
 <p>
-  <form name="search" method="post" enctype="multipart/form-data" action="search.php">	
+  <form name="searchform" method="post" enctype="multipart/form-data" action="search.php" onkeydown="if (event.keyCode == 13) {document.searchform.submit()}">
     <input type="hidden" name="action" value="search">
     <table border="1" bordercolor="#aaaaaa" cellpadding="3" cellspacing="0">
       <tr style="background-color:#eeeeee">

@@ -54,7 +54,7 @@ $nsisweb->start_page('Create Account');
 <p>This page allows you to create a user account on <b>NSISWeb</b> which can then be used to get credit for
 your contributions to the site. You also need an account if you want to be an administrator or have any other
 kind of special rights.</p>
-<form name="wizard" method="post" enctype="multipart/form-data" action="createaccount.php">
+<form name="createaccountform" method="post" enctype="multipart/form-data" action="createaccount.php" onkeydown="if (event.keyCode == 13) {document.createaccountform.submit()}">
   <input type="hidden" name="action" value="createaccount">
   <p align=center>
     <? if(isset($error_msg)) { ?>
@@ -71,7 +71,7 @@ kind of special rights.</p>
   </p>
   <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
     <input type="submit" style="color:white;background-color:white;border-style:none">
-    <a href="javascript:document.wizard.submit();">Continue >></a>
+    <a href="javascript:document.createaccountform.submit();">Continue >></a>
   </p>
 </form>
 <?

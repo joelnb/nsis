@@ -94,7 +94,7 @@ at any time to see how your edits are affecting the appearance of the page.
 Clicking revert will throw away your edits and you will begin the editing process
 from scratch again. When you are finished editing press Save Changes to keep the
 edits, or Cancel to discard them and return to the page you were viewing.</p>
-<form name="wizard" method="post" enctype="multipart/form-data" action="edit.php">
+<form name="editform" method="post" enctype="multipart/form-data" action="edit.php">
   <p>Edit the title of the page: (255 characters max)<br>
   <input type="text" style="font-family:courier new;font-size:10pt;" name="title" size="79" maxlength="255" value="<?= htmlentities($title) ?>"><br>
   <br>
@@ -113,10 +113,10 @@ edits, or Cancel to discard them and return to the page you were viewing.</p>
     <input type="hidden" name="instanceid" value="<?= $instanceid ?>">
     <input type="hidden" name="pageid" value="<?= $pageid ?>">
     <input type="hidden" name="action" value="<?= ACTION_PREVIEW ?>">
-  <a href="Cancel" onclick="document.wizard.action.value=<?= ACTION_CANCEL ?>;document.wizard.submit();return false;">Cancel</a> |
-  <a href="Revert" onclick="document.wizard.action.value=<?= ACTION_REVERT ?>;document.wizard.submit();return false;">Revert</a> |
-  <a href="Preview" onclick="document.wizard.action.value=<?= ACTION_PREVIEW ?>;document.wizard.submit();return false;">Preview</a> |
-  <a href="Save Changes" onclick="document.wizard.action.value=<?= ACTION_SAVE ?>;document.wizard.submit();return false;">Save Changes</a>
+  <a href="Cancel" onclick="document.editform.action.value=<?= ACTION_CANCEL ?>;document.editform.submit();return false;">Cancel</a> |
+  <a href="Revert" onclick="document.editform.action.value=<?= ACTION_REVERT ?>;document.editform.submit();return false;">Revert</a> |
+  <a href="Preview" onclick="document.editform.action.value=<?= ACTION_PREVIEW ?>;document.editform.submit();return false;">Preview</a> |
+  <a href="Save Changes" onclick="document.editform.action.value=<?= ACTION_SAVE ?>;document.editform.submit();return false;">Save Changes</a>
   </p>
   </form>
 <?

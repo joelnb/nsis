@@ -214,8 +214,8 @@ ENDOFHTML;
       $max_upload_mb    = $max_upload_bytes/1024.0/1024.0;
       
       if(count($_FILES) > 0) {
-	$storage = new NsisWebStorage;
-	$result = $storage->process_uploaded_files('nsiswebfile');
+	//$storage = new NsisWebStorage;
+	//$result = $storage->process_uploaded_files('nsiswebfile');
 
 	print "<p>";
 	if(strlen($upload_error)>0 || $result == 0) {
