@@ -18,7 +18,7 @@ function IncludePageHeader($title,$showback=false) {
 	<td> 
 	<table width="720" border="0" cellpadding="0" cellspacing="0" class="innertable"> 
 	<tr class="header"> 
-		<td width="70"><a href="index.php"><div class="center"><img  border="0" src="images/logo.gif" width="48" height="48"></div></a></td> 
+		<td width="70"><a href="index.php"><div class="center"><img  border="0" src="http://nsis.sourceforge.net/images/logo.gif" width="48" height="48"></div></a></td> 
 		<td width="650"><div class="header"><? echo $title; if ($showback) _BackButton(); ?></div></td> 
 	</tr> 
 	<tr> 
