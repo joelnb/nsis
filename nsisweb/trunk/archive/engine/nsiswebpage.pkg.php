@@ -515,8 +515,8 @@ function colour_source($string,$pageid){
       fwrite($temp,str_replace("<br>","\n",$array_contents[0]));
       fclose($temp); 
       $cmd = NSISWEB_LEXER_PATH." < ".$script." 2>&1";
-      unlink($script);
       $array_contents[0] = `$cmd`;
+      unlink($script);
 
       /* attach a disk icon to enable saving the source */
       if($pageid > 0) {
