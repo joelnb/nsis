@@ -45,7 +45,7 @@ if(isset($_POST['keywords']) && strlen($_POST['keywords']) > 0) {
 <p>
 END_OF_HTML;
 	$keywords = explode(' ',$_POST['keywords']);
-	$query    = "select pageid,author,title from nsisweb_pages where flags & ~".PAGEFLAG_ORPHANED." and (instr(title,'".$keywords[0]."') or instr(source,'".$keywords[0]."')";
+	$query    = "select pageid,author,title from nsisweb_pages where flags & ".PAGEFLAG_ORPHANED." = 0 and (instr(title,'".$keywords[0]."') or instr(source,'".$keywords[0]."')";
 	for($i=1; $i<count($keywords); $i++) {
 		$query .= " or instr(title,'".$keywords[$i]."') or instr(source,'".$keywords[$i]."')";
 	}
