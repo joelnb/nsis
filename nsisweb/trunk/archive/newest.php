@@ -45,7 +45,7 @@ if($result) {
 			}
 		}
 		
-		$action = ($new ? 'created' : 'changed')." $diff $units ago by ".$record['username'];
+		$action = ($new ? 'added' : 'changed')." $diff $units ago by ".$record['username'];
 
 		if($i == 0) {
 			$i = 1;
