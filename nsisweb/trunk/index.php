@@ -42,11 +42,6 @@
 			NSIS CVS directory zipped up<br> 
 			<span class="smalltext">Updated: <?=LocalFileDate("nightly/nsis.zip")?> </span> 
 		</ul> 
-	<li class="text"><b><a href="nsis-snapshot-sep22.exe">Snapshot with installer</a></b> 
-		<ul> 
-			NSIS CVS snapshot with installer<br> 
-			<span class="smalltext">Updated: <?=LocalFileDate("nsis-snapshot-sep22.exe")?></span> 
-		</ul> 
 </ul> 
 <? IncludePageFooter(); ?>
 </body> 
