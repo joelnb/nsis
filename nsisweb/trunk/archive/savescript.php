@@ -11,7 +11,7 @@ if(isset($_GET['pageid']) && isset($_GET['script'])) {
       $array_contents = explode("[/source]",$array_contenido[$i]);
       if($i == $script) {
         header("Content-type: text/plain");
-        header("Content-Disposition: attachment; filename=".$page->get_title()." part ".$script.".nsi");
+        header('Content-Disposition: attachment; filename="'.preg_replace("/[\?\"]+/","",$page->get_title()).' part '.$script.'.nsi"');
         print $array_contents[0];
         exit;
       }
