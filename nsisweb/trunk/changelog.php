@@ -6,7 +6,7 @@
 </head> 
 <body> 
 <? IncludePageHeader("NSIS Changelog",true); ?>
-<pre class="text"><?php @readfile('/home/groups/n/ns/nsis/htdocs/nightly/changelog.txt') ?></pre> 
+<pre class="changelog"><?php @readfile('/home/groups/n/ns/nsis/htdocs/nightly/changelog.txt') ?></pre> 
 <? IncludePageFooter(); ?>
 </body> 
 </html> 
