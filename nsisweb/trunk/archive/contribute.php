@@ -293,7 +293,7 @@ ENDOFHTML;
 		if($result) {
 			$pageid = $nsisweb->get_created_id();
 			if($pageid > 0) {
-				add_to_current_picks($pageid,PICKTYPE_PAGE);
+				add_to_current_picks($pageid,0);
 				print <<<ENDOFHTML
 				<p>The new page that you have created has been added to your pick list.
 				You should now browse through the archive until you find somewhere that
