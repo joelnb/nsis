@@ -45,8 +45,8 @@
 		</li>
 	</ul>
 </td>
-<td class="announcement"><a href="http://nsis.sourceforge.net/archive">
-<span class="highlight">NEW!</span> The NSIS Archive</a>
+<td class="announcement"><a href="http://sourceforge.net/forum/forum.php?forum_id=251512">
+<span class="highlight">NEW!</span> NSIS 2 beta 1</a>
 </td>
 </tr>
 </table>
