@@ -83,7 +83,7 @@ ENDOFHTML;
             <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
               <tr style="background-color:#eeeeff">
                 <td style="text-align:center;">&nbsp;<b>#</b>&nbsp;</td>
-                <td colspan="3" style="text-align:center;">&nbsp;<b>Log Message</b>&nbsp;</td>
+                <td colspan="4" style="text-align:center;">&nbsp;<b>Log Message</b>&nbsp;</td>
               </tr>
 ENDOFHTML;
 
@@ -128,8 +128,8 @@ ENDOFHTML;
 
             print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
             print '<td rowspan="2" style="text-align:center;">'.$index++.'</td>';
-            print '<td style="text-align:center">'.$datetime.'</td><td>'.$file.'</td>';
-            print '<td style="text-align:center">Line '.$line.'</td><td>'.$request.'</td>';
+            print '<td style="text-align:center">'.$datetime.'</td><td style="text-align:center">'.$file.'</td>';
+            print '<td style="text-align:center">Line '.$line.'</td><td style="text-align:center">'.$request.'</td>';
             print '</tr><tr style="background-color:#ffffff;font-size:8pt;">';
             print '<td colspan="4" style="padding:3px;font-family:courier new;">'.wordwrap(htmlentities($msg),60,"\n",1).'</td>';
             print "</tr>\n";
