@@ -21,14 +21,14 @@ if($result) {
   while($record = $nsisweb->get_result_array($result)) {
     $rows[] = $record;
   }
-	
+
   $user_map = array(0=>'Anonymous');
   foreach($rows as $record) {
     $userid = $record['last_author'];
     if($userid > 0) {
       if(!is_object($user_map[$userid])) {
-	$user = find_userid($userid);
-	$user_map[$userid] = $user->username;
+$user = find_userid($userid);
+$user_map[$userid] = $user->username;
       }
     }
     $username = $user_map[$userid];
@@ -41,20 +41,20 @@ if($result) {
       $diff = (int)($diff / 60);
       $units = 'minute';
       if ($diff > 60) {
-	$diff = (int)($diff / 60);
-	$units = 'hour';
-	if ($diff > 24) {
-	  $diff = (int)($diff / 24);
-	  $units = 'day';
-	  if ($diff > 365) {
-	    $diff = (int)($diff / 365);
-	    $units = 'year';
-	  }
-	  else if ($diff > 30) {
-	    $diff = (int)($diff / 30);
-	    $units = 'month';
-	  }
-	}
+$diff = (int)($diff / 60);
+$units = 'hour';
+if ($diff > 24) {
+  $diff = (int)($diff / 24);
+  $units = 'day';
+  if ($diff > 365) {
+    $diff = (int)($diff / 365);
+    $units = 'year';
+  }
+  else if ($diff > 30) {
+    $diff = (int)($diff / 30);
+    $units = 'month';
+  }
+}
       }
     }
     
@@ -71,10 +71,10 @@ if($result) {
     print <<<ENDOFHTML
     <tr style="background-color:$bgcolour;">
       <td align="left" valign="middle" style="font-family:verdana;font-size:10pt;">
-	&nbsp;$title&nbsp;
+&nbsp;$title&nbsp;
       </td>
       <td align="right" valign="middle" style="font-family:verdana;font-size:10pt;">
-	&nbsp;$action&nbsp;
+&nbsp;$action&nbsp;
       </td>
     </tr>
 ENDOFHTML;

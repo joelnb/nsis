@@ -31,41 +31,41 @@ if($result) {
       $size       = sprintf("%d Kb",$record['size']/1024.0);
 
       if($record['userid'] != ANONYMOUS_USER_ID) {
-	$username = "<b>$username</b>";
+$username = "<b>$username</b>";
       }
 
       if($i == 0) {
-	$i = 1;
-	$bgcolour = '#eeeeee';
+$i = 1;
+$bgcolour = '#eeeeee';
       } else {
-	$i = 0;
-	$bgcolour = '#ddddff';
+$i = 0;
+$bgcolour = '#ddddff';
       }
 
       if(strstr($record['type'],'image/') || strstr($record['type'],'text/')) {
-	$view_link = '<a style="color:black;text-decoration:underline;" href="'.$storage->get_file_url($filename).'">view</a>';
+$view_link = '<a style="color:black;text-decoration:underline;" href="'.$storage->get_file_url($filename).'">view</a>';
       } else {
-	$view_link = '';
+$view_link = '';
       }
 
       print <<<ENDOFHTML
-	<tr style="background-color:$bgcolour;">
-	  <td align="right" valign="middle" style="font-family:tahoma;font-size:8pt;background-color:transparent;">
-	    <a style="color:black;text-decoration:underline;" href="$grab_link">grab</a> &nbsp;
-	  </td>
-	  <td align="left" valign="middle" style="font-family:verdana;font-size:10pt;">
-	    &nbsp;$filename&nbsp;
-	  </td>
-	  <td align="left" valign="middle" style="font-family:verdana;font-size:10pt;">
-	    &nbsp;$size&nbsp;
-	  </td>
-	  <td align="left" valign="middle" style="font-family:verdana;font-size:10pt;">
-	    &nbsp;$username&nbsp;
-	  </td>
-	  <td align="left" valign="middle" style="font-family:tahoma;font-size:8pt;background-color:transparent;">
-	    &nbsp; $view_link 
-	  </td>
-	</tr>
+<tr style="background-color:$bgcolour;">
+  <td align="right" valign="middle" style="font-family:tahoma;font-size:8pt;background-color:transparent;">
+    <a style="color:black;text-decoration:underline;" href="$grab_link">grab</a> &nbsp;
+  </td>
+  <td align="left" valign="middle" style="font-family:verdana;font-size:10pt;">
+    &nbsp;$filename&nbsp;
+  </td>
+  <td align="left" valign="middle" style="font-family:verdana;font-size:10pt;">
+    &nbsp;$size&nbsp;
+  </td>
+  <td align="left" valign="middle" style="font-family:verdana;font-size:10pt;">
+    &nbsp;$username&nbsp;
+  </td>
+  <td align="left" valign="middle" style="font-family:tahoma;font-size:8pt;background-color:transparent;">
+    &nbsp; $view_link 
+  </td>
+</tr>
 ENDOFHTML;
     }
   }

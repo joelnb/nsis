@@ -21,9 +21,9 @@ if(strlen($_POST['method']) > 0) {
     if($record['count(*)'] == 1) {
       end_session();
       if(isset($_GET['page'])) {
-	header("Location: ".$nsisweb->get_page_url($_GET['page']));
+header("Location: ".$nsisweb->get_page_url($_GET['page']));
       } else {
-	header("Location: ".$nsisweb->get_home_url());
+header("Location: ".$nsisweb->get_home_url());
       }
       exit;
     } else {
@@ -38,16 +38,16 @@ if(strlen($_POST['method']) > 0) {
 ENDOFHTML;
 
       if(isset($_GET['page'])) {
-	print '<input type="hidden" name="page" value="'.$page.'">';
+print '<input type="hidden" name="page" value="'.$page.'">';
       }
 
       print <<<ENDOFHTML
-	<input type="radio" name="method" value="thiscomp" CHECKED>Logout on the this computer<br>
-	<input type="radio" name="method" value="all">Logout all sessions<br>
-	<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-	  <input type="submit" style="color:white;background-color:white;border-style:none">
-	  <a href="javascript:document.logoutform.submit();">Logout >></a>
-	</p>
+<input type="radio" name="method" value="thiscomp" CHECKED>Logout on the this computer<br>
+<input type="radio" name="method" value="all">Logout all sessions<br>
+<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+  <input type="submit" style="color:white;background-color:white;border-style:none">
+  <a href="javascript:document.logoutform.submit();">Logout >></a>
+</p>
       </form>
       </p>
 ENDOFHTML;

@@ -25,24 +25,24 @@ if($result) {
       $views = (int)$record['views'];
       
       if($i == 0) {
-	$i = 1;
-	$bgcolour = '#eeeeee';
+$i = 1;
+$bgcolour = '#eeeeee';
       } else {
-	$i = 0;
-	$bgcolour = '#ddddff';
+$i = 0;
+$bgcolour = '#ddddff';
       }
 
       print <<<ENDOFHTML
       <tr style="background-color:$bgcolour;">
-	<td align="left" valign="middle" style="font-family:verdana;font-size:10pt;">
-	  &nbsp;$rank&nbsp;
-	</td>
-	<td align="left" valign="middle" style="font-family:verdana;font-size:10pt;">
-	  &nbsp;$title&nbsp;
-	</td>
-	<td align="center" valign="middle" style="font-family:verdana;font-size:10pt;">
-	  &nbsp;$views&nbsp;
-	</td>
+<td align="left" valign="middle" style="font-family:verdana;font-size:10pt;">
+  &nbsp;$rank&nbsp;
+</td>
+<td align="left" valign="middle" style="font-family:verdana;font-size:10pt;">
+  &nbsp;$title&nbsp;
+</td>
+<td align="center" valign="middle" style="font-family:verdana;font-size:10pt;">
+  &nbsp;$views&nbsp;
+</td>
       </tr>
 ENDOFHTML;
       $rank++;

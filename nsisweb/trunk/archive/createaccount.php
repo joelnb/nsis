@@ -33,16 +33,16 @@ if(strcmp($_POST['action'],'createaccount') == 0) {
       $error_msg = 'Please try another username and/or password';
     } else {
       $session = login($username,$password);
-	
+
       if($session->is_anonymous()) {
-	$error_msg = 'Please try another username and/or password';
+$error_msg = 'Please try another username and/or password';
       } else {
         $nsisweb->start_page('Create Account');
         print '<span style="font-family: verdana; font-size: 20pt; color: #000000;">Create Account</span>';
-	print '<p><b>Congratulations!</b> Your user account has been created and you have been logged in!</p>';
-	print '<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">';
-	print '<a href="'.$nsisweb->get_home_url().'">Continue >></a>';
-	print '</p>';
+print '<p><b>Congratulations!</b> Your user account has been created and you have been logged in!</p>';
+print '<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">';
+print '<a href="'.$nsisweb->get_home_url().'">Continue >></a>';
+print '</p>';
         exit;
       }
     }

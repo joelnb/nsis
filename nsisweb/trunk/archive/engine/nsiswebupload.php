@@ -13,22 +13,22 @@ $storage = new NsisWebStorage;
 $result = $storage->process_uploaded_files('nsiswebfile');
 
 if($result == 2) {
-	if(strlen($_POST['returnurl']) > 0) {
-		header("Location: ".$_POST['returnurl']);
-		exit;
-	} else {
-		$nsisweb->start_page('Upload');
-		print "Upload complete.<br>";
-	}
+if(strlen($_POST['returnurl']) > 0) {
+header("Location: ".$_POST['returnurl']);
+exit;
 } else {
-	$nsisweb->start_page('Upload');
-	if($result == 1) {
-		print "Some files could not be uploaded.";
-	} else {
-		print "None of the files could be uploaded.";
-	}
-	if(strlen($upload_error) > 0) {
-		print " The webserver reported an error: $upload_error<br>";
-	}
+$nsisweb->start_page('Upload');
+print "Upload complete.<br>";
+}
+} else {
+$nsisweb->start_page('Upload');
+if($result == 1) {
+print "Some files could not be uploaded.";
+} else {
+print "None of the files could be uploaded.";
+}
+if(strlen($upload_error) > 0) {
+print " The webserver reported an error: $upload_error<br>";
+}
 }
 ?>
