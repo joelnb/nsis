@@ -31,12 +31,14 @@
     <?
 		if(count($items) > 0) {
 			foreach($items as $item) {
-				?>
-				<li><a href="<?= $nsisweb->wwwroot.'/nsisweb.php?page='.$item['pageid'] ?>"><?= $item['title'] ?></a>
-				<?
+				print '<li><a href="'.$nsisweb->wwwroot.'/nsisweb.php?page='.$item['pageid'].'">'.$item['title'].'</a>';
+				if($item['type'] == PAGETYPE_DIRECTORY) {
+					$children = find_children($item['pageid']);
+					print ' ('.count($children).')';
+				}
 			}
 		} else {
-			?> There are no pages in this section.<br> <?
+			print 'There are no pages in this section.<br>';
 		}
 		?>
 	</ul>
