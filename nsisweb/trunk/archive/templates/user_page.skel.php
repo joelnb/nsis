@@ -66,7 +66,8 @@ if($page) {
       }
     }
   } else if($view_mode == VIEWMODE_DETACHED) {
-	  $history        = 'Parent Pages: ';
+	  $history  = 'Parent Pages: ';
+	  $history2 = "";
 	  if(!$page_instances) $page_instances = $page->get_instances();
 	  $num_instances  = count($page_instances);
 	  if($num_instances > 0) {
