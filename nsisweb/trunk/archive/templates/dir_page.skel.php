@@ -29,7 +29,7 @@
 				<?
 			}
 		} else {
-			<? There are no pages in this section.<br> ?>
+			?> There are no pages in this section.<br> <?
 		}
 		?>
 	</ul>
