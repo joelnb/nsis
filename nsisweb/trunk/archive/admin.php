@@ -47,11 +47,12 @@ if(!$user->is_admin()) {
         <td>&nbsp;<b>Start Time</b>&nbsp;</td>
         <td>&nbsp;<b>Last Access</b>&nbsp;</td>
         <td>&nbsp;<b>IP</b>&nbsp;</td>
+        <td>&nbsp;<b>Persist</b>&nbsp;</td>
       </tr>
 ENDOFHTML;
 
   $i = 0;
-  $result = $nsisweb->query("select sessionid,a.userid,a.created,last_access,username,ip from nsisweb_sessions as a,nsisweb_users as b where a.userid=b.userid");
+  $result = $nsisweb->query("select sessionid,a.userid,a.created,last_access,username,ip,a.flags from nsisweb_sessions as a,nsisweb_users as b where a.userid=b.userid");
   if($result && $nsisweb->how_many_results($result) > 0) {
     while($record = $nsisweb->get_result_array($result)) {
       if($i == 0) {
@@ -68,6 +69,7 @@ ENDOFHTML;
       print '<td>&nbsp;'.$record['created'].'&nbsp;</td>';
       print '<td>&nbsp;'.$record['last_access'].'&nbsp;</td>';
       print '<td>&nbsp;'.$record['ip'].'&nbsp;</td>';
+      print '<td>&nbsp;'.($record['flags'] & SESSIONFLAG_PERSIST ? 'Yes' : 'No').'&nbsp;</td>';
       print "</tr>\n";
 ENDOFHTML;
     }
@@ -90,6 +92,7 @@ ENDOFHTML;
       print '<td>&nbsp;'.$record['created'].'&nbsp;</td>';
       print '<td>&nbsp;'.$record['last_access'].'&nbsp;</td>';
       print '<td>&nbsp;'.$record['ip'].'&nbsp;</td>';
+      print '<td>&nbsp;No&nbsp;</td>';
       print "</tr>\n";
 ENDOFHTML;
     }
