@@ -426,19 +426,6 @@ function highlight_text($text, $contextstack=undef)
 					$this->context->currquotechar = "";
 				}
 			}
-			// If we've got an indent character, increase the level, and add an indent.
-			else if (!$this->context->inselection && $delim && !$this->context->inquote && ($stri=$this->_starts_with(substr($line, $j), $this->highlightfile->indent))!="") 
-			{
-//print "17";
-				if (!$this->context->inwhitespace) 
-				{
-					$lineout .= str_repeat("  ", $this->context->ind);
-				}
-				$lineout .= $stri;
-				$this->context->ind++;
-				$j += strlen($stri)-1;
-				
-			}
 			// If we've got an unindent (and we are indented), go back a level.
 			else if (!$this->context->inselection && $delim && $this->context->ind>0 && !$this->context->inquote && ($stru=$this->_starts_with(substr($line, $j), $this->highlightfile->unindent))!="") 
 			{
@@ -452,6 +439,19 @@ function highlight_text($text, $contextstack=undef)
 				$lineout .= $stru;
 				
 				$j += strlen($stru)-1;
+			}
+			// If we've got an indent character, increase the level, and add an indent.
+			else if (!$this->context->inselection && $delim && !$this->context->inquote && ($stri=$this->_starts_with(substr($line, $j), $this->highlightfile->indent))!="") 
+			{
+//print "17";
+				if (!$this->context->inwhitespace) 
+				{
+					$lineout .= str_repeat("  ", $this->context->ind);
+				}
+				$lineout .= $stri;
+				$this->context->ind++;
+				$j += strlen($stri)-1;
+				
 			}
 			// Add the characters to the output, and cache strings.
 			else if (!$this->context->inwhitespace || $currchar != " " || $currchar != "\t") 
