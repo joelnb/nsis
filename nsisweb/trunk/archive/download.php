@@ -5,10 +5,17 @@ if(isset($_GET['file'])) {
   $file = find_file($_GET['file']);
   if($file) {
     $file->download();
-    print "<pre>";
-    print_r($file);
-    print "path: ".$file->get_path()."\n";
-    print "</pre>";
+		$nsisweb->start_page('Download',FALSE);
+		$session = $nsisweb->get_session();
+		$user    = find_userid($session->user_id);
+    print "<p><b><font color=\"red\">Error</font></b>: The file you requested could not be found!</p>";
+		if($user->is_admin()) {
+	    print "<p><pre>";
+	    print_r($file);
+	    print "path: ".$file->get_path()."\n";
+	    print "</pre></p>";
+    }
+		$nsisweb->end_page();
     exit;
   }
 }
