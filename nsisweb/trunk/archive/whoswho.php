@@ -18,7 +18,7 @@ while($record = $nsisweb->get_result_array($users)) {
   	print '<tr style="background-color:#eeffee;font-size:8pt;">';
  	}
 
-	$pages_result = $nsisweb->query_one_only("select count(*) from nsisweb_pages where author=".$record['user_id'].". order by created desc",__FILE__,__LINE__);
+	$pages_result = $nsisweb->query_one_only("select count(*) from nsisweb_pages where author=".$record['userid'].". order by created desc",__FILE__,__LINE__);
 	if($pages_result) $pages_created = $pages_result['count(*)'];
 
  	print '<td';
