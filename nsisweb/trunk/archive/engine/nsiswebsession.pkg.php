@@ -160,9 +160,8 @@ function find_my_session()
 			   so that we hit the database less frequently. */
 			if((time()-$session->last_checked) > 300) {
 				$nsisweb->query("delete from nsisweb_sessions where (UNIX_TIMESTAMP()-UNIX_TIMESTAMP(last_access))>".SESSION_TIMEOUT);
-				$nsisweb->query("update nsisweb_sessions set last_checked=NOW() where sessionid='$session_id'");
 				if($session_id != NO_SESSION) {
-					$record
+					$nsisweb->query("update nsisweb_sessions set last_checked=NOW() where sessionid='$session_id'");
 					$record = $nsisweb->query_one_only("select * from nsisweb_sessions where sessionid='$session_id'");
 					if($record) {
 						$session = new NsisWebSession($record);
