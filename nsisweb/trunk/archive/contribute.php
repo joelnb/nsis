@@ -75,7 +75,7 @@ ENDOFHTML;
     <p style="border:solid 2px red;padding:5px;margin-top:20px;margin-bottom:20px;">
       Please do <b>not </b> post bug reports and patches here. Post both at the
       <a style="text-decoration:underline;" href="http://sourceforge.net/projects/nsis">
-      SourceForge project page</a>, it's much more easier for us to follow it there.
+      SourceForge project page</a>.
     </p>
 ENDOFHTML;
 
