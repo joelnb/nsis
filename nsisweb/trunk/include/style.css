@@ -69,6 +69,6 @@ a:hover {
 } 
 
 changelog {
-	font-family: Courier New,Courier;
-	font-size: 11px;
+	font-size: 9pt; 
+    font-family: Verdana, Arial, Helvetica, sans-serif; 
 }
