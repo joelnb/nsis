@@ -178,7 +178,7 @@ class NsisWebStorage
   {
 	  global $nsisweb;
 	  if($this->exists_file($filename)) {
-	  	return $nsisweb->wwwroot.'/uploads/'.$filename;
+	  	return $nsisweb->get_base_url().'/uploads/'.$filename;
   	}
   	return FALSE;
   }

@@ -15,7 +15,7 @@ class NsisWebSite
 	var $last_query;
 	var $errors;
 	var $session;
-	
+
 	function NsisWebSite()
 	{
 		$this->wwwroot  = NSISWEB_WWWROOT.NSISWEB_WWWSUBDIR;
@@ -146,7 +146,11 @@ class NsisWebSite
   }
   function get_page_url($page)
   {
-	  return $this->wwwroot.'/nsisweb.php?page='.urlencode($page);
+	  return $this->get_base_url().'/nsisweb.php?page='.urlencode($page);
+  }
+  function get_base_url()
+  {
+	  return NSISWEB_WWWSUBDIR;
   }
   /* Expects strings like '4.0.6' */
 	function version_check($vercheck)

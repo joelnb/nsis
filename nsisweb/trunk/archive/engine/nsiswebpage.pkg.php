@@ -81,7 +81,7 @@ function show_page($pageid,$make_whole_page)
 			$nsisweb->end_page();
 		}
 	} else {
-	  $url = $nsisweb->wwwroot.'/templates/404.php?page='.urlencode($pageid);
+	  $url = $nsisweb->get_base_url().'/templates/404.php?page='.urlencode($pageid);
 	  header("Location: $url");
 	  exit;
 	}

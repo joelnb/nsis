@@ -31,7 +31,7 @@
     <?
 		if(count($items) > 0) {
 			foreach($items as $item) {
-				print '<li><a href="'.$nsisweb->wwwroot.'/nsisweb.php?page='.$item['pageid'].'">'.$item['title'].'</a>';
+				print '<li><a href="'.$nsisweb->get_base_url().'/nsisweb.php?page='.$item['pageid'].'">'.$item['title']."</a>\n";
 				if($item['type'] == PAGETYPE_DIRECTORY) {
 					$children = find_children($item['pageid']);
 					print ' ('.count($children).')';
