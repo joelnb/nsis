@@ -8,13 +8,13 @@
 <? IncludePageHeader("Nullsoft (SuperPiMP|Scriptable) Install System"); ?>
 <p class="text">NSIS tries to be a scriptable win32 installer/uninstaller system that doesn't suck and isn't huge.</p> 
 <ul> 
-	<li class="text"><b><a href="http://www.nullsoft.com/free/nsis/">Home page</a></b> 
+	<li class="text"><b><a href="http://www.nullsoft.com/free/nsis/">Official Home page</a></b> 
 		<ul>
 			General information about NSIS
 		</ul> 
 	<li class="text"><b><a href="http://sourceforge.net/projects/nsis/">Project page</a></b> 
 		<ul>
-			Latest development version information<br>and downloads
+			Latest development information and downloads
 		</ul> 
 	<li class="text"><b><a href="http://forums.winamp.com/forumdisplay.php?s=&forumid=65">Forum</a></b>  
 		<ul>
@@ -28,19 +28,19 @@
 		<ul>
 			Browse the latest NSIS documentation
 		</ul> 
-	<li class="text"><b><a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/nsis/NSIS/">Browse CVS</a></b> 
-		<ul>
-			Browse the files of the latest version
-		</ul> 
-	<li class="text"><b><a href="http://nsis.sourceforge.net/changelog.php">Change log</a></b> 
+	<li class="text"><b><a href="http://nsis.sourceforge.net/changelog.php">Change Log</a></b> 
 		<ul>
 			See what's cooking<br> 
 			<span class="smalltext">Updated: <?=LocalFileDate("nightly/changelog.htm")?> </span> 
 		</ul> 
-	<li class="text"><b><a href="http://nsis.sourceforge.net/nightly/nsis.zip">Nightly CVS snapshot</a></b> 
+	<li class="text"><b><a href="http://nsis.sourceforge.net/nightly/nsis.zip">Development Snapshot</a></b> 
 		<ul> 
 			NSIS CVS directory zipped up<br> 
 			<span class="smalltext">Updated: <?=LocalFileDate("nightly/nsis.zip")?> </span> 
+		</ul>
+	<li class="text"><b><a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/nsis/NSIS/">Browse CVS</a></b> 
+		<ul>
+			Browse the files of the latest version
 		</ul> 
 </ul> 
 <? IncludePageFooter(); ?>
