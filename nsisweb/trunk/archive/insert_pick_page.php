@@ -26,7 +26,7 @@ if(count($picks)>0) {
 	  	$pageid = $pick['pickedid'];
 	  	$page   = find_pageid($pageid);
 	  	if($page && strlen($page['title'])>0) {
-	  		echo '<input type="checkbox" name="picked[]" value="'.$pageid.'">&nbsp;'.$page['title']."\n";
+	  		echo '<input type="checkbox" name="picked[]" value="'.$pageid.'">&nbsp;'.$page['title']."<br>\n";
   		}
   	}
   }
