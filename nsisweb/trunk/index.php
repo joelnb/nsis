@@ -35,7 +35,7 @@
 	<li class="text"><b><a href="changelog.php">Change log</a></b> 
 		<ul>
 			See what's cooking<br> 
-			<span class="smalltext">Updated: <?=LocalFileDate("nightly/changelog.txt")?> </span> 
+			<span class="smalltext">Updated: <?=LocalFileDate("nightly/changelog.htm")?> </span> 
 		</ul> 
 	<li class="text"><b><a href="nightly/nsis.zip">Nightly CVS snapshot</a></b> 
 		<ul> 
