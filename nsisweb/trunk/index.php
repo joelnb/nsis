@@ -10,6 +10,7 @@
 <ul> 
 	<li class="text"><b><a href="http://www.nullsoft.com/free/nsis/" title="General information about NSIS">Official Home Page</a></b></li>
 	<li class="text"><b><a href="http://sourceforge.net/projects/nsis/" title="Latest development info and downloads">Project page</a></b></li>
+	<li class="text"><b><a href="http://sourceforge.net/tracker/?group_id=22049&atid=373085" title="Found a bug?">Submit Bug</a></b></li>
 	<li class="text"><b><a href="http://forums.winamp.com/forumdisplay.php?s=&forumid=65" title="Talk to other NSIS users">Forum</a></b>  
 	<li class="text"><b><a href="http://forums.winamp.com/showthread.php?s=&threadid=102650" title="Some frequently asked questions">FAQ</a></b></li>
 	<li class="text"><b><a href="http://nsis.sourceforge.net/Docs/" title="Browse the latest NSIS documentation">Documentation</a></b></li>
