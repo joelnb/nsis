@@ -2,15 +2,15 @@
 include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 include_once(dirname(__FILE__)."/engine/nsiswebstorage.pkg.php");
 
-$keywords       = $_POST['keywords'];
-$author         = $_POST['author'];
-$anon_author    = $_POST['anon_author'];
-$anon_editor    = $_POST['anon_editor'];
-$created_since   = $_POST['created_since'];
-$created_until     = $_POST['created_until'];
-$modified_since  = $_POST['modified_since'];
-$modified_until    = $_POST['modified_until'];
-$allow_orphans  = $_POST['allow_orphans'];
+$keywords       = ""; if(strlen($_POST['keywords'])>0)       { $keywords       = $_POST['keywords'];      }
+$author         = ""; if(strlen($_POST['author'])>0)         { $author         = $_POST['author'];        }
+$anon_author    = ""; if(strlen($_POST['anon_author'])>0)    { $anon_author    = $_POST['anon_author'];   }
+$anon_editor    = ""; if(strlen($_POST['anon_editor'])>0)    { $anon_editor    = $_POST['anon_editor'];   }
+$allow_orphans  = ""; if(strlen($_POST['allow_orphans'])>0)  { $allow_orphans  = $_POST['allow_orphans']; }
+$created_since  = ""; if(strlen($_POST['created_since'])>0)  { $date = strtotime($_POST['created_since']);  if($date != -1) { $created_since  = date('Y-m-d H:i:s',$date); } }
+$created_until  = ""; if(strlen($_POST['created_until'])>0)  { $date = strtotime($_POST['created_until']);  if($date != -1) { $created_until  = date('Y-m-d H:i:s',$date); } }
+$modified_since = ""; if(strlen($_POST['modified_since'])>0) { $date = strtotime($_POST['modified_since']); if($date != -1) { $modified_since = date('Y-m-d H:i:s',$date); } }
+$modified_until = ""; if(strlen($_POST['modified_until'])>0) { $date = strtotime($_POST['modified_until']); if($date != -1) { $modified_until = date('Y-m-d H:i:s',$date); } }
 
 if(strcmp($_POST['action'],'search') == 0) {
 	$do_search = TRUE;
@@ -23,6 +23,7 @@ if(strcmp($anon_editor,'CHECKED') != 0) $anon_editor = '';
 if(strcmp($allow_orphans,'CHECKED') != 0) $allow_orphans = '';
 
 $nsisweb->start_page('Search');
+
 ?>
 <font style="font-family: verdana; font-size: 20pt; color: #000000;">Search</font>
 <p>You can use this page to search through the content of those archive pages
