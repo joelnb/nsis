@@ -30,8 +30,8 @@ class HFile_nsis extends HFile{
 
 		// Indent Strings
 
-		$this->indent            	= array("Function", "Section");
-		$this->unindent          	= array("FunctionEnd", "SectionEnd");
+		$this->indent            	= array();//"Function", "Section");
+		$this->unindent          	= array();//"FunctionEnd", "SectionEnd");
 
 		$this->selecton		        = "<!";
 		$this->selectoff	       	= "!>0";
