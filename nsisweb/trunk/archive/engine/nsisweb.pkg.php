@@ -49,7 +49,7 @@ class NsisWeb
     if(strlen($error)>0) {
       $this->errors[] = $error;
       if ($fp = fopen(NSISWEB_LOGSDIR.'/errors.log', 'a')) {
-        fwrite($fp, date('d-M-Y G:i:s T:').$error.'\n');
+        fwrite($fp, date('d-M-Y G:i:s T:').$error."\n");
         fclose($fp);
       }
     }
