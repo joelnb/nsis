@@ -10,10 +10,7 @@ function return_to_caller($instances,$pageid)
   if(strlen($instances)>0) {
     $array = explode(',',$instances);
     if(is_array($array) && count($array)>0) {
-      $int = array_pop($array);
-      if(is_integer($int)) {
-        $instanceid = (int)$int;
-      }
+      $instanceid = (int)array_pop($array);
     }
   }
 
