@@ -230,11 +230,8 @@ function set_page_parent($pageid,$parentid)
 	$result = $nsisweb->query("select count(*) from nsisweb_pages where pageid=$pageid");
 	if($result && $record = $nsisweb->get_result_array($result)) {
 		if($record['count(*)'] == 1) {
-			$page = $nsisweb->get_result_array($result);
-			if($page['flags'] & PAGEFLAG_ORPHANED) {
-				$nsisweb->query("update nsisweb_pages set parentid=$parentid,flags=flags & ~".PAGEFLAG_ORPHANED." where pageid=$pageid");
-				return TRUE;
-			}
+			$nsisweb->query("update nsisweb_pages set parentid=$parentid,flags=flags & ~".PAGEFLAG_ORPHANED." where pageid=$pageid");
+			return TRUE;
 		}
 		$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_PARENTLINK.",pageid=$pageid,parentid=$parentid");
 		return TRUE;
