@@ -17,7 +17,7 @@ and to contribute. You don't even need to create an account on the site in
 order to create your own pages of content, you can dive right it and add
 content right away.</p>
 <p align="center" style="padding:5px;"><span style="padding:5px 10px 5px 10px;background-color:#eeeeee;font-size:12pt;">
-Start contributing right now.. <a href="Contribute.php">click here</a></span></p>
+Start contributing right now.. <a href="contribute.php">click here</a></span></p>
 <p>If you're having problems or experiencing odd behaviour you need to bear in
 mind that this first incarnation of the site has only been tested on Internet
 Explorer 6 and uses some cascading style sheet features that may not be
@@ -27,7 +27,7 @@ supported in yet in other browsers.</p>
 clicking Browse or Search on the main page. The remaining content is in the
 form of downloadable files.</p>
 <p align="center" style="padding:5px;"><span style="padding:5px 10px 5px 10px;background-color:#eeeeee;font-size:12pt;">
-<a href="Download.php">View</a> the list of downloadable files</span></p>
+<a href="download.php">View</a> the list of downloadable files</span></p>
 <p>The Search page searches the content that you can see by entering the Browse
 section of the site. Content is organised into a hierarchy, the Browse page
 takes you to the top of the tree of content, all content is stored in one
@@ -38,7 +38,7 @@ that exists immediately below them in the tree and allow access to the whole
 tree below that point. You can create a directory page or a page of content
 at any time.</p>
 <p align="center" style="padding:5px;"><span style="padding:5px 10px 5px 10px;background-color:#eeeeee;font-size:12pt;">
-<a href="Browse.php">Browse</a> the archive or use the <a href="Search.php">Search</a> facility</span></p>
+<a href="browse.php">Browse</a> the archive or use the <a href="search.php">Search</a> facility</span></p>
 <p>The tree analogy only works up to a point, ultimately pages in this archive
 can exist in more than one place at once which stretches the analogy a bit.
 Why would you want to have the same page more than once? Well sometimes
