@@ -234,7 +234,7 @@ if($do_search) {
 	  </tr>
 END_OF_HTML;
 	  $i = 0;
-	  $index = 0;
+	  $index = 1;
 	  $user_map = array();
 		while($record = $nsisweb->get_result_array($result)) {
 			if($i == 0) {
