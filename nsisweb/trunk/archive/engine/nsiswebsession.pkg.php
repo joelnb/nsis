@@ -103,6 +103,7 @@ function find_my_session()
 	/* Import saved php data (if any exists) -- this could come from a publicly
 	   accessible file depending on how php is configured, e.g. /tmp is the
 	   default location for session files to be stored. */
+	session_save_path(NSISWEB_SESSION_DIR);
   session_start();
 
   /* Can we trust this imported data? The saved session data includes an md5'd
@@ -215,6 +216,7 @@ function login($username,$password)
 				/* Update the cached username in the session object */
   			$session->get_username();
 				
+				session_save_path(NSISWEB_SESSION_DIR);
   			session_start();
 				$_SESSION['session'] = base64_encode(serialize($session));
 				$_SESSION['id']      = md5($session_id+NSISWEB_MAGIC_NUMBER);
