@@ -42,7 +42,6 @@ if(!$user->is_admin()) {
 	  <br>
 	  <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
 	    <tr style="background-color:#eeeeff">
-	    	<td>&nbsp;<b>Session ID</b>&nbsp;</td>
 	    	<td>&nbsp;<b>ID</b>&nbsp;</td>
 	    	<td>&nbsp;<b>User</b>&nbsp;</td>
 	    	<td>&nbsp;<b>Start Time</b>&nbsp;</td>
@@ -56,14 +55,13 @@ ENDOFHTML;
 		while($record = $nsisweb->get_result_array($result)) {
 			if($i == 0) {
 				$i = 1;
-				$bgcolour = '#eeeeee';
+				$bgcolour = '#eeffee';
 			} else {
 				$i = 0;
-				$bgcolour = '#eeffee';
+				$bgcolour = '#eeeeee';
 			}
 
-			print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
-			print '<td>&nbsp;'.$record['sessionid'].'&nbsp;</td>';
+			print '<tr style="background-color:'.$bgcolour.';font-size:8pt;" title="Session ID: '.$record['sessionid'].'">';
 			print '<td>&nbsp;'.$record['userid'].'&nbsp;</td>';
 			print '<td>&nbsp;'.$record['username'].'&nbsp;</td>';
 			print '<td>&nbsp;'.$record['created'].'&nbsp;</td>';
@@ -78,10 +76,10 @@ ENDOFHTML;
 		while($record = $nsisweb->get_result_array($result)) {
 			if($i == 0) {
 				$i = 1;
-				$bgcolour = '#eeeeee';
+				$bgcolour = '#eeffee';
 			} else {
 				$i = 0;
-				$bgcolour = '#ddddff';
+				$bgcolour = '#eeeeee';
 			}
 
 			print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
