@@ -1,6 +1,6 @@
 <?
-include_once('nsisweb.pkg.php');
-include_once('nsiswebsession.pkg.php');
+include_once('engine/nsisweb.pkg.php');
+include_once('engine/nsiswebsession.pkg.php');
 
 $login_failed = FALSE;
 

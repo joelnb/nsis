@@ -1,8 +1,8 @@
 <?
 $upload_error = $php_errormsg;
 
-include_once('nsisweb.pkg.php');
-include_once('nsiswebpage.pkg.php');
+include_once('engine/nsisweb.pkg.php');
+include_once('engine/nsiswebpage.pkg.php');
 
 function get_max_upload() {
 	if(!ini_get("file_uploads")) {

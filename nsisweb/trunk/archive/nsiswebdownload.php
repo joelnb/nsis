@@ -1,7 +1,7 @@
 <?
-include_once("nsisweb.pkg.php");
+include_once("engine/nsisweb.pkg.php");
 if(strlen($_GET['file']) > 0) {
-	include_once("nsiswebstorage.pkg.php");
+	include_once("engine/nsiswebstorage.pkg.php");
 
 	$storage = new NsisWebStorage;
 	$result = $storage->exists_file($_GET['file']);

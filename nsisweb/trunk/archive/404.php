@@ -1,12 +1,12 @@
 <?
-include_once("nsisweb.pkg.php");
+include_once("engine/nsisweb.pkg.php");
 $nsisweb->start_page('Page Not Found');
 ?>
 <center>
 	<table width="75%" border="0" cellpadding="0" cellspacing="0">
 	  <tr>
 	    <td align="left">
-	      <img border="0" align="top" src="exclamation.bmp">
+	      <img border="0" align="top" src="images/exclamation.bmp">
 	    </td>
 	    <td align="left" valign="middle" style="font-size:10pt;margin:12px;">
 	      The page you were looking for, is not currently available, or you may have
