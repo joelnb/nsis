@@ -17,7 +17,10 @@
 			   -> $title
 */
 ?>
-<font style="font-family: verdana; font-size: 20pt; color: #000000;"><?= $title ?></font><br>
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td align="left"><font style="font-family: verdana; font-size: 20pt; color: #000000;"><?= $title ?></font></td>
+<td align="right"><a href="<?= $nsisweb->get_page_url('insert_pick_page') ?>&parentid=<?= $pageid ?>">insert page</a></td>
+</tr></table>
 <p><i><?= $desc ?></i></p>
 <p>
 	<ul>
