@@ -29,7 +29,7 @@ if(!$session->is_anonymous()) {
 <!-- header.skel.php: begin -->
 <html> 
 	<head>
-		<title>Nullsoft (SuperPiMP|Scriptable) Install System // NSIS Archive Site</title>
+		<title>NSIS Archive</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 		<link rel="Stylesheet" type="text/css" href="/include/style.css">
 		<link rel="SHORTCUT ICON" href="/favicon.ico">
@@ -58,7 +58,7 @@ if(!$session->is_anonymous()) {
 						<table width="720" border="0" cellpadding="0" cellspacing="0" class="innertable" style="background-image:none;"> 
 							<tr class="header"> 
 								<td width="70"><a href="/index.php"><div class="center"><img  border="0" src="/images/logo.gif" width="48" height="48"></div></a></td> 
-								<td width="650"><div class="header">Nullsoft (SuperPiMP|Scriptable) Install System<br><font style="font-size:8pt;"><?= $page_browsing_depth ?></font></div></td> 
+								<td width="650"><div class="header" style="font-size:25pt;">NSIS Archive<br><font style="font-size:8pt;"><?= $page_browsing_depth ?></font></div></td> 
 							</tr> 
 							<tr> 
 								<td colspan="2">

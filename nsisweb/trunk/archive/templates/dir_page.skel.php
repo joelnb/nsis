@@ -37,11 +37,17 @@ if($page = $this->get_page()) {
     $children = $this->get_children();
 		if(count($children) > 0) {
 			foreach($children as $child) {
-				print '<li><a href="'.$nsisweb->get_page_url($child['instanceid']).'">'.$child['title']."</a>\n";
+				if($child['type'] == PAGETYPE_DIRECTORY) {
+					print '<img src="images/folder.gif" width="16" height="16" vspace="5" hspace="5" style="vertical-align:middle;">';
+				} else {
+					print '<img src="images/file.gif" width="16" height="16" vspace="5" hspace="5" style="vertical-align:middle;">';
+				}
+				print '<a href="'.$nsisweb->get_page_url($child['instanceid']).'">'.$child['title']."</a>";
 				if($child['type'] == PAGETYPE_DIRECTORY) {
 					$count = get_instance_children_count($child['instanceid']);
 					print " ($count)";
 				}
+				print "<br>\n";
 			}
 		} else {
 			print 'There are no pages in this section.<br>';
