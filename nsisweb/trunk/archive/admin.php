@@ -102,7 +102,7 @@ ENDOFHTML;
 	  <br>
 	  <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
 	    <tr style="background-color:#eeeeff">
-	    	<td>&nbsp;<b>#</b>&nbsp;</td>
+	    	<td>&nbsp;<b>ID</b>&nbsp;</td>
 	    	<td>&nbsp;<b>User</b>&nbsp;</td>
 	    	<td>&nbsp;<b>Created</b>&nbsp;</td>
 	    	<td>&nbsp;<b>Persistent Login</b>&nbsp;</td>
@@ -152,7 +152,7 @@ ENDOFHTML;
 	    </tr>
 ENDOFHTML;
 
-	$result = $nsisweb->query("select distinct user_agent from nsisweb_info order by user_agent asc");
+	$result = $nsisweb->query("select user_agent from nsisweb_info group by user_agent order by user_agent asc");
 	if($result && $nsisweb->how_many_results($result) > 0) {
 		$i = 0;
 		$index = 1;
@@ -173,6 +173,76 @@ ENDOFHTML;
 		}
 	}
 	
+	print <<<ENDOFHTML
+	  </table>
+	</p>
+ENDOFHTML;
+
+	<font style="font-family:verdana;font-size:15pt;color:#000000;">Browsers By IP</font>
+	<p>This table shows the number of distinct ip addresses associated with each browser type:<br>
+	  <br>
+	  <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
+	    <tr style="background-color:#eeeeff">
+	    	<td>&nbsp;<b>#</b>&nbsp;</td>
+	    	<td>&nbsp;<b>User Agent</b>&nbsp;</td>
+	    	<td>&nbsp;<b>IP Addresses</b>&nbsp;</td>
+	    </tr>
+ENDOFHTML;
+
+  /* There must be a way to do this with SQL and joins */
+	$result = $nsisweb->query("select user_agent from nsisweb_info group by user_agent order by user_agent ascselect ip,user_agent from nsisweb_info group by user_agent,ip order by user_agent asc");
+	if($result && $nsisweb->how_many_results($result) > 0) {
+		$i          = 0;
+		$index      = 1;
+		$last_agent = '';
+		$count      = 0;
+		$first      = TRUE;
+		
+		while($record = $nsisweb->get_result_array($result)) {
+			$this_agent = $record['user_agent'];
+			if(strcmp($this_agent,$last_agent) == 0) {
+				$count++;
+			} else {
+				if(!$first) {
+					if($i == 0) {
+						$i = 1;
+						$bgcolour = '#eeffee';
+					} else {
+						$i = 0;
+						$bgcolour = '#eeeeee';
+					}
+
+					print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
+					print '<td>&nbsp;'.$index++.'&nbsp;</td>';
+					print '<td>&nbsp;'.$last_agent.'&nbsp;</td>';
+					print '<td>&nbsp;'.$count.'&nbsp;</td>';
+					print "</tr>\n";
+ENDOFHTML;
+				}
+				$last_agent = $this_agent;
+				$count      = 1;
+				$first      = FALSE;
+			}
+		}
+	}
+
+	if(!$first) {
+		if($i == 0) {
+			$i = 1;
+			$bgcolour = '#eeffee';
+		} else {
+			$i = 0;
+			$bgcolour = '#eeeeee';
+		}
+
+		print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
+		print '<td>&nbsp;'.$index++.'&nbsp;</td>';
+		print '<td>&nbsp;'.$last_agent.'&nbsp;</td>';
+		print '<td>&nbsp;'.$count.'&nbsp;</td>';
+		print "</tr>\n";
+ENDOFHTML;
+	}
+		
 	print <<<ENDOFHTML
 	  </table>
 	</p>
