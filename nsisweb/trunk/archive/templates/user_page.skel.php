@@ -23,7 +23,7 @@
 			<font style="font-size: 20pt;"><?= $title ?></font><br>
 			<font>Written by <?= $author ?>, <?= $date ?></font><br>
 		</td>
-		<td align="right">
+		<td align="right" valign="top">
 		  <?= $edit_link ?> | <?= $delete_link ?><br>
 		</td>
 	</tr>

@@ -24,7 +24,7 @@
 <!-- dir_page.skel.php: begin -->
 <table style="font-family:verdana;font-size:8pt;color:#000000;" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
 <td align="left"><font style="font-size:20pt;"><?= $title ?></font></td>
-<td align="right"><a href="<?= $nsisweb->get_page_url('insert_pick_page') ?>&parentid=<?= $pageid ?>">insert page</a></td>
+<td align="right" valign="top"><a href="<?= $nsisweb->get_page_url('insert_pick_page') ?>&parentid=<?= $pageid ?>">insert page</a></td>
 </tr></table>
 <p><i><?= $desc ?></i></p>
 <p>
