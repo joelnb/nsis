@@ -8,15 +8,15 @@ function get_image($img,$tooltip)
 	return '<img src="images/'.$img.'.png" name="'.$img.'" width="20" height="20" border="0" alt="'.$tooltip.'">';
 }
 
-$edit_link = '<a href="'.$nsisweb->get_page_url('edit').'&instanceid='.$this->get_instanceid().'&pageid='.$this->get_pageid().'" '.get_rollover('edit').'>'.get_image('edit','Edit this page').'</a>';
+$edit_link = '<a href="'.$nsisweb->get_page_url('edit').'&instanceid='.$this->get_instanceid().'&pageid='.$this->get_pageid().'">'.get_image('edit2','Edit this page').'</a>';
 if($this->get_instanceid() == 0) {
 	$pick_link   = get_image('copy','This page cannot be added to your pick list');
 	$delete_link = get_image('cut','This page instance cannot be removed from the Archive');
-	$up_link     = '<a href="'.$nsisweb->get_home_url($this->get_parentid()).'" '.get_rollover('up').'>'.get_image('up','Return to the Archive home page').'</a>';
+	$up_link     = '<a href="'.$nsisweb->get_home_url($this->get_parentid()).'">'.get_image('up2','Return to the Archive home page').'</a>';
 } else {
-	$pick_link   = '<a href="picklist.php?action=pick&instanceid='.$this->get_instanceid().'" '.get_rollover('copy').'>'.get_image('copy','Add this page to your pick list').'</a>';
-	$delete_link = '<a href="'.$nsisweb->get_page_url('delete').'&instanceid='.$this->get_instanceid().'" '.get_rollover('cut').'>'.get_image('cut','Remove this page instance from the Archive').'</a>';
-	$up_link     = '<a href="'.$nsisweb->get_page_url($this->get_parentid()).'" '.get_rollover('up').'>'.get_image('up','View the parent of this page').'</a>';
+	$pick_link   = '<a href="picklist.php?action=pick&instanceid='.$this->get_instanceid().'">'.get_image('copy2','Add this page to your pick list').'</a>';
+	$delete_link = '<a href="'.$nsisweb->get_page_url('delete').'&instanceid='.$this->get_instanceid().'">'.get_image('cut2','Remove this page instance from the Archive').'</a>';
+	$up_link     = '<a href="'.$nsisweb->get_page_url($this->get_parentid()).'">'.get_image('up2','View the parent of this page').'</a>';
 }
 
 $page = $this->get_page();
