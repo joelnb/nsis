@@ -10,7 +10,7 @@ if(isset($_GET['file'])) {
 		$user    = find_userid($session->user_id);
     print "<p><b><font color=\"red\">Error</font></b>: The file you requested could not be found!</p>";
 		if($user->is_admin()) {
-	    print "<p><pre>";
+	    print "<p>Admin, FYI here's the details of the download that could not be found:-<pre>";
 	    print_r($file);
 	    print "path: ".$file->get_path()."\n";
 	    print "</pre></p>";
@@ -28,7 +28,6 @@ user that contributed the file to the archive.</p>
 <br>
 <center>
   <table style="border-style:none;font-size:10pt;" cellpadding="2" cellspacing="0">
-    <tr style="background-color:#ffaa00;font-size:12pt;"><td colspan="3"><b>Downloads are currently down. Normal service <i>should</i> be resumed by 18:00 GMT 07/05/2003.</b></td></tr>
 <?
 $result = $nsisweb->query("select * from nsisweb_files",__FILE__,__LINE__);
 if($result) {
