@@ -19,7 +19,7 @@ if(!$user->is_admin()) {
 } else {
   $time_web = date('Y-m-d H:i:s',time());
   $time_db  = 'unknown';
-  $record   = $nsisweb->query_one_only("select NOW()");
+  $record   = $nsisweb->query_one_only("select NOW()",__FILE__,__LINE__);
   if($record) $time_db = $record['NOW()'];
 
   switch($_GET['action']) {
@@ -145,8 +145,8 @@ ENDOFHTML;
       /* Make sure the session data we print is the most upto date */
       timeout_sessions();
 
-      $users = $nsisweb->query("select sessionid,a.userid,a.created,last_access,username,ip,a.flags,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(a.created)) as uptime,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(last_access)) as accessed from nsisweb_sessions as a,nsisweb_users as b where a.userid=b.userid order by ip");
-      $anons = $nsisweb->query("select sessionid,userid,created,last_access,ip,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(created)) as uptime,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(last_access)) as accessed from nsisweb_sessions where userid=0 order by ip");
+      $users = $nsisweb->query("select sessionid,a.userid,a.created,last_access,username,ip,a.flags,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(a.created)) as uptime,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(last_access)) as accessed from nsisweb_sessions as a,nsisweb_users as b where a.userid=b.userid order by ip",__FILE__,__LINE__);
+      $anons = $nsisweb->query("select sessionid,userid,created,last_access,ip,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(created)) as uptime,(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(last_access)) as accessed from nsisweb_sessions where userid=0 order by ip",__FILE__,__LINE__);
       $usercount = $users ? $nsisweb->how_many_results($users) : 0;
       $anoncount = $anons ? $nsisweb->how_many_results($anons) : 0;
 
@@ -227,10 +227,10 @@ ENDOFHTML;
     // -------------------------------------------
     case 'users':
       if(strcmp($_GET['subaction'],'grant') == 0 && $_GET['userid'] > 0) {
-        $nsisweb->query('update nsisweb_users set usertype='.USERTYPE_ADMIN.' where userid='.$_GET['userid']);
+        $nsisweb->query('update nsisweb_users set usertype='.USERTYPE_ADMIN.' where userid='.$_GET['userid'],__FILE__,__LINE__);
       }
 
-      $users     = $nsisweb->query("select userid,username,created,usertype,flags from nsisweb_users");
+      $users     = $nsisweb->query("select userid,username,created,usertype,flags from nsisweb_users",__FILE__,__LINE__);
       $usercount = $users ? $nsisweb->how_many_results($users) : 0;
 
       print <<<ENDOFHTML
@@ -297,7 +297,7 @@ ENDOFHTML;
             </tr>
 ENDOFHTML;
 
-      $result = $nsisweb->query("select count(ip) as cc,user_agent from nsisweb_info group by user_agent order by cc desc,user_agent asc");
+      $result = $nsisweb->query("select count(ip) as cc,user_agent from nsisweb_info group by user_agent order by cc desc,user_agent asc",__FILE__,__LINE__);
       if($result && $nsisweb->how_many_results($result) > 0) {
         $i     = 0;
         $index = 1;

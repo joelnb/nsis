@@ -22,7 +22,7 @@ user that contributed the file to the archive.</p>
 <center>
   <table style="border-style:none;font-size:10pt;" cellpadding="2" cellspacing="0">
 <?
-$result = $nsisweb->query("select * from nsisweb_files");
+$result = $nsisweb->query("select * from nsisweb_files",__FILE__,__LINE__);
 if($result) {
   if($nsisweb->how_many_results($result) > 0) {
     $i = 0;

@@ -122,7 +122,7 @@ if(strlen($author)>0) {
       $temp_query .= " or username like '%".$authors[$i]."%'";
     }
 
-    $result = $nsisweb->query($temp_query);
+    $result = $nsisweb->query($temp_query,__FILE__,__LINE__);
     if($result) $author_count = $nsisweb->how_many_results($result);
     
     if($result && $author_count>0) {
@@ -158,7 +158,7 @@ if(strlen($editor)>0) {
       $temp_query .= " or username like '%".$editors[$i]."%'";
     }
 
-    $result = $nsisweb->query($temp_query);
+    $result = $nsisweb->query($temp_query,__FILE__,__LINE__);
     if($result && $nsisweb->how_many_results($result)>0) {
       if(isset($query)) $query .= " and ";
       $query .= "last_author in (";
@@ -222,7 +222,7 @@ if($do_search) {
   } else {
     $query = $query_base;
   }
-  $result = $nsisweb->query($query);
+  $result = $nsisweb->query($query,__FILE__,__LINE__);
 
   /* Process the results */
   $count = $nsisweb->how_many_results($result);
@@ -231,9 +231,9 @@ if($do_search) {
     if($count != 1) print 's';
     print ". ";
     if($author_count > 0) {
-	    print "Your entered username(s) matched $author_count users.";
+      print "Your entered username(s) matched $author_count users.";
     } else if($author_count == 0) {
-	    print "Your entered username(s) did not match any known users, no filtering by user was done.";
+      print "Your entered username(s) did not match any known users, no filtering by user was done.";
     }
     print "<br><br>";
     print <<<END_OF_HTML

@@ -13,15 +13,15 @@ if($session->is_anonymous()) {
   $user_id    = $session->user_id;
 
   if(strcmp($_GET['action'],'stoppersist') == 0) {
-    $nsisweb->query('update nsisweb_users set flags=flags & '.~USERFLAG_PERSIST." where userid=$user_id");
-    $nsisweb->query('update nsisweb_sessions set flags=flags & '.~SESSIONFLAG_PERSIST." where userid=$user_id");
+    $nsisweb->query('update nsisweb_users set flags=flags & '.~USERFLAG_PERSIST." where userid=$user_id",__FILE__,__LINE__);
+    $nsisweb->query('update nsisweb_sessions set flags=flags & '.~SESSIONFLAG_PERSIST." where userid=$user_id",__FILE__,__LINE__);
   } else if(strcmp($_GET['action'],'persist') == 0) {
-    $nsisweb->query('update nsisweb_users set flags=flags | '.USERFLAG_PERSIST." where userid=$user_id");
-    $nsisweb->query('update nsisweb_sessions set flags=flags | '.SESSIONFLAG_PERSIST." where userid=$user_id");
+    $nsisweb->query('update nsisweb_users set flags=flags | '.USERFLAG_PERSIST." where userid=$user_id",__FILE__,__LINE__);
+    $nsisweb->query('update nsisweb_sessions set flags=flags | '.SESSIONFLAG_PERSIST." where userid=$user_id",__FILE__,__LINE__);
   } else if(strcmp($_GET['action'],'showqueries') == 0) {
-    $nsisweb->query('update nsisweb_users set flags=flags | '.USERFLAG_SHOWQUERIES." where userid=$user_id");
+    $nsisweb->query('update nsisweb_users set flags=flags | '.USERFLAG_SHOWQUERIES." where userid=$user_id",__FILE__,__LINE__);
   } else if(strcmp($_GET['action'],'dontshowqueries') == 0) {
-    $nsisweb->query('update nsisweb_users set flags=flags & '.~USERFLAG_SHOWQUERIES." where userid=$user_id");
+    $nsisweb->query('update nsisweb_users set flags=flags & '.~USERFLAG_SHOWQUERIES." where userid=$user_id",__FILE__,__LINE__);
   }
   
   $user     = find_userid($user_id);
@@ -34,22 +34,22 @@ if($session->is_anonymous()) {
   $current_picks    = 'Unknown';
   $current_sessions = 'Unknown';
 
-  $record = $nsisweb->query_one_only("select created from nsisweb_users where userid=$user_id");
+  $record = $nsisweb->query_one_only("select created from nsisweb_users where userid=$user_id",__FILE__,__LINE__);
   if($record) $user_created = $record['created'];
 
-  $record = $nsisweb->query_one_only("select count(*) from nsisweb_pages where author=$user_id");
+  $record = $nsisweb->query_one_only("select count(*) from nsisweb_pages where author=$user_id",__FILE__,__LINE__);
   if($record) $pages_created = $record['count(*)'];
 
-  $record = $nsisweb->query_one_only("select count(*) from nsisweb_pages where author<>$user_id and last_author=$user_id");
+  $record = $nsisweb->query_one_only("select count(*) from nsisweb_pages where author<>$user_id and last_author=$user_id",__FILE__,__LINE__);
   if($record) $pages_modified = $record['count(*)'];
 
-  $record = $nsisweb->query_one_only("select count(*) from nsisweb_files where userid=$user_id");
+  $record = $nsisweb->query_one_only("select count(*) from nsisweb_files where userid=$user_id",__FILE__,__LINE__);
   if($record) $files_uploaded = $record['count(*)'];
 
-  $record = $nsisweb->query_one_only("select count(*) from nsisweb_picks where sessionid='$session_id'");
+  $record = $nsisweb->query_one_only("select count(*) from nsisweb_picks where sessionid='$session_id'",__FILE__,__LINE__);
   if($record) $current_picks = $record['count(*)'];
 
-  $record = $nsisweb->query_one_only("select count(*) from nsisweb_sessions where userid=$user_id");
+  $record = $nsisweb->query_one_only("select count(*) from nsisweb_sessions where userid=$user_id",__FILE__,__LINE__);
   if($record) $current_sessions = $record['count(*)'];
 
   ?>
@@ -88,7 +88,7 @@ ENDOFHTML;
   
   if($user->is_admin()) {
     ?><span style="font-family:verdana;font-size:15pt;color:#000000;">Show queries</span><?
-    $record = $nsisweb->query_one_only('select flags from nsisweb_users where userid='.$user_id);
+    $record = $nsisweb->query_one_only('select flags from nsisweb_users where userid='.$user_id,__FILE__,__LINE__);
     if($record) {
       if ($record['flags'] & USERFLAG_SHOWQUERIES) {
         //? 'dontshowqueries' : 'showqueries';

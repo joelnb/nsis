@@ -5,9 +5,9 @@ include_once(dirname(__FILE__)."/nsiswebuser.pkg.php");
 function initialise_page_table()
 {
   global $nsisweb;
-  $nsisweb->query("drop table if exists nsisweb_pages");
-  $nsisweb->query("create table nsisweb_pages (pageid int unsigned auto_increment,type int unsigned not null default 0,flags int unsigned not null default 0,source text not null,ppsource text not null,title varchar(255),author int unsigned not null default 0,created datetime not null,last_author int unsigned not null default 0,last_updated datetime not null,views int unsigned not null default 0,rating float unsigned default 0,votes int unsigned not null default 0,primary key (pageid))");
-  $nsisweb->query("create table nsisweb_hierarchy (instanceid int unsigned auto_increment,pageid int unsigned not null default 0,parentid int unsigned not null default 0,sequence int unsigned not null default 0,primary key (instanceid))");
+  $nsisweb->query("drop table if exists nsisweb_pages",__FILE__,__LINE__);
+  $nsisweb->query("create table nsisweb_pages (pageid int unsigned auto_increment,type int unsigned not null default 0,flags int unsigned not null default 0,source text not null,ppsource text not null,title varchar(255),author int unsigned not null default 0,created datetime not null,last_author int unsigned not null default 0,last_updated datetime not null,views int unsigned not null default 0,rating float unsigned default 0,votes int unsigned not null default 0,primary key (pageid))",__FILE__,__LINE__);
+  $nsisweb->query("create table nsisweb_hierarchy (instanceid int unsigned auto_increment,pageid int unsigned not null default 0,parentid int unsigned not null default 0,sequence int unsigned not null default 0,primary key (instanceid))",__FILE__,__LINE__);
 }
 
 define('FETCH_CONTENT_NO',  1); // page details only
@@ -68,7 +68,7 @@ class NsisWebPage
       }
 
       global $nsisweb;
-      $record = $nsisweb->query_one_only("select $fields from nsisweb_pages where pageid=$pageid");
+      $record = $nsisweb->query_one_only("select $fields from nsisweb_pages where pageid=$pageid",__FILE__,__LINE__);
       if($record) {
         foreach($record as $key => $value) {
           $this->private_info[$key] = $value;
@@ -100,7 +100,7 @@ class NsisWebPage
   {
     if(!$this->private_info['source']) {
       global $nsisweb;
-      $record = $nsisweb->query_one_only('select source from nsisweb_pages where pageid = '.$this->get_pageid());
+      $record = $nsisweb->query_one_only('select source from nsisweb_pages where pageid = '.$this->get_pageid(),__FILE__,__LINE__);
       if($record) $this->private_info['source'] = $record['source'];
     }
     return $this->private_info['source'];
@@ -109,7 +109,7 @@ class NsisWebPage
   {
     if(!$this->private_info['ppsource']) {
       global $nsisweb;
-      $record = $nsisweb->query_one_only('select ppsource from nsisweb_pages where pageid = '.$this->get_pageid());
+      $record = $nsisweb->query_one_only('select ppsource from nsisweb_pages where pageid = '.$this->get_pageid(),__FILE__,__LINE__);
       if($record) $this->private_info['ppsource'] = $record['ppsource'];
     }
     return $this->private_info['ppsource'];
@@ -119,7 +119,7 @@ class NsisWebPage
   {
     global $nsisweb;
     $instances = array();
-    $result    = $nsisweb->query('select * from nsisweb_hierarchy where pageid='.$this->get_pageid().' order by sequence asc');
+    $result    = $nsisweb->query('select * from nsisweb_hierarchy where pageid='.$this->get_pageid().' order by sequence asc',__FILE__,__LINE__);
     if($result && $nsisweb->how_many_results($result) > 0) {
       while($record = $nsisweb->get_result_array($result)) {
         $instances[] = new NsisWebInstance($record);
@@ -149,7 +149,7 @@ class NsisWebPage
     /* Build a list of pages in the section we are adding to. Don't allow the
        same page in a section twice. */
     $instances = array();
-    $result    = $nsisweb->query("select * from nsisweb_hierarchy where parentid=$parentid order by sequence asc");
+    $result    = $nsisweb->query("select * from nsisweb_hierarchy where parentid=$parentid order by sequence asc",__FILE__,__LINE__);
     if($result && $nsisweb->how_many_results($result) > 0) {
       while($record = $nsisweb->get_result_array($result)) {
         $instance = new NsisWebInstance($record);
@@ -166,14 +166,14 @@ class NsisWebPage
       $sequence = 0;
     }
     if(!$sequence) {
-      if(!$nsisweb->query("insert into nsisweb_hierarchy set parentid=$parentid,pageid=".$this->get_pageid().',sequence='.($num_instances+1))) {
+      if(!$nsisweb->query("insert into nsisweb_hierarchy set parentid=$parentid,pageid=".$this->get_pageid().',sequence='.($num_instances+1),__FILE__,__LINE__)) {
         return FALSE;
       }
     } else {
       /* We need to renumber the other instances so that this instance can have
          the sequence that the user requested. */
-      $nsisweb->query("insert into nsisweb_hierarchy set parentid=$parentid,pageid=".$this->get_pageid().",sequence=$sequence");
-      $nsisweb->query("update nsisweb_hierarchy set sequence=sequence+1 where parentid=$parentid and sequence > $sequence");
+      $nsisweb->query("insert into nsisweb_hierarchy set parentid=$parentid,pageid=".$this->get_pageid().",sequence=$sequence",__FILE__,__LINE__);
+      $nsisweb->query("update nsisweb_hierarchy set sequence=sequence+1 where parentid=$parentid and sequence > $sequence",__FILE__,__LINE__);
     }
     return TRUE;
   }
@@ -182,7 +182,7 @@ class NsisWebPage
   {
     global $nsisweb;
     $ppsource = mysql_escape_string(preprocess($this->get_content(),$this->get_pageid()));
-    $result = $nsisweb->query("update nsisweb_pages set ppsource='$ppsource' where pageid=".$this->get_pageid());
+    $result = $nsisweb->query("update nsisweb_pages set ppsource='$ppsource' where pageid=".$this->get_pageid(),__FILE__,__LINE__);
   }
 
   /* Only use this for existing pages */  
@@ -194,9 +194,9 @@ class NsisWebPage
     $ppsource = mysql_escape_string(preprocess($content,$this->get_pageid()));
     $session  = $nsisweb->get_session();
     $author   = $session->user_id;
-    $result = $nsisweb->query("update nsisweb_pages set flags=$flags,title='$title',source='$source',ppsource='$ppsource',last_author=$author,last_updated=NOW() where pageid=".$this->get_pageid());
+    $result = $nsisweb->query("update nsisweb_pages set flags=$flags,title='$title',source='$source',ppsource='$ppsource',last_author=$author,last_updated=NOW() where pageid=".$this->get_pageid(),__FILE__,__LINE__);
     if(!$result) return FALSE;
-    $record = $nsisweb->query_one_only("select NOW()");
+    $record = $nsisweb->query_one_only("select NOW()",__FILE__,__LINE__);
     $this->private_info['flags']        = $flags;
     $this->private_info['title']        = $title;
     $this->private_info['source']       = $source;
@@ -213,9 +213,9 @@ class NsisWebPage
     $ppsource = mysql_escape_string(preprocess($content,$this->get_pageid()));
     $session  = $nsisweb->get_session();
     $author   = $session->user_id;
-    $result   = $nsisweb->query("insert into nsisweb_pages set type=$type,flags=$flags,title='$title',source='$source',ppsource='$ppsource',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0,votes=0");
+    $result   = $nsisweb->query("insert into nsisweb_pages set type=$type,flags=$flags,title='$title',source='$source',ppsource='$ppsource',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0,votes=0",__FILE__,__LINE__);
     if(!$result) return FALSE;
-    $record = $nsisweb->query_one_only("select NOW()");
+    $record = $nsisweb->query_one_only("select NOW()",__FILE__,__LINE__);
     $this->private_info = array(
       'pageid'       => $nsisweb->get_created_id(),
       'type'         => $type,
@@ -236,7 +236,7 @@ class NsisWebPage
   {
     global $nsisweb;
     if($this->get_pageid() > 0) {
-      $nsisweb->query('update nsisweb_pages set views=views+1 where pageid='.$this->get_pageid());
+      $nsisweb->query('update nsisweb_pages set views=views+1 where pageid='.$this->get_pageid(),__FILE__,__LINE__);
     }
   }
   function can_modify()
@@ -261,7 +261,7 @@ class NsisWebPage
     /* Use a join to the nsisweb_pages table to return the page details. */ 
     global $nsisweb;
     $children = array();
-    $result   = $nsisweb->query('select a.instanceid,a.pageid,b.type,b.title from nsisweb_hierarchy as a,nsisweb_pages as b where a.parentid='.$parentid.' and b.pageid=a.pageid order by a.sequence');
+    $result   = $nsisweb->query('select a.instanceid,a.pageid,b.type,b.title from nsisweb_hierarchy as a,nsisweb_pages as b where a.parentid='.$parentid.' and b.pageid=a.pageid order by a.sequence',__FILE__,__LINE__);
     if($result && $nsisweb->how_many_results($result) > 0) {
       while($record = $nsisweb->get_result_array($result)) {
         $children[] = $record;
@@ -278,7 +278,7 @@ class NsisWebPage
     
     /* Use a join to the nsisweb_pages table to return the full pages. */ 
     global $nsisweb;
-    $record = $nsisweb->query_one_only('select count(*) from nsisweb_hierarchy as a,nsisweb_pages as b where a.parentid='.$parentid.' and b.pageid=a.pageid');
+    $record = $nsisweb->query_one_only('select count(*) from nsisweb_hierarchy as a,nsisweb_pages as b where a.parentid='.$parentid.' and b.pageid=a.pageid',__FILE__,__LINE__);
     if($record) {
       return $record['count(*)'];
     }
@@ -314,7 +314,7 @@ class NsisWebInstance
     } else {
       global $nsisweb;
       if($fetch_mode == 0) {
-        $record = $nsisweb->query_one_only('select instanceid,pageid,parentid,sequence from nsisweb_hierarchy where instanceid='.(int)$param);
+        $record = $nsisweb->query_one_only('select instanceid,pageid,parentid,sequence from nsisweb_hierarchy where instanceid='.(int)$param,__FILE__,__LINE__);
         if($record) {
           $this->private_info = $record;
           $this->private_info['page'] = FALSE;
@@ -329,7 +329,7 @@ class NsisWebInstance
           case FETCH_CONTENT_BOTH: $page_fields .= ',b.source,b.ppsource'; break;
         }
 
-        $record = $nsisweb->query_one_only("select $instance_fields,$page_fields from nsisweb_hierarchy as a,nsisweb_pages as b where a.instanceid=".(int)$param.' and b.pageid=a.pageid');
+        $record = $nsisweb->query_one_only("select $instance_fields,$page_fields from nsisweb_hierarchy as a,nsisweb_pages as b where a.instanceid=".(int)$param.' and b.pageid=a.pageid',__FILE__,__LINE__);
         $page_details = array(
           'pageid'       => $record['pageid'],
           'author'       => $record['author'],
@@ -420,11 +420,11 @@ class NsisWebInstance
     global $nsisweb;
     $parentid = $this->get_parentid();
     $sequence = $this->get_sequence();
-    $record   = $nsisweb->query_one_only("select max(sequence) from nsisweb_hierarchy where parentid=$parentid");
+    $record   = $nsisweb->query_one_only("select max(sequence) from nsisweb_hierarchy where parentid=$parentid",__FILE__,__LINE__);
     if(!$record) return FALSE;
     $count = $record['max(sequence'];
-    $nsisweb->query("delete from nsisweb_hierarchy where parentid=$parentid and sequence=$sequence");
-    $nsisweb->query("update nsisweb_hierarchy set sequence=sequence-1 where parentid=$parentid and sequence > $sequence");
+    $nsisweb->query("delete from nsisweb_hierarchy where parentid=$parentid and sequence=$sequence",__FILE__,__LINE__);
+    $nsisweb->query("update nsisweb_hierarchy set sequence=sequence-1 where parentid=$parentid and sequence > $sequence",__FILE__,__LINE__);
     return TRUE;
   }
   function get_children()

@@ -13,8 +13,8 @@ define('USERFLAG_SHOWQUERIES', 2);
 function initialise_user_table()
 {
   global $nsisweb;
-  $nsisweb->query("drop table if exists nsisweb_users");
-  $nsisweb->query("create table nsisweb_users (username varchar(255) not null,password varchar(255) not null,userid int unsigned auto_increment,primary key(userid),created datetime not null,usertype int unsigned not null default 0,flags int unsigned default 0)");
+  $nsisweb->query("drop table if exists nsisweb_users",__FILE__,__LINE__);
+  $nsisweb->query("create table nsisweb_users (username varchar(255) not null,password varchar(255) not null,userid int unsigned auto_increment,primary key(userid),created datetime not null,usertype int unsigned not null default 0,flags int unsigned default 0)",__FILE__,__LINE__);
 }
 
 class NsisWebUser
@@ -53,7 +53,7 @@ function find_user($username)
 {
   global $nsisweb;
   $username = mysql_escape_string($username);
-  $result = $nsisweb->query("select * from nsisweb_users where username='$username'");
+  $result = $nsisweb->query("select * from nsisweb_users where username='$username'",__FILE__,__LINE__);
   if($result != FALSE && $nsisweb->how_many_results($result) == 1) {
     $array = $nsisweb->get_result_array($result);
   } else {
@@ -69,7 +69,7 @@ function find_userid($user_id)
     return new NsisWebUser(array('userid'=>0,'username'=>'anonymous'));
   } else {
     global $nsisweb;
-    $result = $nsisweb->query("select * from nsisweb_users where userid=$user_id");
+    $result = $nsisweb->query("select * from nsisweb_users where userid=$user_id",__FILE__,__LINE__);
     if($result != FALSE && $nsisweb->how_many_results($result) == 1) {
       $array = $nsisweb->get_result_array($result);
     } else {
@@ -86,7 +86,7 @@ function add_user($username,$password)
     if($user->user_id == ANONYMOUS_USER_ID) {
       global $nsisweb;
       $password = md5($password);
-      $result = $nsisweb->query("insert into nsisweb_users set username='$username', password='$password', userid=NULL, created=NOW()");
+      $result = $nsisweb->query("insert into nsisweb_users set username='$username', password='$password', userid=NULL, created=NOW()",__FILE__,__LINE__);
       return $result != FALSE;
     }
   }
@@ -101,7 +101,7 @@ function change_user_type($user,$new_type)
   $this_user = find_userid($session->user_id);
   
   if($this_user->is_admin()) {
-    $result = $nsisweb->query("update nsisweb_users set usertype=$new_type where userid=".$session->user_id);
+    $result = $nsisweb->query("update nsisweb_users set usertype=$new_type where userid=".$session->user_id,__FILE__,__LINE__);
     if($result) {
       $user->usertype = $new_type;
       return TRUE;

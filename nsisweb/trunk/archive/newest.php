@@ -12,7 +12,7 @@ $nsisweb->start_page('Latest Additions/Changes');
       <th align="center"><b>&nbsp;Added / Changed&nbsp;</b></th>
     </tr>
 <?
-$result = $nsisweb->query('select type,title,pageid,UNIX_TIMESTAMP(created) as created,UNIX_TIMESTAMP(last_updated) as last_updated,last_author from nsisweb_pages as p where type<>'.PAGETYPE_DIRECTORY.' order by greatest(created,last_updated) desc limit 25');
+$result = $nsisweb->query('select type,title,pageid,UNIX_TIMESTAMP(created) as created,UNIX_TIMESTAMP(last_updated) as last_updated,last_author from nsisweb_pages as p where type<>'.PAGETYPE_DIRECTORY.' order by greatest(created,last_updated) desc limit 25',__FILE__,__LINE__);
 echo mysql_error();
 if($result) {
   $i = 0;

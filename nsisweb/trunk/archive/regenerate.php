@@ -10,7 +10,7 @@ $user    = find_userid($session->user_id);
 if(!$user->is_admin()) {
   echo '<p>This page is for users with admin rights only.</p>';
   } else {
-  $result = $nsisweb->query("select pageid from nsisweb_pages");
+  $result = $nsisweb->query("select pageid from nsisweb_pages",__FILE__,__LINE__);
   if($result && $nsisweb->how_many_results($result)>0) {
     while($record = $nsisweb->get_result_array($result)) {
       $pages[] = $record['pageid'];

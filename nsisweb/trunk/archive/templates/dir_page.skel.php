@@ -68,7 +68,7 @@ unset($history);
 $instances = $nsisweb->get_instance_history(-1);
 if(strlen($instances)>0) {
   $history = '<a href="'.$nsisweb->get_page_url(0).'">Browse</a>';
-  $result  = $nsisweb->query("select a.instanceid,b.title from nsisweb_hierarchy as a,nsisweb_pages as b where a.instanceid in ($instances) and a.pageid=b.pageid");
+  $result  = $nsisweb->query("select a.instanceid,b.title from nsisweb_hierarchy as a,nsisweb_pages as b where a.instanceid in ($instances) and a.pageid=b.pageid",__FILE__,__LINE__);
   if($result && $nsisweb->how_many_results($result)>0) {
     $i = 0;
     while($record = $nsisweb->get_result_array($result)) {

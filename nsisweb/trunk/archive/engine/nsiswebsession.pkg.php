@@ -39,9 +39,9 @@ define('SESSIONFLAG_PERSIST',1);
 function initialise_session_table()
 {
   global $nsisweb;
-  $nsisweb->query("drop table if exists nsisweb_sessions");
-  $nsisweb->query('create table nsisweb_sessions (sessionid varchar(255) not null,userid int unsigned not null default 0,created datetime not null,last_access datetime not null,last_checked datetime not null,ip varchar(16),flags int unsigned default 0)');
-  $nsisweb->query('create table nsisweb_info (at datetime,user_agent varchar(255),ip varchar(255))');
+  $nsisweb->query("drop table if exists nsisweb_sessions",__FILE__,__LINE__);
+  $nsisweb->query('create table nsisweb_sessions (sessionid varchar(255) not null,userid int unsigned not null default 0,created datetime not null,last_access datetime not null,last_checked datetime not null,ip varchar(16),flags int unsigned default 0)',__FILE__,__LINE__);
+  $nsisweb->query('create table nsisweb_info (at datetime,user_agent varchar(255),ip varchar(255))',__FILE__,__LINE__);
 }
 
 class NsisWebSession
@@ -188,8 +188,8 @@ function find_my_session()
       if(!$session->persists() && (time()-$session->last_checked) > TIMEOUT_CHECK_FREQUENCY) {
         timeout_sessions();
         if($session_id != NO_SESSION) {
-          $nsisweb->query("update nsisweb_sessions set last_checked=NOW() where sessionid='$session_id'");
-          $record = $nsisweb->query_one_only("select * from nsisweb_sessions where sessionid='$session_id'");
+          $nsisweb->query("update nsisweb_sessions set last_checked=NOW() where sessionid='$session_id'",__FILE__,__LINE__);
+          $record = $nsisweb->query_one_only("select * from nsisweb_sessions where sessionid='$session_id'",__FILE__,__LINE__);
           if($record) {
             $session = new NsisWebSession($record);
             if($session->is_legal()) {
@@ -213,12 +213,12 @@ function find_my_session()
        out if they have the persistent session option turned on... if so
        damn well treat them as logged in !! Closing the browser window will
        expire the phpsession data. */
-     $record = $nsisweb->query_one_only("select userid from nsisweb_sessions where sessionid='$session_id'");
+     $record = $nsisweb->query_one_only("select userid from nsisweb_sessions where sessionid='$session_id'",__FILE__,__LINE__);
      if($record) {
        $user = find_userid($record['userid']);
        if(!$user->is_anonymous() || $user->persists()) {
         /* Anonymous sessions are by nature persistent */
-        $now_record                = $nsisweb->query_one_only("select NOW()");
+        $now_record                = $nsisweb->query_one_only("select NOW()",__FILE__,__LINE__);
         $now                       = $now_record['NOW()'];
         $session                   = new NsisWebSession(array('sessionid'=>$session_id,'userid'=>$user->user_id,'created'=>$now,'last_access'=>$now,'last_checked'=>time(),'ip'=>$_SERVER['REMOTE_ADDR']));
         $session->looks_like_admin = $user->is_admin();
@@ -230,16 +230,16 @@ function find_my_session()
   }
 
   if($session && $session_okay) {
-    $result = $nsisweb->query("update nsisweb_sessions set last_access=NOW() where sessionid='$session_id'");
+    $result = $nsisweb->query("update nsisweb_sessions set last_access=NOW() where sessionid='$session_id'",__FILE__,__LINE__);
   }
 
   if(!$session || !$session_okay) {
     /* Create a new anonymous session */
     $session_id = construct_session_id();
-    $record     = $nsisweb->query_one_only("select NOW()");
+    $record     = $nsisweb->query_one_only("select NOW()",__FILE__,__LINE__);
     $now        = $record['NOW()'];
     $session    = new NsisWebSession(array('sessionid'=>$session_id,'userid'=>0,'created'=>$now,'last_access'=>$now,'last_checked'=>time(),'ip'=>$_SERVER['REMOTE_ADDR']));
-    $nsisweb->query("insert into nsisweb_sessions set sessionid='$session_id',userid=0,created=NOW(),last_access=NOW(),ip='".$_SERVER['REMOTE_ADDR']."'");
+    $nsisweb->query("insert into nsisweb_sessions set sessionid='$session_id',userid=0,created=NOW(),last_access=NOW(),ip='".$_SERVER['REMOTE_ADDR']."'",__FILE__,__LINE__);
     track_user_agent();
     setcookie(COOKIE_NAME,$session_id,time()+86400,"/","",0);
   }
@@ -273,8 +273,8 @@ function end_session()
   }
   
   if($session_id != 0) {
-    $nsisweb->query("delete from nsisweb_sessions where sessionid='$session_id'");
-    $nsisweb->query("delete from nsisweb_picks where sessionid='$session_id'");
+    $nsisweb->query("delete from nsisweb_sessions where sessionid='$session_id'",__FILE__,__LINE__);
+    $nsisweb->query("delete from nsisweb_picks where sessionid='$session_id'",__FILE__,__LINE__);
   }
 
   setcookie(COOKIE_NAME,"",time()-86400,"/","",0);
@@ -308,18 +308,18 @@ function end_sessions()
   $blurb[] = "***ENDING SESSIONS: session_id=$session_id<br>";
   if($session_id != 0) {
     $blurb[] = "***ENDING SESSIONS: 2<br>";
-    $record = $nsisweb->query_one_only("select userid from nsisweb_sessions where sessionid='$session_id'");
+    $record = $nsisweb->query_one_only("select userid from nsisweb_sessions where sessionid='$session_id'",__FILE__,__LINE__);
     if($record) {
       $user_id = $record['userid'];
-      $result  = $nsisweb->query("select sessionid from nsisweb_sessions where userid=$user_id");
+      $result  = $nsisweb->query("select sessionid from nsisweb_sessions where userid=$user_id",__FILE__,__LINE__);
       if($result && $nsisweb->how_many_results($result)>0) {
         while($record = $nsisweb->get_result_array($result)) {
           $session_id = $record['sessionid'];
-          $nsisweb->query("delete from nsisweb_picks where sessionid='$session_id'");
+          $nsisweb->query("delete from nsisweb_picks where sessionid='$session_id'",__FILE__,__LINE__);
         }
       }
     }
-    $nsisweb->query("delete from nsisweb_sessions where userid=$user_id");
+    $nsisweb->query("delete from nsisweb_sessions where userid=$user_id",__FILE__,__LINE__);
   }
 
   setcookie(COOKIE_NAME,"",time()-86400,"/","",0);
@@ -345,7 +345,7 @@ function end_sessions()
 function login($username,$password)
 {
   global $nsisweb;
-  $record = $nsisweb->query_one_only("select * from nsisweb_users where username='$username'");
+  $record = $nsisweb->query_one_only("select * from nsisweb_users where username='$username'",__FILE__,__LINE__);
 
   if($record && md5($password) == $record['password']) {
     $user_id    = $record['userid'];
@@ -371,7 +371,7 @@ function login($username,$password)
       $persist_sql = ',flags='.SESSIONFLAG_PERSIST;
     }
     
-    $nsisweb->query('update nsisweb_sessions set last_access=NOW(),last_checked=NOW(),userid='.$session->user_id.$persist_sql." where sessionid='$session_id'");
+    $nsisweb->query('update nsisweb_sessions set last_access=NOW(),last_checked=NOW(),userid='.$session->user_id.$persist_sql." where sessionid='$session_id'",__FILE__,__LINE__);
     return $nsisweb->session = $session;
   }
   return find_my_session();
@@ -380,12 +380,12 @@ function login($username,$password)
 function timeout_sessions()
 {
   global $nsisweb;
-  $nsisweb->query("delete from nsisweb_sessions where (UNIX_TIMESTAMP()-UNIX_TIMESTAMP(last_access))>".SESSION_TIMEOUT.' and flags & '.SESSIONFLAG_PERSIST.'=0');
+  $nsisweb->query("delete from nsisweb_sessions where (UNIX_TIMESTAMP()-UNIX_TIMESTAMP(last_access))>".SESSION_TIMEOUT.' and flags & '.SESSIONFLAG_PERSIST.'=0',__FILE__,__LINE__);
 }
 
 function track_user_agent()
 {
   global $nsisweb;
-  $nsisweb->query("insert into nsisweb_info set at=NOW(),user_agent='".$_SERVER['HTTP_USER_AGENT']."',ip='".$_SERVER['REMOTE_ADDR']."'");
+  $nsisweb->query("insert into nsisweb_info set at=NOW(),user_agent='".$_SERVER['HTTP_USER_AGENT']."',ip='".$_SERVER['REMOTE_ADDR']."'",__FILE__,__LINE__);
 }
 ?>

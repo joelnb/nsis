@@ -142,7 +142,7 @@ class NsisWeb
   {
     return $this->get_page_url($this->get_last_history_page()).'&instances='.urlencode($this->get_instance_history(-2));
   }
-  function query($query)
+  function query($query,$file='Unknown',$line='Unknown')
   {
     unset($this->$last_query);
     if($link = mysql_pconnect(NSISWEB_MYSQL_HOST,NSISWEB_MYSQL_USER,NSISWEB_MYSQL_PASSWORD)) {
@@ -162,34 +162,34 @@ class NsisWeb
         if($result != FALSE) {
           return $result;
         } else {
-          $this->record_error('mysql_query() failed: '.mysql_error()." (query=$query)",__FILE__,__LINE__);
+          $this->record_error('mysql_query() failed: '.mysql_error()." (query=$query)",$file,$line);
         }
       } else {
-        $this->record_error('connection_status() is not NORMAL: '.mysql_error()." (query=$query)",__FILE__,__LINE__);
+        $this->record_error('connection_status() is not NORMAL: '.mysql_error()." (query=$query)",$file,$line);
       }
     } else {
-      $this->record_error('mysql_pconnect() failed: '.mysql_error()." (query=$query)",__FILE__,__LINE__);
+      $this->record_error('mysql_pconnect() failed: '.mysql_error()." (query=$query)",$file,$line);
     }
     return FALSE;
   }
-  function query_one($query)
+  function query_one($query,$file='Unknown',$line='Unknown')
   {
     /* If you know that you are only interested in a single row of result data
        (which is a very common case) this function performs the steps necessary
        in one neat call. */
-     $result = $this->query($query);
+     $result = $this->query($query,$file,$line);
      if($result && $this->how_many_results($result) > 0) {
        return $this->get_result_array($result);
      }
      return FALSE;
   }
-  function query_one_only($query)
+  function query_one_only($query,$file='Unknown',$line='Unknown')
   {
     /* If you know that you are only interested in a single row of result data
        (which is a very common case) this function performs the steps necessary
        in one neat call. This variant will barf if more than a single row of
        data is returned to us by the database engine. */
-     $result = $this->query($query);
+     $result = $this->query($query,$file,$line);
      if($result && $this->how_many_results($result) == 1) {
        return $this->get_result_array($result);
      }

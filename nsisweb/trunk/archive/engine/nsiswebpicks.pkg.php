@@ -16,8 +16,8 @@ include_once(dirname(__FILE__)."/nsiswebuser.pkg.php");
 function initialise_picks_table()
 {
   global $nsisweb;
-  $nsisweb->query("drop table if exists nsisweb_picks");
-  $nsisweb->query("create table nsisweb_picks (sessionid varchar(255) not null,pickedid int unsigned not null default 0,pickedtype int unsigned not null default 0)");
+  $nsisweb->query("drop table if exists nsisweb_picks",__FILE__,__LINE__);
+  $nsisweb->query("create table nsisweb_picks (sessionid varchar(255) not null,pickedid int unsigned not null default 0,pickedtype int unsigned not null default 0)",__FILE__,__LINE__);
 }
 
 function get_current_picks()
@@ -26,7 +26,7 @@ function get_current_picks()
   $picks      = array();
   $session    = $nsisweb->get_session();
   $session_id = $session->session_id;
-  $result     = $nsisweb->query("select * from nsisweb_picks where sessionid='$session_id'");
+  $result     = $nsisweb->query("select * from nsisweb_picks where sessionid='$session_id'",__FILE__,__LINE__);
   if($result && $nsisweb->how_many_results($result)>0) {
     while($array = $nsisweb->get_result_array($result)) {
       $picks[] = array(
@@ -43,7 +43,7 @@ function clear_current_picks()
   global $nsisweb;
   $session    = $nsisweb->get_session();
   $session_id = $session->session_id;
-  $nsisweb->query("delete from nsisweb_picks where sessionid='$session_id'");
+  $nsisweb->query("delete from nsisweb_picks where sessionid='$session_id'",__FILE__,__LINE__);
 }
 
 function add_to_current_picks($pickedid,$pickedtype)
@@ -51,8 +51,8 @@ function add_to_current_picks($pickedid,$pickedtype)
   global $nsisweb;
   $session    = $nsisweb->get_session();
   $session_id = $session->session_id;
-  $nsisweb->query("delete from nsisweb_picks where sessionid='$session_id' and pickedid=$pickedid");
-  $nsisweb->query("insert into nsisweb_picks set sessionid='$session_id', pickedid=$pickedid, pickedtype=$pickedtype");
+  $nsisweb->query("delete from nsisweb_picks where sessionid='$session_id' and pickedid=$pickedid",__FILE__,__LINE__);
+  $nsisweb->query("insert into nsisweb_picks set sessionid='$session_id', pickedid=$pickedid, pickedtype=$pickedtype",__FILE__,__LINE__);
 }
 
 function remove_from_current_picks($pickedid)
@@ -60,6 +60,6 @@ function remove_from_current_picks($pickedid)
   global $nsisweb;
   $session    = $nsisweb->get_session();
   $session_id = $session->session_id;
-  $nsisweb->query("delete from nsisweb_picks where sessionid='$session_id' and pickedid=$pickedid");
+  $nsisweb->query("delete from nsisweb_picks where sessionid='$session_id' and pickedid=$pickedid",__FILE__,__LINE__);
 }
 ?>

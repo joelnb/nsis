@@ -14,7 +14,7 @@
   
   $okay_count = 0;
 
-  $result = $nsisweb->query("select count(*) from nsisweb_users");
+  $result = $nsisweb->query("select count(*) from nsisweb_users",__FILE__,__LINE__);
   if($result && $nsisweb->how_many_results($result) == 1) {
     $record = $nsisweb->get_result_array($result);
     $count  = $record['count(*)'];
@@ -22,7 +22,7 @@
     $okay_count++;
   }
   
-  $result = $nsisweb->query("select count(*) from nsisweb_hierarchy as a,nsisweb_pages as b where a.pageid=b.pageid and b.type=".PAGETYPE_TEMPLATED);
+  $result = $nsisweb->query("select count(*) from nsisweb_hierarchy as a,nsisweb_pages as b where a.pageid=b.pageid and b.type=".PAGETYPE_TEMPLATED,__FILE__,__LINE__);
   if($result && $nsisweb->how_many_results($result) == 1) {
     $record = $nsisweb->get_result_array($result);
     $count  = $record['count(*)'];

@@ -15,7 +15,7 @@ if(strlen($_POST['method']) > 0) {
   exit;
 } else {
   $session = $nsisweb->get_session();
-  $record = $nsisweb->query_one("select count(*) from nsisweb_sessions where userid=".$session->user_id);
+  $record = $nsisweb->query_one("select count(*) from nsisweb_sessions where userid=".$session->user_id,__FILE__,__LINE__);
 
   if($record) {
     if($record['count(*)'] == 1) {

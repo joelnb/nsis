@@ -199,7 +199,7 @@ ENDOFHTML;
     echo '<input type="radio" name="parentid" value="0"> The Archive Root (only admins can insert pages here)<br><br>';
   }
 
-  $result = $nsisweb->query('select pageid,title from nsisweb_pages where type='.PAGETYPE_DIRECTORY);
+  $result = $nsisweb->query('select pageid,title from nsisweb_pages where type='.PAGETYPE_DIRECTORY,__FILE__,__LINE__);
   if($result && $nsisweb->how_many_results($result)>0) {
     while($record = $nsisweb->get_result_array($result)) {
       echo '<input type="radio" name="parentid" value="'.$record['pageid'].'"> '.$record['title']."<br>\n";
@@ -321,7 +321,7 @@ ENDOFHTML;
     echo '<input type="radio" name="parentid" value="0"> The Archive Root (only admins can insert pages here)<br><br>';
   }
 
-  $result = $nsisweb->query('select pageid,title from nsisweb_pages where type='.PAGETYPE_DIRECTORY);
+  $result = $nsisweb->query('select pageid,title from nsisweb_pages where type='.PAGETYPE_DIRECTORY,__FILE__,__LINE__);
   if($result && $nsisweb->how_many_results($result)>0) {
     while($record = $nsisweb->get_result_array($result)) {
       echo '<input type="radio" name="parentid" value="'.$record['pageid'].'"> '.$record['title']."<br>\n";

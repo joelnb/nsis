@@ -6,8 +6,8 @@ define('USE_UNIX_FILE_COMMAND',TRUE);
 function initialise_files_table()
 {
   global $nsisweb;
-  $nsisweb->query("drop table if exists nsisweb_files");
-  $nsisweb->query("create table nsisweb_files (filename varchar(255) not null,type varchar(255) not null,size int unsigned not null default 0,userid int unsigned not null default 0,downloads int unsigned not null default 0,about text not null)");
+  $nsisweb->query("drop table if exists nsisweb_files",__FILE__,__LINE__);
+  $nsisweb->query("create table nsisweb_files (filename varchar(255) not null,type varchar(255) not null,size int unsigned not null default 0,userid int unsigned not null default 0,downloads int unsigned not null default 0,about text not null)",__FILE__,__LINE__);
 }
 
 class NsisWebFile
@@ -54,7 +54,7 @@ class NsisWebFile
   {
     global $nsisweb;
     $sqlfilename  = mysql_escape_string($this->get_path());
-    $nsisweb->query("delete from nsisweb_files where filename='$sqlfilename'");
+    $nsisweb->query("delete from nsisweb_files where filename='$sqlfilename'",__FILE__,__LINE__);
   }
   function download()
   {
@@ -66,7 +66,7 @@ class NsisWebFile
         if(@readfile($this->get_path())) {
           global $nsisweb;
           $this->private_info['downloads']++;
-          $nsisweb->query("update nsisweb_files set downloads=downloads+1 where filename='".mysql_escape_string($this->get_filename())."'");
+          $nsisweb->query("update nsisweb_files set downloads=downloads+1 where filename='".mysql_escape_string($this->get_filename())."'",__FILE__,__LINE__);
           exit;
         }
       }
@@ -79,7 +79,7 @@ class NsisWebFile
     if($size > 0) {
       $type        = mysql_escape_string(determine_file_type($this->get_filename(),$mime_type));
       $description = mysql_escape_string($description);
-      $nsisweb->query("update nsisweb_files set about='$description',size=$size,type='$type' where filename='".$this->get_filename());
+      $nsisweb->query("update nsisweb_files set about='$description',size=$size,type='$type' where filename='".$this->get_filename(),__FILE__,__LINE__);
     }
   }
 };
@@ -88,7 +88,7 @@ function find_file($filename)
 {
   global $nsisweb;
   $filename = mysql_escape_string($filename);
-  $record   = $nsisweb->query_one_only("select * from nsisweb_files where filename='$filename'");
+  $record   = $nsisweb->query_one_only("select * from nsisweb_files where filename='$filename'",__FILE__,__LINE__);
   return new NsisWebFile($record);
 }
 
@@ -103,7 +103,7 @@ function add_file($filename,$mime_type,$description)
     $type        = mysql_escape_string(determine_file_type($filename,$mime_type));
     $session     = $nsisweb->get_session();
     $user_id     = $session->user_id;
-    $result      = $nsisweb->query("insert into nsisweb_files set filename='$filename',type='$type',size='$size',userid='$user_id',downloads=0,about='$description'");
+    $result      = $nsisweb->query("insert into nsisweb_files set filename='$filename',type='$type',size='$size',userid='$user_id',downloads=0,about='$description'",__FILE__,__LINE__);
     return ($result != FALSE);
   }
   return FALSE;
