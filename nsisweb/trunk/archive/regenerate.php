@@ -1,4 +1,8 @@
 <?
+
+// Regenerating can take a while
+set_time_limit(300);
+
 include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 
 $nsisweb->start_page('Regenerating Content',FALSE);

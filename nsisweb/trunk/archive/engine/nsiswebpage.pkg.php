@@ -527,7 +527,7 @@ function colour_source($string,$pageid){
 
       /* At the moment the parser flextest encloses the output in <pre>
          </pre> which we don't want, so get rid of it. */
-      $array_contents[0] = substr($array_contents[0],5,-6);
+      // $array_contents[0] = substr($array_contents[0],5,-6);
 
       /* attach a disk icon to enable saving the source */
       if($pageid > 0) {
@@ -536,7 +536,7 @@ function colour_source($string,$pageid){
         $final .= '<span style="font-family:verdana;font-size:7pt;">Save this script</span><br>';
       }
 
-      $final .= '<span style="white-space:pre;font-family:courier new;font-size:10pt;">';
+      $final .= '<span style="font-family:courier new;font-size:10pt;">';
       $final .= $array_contents[0]."</span>".$array_contents[1];
     }
 
