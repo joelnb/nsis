@@ -137,42 +137,7 @@ ENDOFHTML;
 ENDOFHTML;
 		}
 	}
-	
-	print <<<ENDOFHTML
-	  </table>
-	</p>
 
-	<font style="font-family:verdana;font-size:15pt;color:#000000;">Browser Types Seen</font>
-	<p>The following users HTTP_USER_AGENT strings have been recorded:<br>
-	  <br>
-	  <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
-	    <tr style="background-color:#eeeeff">
-	    	<td>&nbsp;<b>#</b>&nbsp;</td>
-	    	<td>&nbsp;<b>User Agent</b>&nbsp;</td>
-	    </tr>
-ENDOFHTML;
-
-	$result = $nsisweb->query("select user_agent from nsisweb_info group by user_agent order by user_agent asc");
-	if($result && $nsisweb->how_many_results($result) > 0) {
-		$i = 0;
-		$index = 1;
-		while($record = $nsisweb->get_result_array($result)) {
-			if($i == 0) {
-				$i = 1;
-				$bgcolour = '#eeffee';
-			} else {
-				$i = 0;
-				$bgcolour = '#eeeeee';
-			}
-
-			print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
-			print '<td>&nbsp;'.$index++.'&nbsp;</td>';
-			print '<td>&nbsp;'.$record['user_agent'].'&nbsp;</td>';
-			print "</tr>\n";
-ENDOFHTML;
-		}
-	}
-	
 	print <<<ENDOFHTML
 	  </table>
 	</p>
