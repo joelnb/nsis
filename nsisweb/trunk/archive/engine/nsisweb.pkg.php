@@ -70,6 +70,17 @@ class NsisWebSite
 	{
 		if(file_exists($this->fileroot.'/'.$pagename.'.php')) {
 		  $url = $this->wwwroot.'/'.$pagename.'.php';
+		  // encode get args into $url
+		  $first = TRUE;
+		  foreach($_GET as $arg) {
+			  if($first) {
+				  $url .= '?';
+				  $first = FALSE;
+			  } else {
+				  $url .= '&';
+			  }
+			  $url .= urlencode($arg);
+		  }
 	  	header("Location: $url");
 	  	exit;
   	} else {
