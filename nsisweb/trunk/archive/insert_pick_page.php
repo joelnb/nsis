@@ -30,6 +30,7 @@ if(count($picks)>0) {
   		}
   	}
   }
+  echo '<input type="submit" value="Insert Pages">'."\n";
   echo "</form>\n";
 } else {
   echo "<ul><li>There are no pages in your pick list at this time.</ul>\n";
