@@ -32,7 +32,7 @@ if(!$user->is_admin()) {
   <p>Administrator status gives you the right to modify any page stored in the
   database no  matter who created it, and the right to grant admin rights to
   other users.</p>
-  
+
   <span style="font-family:verdana;font-size:15pt;color:#000000;">Web Server Info</span>
   <p>The time on the web server is $time_web. The time on the database server is
   $time_db. PHP diagnostics can be viewed  <a href="admin.php?action=phpinfo">here</a></p>
@@ -92,7 +92,7 @@ ENDOFHTML;
       print '<td>&nbsp;'.$record['created'].'&nbsp;</td>';
       print '<td>&nbsp;'.$record['last_access'].'&nbsp;</td>';
       print '<td>&nbsp;'.$record['ip'].'&nbsp;</td>';
-      print '<td>&nbsp;No&nbsp;</td>';
+      print '<td>&nbsp;N/A&nbsp;</td>';
       print "</tr>\n";
 ENDOFHTML;
     }

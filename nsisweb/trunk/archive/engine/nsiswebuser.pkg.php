@@ -36,7 +36,7 @@ class NsisWebUser
   }
   function persists()
   {
-    return ($this->flags & USERFLAG_PERSIST) ? TRUE : FALSE;
+    return ($this->is_anonymous() || $this->flags & USERFLAG_PERSIST) ? TRUE : FALSE;
   }
   function is_anonymous()
   {

@@ -213,16 +213,19 @@ function find_my_session()
        expired... if this is the case the session record should still exist
        in the database, check to see and if it does using the userid find
        out if they have the persistent session option turned on... if so
-       damn well treat them as logged in !! */
-     $record = $nsisweb->query_one_only("select userid from nsisweb_sessions where sessionid='%session_id'");
+       damn well treat them as logged in !! Closing the browser window will
+       expire the phpsession data. */
+     $record = $nsisweb->query_one_only("select userid from nsisweb_sessions where sessionid='$session_id'");
      if($record) {
        $user = find_userid($record['userid']);
-       if(!$user->is_anonymous() && $user->persists()) {
-        $now_record = $nsisweb->query_one_only("select NOW()");
-        $now        = $now_record['NOW()'];
-        $session    = new NsisWebSession(array('sessionid'=>$session_id,'userid'=>$user->user_id,'created'=>$now,'last_access'=>$now,'last_checked'=>time(),'ip'=>$_SERVER['REMOTE_ADDR']));
+       if(!$user->is_anonymous() || $user->persists()) {
+        /* Anonymous sessions are by nature persistent */
+        $now_record                = $nsisweb->query_one_only("select NOW()");
+        $now                       = $now_record['NOW()'];
+        $session                   = new NsisWebSession(array('sessionid'=>$session_id,'userid'=>$user->user_id,'created'=>$now,'last_access'=>$now,'last_checked'=>time(),'ip'=>$_SERVER['REMOTE_ADDR']));
         $session->looks_like_admin = $user->is_admin();
         $session->persist          = TRUE;
+        $session_okay              = TRUE;
         track_user_agent();
        }
      }
@@ -280,6 +283,7 @@ function end_session()
   setcookie(session_name(),"",time()-86400,"/","",0);
   unset($_GET[COOKIE_NAME]);
 
+  unset($_SESSION['session']);
   @session_start();
   $_SESSION = array();
   @session_unset();
@@ -292,8 +296,6 @@ function end_session()
     $session->persist          = FALSE;
     unset($session->cached_username);
   }
-  
-  unset($_SESSION['session']);
 }
 
 function end_sessions()
@@ -360,7 +362,7 @@ function login($username,$password)
 
     /* Update the cached username in the session object */
     $session->get_username();
-
+    
     session_save_path(NSISWEB_SESSION_DIR);
     session_start();
     $_SESSION['session'] = base64_encode($session->to_string());
