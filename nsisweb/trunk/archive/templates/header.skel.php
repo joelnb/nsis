@@ -67,7 +67,7 @@ if(!$session->is_anonymous()) {
               <td colspan="2">
                 <p style="font-size:8pt;color:#FF0000;text-align:center;">Please note that the archive is still under development. If you have any suggestions, find any bugs,
                 or have problems working with the archive come chat with us at <a href="irc://irc.landoleet.org/nsis">#nsis @ irc.landoleet.org</a> or send
-                a PM to <a href="http://forums.winamp.com/private.php?s=&action=newmessage&userid=19620">KiCHiK</a> or
+                a PM to <a href="http://forums.winamp.com/private.php?s=&action=newmessage&userid=44024">KiCHiK</a> or
                 <a href="http://forums.winamp.com/private.php?s=&action=newmessage&userid=70214">Sunjammer</a></p>
               </td>
             </tr> 
