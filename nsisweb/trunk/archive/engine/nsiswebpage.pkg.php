@@ -48,7 +48,7 @@ function show_page($pageid,$make_whole_page)
 				/* ------------------------ 
 		         PAGETYPE: TEMPLATED
 				   ------------------------ */
-				$result = $nsisweb->query("update nsisweb_pages set views=views+1");
+				$result = $nsisweb->query("update nsisweb_pages set views=views+1 where pageid=$pageid");
 				$title  = &$page_info['title'];
 				$source = &$page_info['source'];
 				$user   = find_userid($page_info['author']);
