@@ -49,12 +49,14 @@ class NsisWeb
       initialise_files_table();
     }
   }
-  function record_error($error)
+  function record_error($error,$file='Unknown',$line='Unknown')
   {
     if(strlen($error)>0) {
       $this->errors[] = $error;
       if ($fp = fopen(NSISWEB_LOGSDIR.'/errors.log', 'a')) {
-        fwrite($fp, date('d-M-Y G:i:s T:').$error."\n");
+        /* #error# acts as a dectectable start point of an error message and is
+           not likely to turn up in the logs. */
+        fwrite($fp,"#error#$file#$line#".date('d-M-Y G:i:s T:').$error."\n");
         fclose($fp);
       }
     }
@@ -160,13 +162,13 @@ class NsisWeb
         if($result != FALSE) {
           return $result;
         } else {
-          $this->record_error('NsisWeb::query(): mysql_query() failed: '.mysql_error()." [query=$query]");
+          $this->record_error('mysql_query() failed: '.mysql_error()." (query=$query)",__FILE__,__LINE__);
         }
       } else {
-        $this->record_error('NsisWeb::query(): connection_status() is not NORMAL: '.mysql_error()." [query=$query]");
+        $this->record_error('connection_status() is not NORMAL: '.mysql_error()." (query=$query)",__FILE__,__LINE__);
       }
     } else {
-      $this->record_error('NsisWeb::query(): mysql_pconnect() failed: '.mysql_error()." [query=$query]");
+      $this->record_error('mysql_pconnect() failed: '.mysql_error()." (query=$query)",__FILE__,__LINE__);
     }
     return FALSE;
   }

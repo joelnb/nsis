@@ -52,7 +52,11 @@ ENDOFHTML;
     case 'dbinfo':
       $filename = NSISWEB_LOGSDIR.'/errors.log';
       if(strcmp($_GET['subaction'],'clearlog') == 0) {
-        @unlink($filename);
+        $file = fopen($filename,'w');
+        if($file) {
+          fwrite($file,"Log emptied on ".date('Y-m-s H:i:s')."\n");
+          fclose($filename);
+        }
       }
       
       print <<<ENDOFHTML
@@ -63,57 +67,71 @@ ENDOFHTML;
       if(@filesize($filename) <= 0) {
         print '<p>There are no errors in the database logs at this time.</p>';
       } else {
-        $file = @fopen($filename,'r');
-        
-        if($file) {
-          print <<<ENDOFHTML
-            <script>
-              function checkclearlog()
-              {
-                return confirm("Are you sure you want to clear the log?");
-              }
-            </script>
-            <p>Each row of this table is an error log entry logged by the NSIS
-              Archive Engine when a database SQL query failed to execute
-              correctly. Push the big red button to clear the log.<br>
-              <br>
-              <div style="text-align:center;"><a href="admin.php?action=dbinfo&subaction=clearlog" onclick="return checkclearlog();"><img style="border:none;" src="images/bigred.jpg"></a><div>
-              <br>
-              <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
-                <tr style="background-color:#eeeeff">
-                  <td style="text-align:center;">&nbsp;<b>#</b>&nbsp;</td>
-                  <td style="text-align:center;">&nbsp;<b>Log Message</b>&nbsp;</td>
-                </tr>
+        print <<<ENDOFHTML
+          <script>
+            function checkclearlog()
+            {
+              return confirm("Are you sure you want to clear the log?");
+            }
+          </script>
+          <p>Each row of this table is an error log entry logged by the NSIS
+            Archive Engine when a database SQL query failed to execute
+            correctly. Push the big red button to clear the log.<br>
+            <br>
+            <div style="text-align:center;"><a href="admin.php?action=dbinfo&subaction=clearlog" onclick="return checkclearlog();"><img style="border:none;" src="images/bigred.jpg"></a><div>
+            <br>
+            <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
+              <tr style="background-color:#eeeeff">
+                <td style="text-align:center;">&nbsp;<b>#</b>&nbsp;</td>
+                <td colspan="3" style="text-align:center;">&nbsp;<b>Log Message</b>&nbsp;</td>
+              </tr>
 ENDOFHTML;
 
-          $i     = 0;
-          $index = 1;
-          
-          while(!@feof($file)) {
-            $msg = @fgets($file,4096);
+        ob_start();
+        readfile($filename);
+        $log = ob_get_contents();
+        ob_end_clean();
 
-            if(strlen($msg)>0) {
-              if($i == 0) {
-                $i = 1;
-                $bgcolour = '#eeffee';
-              } else {
-                $i = 0;
-                $bgcolour = '#eeeeee';
-              }
+        $i     = 0;
+        $index = 1;
+        $pos   = strpos($log,'#error#');
 
-              print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
-              print '<td style="text-align:center;">'.$index++.'</td>';
-              print '<td style="padding:3px;font-family:courier new;">'.wordwrap(htmlentities($msg),60,"\n",1).'</td>';
-              print "</tr>\n";
+        do {
+          $end  = strpos($log,'#error#',$pos+1);
+          $pos += strlen('#error#');
+
+          if($end-$pos > 0) {
+            $markerpos = strpos($log,'#',$pos);
+            $file      = substr($log,$pos,$markerpos-$pos);
+            $pos       = $markerpos+1;
+            $markerpos = strpos($log,'#',$pos);
+            $line      = substr($log,$pos,$markerpos-$pos);
+            $pos       = $markerpos+1;
+            $msg       = substr($log,$pos,$end-$pos);
+
+            if($i == 0) {
+              $i = 1;
+              $bgcolour = '#eeffee';
+            } else {
+              $i = 0;
+              $bgcolour = '#eeeeee';
             }
+
+            print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
+            print '<td rowspan="2" style="text-align:center;">'.$index++.'</td>';
+            print '<td>'.$file.'</td><td style="text-align:center">Line '.$line.'</td>';
+            print '</tr><tr style="background-color:#ffffff;font-size:8pt;">';
+            print '<td colspan="2" style="padding:3px;font-family:courier new;">'.wordwrap(htmlentities($msg),60,"\n",1).'</td>';
+            print "</tr>\n";
           }
 
-          print <<<ENDOFHTML
-              </table>
-            </p>
+          $pos = $end;
+        } while($pos > 0);
+
+        print <<<ENDOFHTML
+            </table>
+          </p>
 ENDOFHTML;
-        }
-        @fclose($file);
       }
       break;
 

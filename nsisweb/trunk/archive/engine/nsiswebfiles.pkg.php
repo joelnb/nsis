@@ -148,11 +148,13 @@ function process_uploaded_files($form_field_name)
         if(is_uploaded_file($_FILES[$form_field_name]['tmp_name'])) {
           $okay_files = 1;
         } else {
-          $nsisweb->record_error("upload failure: file is not an uploaded file");
+          $nsisweb->record_error("upload failure: file is not an uploaded file (file=".$_FILES[$form_field_name].')',__FILE__,__LINE__);
           $_FILES[$form_field_name]['error'] = 4;
         }
+      } else if($error) {
+        $nsisweb->record_error("upload failure: file has error code (error=$error)",__FILE__,__LINE__);
       } else {
-        $nsisweb->record_error("upload failure: file has error code [ $error ]");
+        $nsisweb->record_error("upload failure: PHP version 4.2.0 required for is_uploaded_file()",__FILE__,__LINE__);
       }
     }
   } else if(is_array($_FILES[$form_field_name]['name'])) {
@@ -168,11 +170,13 @@ function process_uploaded_files($form_field_name)
         if($error == 0 && is_uploaded_file($tmp)) {
           $okay_files++;
         } else {
-          $nsisweb->record_error("upload failure: file is not an uploaded file");
+          $nsisweb->record_error("upload failure: file is not an uploaded file (file=$tmp)",__FILE__,__LINE__);
           $_FILES[$form_field_name]['error'][$i] = 4;
         }
+      } else if($error) {
+        $nsisweb->record_error("upload failure: file has error code (error=$error)",__FILE__,__LINE__);
       } else {
-        $nsisweb->record_error("upload failure: file has error code [ $error ]");
+        $nsisweb->record_error("upload failure: PHP version 4.2.0 required for is_uploaded_file()",__FILE__,__LINE__);
       }
     }
   }
@@ -187,11 +191,11 @@ function process_uploaded_files($form_field_name)
             $_FILES[$form_field_name]['type'][$i])) {
             $stored_files++;
           } else {
-            $nsisweb->record_error('upload failure: add_file() failed');
+            $nsisweb->record_error('upload failure: add_file() failed (file='.$_FILES[$form_field_name]['name'][$i].')',__FILE__,__LINE__);
             unlink($uploaded_name);
           }
         } else {
-          $nsisweb->record_error("upload failure: file could not be moved to $uploaded_name");
+          $nsisweb->record_error("upload failure: file could not be moved (oldname=".$_FILES[$form_field_name]['tmp_name'].',newname='.$uploaded_name.')',__FILE__,__LINE__);
         }
       }
     } else {
@@ -201,11 +205,11 @@ function process_uploaded_files($form_field_name)
           $_FILES[$form_field_name]['type'])) {
           $stored_files++;
         } else {
-          $nsisweb->record_error('upload failure: add_file() failed');
+          $nsisweb->record_error('upload failure: add_file() failed (file='.$_FILES[$form_field_name]['name'].')',__FILE__,__LINE__);
           unlink($uploaded_name);
         }
       } else {
-        $nsisweb->record_error("upload failure: file could not be moved to $uploaded_name");
+        $nsisweb->record_error("upload failure: file could not be moved (oldname=".$_FILES[$form_field_name]['tmp_name'].',newname='.$uploaded_name.')',__FILE__,__LINE__);
       }
     }
   }
