@@ -33,7 +33,7 @@
 		<p>Some frequently asked questions</p>
 		</li>
 	<li><b><a href="http://nsis.sourceforge.net/Docs/">Documentation</a></b>
-		<p>Browse the latest NSIS documentation
+		<p>Browse the latest NSIS documentation<br />
     <span class="smalltext">Latest CVS version</span></p>
     </li>
 	<li><b><a href="http://nsis.sourceforge.net/changelog.php">Change Log</a></b>
