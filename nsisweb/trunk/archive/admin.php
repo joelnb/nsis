@@ -16,6 +16,7 @@ if(!$user->is_admin()) {
 		echo '<p>The PHP engine reports:<br><br></p>';
 		phpinfo();
 		$nsisweb->end_page();
+		die();
 	}
 	
 	/* Make sure the session data we print is the most upto date */
@@ -55,10 +56,10 @@ ENDOFHTML;
 		while($record = $nsisweb->get_result_array($result)) {
 			if($i == 0) {
 				$i = 1;
-				$bgcolour = '#eeffee';
+				$bgcolour = '#eeeeee';
 			} else {
 				$i = 0;
-				$bgcolour = '#eeeeee';
+				$bgcolour = '#eeffee';
 			}
 
 			print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
