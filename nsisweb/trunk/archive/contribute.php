@@ -40,7 +40,7 @@ function get_real_size($size) {
 	return $size;
 }
  
-$stage = 0;
+$stage = 1;
 if(strlen($_POST['stage'])>0) {
 	$stage = $_POST['stage'];
 }
@@ -53,21 +53,34 @@ if($stage == 2 && strcmp($_POST['pagetype'],'newpage') != 0 &&
 }
 
 switch($stage) {
-	case 0:
+	case 1:
 		/* --------------------
-		      INTRODUCTION
+		      WIZARD PAGE 1
 		   -------------------- */
 		$nsisweb->start_page('Contribute');
 		print <<<ENDOFHTML
-		<font style="font-family: verdana; font-size: 20pt; color: #000000;">Contribute</font>
-		<p>The next few pages will take you step by step through the process of contributing to the content
-		of this site. Press continue to begin the process:</p>
-		<form name="wizard" method="post" enctype="multipart/form-data" action="contribute.php">
-		<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-		  <input type="hidden" name="stage" value="1">
-		  <a href="javascript:wizard.submit();">Continue >></a>
+		<font style="font-family: verdana; font-size: 20pt; color: #000000;">Contribute: Stage One</font>
+		<p>Firstly you need to decide what type of content you are contributing to the site. Currently you have
+		two choices: (1) you can create a page of content, containing content or containing other pages, or (2) you can
+		con upload files to the archive.<br>
+		<br>
+		I want to contribute:
 		</p>
+		<form name="wizard" method="post" enctype="multipart/form-data" action="contribute.php">
+		  <p style="margin-left:20px;">
+				<input type="radio" name="pagetype" value="newpage" checked>a page of content of my design.<br>
+				<input type="radio" name="pagetype" value="newsection">a new section that can contain other pages.<br>
+				<input type="radio" name="pagetype" value="newfile">one or more files that others can download.<br>
+			</p>
+			<p>
+			When you have made your choice press continue to move on to the next stage:
+			</p>
+			<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+			  <input type="hidden" name="stage" value="2">
+			  <a href="javascript:wizard.submit();">Continue >></a>
+			</p>
 		</form>
+		</p>
 ENDOFHTML;
 		$session = $nsisweb->get_session();	
 		if($session->user_id == ANONYMOUS_USER_ID) {
@@ -84,37 +97,6 @@ ENDOFHTML;
 			can only be edited by you or an administrator.</p>
 ENDOFHTML;
 		}
-		break;
-	case 1:
-		/* --------------------
-		      WIZARD PAGE 1
-		   -------------------- */
-		$nsisweb->start_page('Contribute');
-		print <<<ENDOFHTML
-		<font style="font-family: verdana; font-size: 20pt; color: #000000;">Contribute: Stage One</font>
-		<p>Firstly you need to decide what type of content you are contributing to the site. Currently you have
-		two choices: (1) a page of content that can be about anything you like; or (2) a section page which can be
-		used to contain other pages (and will automatically list those contained pages in a directory listing style).<br>
-		<br>
-		I want to contribute:
-		</p>
-		<form name="wizard" method="post" enctype="multipart/form-data" action="contribute.php">
-		  <p style="margin-left:20px;">
-				<input type="radio" name="pagetype" value="newpage" checked>a page of content of my design.<br>
-				<input type="radio" name="pagetype" value="newsection">a new section that can contain other pages.<br>
-				<input type="radio" name="pagetype" value="newfile">one or more files that others can download.<br>
-			</p>
-			<p>
-			When you have made your choice press continue to move on to the next stage:
-			</p>
-			<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-			  <input type="hidden" name="stage" value="2">
-			  <a href="javascript:wizard.stage.value=0;wizard.submit();"><< Back</a> |
-			  <a href="javascript:wizard.submit();">Continue >></a>
-			</p>
-		</form>
-		</p>
-ENDOFHTML;
 	  break;
 	case 2:
 		/* --------------------
@@ -188,6 +170,11 @@ ENDOFHTML;
 				print <<<ENDOFHTML
 				You must now enter the description of your new section: (255 characters max)<br>
 				<input type="text" style="font-family:courier new;font-size:10pt;" name="content" size="79" maxlength="255" value="$title"><br>
+ENDOFHTML;
+			} else if(strcmp($pagetype,'newsection') == 0) {
+				print <<<ENDOFHTML
+				Enter a description for your new section:<br>
+				<textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="3">$content</textarea>
 ENDOFHTML;
 			}
 			
@@ -290,24 +277,33 @@ ENDOFHTML;
 		<font style="font-family: verdana; font-size: 20pt; color: #000000;">Contribute: Complete</font>
 ENDOFHTML;
 
-		if($result) {
-			$pageid = $nsisweb->get_created_id();
-			if($pageid > 0) {
-				add_to_current_picks($pageid,0);
-				print <<<ENDOFHTML
-				<p>The new page that you have created has been added to your pick list.
-				You should now browse through the archive until you find somewhere that
-				you want to insert your new page. You may find that you do not have
-				permission to insert the page at some locations.<br>
-				<br>
-				Once you have found a section to insert the page in click the insert pages
-				link on the browse page and you will be able to select which pages you wish
-				to insert from your pick list.<br>
-				<br>
-				If you do not insert the page in your current session the new page will be
-				deleted.</p>
+		if($result > 0) {
+			add_to_current_picks($result,0);
+			print <<<ENDOFHTML
+			<p>The new page that you have created has been added to your pick list.
+			You should now browse through the archive until you find somewhere that
+			you want to insert your new page. You may find that you do not have
+			permission to insert the page at some locations.<br>
+			<br>
+			Once you have found a section to insert the page in click the insert pages
+			link on the browse page and you will be able to select which pages you wish
+			to insert from your pick list.<br>
+			<br>
+			If you do not insert the page in your current session the new page will be
+			deleted.</p>
 ENDOFHTML;
-			}
+		} else {
+			$query = $nsisweb->last_query;
+			print <<<ENDOFHTML
+			<p>An error has occured, your page could not be created.<br>
+			<br>
+			The last query executed was:<br>
+			<font style="font-family:courier new;">$query</font><br>
+			<br>
+			Errors that we know of are:<br>
+ENDOFHTML;
+			print_r($nsisweb->errors);
+			print "</p>";
 		}
 
 		$home_link   = $nsisweb->get_home_url();

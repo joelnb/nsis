@@ -124,6 +124,7 @@ function create_templated_page($title,$body)
 	global $nsisweb;
 	$source  = process_templated_content($body);
 	$source  = mysql_escape_string($source);
+	$title   = mysql_escape_string($title);
 	$session = $nsisweb->get_session();
 	$author  = $session->user_id;
 	$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_TEMPLATED.",flags=".PAGEFLAG_ORPHANED.",parentid=0,source='$source',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
@@ -183,8 +184,10 @@ function process_templated_content($content)
 function create_directory_page($title,$description)
 {
 	global $nsisweb;
-	$session = $nsisweb->get_session();
-	$author  = $session->user_id;
+	$session     = $nsisweb->get_session();
+	$author      = $session->user_id;
+	$title       = mysql_escape_string($title);
+	$description = mysql_escape_string($description);
 	$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_DIRECTORY.",flags=".PAGEFLAG_ORPHANED.",parentid=0,source='$description',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
 	return $nsisweb->get_created_id();
 }
@@ -271,17 +274,22 @@ function render_directory_page($title,$author,$date,$desc,$pageid,$items)
 	include(NSISWEB_DIRECTORY_SKELETON);
 }
 
+/* When a page is deleted it is placed on the pick list and the page
+   is orphaned. If it is still there when the session times out or is
+   logged out the pages will be destroyed.
+   
+   If a section is deleted at some point later the pages will be tested
+   and those whose parent have vanished will be orphaned. This is not
+   implemented yet. */
 function delete_page($pageid)
 {
 	global $nsisweb;
 	$session = $nsisweb->get_session();
 	$user    = find_userid($session->user_id);
 	if($pageid > 0 && $user->usertype == USERTYPE_ADMIN) {
-		/* also need to remove links to other pages in the hierarchy */
-		$result = $nsisweb->query("delete from nsisweb_pages where pageid=$pageid");
-		if($result) {
-			return TRUE;
-		}
+		$nsisweb->query("update nsisweb_pages set flags = flags & ".PAGEFLAG_ORPHANED." where pageid=$pageid");
+		add_to_current_picks($pageid,0);
+		return TRUE;
 	}
 	return FALSE;
 }
