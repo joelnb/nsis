@@ -1,7 +1,7 @@
 <?
 include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 
-$nsisweb->start_page('Regenerating Content');
+$nsisweb->start_page('Regenerating Content',FALSE);
 echo '<span style="font-family:verdana;font-size:20pt;color:#000000;">Regenerate Content</span>';
 
 $session = $nsisweb->get_session();

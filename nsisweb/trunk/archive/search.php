@@ -25,7 +25,7 @@ if(strcmp($anon_editor,'CHECKED') != 0)  $anon_editor  = '';
 if(strcmp($has_source,'CHECKED') != 0)   $has_source   = '';
 if(strcmp($exclude_dirs,'CHECKED') != 0) $exclude_dirs = '';
 
-$nsisweb->start_page('Search');
+$nsisweb->start_page('Search',FALSE);
 
 ?>
 <span style="font-family: verdana; font-size: 20pt; color: #000000;">Search</span>

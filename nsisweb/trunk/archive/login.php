@@ -25,7 +25,7 @@ unset($username);
 unset($password);
 
 $create_url = $nsisweb->get_page_url('createaccount');
-$nsisweb->start_page('Login');
+$nsisweb->start_page('Login',FALSE);
 ?>
 <span style="font-family: verdana; font-size: 20pt; color: #000000;">Login</span>
 <p>This page allows you to login to the <b>Archive</b> using your user account. If you do not have a user account you can

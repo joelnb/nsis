@@ -1,6 +1,6 @@
 <?
 include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
-$nsisweb->start_page('Admin');
+$nsisweb->start_page('Admin',FALSE);
 
 echo '<span style="font-family:verdana;font-size:20pt;color:#000000;">NSIS Archive Admin Options</span>';
 

@@ -40,7 +40,7 @@ if(strcmp($_GET['action'],'pick') == 0) {
   }
 }
 
-$nsisweb->start_page('Your Pick List');
+$nsisweb->start_page('Your Pick List',FALSE);
 
 ?>
 <span style="font-family: verdana; font-size: 20pt; color: #000000;">Your Pick List</span>

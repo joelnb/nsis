@@ -42,7 +42,7 @@ if(!$instance->delete()) {
 
 $page = $instance->get_page();
 add_to_current_picks($page->get_pageid(),$page->get_type());
-$nsisweb->start_page('Delete');
+$nsisweb->start_page('Delete',FALSE);
 ?>
 <span style="font-family: verdana; font-size: 20pt; color: #000000;">Delete Page:</span>
 <p>The instance of the page in that section has now been removed.<br><br>Click <b>Go To Section</b> to return to the section that contained the deleted page.</p>
@@ -56,7 +56,7 @@ $nsisweb->end_page();
 function show_delete_error($summary,$message)
 {
   global $nsisweb;
-  $nsisweb->start_page('Delete');
+  $nsisweb->start_page('Delete',FALSE);
   ?>
   <span style="font-family: verdana; font-size: 20pt; color: #000000;">Delete Page: <span color="red"><?= $summary ?></span></span>
   <p><?= $message ?> Click <b>Go Back</b> to return to the page you came from.</p>

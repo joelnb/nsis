@@ -1,7 +1,7 @@
 <?
 include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 
-$nsisweb->start_page('Your Preferences');
+$nsisweb->start_page('Your Preferences',FALSE);
 echo '<span style="font-family:verdana;font-size:20pt;color:#000000;">Your Preferences</span>';
 
 $session = $nsisweb->get_session();

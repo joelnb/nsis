@@ -41,13 +41,13 @@ $pageid = $page->get_pageid();
 
 /* Handle error conditions */
 if(!$instance || !$page->is_okay()) {
-  $nsisweb->start_page('Edit');
+  $nsisweb->start_page('Edit',FALSE);
   $pageid = $instance ? $instance->get_pageid() : $page->get_pageid();
   echo '<b><span style="color:red">Page '.$pageid.' not found!</span></b>';
   $nsisweb->end_page();
   exit;
 } else if($page->get_type() != PAGETYPE_TEMPLATED && $page->get_type() != PAGETYPE_DIRECTORY) {
-  $nsisweb->start_page('Edit');
+  $nsisweb->start_page('Edit',FALSE);
   echo '<b><span style="color:red">Page '.$instance->get_pageid().' cannot be edited!</span></b>';
   $nsisweb->end_page();
   exit;
@@ -55,7 +55,7 @@ if(!$instance || !$page->is_okay()) {
   $session = $nsisweb->get_session();
   $author  = $page->get_authorid();
   if(!$page->can_modify()) {
-    $nsisweb->start_page('Edit');
+    $nsisweb->start_page('Edit',FALSE);
     ?>
     <span style="font-family: verdana; font-size: 20pt; color: #000000;">Edit Page: <span color="red">Access Denied</span></span>
     <p>You do not have the right to edit the page entitled '<?= $page->get_title() ?>'. Click <b>Go Back</b>
@@ -86,7 +86,7 @@ switch($action) {
     break;
 }
 
-$nsisweb->start_page('Edit');
+$nsisweb->start_page('Edit',FALSE);
 ?>
 <span style="font-family: verdana; font-size: 20pt; color: #000000;">Edit Page</span>
 <p>Use the edit controls on this page to edit the page you selected. Click preview

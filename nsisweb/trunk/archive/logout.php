@@ -27,7 +27,7 @@ if(strlen($_POST['method']) > 0) {
       }
       exit;
     } else {
-      $nsisweb->start_page('Logout');
+      $nsisweb->start_page('Logout',FALSE);
       $page = $_GET['page'];
 
       print <<<ENDOFHTML

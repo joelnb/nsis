@@ -66,7 +66,7 @@ class NsisWeb
     $session = $this->get_session();
     return $session->user_id != ANONYMOUS_USER_ID;
   }
-  function start_page($title)
+  function start_page($title,$no_robots = FALSE)
   {
     $this->start_time = $this->get_micro_time();
     global $page_info;
