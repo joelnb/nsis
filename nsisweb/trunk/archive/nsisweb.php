@@ -34,11 +34,13 @@ NSIS users for NSIS users.</p>
   <li><b><a href="<?= $nsisweb->get_page_url('popular') ?>">Most Popular</a></b>
     <ul>See which pages are visited most and which files are downloaded most frequently</ul>
   </li>
-<? if ($nsisweb->get_session()->is_anonymous()) { ?>
-  <li><b><a href="<?= $nsisweb->get_page_url('createaccount') ?>">Your Account</a></b>
-    <ul>Get your free account with us and get the credit for your contributions</ul>
-  </li>
-<?
+<? if ($nsisweb->get_session()->is_anonymous()) {
+	$url = $nsisweb->get_page_url('createaccount');
+	print <<<ENDOFHTML
+			<li><b><a href="$url">Your Account</a></b>
+			  <ul>Get your free account with us and get the credit for your contributions</ul>
+			</li>
+ENDOFHTML;
 }
   
 $nsisweb->end_page(); ?>
