@@ -37,68 +37,63 @@ switch($action) {
 
 function ChooseContributionType()
 {
-  /* Present visitors with a selection of ways that they can contribute to the
-     Archive. */
   global $nsisweb;
   $nsisweb->start_page('Contribute To The Archive',FALSE);
-  print <<<ENDOFHTML
-    <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute To The Archive</span>
-    <p>I want to contribute:</p>
-    <form name="choiceform" method="post" enctype="multipart/form-data" action="contribute.php">
-      <p style="margin-left:20px;">
-        <input type="radio" name="action" value="createpage" checked>a page of content of my design.<br>
-        <input type="radio" name="action" value="createsection">a new section that can contain other pages.<br>
-ENDOFHTML;
-
-  /* Only present the option to upload files to users that have admin
-     rights. */
   $session = $nsisweb->get_session();
   $user    = find_userid($session->user_id);
-  if($user->is_admin()) {
-    echo '<input type="radio" name="action" value="specifyupload">one or more files that others can download.';
-  }
 
-  print <<<ENDOFHTML
-      </p>
-      <p>
-        When you have made your choice press continue to move on to the next stage:
-      </p>
-      <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-        <input type="hidden" name="stage" value="2">
-        <a href="javascript:document.choiceform.submit();">Continue >></a>
-      </p>
-    </form>
-    </p>
-ENDOFHTML;
-
-  print <<<ENDOFHTML
-    <p style="border:solid 2px red;padding:5px;margin-top:20px;margin-bottom:20px;">
-      Please do <b>not </b> post bug reports and patches here. Post both at the
-      <a style="text-decoration:underline;" href="http://sourceforge.net/projects/nsis">
-      SourceForge project page</a>.
-    </p>
-ENDOFHTML;
-
-
-  /* Warn anonymous users that they will not receive credit for their
-     contributions. */
+  /* Anonymous users can't contribute thanks to a jerk that likes to spam. */
   if($user->is_anonymous()) {
     print <<<ENDOFHTML
       <p style="border:solid 2px red;padding:5px;margin-top:20px;margin-bottom:20px;">
-        You are <b>not</b> logged in which means that any contribution you make
-        to the archive will be credited to the anonymous user. If you wish to
-        gain the credit for this contribution you should
+        Anonymous contribution is currently disabled. Please
         <a style="text-decoration:underline;" href="login.php">login now</a>.
         If you do not already have an account here you can
         <a style="text-decoration:underline;" href="createaccount.php">create
-        one for free</a>.<br>
-        <br>
-        Pages created by the anonymous user can be edited by anyone. Pages
-        created when you are logged in however can only be edited by you or an
-        administrator.
+        one for free</a>.
       </p>
 ENDOFHTML;
   }
+  else {
+    /* Present visitors with a selection of ways that they can contribute to the
+       Archive. */
+    print <<<ENDOFHTML
+      <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute To The Archive</span>
+      <p>I want to contribute:</p>
+      <form name="choiceform" method="post" enctype="multipart/form-data" action="contribute.php">
+        <p style="margin-left:20px;">
+          <input type="radio" name="action" value="createpage" checked>a page of content of my design.<br>
+          <input type="radio" name="action" value="createsection">a new section that can contain other pages.<br>
+ENDOFHTML;
+
+    /* Only present the option to upload files to users that have admin
+       rights. */
+    if($user->is_admin()) {
+      echo '<input type="radio" name="action" value="specifyupload">one or more files that others can download.';
+    }
+
+    print <<<ENDOFHTML
+        </p>
+        <p>
+          When you have made your choice press continue to move on to the next stage:
+        </p>
+        <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+          <input type="hidden" name="stage" value="2">
+          <a href="javascript:document.choiceform.submit();">Continue >></a>
+        </p>
+      </form>
+      </p>
+ENDOFHTML;
+
+    print <<<ENDOFHTML
+      <p style="border:solid 2px red;padding:5px;margin-top:20px;margin-bottom:20px;">
+        Please do <b>not </b> post bug reports and patches here. Post both at the
+        <a style="text-decoration:underline;" href="http://sourceforge.net/projects/nsis">
+        SourceForge project page</a>.
+      </p>
+ENDOFHTML;
+  }
+
   $nsisweb->end_page();
 }
 
