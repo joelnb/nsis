@@ -43,27 +43,27 @@ if(!$user->is_admin()) {
   $anoncount = $anons ? $nsisweb->how_many_results($anons) : 0;
 
   print <<<ENDOFHTML
-  <p>Administrator status gives you the right to modify any page stored in the
-  database no  matter who created it, and the right to grant admin rights to
-  other users.</p>
+    <p>Administrator status gives you the right to modify any page stored in the
+    database no  matter who created it, and the right to grant admin rights to
+    other users.</p>
 
-  <span style="font-family:verdana;font-size:15pt;color:#000000;">Web Server Info</span>
-  <p>The time on the web server is $time_web. The time on the database server is
-  $time_db. PHP diagnostics can be viewed <a href="admin.php?action=phpinfo">here</a></p>
-  
-  <span style="font-family:verdana;font-size:15pt;color:#000000;">Connected Sessions</span>
-  <p>The following sessions are currently established: ($usercount registered users and
-  $anoncount guests)<br>
-    <br>
-    <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
-      <tr style="background-color:#eeeeff">
-        <td>&nbsp;<b>ID</b>&nbsp;</td>
-        <td>&nbsp;<b>User</b>&nbsp;</td>
-        <td>&nbsp;<b>Start Time</b>&nbsp;</td>
-        <td>&nbsp;<b>Last Access</b>&nbsp;</td>
-        <td>&nbsp;<b>IP</b>&nbsp;</td>
-        <td>&nbsp;<b>Persist</b>&nbsp;</td>
-      </tr>
+    <span style="font-family:verdana;font-size:15pt;color:#000000;">Web Server Info</span>
+    <p>The time on the web server is $time_web. The time on the database server is
+    $time_db. PHP diagnostics can be viewed <a href="admin.php?action=phpinfo">here</a></p>
+    
+    <span style="font-family:verdana;font-size:15pt;color:#000000;">Connected Sessions</span>
+    <p>The following sessions are currently established: ($usercount registered users and
+    $anoncount guests)<br>
+      <br>
+      <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
+        <tr style="background-color:#eeeeff">
+          <td>&nbsp;<b>ID</b>&nbsp;</td>
+          <td>&nbsp;<b>User</b>&nbsp;</td>
+          <td>&nbsp;<b>Start Time</b>&nbsp;</td>
+          <td>&nbsp;<b>Last Access</b>&nbsp;</td>
+          <td>&nbsp;<b>IP</b>&nbsp;</td>
+          <td>&nbsp;<b>Persist</b>&nbsp;</td>
+        </tr>
 ENDOFHTML;
 
   $i = 0;
@@ -88,7 +88,6 @@ ENDOFHTML;
       print '<td>&nbsp;'.$record['ip'].'&nbsp;</td>';
       print '<td>&nbsp;'.($record['flags'] & SESSIONFLAG_PERSIST ? 'Yes' : 'No').'&nbsp;</td>';
       print "</tr>\n";
-ENDOFHTML;
     }
   }
 
@@ -113,7 +112,6 @@ ENDOFHTML;
       print '<td>&nbsp;'.$record['ip'].'&nbsp;</td>';
       print '<td>&nbsp;N/A&nbsp;</td>';
       print "</tr>\n";
-ENDOFHTML;
     }
   }
 
@@ -121,19 +119,19 @@ ENDOFHTML;
   $usercount = $users ? $nsisweb->how_many_results($users) : 0;
   
   print <<<ENDOFHTML
-    </table>
-  </p>
-  <span style="font-family:verdana;font-size:15pt;color:#000000;">Registered Users</span>
-  <p>The following $usercount users are registered on this site:<br>
-    <br>
-    <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
-      <tr style="background-color:#eeeeff">
-        <td>&nbsp;<b>ID</b>&nbsp;</td>
-        <td>&nbsp;<b>User</b>&nbsp;</td>
-        <td>&nbsp;<b>Created</b>&nbsp;</td>
-        <td>&nbsp;<b>Persistent Login</b>&nbsp;</td>
-        <td>&nbsp;<b>Is Admin</b>&nbsp;</td>
-      </tr>
+      </table>
+    </p>
+    <span style="font-family:verdana;font-size:15pt;color:#000000;">Registered Users</span>
+    <p>The following $usercount users are registered on this site:<br>
+      <br>
+      <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
+        <tr style="background-color:#eeeeff">
+          <td>&nbsp;<b>ID</b>&nbsp;</td>
+          <td>&nbsp;<b>User</b>&nbsp;</td>
+          <td>&nbsp;<b>Created</b>&nbsp;</td>
+          <td>&nbsp;<b>Persistent Login</b>&nbsp;</td>
+          <td>&nbsp;<b>Is Admin</b>&nbsp;</td>
+        </tr>
 ENDOFHTML;
 
   if($usercount > 0) {
@@ -164,20 +162,20 @@ ENDOFHTML;
   }
 
   print <<<ENDOFHTML
-    </table>
-  </p>
+      </table>
+    </p>
 ENDOFHTML;
 
   print <<<ENDOFHTML
-  <span style="font-family:verdana;font-size:15pt;color:#000000;">Browsers By IP</span>
-  <p>This table shows the number of distinct ip addresses associated with each browser type:<br>
-    <br>
-    <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
-      <tr style="background-color:#eeeeff">
-        <td>&nbsp;<b>#</b>&nbsp;</td>
-        <td>&nbsp;<b>User Agent</b>&nbsp;</td>
-        <td>&nbsp;<b>IP Addresses</b>&nbsp;</td>
-      </tr>
+    <span style="font-family:verdana;font-size:15pt;color:#000000;">Browsers By IP</span>
+    <p>This table shows the number of distinct ip addresses associated with each browser type:<br>
+      <br>
+      <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
+        <tr style="background-color:#eeeeff">
+          <td>&nbsp;<b>#</b>&nbsp;</td>
+          <td>&nbsp;<b>User Agent</b>&nbsp;</td>
+          <td>&nbsp;<b>IP Addresses</b>&nbsp;</td>
+        </tr>
 ENDOFHTML;
 
   $result = $nsisweb->query("select count(ip) as cc,user_agent from nsisweb_info group by user_agent order by cc desc,user_agent asc");
@@ -198,13 +196,12 @@ ENDOFHTML;
       print '<td>&nbsp;'.$record['user_agent'].'&nbsp;</td>';
       print '<td>&nbsp;'.$record['cc'].'&nbsp;</td>';
       print "</tr>\n";
-  ENDOFHTML;
     }
   }
 
   print <<<ENDOFHTML
-    </table>
-  </p>
+      </table>
+    </p>
 ENDOFHTML;
 }
 
