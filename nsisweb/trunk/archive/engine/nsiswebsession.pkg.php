@@ -378,7 +378,7 @@ function login($username,$password)
       $persist_sql = ',flags='.SESSIONFLAG_PERSIST;
     }
     
-    $nsisweb->query('update nsisweb_sessions set last_access=NOW(),last_checked=NOW(),userid='.$session->user_id.$persist_sql" where sessionid='$session_id'");
+    $nsisweb->query('update nsisweb_sessions set last_access=NOW(),last_checked=NOW(),userid='.$session->user_id.$persist_sql." where sessionid='$session_id'");
     return $nsisweb->session = $session;
   } else {
     $nsisweb->record_error('Unknown username');
