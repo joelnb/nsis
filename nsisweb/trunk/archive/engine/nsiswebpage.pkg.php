@@ -243,7 +243,7 @@ function find_pageid($pageid)
 function get_top_level_pages()
 {
 	global $nsisweb;
-	$result = $nsisweb->query("select * from nsisweb_pages where parentid=0");
+	$result = $nsisweb->query("select * from nsisweb_pages where parentid=0 and not flags & ".PAGEFLAG_ORPHANED);
 	$pages  = array();
 	if($result && $nsisweb->how_many_results($result) > 0) {
 		while($page = $nsisweb->get_result_array($result)) {
