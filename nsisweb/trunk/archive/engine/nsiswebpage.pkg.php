@@ -231,7 +231,7 @@ function clear_page_parents($pageid)
 function set_page_parent($pageid,$parentid)
 {
 	global $nsisweb;
-	$result = $nsisweb->query("select * from nsisweb_pages where pageid=$pageid and type in (1,2,3)");
+	$result = $nsisweb->query("select * from nsisweb_pages where pageid=$pageid");
 	$count  = $nsisweb->how_many_results($result);
 	if($result && $count > 0) {
 		if($count == 1) {
@@ -304,23 +304,21 @@ function render_directory_page($title,$author,$date,$desc,$pageid,$items)
 	include(NSISWEB_DIRECTORY_SKELETON);
 }
 
-/* When a page is deleted it is placed on the pick list and the page
-   is orphaned. If it is still there when the session times out or is
-   logged out the pages will be destroyed.
-   
-   If a section is deleted at some point later the pages will be tested
-   and those whose parent have vanished will be orphaned. This is not
-   implemented yet. */
+function delete_page_from_section($pageid,$parent)
+{
+	global $nsisweb;
+  if($page = find_pageid($pageid)) {
+    $result = $nsisweb->query("delete from nsisweb_pages where pageid=$pageid and parentid=$parent and type=".PAGETYPE_PARENTLINK);
+	  $result = $nsisweb->query("update nsisweb_pages set flags=flags | ".PAGEFLAG_ORPHANED." where pageid=$pageid and parentid=$parent and type <> ".PAGETYPE_PARENTLINK);
+	  add_to_current_picks($pageid,$page['type']);
+    return TRUE;
+  }
+  return FALSE;
+}
+
 function delete_page($pageid)
 {
 	global $nsisweb;
-	$session = $nsisweb->get_session();
-	$user    = find_userid($session->user_id);
-	if($pageid > 0 && $user->usertype == USERTYPE_ADMIN) {
-		$nsisweb->query("update nsisweb_pages set flags = flags & ".PAGEFLAG_ORPHANED." where pageid=$pageid");
-		add_to_current_picks($pageid,0);
-		return TRUE;
-	}
-	return FALSE;
+  $nsisweb->query("delete from nsisweb_pages where pageid=$pageid");
 }
 ?>

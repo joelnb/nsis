@@ -5,17 +5,40 @@
    
    Defined already are:
      + $nsisweb
-     + $page_info (array)
+     + $page_info
      + $title
 */
+$login_url_ext = '';
+if((isset($page_info) || isset($_GET['page']) || isset($_GET['pageid'])) && isset($_GET['parentid'])) {
+  unset($our_pageid);
+  unset($our_parentid);
+  if(isset($page_info)) {
+    $our_pageid   = (int)$page_info['pageid'];
+    $our_parentid = (int)$page_info['parentid'];
+  } else {
+    $our_parentid = (int)$_GET['parentid'];
+    if(isset($_GET['pageid'])) {
+      $our_pageid = (int)$_GET['pageid'];
+    } else {
+      $page = find_pageid($_GET['page']);
+      if(isset($page['pageid'])) {
+        $our_pageid = $page['pageid'];
+      }
+    }
+  }
+  if(isset($our_pageid) && isset($our_parentid)) {
+    $login_url_ext = '&pageid='.$our_pageid.'&parentid='.$our_parentid;
+  }
+}
 $page_browsing_depth = "You are viewing archive page <b>$title</b>";
 $home_url            = $nsisweb->get_home_url();
-$logged_in_text      = '<i>not logged in</i> ( <a style="color:#0000ff;text-decoration:underline;" href="'.$nsisweb->get_page_url('login').'">login</a> )';
+$picklist_url        = $nsisweb->get_page_url('picklist');
+$logged_in_text      = '<i>not logged in</i> ( <a style="color:#0000ff;text-decoration:underline;" href="'.$nsisweb->get_page_url('login').$login_url_ext.'">login</a> )';
 
 $session = $nsisweb->get_session();
 
 if(!$session->is_anonymous()) {
-	$logged_in_text = $session->get_username().' ( <a style="color:#0000ff;text-decoration:underline;" href="'.$nsisweb->get_page_url('logout').'">logout</a> )';
+	$logged_in_text = $session->get_username().' ( <a style="color:#0000ff;text-decoration:underline;" href="'.$nsisweb->get_page_url('logout').$login_url_ext.'">logout</a> )';
 }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> 
@@ -27,12 +50,12 @@ if(!$session->is_anonymous()) {
 		<link rel="Stylesheet" type="text/css" href="/include/style.css">
 		<link rel="SHORTCUT ICON" href="/favicon.ico">
 	</head> 
-	<body> 
+	<body>
 		<div class="center">
 			<table width="750" cellpadding="0" cellspacing="0" border="0" style="background-color:#F0F0F0">
 				<tr>
 				  <td align="left" style="font-size:8pt;padding-bottom:2px;"><b>Logged in as:</b> <?= $logged_in_text ?></td>
-				  <td align="right" style="font-size:8pt;padding-bottom:2px;">[ <a href="<?= $home_url ?>">Home</a> ]</td>
+				  <td align="right" style="font-size:8pt;padding-bottom:2px;">[ <a href="<?= $picklist_url ?>">Pick List</a> ] [ <a href="<?= $home_url ?>">Home</a> ]</td>
 				</tr>
 			</table>
 			<table width="750" cellpadding="0" cellspacing="0" class="maintable"> 

@@ -13,8 +13,14 @@
 			 + $pageid  : the NSISWeb internal id of the user document
 			 + $nsisweb : the NSISWeb core object instance
 */
-	$edit_link = '<a href="'.$nsisweb->get_page_url('edit').'&pageid='.$pageid.'">edit</a>';
-	$delete_link = '<a href="'.$nsisweb->get_home_url().'/nsisweb.php?action=delete&pageid='.$pageid.'">delete</a>';
+$edit_link = '<a href="'.$nsisweb->get_page_url('edit').'&pageid='.$pageid.'">edit</a>';
+if(isset($_GET['parentid'])) {
+  $delete_link = '<a href="'.$nsisweb->get_page_url('delete').'&pageid='.$pageid.'&parentid='.$_GET['parentid'].'">delete</a>';
+  $up_link     = '<a href="'.$nsisweb->get_page_url($_GET['parentid']).'">up</a>';
+} else {
+  $delete_link = '<font color="#aaaaaa">delete</font>';
+  $up_link = '<a href="'.$nsisweb->get_home_url().'">up</a>';
+}
 ?>
 <!-- user_page.skel.php: begin -->
 <table style="font-family:verdana;font-size:8pt;color:#000000;" width="100%" cellpadding="0" cellspacing="0" border="0">
@@ -33,7 +39,7 @@
 			</font><br>
 		</td>
 		<td align="right" valign="top">
-		  <?= $edit_link ?> | <?= $delete_link ?><br>
+		  <?= $edit_link ?> | <?= $delete_link ?> | <?= $up_link ?><br>
 		</td>
 	</tr>
 </table>

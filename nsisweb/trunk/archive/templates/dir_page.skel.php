@@ -20,11 +20,27 @@
 		all but instead this template has been invoked by the engine for some
 		other nefarious use ;-)
 */
+unset($parentid);
+if(isset($_GET['parentid'])) {
+  $parentid = $_GET['parentid'];
+}
+
+$insert_link = '<a href="'.$nsisweb->get_page_url('picklist').'&parentid='.$pageid.'">insert page</a>';
+$delete_link = '<a href="'.$nsisweb->get_page_url('delete').'&parentid='.$parentid.'&pageid='.$pageid.'">delete page</a>';
+if(isset($parentid)) {
+  $edit_link   = '<a href="'.$nsisweb->get_page_url('edit').'&pageid='.$pageid.'&parentid='.$parentid.'">edit</a>';
+  $delete_link = '<a href="'.$nsisweb->get_page_url('delete').'&pageid='.$pageid.'&parentid='.$parentid.'">delete</a>';
+  $up_link     = '<a href="'.$nsisweb->get_page_url($_GET['parentid']).'">up</a>';
+} else {
+  $edit_link   = '<font color="#aaaaaa">edit</a>';
+  $delete_link = '<font color="#aaaaaa">delete</font>';
+  $up_link = '<a href="'.$nsisweb->get_home_url().'">up</a>';
+}
 ?>
 <!-- dir_page.skel.php: begin -->
 <table style="font-family:verdana;font-size:8pt;color:#000000;" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
 <td align="left"><font style="font-size:20pt;"><?= $title ?></font></td>
-<td align="right" valign="top"><a href="<?= $nsisweb->get_page_url('insert_pick_page') ?>&parentid=<?= $pageid ?>">insert page</a></td>
+<td align="right" valign="top"><?= $edit_link ?> | <?= $delete_link ?> | <?= $insert_link ?> | <?= $up_link ?></td>
 </tr></table>
 <p><i><?= $desc ?></i></p>
 <p>
@@ -32,7 +48,7 @@
     <?
 		if(count($items) > 0) {
 			foreach($items as $item) {
-				print '<li><a href="'.$nsisweb->get_base_url().'/nsisweb.php?page='.$item['pageid'].'">'.$item['title']."</a>\n";
+				print '<li><a href="'.$nsisweb->get_page_url($item['pageid']).'&parentid='.$pageid.'">'.$item['title']."</a>\n";
 				if($item['type'] == PAGETYPE_DIRECTORY) {
 					$children = find_children($item['pageid']);
 					print ' ('.count($children).')';

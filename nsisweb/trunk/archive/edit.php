@@ -2,9 +2,17 @@
 include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 include_once(dirname(__FILE__)."/engine/nsiswebpage.pkg.php");
 
+unset($parentid);
+if(isset($_GET['parentid'])) {
+  $parentid = $_GET['parentid'];
+} else if(isset($_POST['parentid'])) {
+  $parentid = $_POST['parentid'];
+}
+
 $revert = false;
 if(strlen($_POST['action']) > 0) {
 	if(strcmp($_POST['action'],'cancel') == 0) {
+    $_GET['parentid'] = $parentid;
 		$nsisweb->redirect($_POST['pageid']);
 	} else if(strcmp($_POST['action'],'revert') == 0) {
 		$revert = true;
@@ -28,6 +36,13 @@ if($revert || $_GET['pageid'] > 0) {
 		$nsisweb->end_page();
 		exit;
 	}
+  if($page['type'] != PAGETYPE_TEMPLATED &&
+     $page['type'] != PAGETYPE_DIRECTORY) {
+		$nsisweb->start_page('Edit');
+		echo "<b><font color=\"red\">Page $pageid cannot be edited!</font></b>";
+		$nsisweb->end_page();
+		exit;
+  }
 	$title   = $page['title'];
 	$content = $page['source'];
 } else if($_POST['pageid'] > 0) {
@@ -67,7 +82,12 @@ edits, or Cancel to discard them and return to the page you were viewing.</p>
   <p>Edit the title of the page: (255 characters max)<br>
   <input type="text" style="font-family:courier new;font-size:10pt;" name="title" size="79" maxlength="255" value="<?=$title?>"><br>
 	<br>
-	Edit the content of the page. You can use HTML although some tags that could be
+  <? if($page['type'] == PAGETYPE_DIRECTORY) { ?>
+  Edit the description of this directory page.
+  <? } else { ?>
+	Edit the content of the page.
+  <? } ?>
+  You can use HTML although some tags that could be
 	used to attack this site will be removed from your content. Additionally you can
 	enclose text inside a [source] ... [/source] token pair which will cause that
 	text to be syntax highlighted as if the text is PHP code:<br>
@@ -76,6 +96,7 @@ edits, or Cancel to discard them and return to the page you were viewing.</p>
 	<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
 	  <input type="hidden" name="pageid" value="<?=$pageid?>">
 	  <input type="hidden" name="action" value="preview">
+    <input type="hidden" name="parentid" value="<?= $parentid ?>">
   	<a href="Cancel" onclick="wizard.action.value='cancel';wizard.submit();return false;">Cancel</a> |
   	<a href="Revert" onclick="wizard.action.value='revert';wizard.submit();return false;">Revert</a> |
   	<a href="Preview" onclick="wizard.action.value='preview';wizard.submit();return false;">Preview</a> |
@@ -90,7 +111,18 @@ if(strlen($title)>0 || strlen($content)>0) {
 	if($result) {
 		$array     = $nsisweb->get_result_array($result);
 		$processed = process_templated_content($content,TRUE);
-		render_templated_page($title,$session->get_username(),$now,$processed,0);
+    if($page['type'] == PAGETYPE_DIRECTORY) {
+		  $items = array(
+			  array('pageid' => 0,'title' => 'dummy item one'),
+			  array('pageid' => 1,'title' => 'dummy item two'),
+			  array('pageid' => 2,'title' => 'dummy item three'),
+			  array('pageid' => 3,'title' => 'dummy item four'),
+			  array('pageid' => 4,'title' => 'dummy item five')
+		  );
+		  render_directory_page($title,$session->get_username(),$now,$processed,0,$items);
+    } else  {
+		  render_templated_page($title,$session->get_username(),$now,$processed,0);
+    }
 	}
 }
 $nsisweb->end_page();

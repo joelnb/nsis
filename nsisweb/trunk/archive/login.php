@@ -18,7 +18,11 @@ if(strlen($username)>0 && strlen($password)>0) {
 		print '<font style="font-family: verdana; font-size: 20pt; color: #000000;">Login</font>';
 		print '<p><b>Congratulations!</b> You have been successfully logged in.</p>';
 		print '<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">';
-		print '<a href="'.$nsisweb->get_home_url().'">Return To Home >></a>';
+    if(isset($_POST['pageid'])) {
+		  print '<a href="'.$nsisweb->get_page_url($_POST['pageid']).'&pageid='.$_POST['pageid'].'&parentid='.$_POST['parentid'].'">Continue >></a>';
+    } else {
+		  print '<a href="'.$nsisweb->get_home_url().'">Go To Archive Home >></a>';
+    }
 		print '</p>';
 		unset($username);
 		unset($password);
@@ -40,14 +44,18 @@ if($login_failed) {
 }
 ?>
 <form name="wizard" method="post" enctype="multipart/form-data" action="login.php">
-<p align="center">
-Username: <input type="text" style="font-family:courier new;font-size:10pt;" name="username" size="25" maxlength="255"><br>
-<br>
-Password: <input type="password" style="font-family:courier new;font-size:10pt;" name="password" size="25" maxlength="255"><br>
-</p>
-<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-  <a href="javascript:wizard.submit();">Login >></a>
-</p>
+  <? if(isset($_GET['pageid'])) { ?>
+    <input type="hidden" name="pageid" value="<?= $_GET['pageid'] ?>">
+  <? } ?>
+  <input type="hidden" name="parentid" value="<?= $_GET['parentid'] ?>">
+  <p align="center">
+  Username: <input type="text" style="font-family:courier new;font-size:10pt;" name="username" size="25" maxlength="255"><br>
+  <br>
+  Password: <input type="password" style="font-family:courier new;font-size:10pt;" name="password" size="25" maxlength="255"><br>
+  </p>
+  <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+    <a href="javascript:wizard.submit();">Login >></a>
+  </p>
 </form>
 <?
 $nsisweb->end_page();

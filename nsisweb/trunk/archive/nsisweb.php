@@ -2,15 +2,11 @@
   include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 	include_once(dirname(__FILE__)."/engine/nsiswebpage.pkg.php");
   
-  if(isset($_GET['page']) && strlen($_GET['page']) > 0) {
+  if(isset($_GET['page']) && strlen($_GET['page']) >= 0) {
 	  $page = $_GET['page'];
 	  unset($_GET['page']);
   	$nsisweb->redirect($page);
-  } else if(isset($_GET['action'])) {
-		if(strcmp($_GET['action'],'delete') == 0) {
-			delete_page($_GET['pageid']);
-		}
-	}
+  }
 
   unset($_GET['page']);
   $nsisweb->start_page('Home');
