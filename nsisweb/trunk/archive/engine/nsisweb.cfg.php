@@ -4,6 +4,7 @@ define('NSISWEB_WWWROOT','http://nsis.sourceforge.net');
 define('NSISWEB_WWWSUBDIR','/archive');
 define('NSISWEB_FILEROOT','/home/groups/n/ns/nsis/htdocs');
 define('NSISWEB_FILESUBDIR','/archive');
+define('NSISWEB_LOGSDIR','/home/groups/n/ns/nsis/logs');
 define('NSISWEB_MAXSINGLEUPLOAD',10485760);
 define('NSISWEB_USERPAGE_SKELETON',NSISWEB_FILEROOT.NSISWEB_FILESUBDIR.'/templates/user_page.skel.php');
 define('NSISWEB_DIRECTORY_SKELETON',NSISWEB_FILEROOT.NSISWEB_FILESUBDIR.'/templates/dir_page.skel.php');

@@ -48,6 +48,10 @@ class NsisWebSite
   {
     if(strlen($error)>0) {
       $this->errors[] = $error;
+      if ($fp = fopen(NSISWEB_LOGSDIR.'/errors.log', 'a')) {
+        fwrite($fp, date('d-M-Y G:i:s T:').$error.'\n');
+        fclose($fp);
+      }
     }
   }
   function get_session()
@@ -136,7 +140,6 @@ class NsisWebSite
         $result = mysql_query($query);
         if($result != FALSE) {
           return $result;
-        }
       }
     }
     $this->record_error(mysql_error());
