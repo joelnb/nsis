@@ -103,7 +103,7 @@ ENDOFHTML;
 
               print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
               print '<td style="text-align:center;">'.$index++.'</td>';
-              print '<td style="padding:3px;font-family:courier new;">'.wordwrap(htmlentities($msg),78,"\n",1).'</td>';
+              print '<td style="padding:3px;font-family:courier new;">'.wordwrap(htmlentities($msg),60,"\n",1).'</td>';
               print "</tr>\n";
             }
           }
