@@ -57,14 +57,14 @@ class NsisWebUser
   }
 	function get_forumid()
 	{
-		return $this->forumid;
+		return (int)($this->forumid);
 	}
 	function update($email,$forumid)
 	{
 		if($this->user_id != ANONYMOUS_USER_ID && is_int($forumid)) {
 			$email = mysql_escape_string($email);
 			global $nsisweb;
-			$nsisweb->query("update nsisweb_users set email='$email', forumid='$forumid' where userid=".$this->user_id);
+			$nsisweb->query("update nsisweb_users set email='$email', forumid=$forumid where userid=".$this->user_id);
 		}
 	}
 };

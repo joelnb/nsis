@@ -23,10 +23,17 @@ if($session->is_anonymous()) {
   } else if(strcmp($_GET['action'],'dontshowqueries') == 0) {
     $nsisweb->query('update nsisweb_users set flags=flags & '.~USERFLAG_SHOWQUERIES." where userid=$user_id",__FILE__,__LINE__);
   }
-  
   $user     = find_userid($user_id);
   $username = $user->username;
 
+	if(strcmp($_POST['action'],'email') == 0) {
+		$user->update($_POST['email'],$user->get_forumid());
+		$user = find_userid($user_id);
+	} else if(strcmp($_POST['action'],'forumid') == 0) {
+		$user->update($user->get_email(),(int)($_POST['forumid']));
+		$user = find_userid($user_id);
+	}
+  
   $user_created     = 'Unknown';
   $pages_created    = 'Unknown';
   $pages_modified   = 'Unknown';
@@ -65,6 +72,8 @@ if($session->is_anonymous()) {
       <tr style="background-color:#eeeeee"><td align="left" valign="middle">Number of current sessions</td><td align="left"><?= $current_sessions ?></td></tr>
       <tr><td align="left" valign="middle">Do you have admin rights?</td><td align="left"><?= $user->is_admin() ? 'Yes' : 'No' ?></td></tr>
       <tr style="background-color:#eeeeee"><td align="left" valign="middle">Persistent Login</td><td align="left"><?= $user->persists() ? 'Yes' : 'No' ?></td></tr>
+      <tr><td align="left" valign="middle">Your email address</td><td align="left"><?= strlen($user->get_email())>0 ? $user->get_email() : 'Not specified' ?></td></tr>
+      <tr style="background-color:#eeeeee"><td align="left" valign="middle">Your Winamp forum userid</td><td align="left"><?= $user->get_forumid()>0 ? $user->get_forumid() : 'Not specified' ?></td></tr>
     </table>
   </p>
   
@@ -87,7 +96,7 @@ ENDOFHTML;
   }
   
   if($user->is_admin()) {
-    ?><span style="font-family:verdana;font-size:15pt;color:#000000;">Show queries</span><?
+    ?><span style="font-family:verdana;font-size:15pt;color:#000000;">Show Queries</span><?
     $record = $nsisweb->query_one_only('select flags from nsisweb_users where userid='.$user_id,__FILE__,__LINE__);
     if($record) {
       if ($record['flags'] & USERFLAG_SHOWQUERIES) {
@@ -102,6 +111,29 @@ ENDOFHTML;
       }
     }
   }
+	
+	?><span style="font-family:verdana;font-size:15pt;color:#000000;">Your Email Address</span>
+	<p>Use this form to update the email address we have for you in our records. This email address is visible only to administrators and allows them to contact you if necessary.<br>
+	<br>
+	<form name="email" method="post" enctype="multipart/form-data" action="prefs.php" onkeydown="if (event.keyCode == 13) {document.email.submit()}">
+    <input type="hidden" name="action" value="email">
+    <span style="align:middle;">Enter your email address:</span> 
+		<input type="text" style="font-family:courier new;font-size:10pt;" name="email" size="25" maxlength="255" value="<?= $user->get_email() ?>">
+    <input type="submit" value="Update Profile">
+	</form>
+  </p>
+	
+	<span style="font-family:verdana;font-size:15pt;color:#000000;">Your Winamp Forum User ID</span>
+	<p>Use this form to update the Winamp forum user id we have for you in our records. This id allows both users and administrators to contact you via the forum.<br>
+	<br>
+	<form name="forumid" method="post" enctype="multipart/form-data" action="prefs.php" onkeydown="if (event.keyCode == 13) {document.forumid.submit()}">
+    <input type="hidden" name="action" value="forumid">
+    <span style="align:middle;">Enter your forum id:</span> 
+		<input type="integer" style="font-family:courier new;font-size:10pt;" name="forumid" size="25" maxlength="255" value="<?= $user->get_forumid() ?>">
+    <input type="submit" value="Update Profile">
+	</form>
+  </p>
+	<?
 }
 $nsisweb->end_page();
 ?>
