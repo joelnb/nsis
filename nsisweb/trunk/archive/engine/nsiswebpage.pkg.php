@@ -124,10 +124,10 @@ function create_templated_page($title,$body)
 {
 	global $nsisweb;
 	$source  = process_templated_content($body,FALSE);
-	if (!get_magic_quotes_gpc()) {
+	//if (!get_magic_quotes_gpc()) {
 		$source = mysql_escape_string($source);
 		$title  = mysql_escape_string($title);
-	}
+	//}
 	$session = $nsisweb->get_session();
 	$author  = $session->user_id;
 	$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_TEMPLATED.",flags=".PAGEFLAG_ORPHANED.",parentid=0,source='$source',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
@@ -138,10 +138,10 @@ function update_templated_page($pageid,$title,$body)
 {
 	global $nsisweb;
 	$source  = process_templated_content($body,FALSE);
-	if (!get_magic_quotes_gpc()) {
+	//if (!get_magic_quotes_gpc()) {
 		$source = mysql_escape_string($source);
 		$title  = mysql_escape_string($title);
-	}
+	//}
 	$session = $nsisweb->get_session();
 	$author  = $session->user_id;
 	$result = $nsisweb->query("select author from nsisweb_pages where pageid=$pageid");
