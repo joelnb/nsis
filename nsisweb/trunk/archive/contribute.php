@@ -109,7 +109,7 @@ ENDOFHTML;
   $content = stripslashes($_POST['content']);
 
   if(strlen($title)<=0) {
-    $title = "Pick a title for your page.";
+    $title = "Pick a title for your page";
   }
   if(strlen($content)<=0) {
     $content = "Enter your page content here. You can remove the outer paragraph if you wish, it depends on the appearance you want for your page.\n\nYou can put NSIS source code in like this:\n\n[source]; Turn off old selected section\nSectionGetFlags $1 $0\nIntOp $0 $0 & ${SECTION_OFF}\nSectionSetFlags $1 $0\n[/source]\nAnd then carry on again...";
@@ -235,10 +235,10 @@ ENDOFHTML;
   $content = stripslashes($_POST['content']);
 
   if(strlen($title)<=0) {
-    $title = "Pick a title for your page.";
+    $title = "Pick a title for your page";
   }
   if(strlen($content)<=0) {
-    $content = "Pick a title for your section.";
+    $content = "Pick a title for your section";
   }
 
   $safe_content = htmlentities($content);
