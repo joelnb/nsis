@@ -39,6 +39,11 @@ the content of this site can be searched from this page.<br></p>
 </p>
 <?
 if(isset($_POST['keywords']) && strlen($_POST['keywords']) > 0) {
+		print <<<END_OF_HTML
+<br>
+<font style="font-family: verdana; font-size: 20pt; color: #000000;">Results</font>
+<p>
+END_OF_HTML;
 	$keywords = explode(' ',$_POST['keywords']);
 	$query    = "select pageid,author,title from nsisweb_pages where flags & ~".PAGEFLAG_ORPHANED." and (instr(title,'".$keywords[0]."') or instr(source,'".$keywords[0]."')";
 	for($i=1; $i<count($keywords); $i++) {
@@ -46,11 +51,8 @@ if(isset($_POST['keywords']) && strlen($_POST['keywords']) > 0) {
 	}
 	$query .= ")";
 	$result = $nsisweb->query($query);
-	if($result) {
+	if($result && $nsisweb->how_many_results($result) > 0) {
 		print <<<END_OF_HTML
-<br>
-<font style="font-family: verdana; font-size: 20pt; color: #000000;">Results</font>
-<p>
 	<table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
 	  <tr style="background-color:#eeeeff">
 	  	<td align="center"><b>Author</b></td>
@@ -75,8 +77,11 @@ END_OF_HTML;
 			print '</tr>';
 			$i = 1-$i;
 		}
-		print "</table></p>";
+		print "</table>";
+	} else {
+		print "Your search returned no results.";
 	}
+	print "</p>";
 }
 
 $nsisweb->end_page();
