@@ -39,7 +39,7 @@ function initialise_session_table()
 {
 	global $nsisweb;
 	$nsisweb->query("drop table if exists nsisweb_sessions");
-	$nsisweb->query('create table nsisweb_sessions (sessionid varchar(255) not null,userid int unsigned not null default 0,created datetime not null,last_access datetime not null,last_checked datetime not null)');
+	$nsisweb->query('create table nsisweb_sessions (sessionid varchar(255) not null,userid int unsigned not null default 0,created datetime not null,last_access datetime not null,last_checked datetime not null,ip varchar(16))');
 	$nsisweb->query('create table nsisweb_info (at datetime,user_agent varchar(255),ip varchar(255))');
 }
 
@@ -53,6 +53,7 @@ class NsisWebSession
 	var $cached_username; /* do not use this directly, call get_username() instead! */
 	var $looks_like_admin;
 	var $persist;
+	var $ip; /* not necessarily the real ip if a proxy is in the middle */
 
 	function NsisWebSession($param)
 	{
@@ -60,11 +61,12 @@ class NsisWebSession
 		$this->persist          = FALSE;
 		
 		if(is_array($param)) {
-			$this->session_id       = $param['sessionid'];
-			$this->user_id          = $param['userid'];
-			$this->created          = $param['created'];
-			$this->last_access      = $param['last_access'];
-			$this->last_checked     = $param['last_checked'];
+			$this->session_id   = $param['sessionid'];
+			$this->user_id      = $param['userid'];
+			$this->created      = $param['created'];
+			$this->last_access  = $param['last_access'];
+			$this->last_checked = $param['last_checked'];
+			$this->ip = $param['ip'];
 			unset($this->cached_username);
 		} else if(is_string($param)) {
 			$this->from_string($param);
@@ -92,17 +94,22 @@ class NsisWebSession
 		}
 		return $this->cached_username;
 	}
+	function get_ip()
+	{
+		return $this->ip;
+	}
 	function to_string()
 	{
 		/* No I don't trust serialize/unserialize!!! */
 		$string = sprintf(
-			"%3d%3d%3d%3d%3d%3d%3d%3d%s%s%s%s%s%s%s%s",
+			"%3d%3d%3d%3d%3d%3d%3d%3d%3d%s%s%s%s%s%s%s%s%s",
 			strlen($this->session_id),
 			strlen($this->user_id),
 			strlen($this->created),
 			strlen($this->last_access),
 			strlen($this->last_checked),
 			1,1,
+			strlen($this->ip),
 			isset($this->cached_username) ? strlen($this->cached_username) : 0,
 			"$this->session_id",
 			"$this->user_id",
@@ -111,12 +118,13 @@ class NsisWebSession
 			"$this->last_checked",
 			$this->looks_like_admin ? 1 : 0,
 			$this->persist ? 1 : 0,
+			"$this->ip",
 			isset($this->cached_username) ? "$this->cached_username" : "");
 		return $string;
 	}
 	function from_string($string)
 	{
-		$format_string          = "%3d%3d%3d%3d%3d%3d%3d%3d";
+		$format_string          = "%3d%3d%3d%3d%3d%3d%3d%3d%3d";
 		$skipcount              = strlen($format_string);
 		$lengths                = sscanf($string,$format_string);
 		$this->session_id       = substr($string,$skipcount,$lengths[0]); $skipcount += $lengths[0];
@@ -126,9 +134,10 @@ class NsisWebSession
 		$this->last_checked     = substr($string,$skipcount,$lengths[4]); $skipcount += $lengths[4];
 		$this->looks_like_admin = substr($string,$skipcount,$lengths[5]); $skipcount += $lengths[5];
 		$this->persist          = substr($string,$skipcount,$lengths[6]); $skipcount += $lengths[6];
+		$this->ip     = substr($string,$skipcount,$lengths[7]); $skipcount += $lengths[7];
 		
-		if($lengths[7] > 0) {
-			$this->cached_username = substr($string,$skipcount,$lengths[7]);
+		if($lengths[8] > 0) {
+			$this->cached_username = substr($string,$skipcount,$lengths[8]);
 		} else {
 			unset($this->cached_username);
 		}
@@ -212,7 +221,7 @@ function find_my_session()
 			 if(!$user->is_anonymous() && $user->persists()) {
 				$record     = $nsisweb->query_one_only("select NOW()");
 				$now        = $record['NOW()'];
-				$session    = new NsisWebSession(array('sessionid'=>$session_id,'userid'=>$user->user_id,'created'=>$now,'last_access'=>$now,'last_checked'=>time()));
+				$session    = new NsisWebSession(array('sessionid'=>$session_id,'userid'=>$user->user_id,'created'=>$now,'last_access'=>$now,'last_checked'=>time(),'ip'=>$_SERVER['REMOTE_ADDR']));
 				$session->looks_like_admin = ($record['usertype'] == USERTYPE_ADMIN) ? TRUE : FALSE;
 				$session->persist          = TRUE;
 			 }
@@ -228,8 +237,8 @@ function find_my_session()
 		$session_id = construct_session_id();
 		$record     = $nsisweb->query_one_only("select NOW()");
 		$now        = $record['NOW()'];
-		$session    = new NsisWebSession(array('sessionid'=>$session_id,'userid'=>0,'created'=>$now,'last_access'=>$now,'last_checked'=>time()));
-		$nsisweb->query("insert into nsisweb_sessions set sessionid='$session_id',userid=0,created=NOW(),last_access=NOW()");
+		$session    = new NsisWebSession(array('sessionid'=>$session_id,'userid'=>0,'created'=>$now,'last_access'=>$now,'last_checked'=>time(),'ip'=>$_SERVER['REMOTE_ADDR']));
+		$nsisweb->query("insert into nsisweb_sessions set sessionid='$session_id',userid=0,created=NOW(),last_access=NOW(),ip='".$_SERVER['REMOTE_ADDR']."'");
 		$nsisweb->query("insert into nsisweb_info set at=NOW(),user_agent='".$_SERVER['HTTP_USER_AGENT']."',ip='".$_SERVER['REMOTE_ADDR']."'");
 		setcookie(COOKIE_NAME,$session_id,time()+86400,"/","",0);
   }
@@ -263,7 +272,7 @@ function end_session()
 	} else if(isset($_GET[COOKIE_NAME])) {
 		$session_id = $_GET[COOKIE_NAME];
 	}
-
+	
 	if($session_id != 0) {
 		$nsisweb->query("delete from nsisweb_sessions where sessionid='$session_id'");
 		$nsisweb->query("delete from nsisweb_picks where sessionid='$session_id'");

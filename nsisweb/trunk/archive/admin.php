@@ -46,11 +46,12 @@ if(!$user->is_admin()) {
 	    	<td>&nbsp;<b>User</b>&nbsp;</td>
 	    	<td>&nbsp;<b>Start Time</b>&nbsp;</td>
 	    	<td>&nbsp;<b>Last Access</b>&nbsp;</td>
+	    	<td>&nbsp;<b>IP</b>&nbsp;</td>
 	    </tr>
 ENDOFHTML;
 
 	$i = 0;
-	$result = $nsisweb->query("select sessionid,a.userid,a.created,last_access,username from nsisweb_sessions as a,nsisweb_users as b where a.userid=b.userid");
+	$result = $nsisweb->query("select sessionid,a.userid,a.created,last_access,username,ip from nsisweb_sessions as a,nsisweb_users as b where a.userid=b.userid");
 	if($result && $nsisweb->how_many_results($result) > 0) {
 		while($record = $nsisweb->get_result_array($result)) {
 			if($i == 0) {
@@ -66,12 +67,13 @@ ENDOFHTML;
 			print '<td>&nbsp;'.$record['username'].'&nbsp;</td>';
 			print '<td>&nbsp;'.$record['created'].'&nbsp;</td>';
 			print '<td>&nbsp;'.$record['last_access'].'&nbsp;</td>';
+			print '<td>&nbsp;'.$record['ip'].'&nbsp;</td>';
 			print "</tr>\n";
 ENDOFHTML;
 		}
 	}
 
-	$result = $nsisweb->query("select sessionid,userid,created,last_access from nsisweb_sessions where userid=0");
+	$result = $nsisweb->query("select sessionid,userid,created,last_access,ip from nsisweb_sessions where userid=0");
 	if($result && $nsisweb->how_many_results($result) > 0) {
 		while($record = $nsisweb->get_result_array($result)) {
 			if($i == 0) {
@@ -82,12 +84,12 @@ ENDOFHTML;
 				$bgcolour = '#eeeeee';
 			}
 
-			print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
-			print '<td>&nbsp;'.$record['sessionid'].'&nbsp;</td>';
+			print '<tr style="background-color:'.$bgcolour.';font-size:8pt;" title="Session ID: '.$record['sessionid'].'">';
 			print '<td>&nbsp;0&nbsp;</td>';
 			print '<td>&nbsp;Anonymous&nbsp;</td>';
 			print '<td>&nbsp;'.$record['created'].'&nbsp;</td>';
 			print '<td>&nbsp;'.$record['last_access'].'&nbsp;</td>';
+			print '<td>&nbsp;'.$record['ip'].'&nbsp;</td>';
 			print "</tr>\n";
 ENDOFHTML;
 		}
