@@ -188,7 +188,7 @@ function find_my_session()
       if(!$session->persists() && (time()-$session->last_checked) > TIMEOUT_CHECK_FREQUENCY) {
         timeout_sessions();
         if($session_id != NO_SESSION) {
-          $nsisweb->query("update nsisweb_sessions set last_checked=NOW() where sessionid='$session_id'",__FILE__,__LINE__);
+          $nsisweb->query("update nsisweb_sessions set last_checked=NOW() where sessionid='$session_id'",__FILE__,__LINE__,0);
           $record = $nsisweb->query_one_only("select * from nsisweb_sessions where sessionid='$session_id'",__FILE__,__LINE__);
           if($record) {
             $session = new NsisWebSession($record);

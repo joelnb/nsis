@@ -236,7 +236,7 @@ class NsisWebPage
   {
     global $nsisweb;
     if($this->get_pageid() > 0) {
-      $nsisweb->query('update nsisweb_pages set views=views+1 where pageid='.$this->get_pageid(),__FILE__,__LINE__);
+      $nsisweb->query('update nsisweb_pages set views=views+1 where pageid='.$this->get_pageid(),__FILE__,__LINE__,0);
     }
   }
   function can_modify()

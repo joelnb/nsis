@@ -142,7 +142,7 @@ class NsisWeb
   {
     return $this->get_page_url($this->get_last_history_page()).'&instances='.urlencode($this->get_instance_history(-2));
   }
-  function query($query,$file='Unknown',$line='Unknown')
+  function query($query,$file='Unknown',$line='Unknown',$dolog=1)
   {
     unset($this->$last_query);
     if($link = mysql_pconnect(NSISWEB_MYSQL_HOST,NSISWEB_MYSQL_USER,NSISWEB_MYSQL_PASSWORD)) {
@@ -171,10 +171,12 @@ class NsisWeb
           } else {
             $user = $ip = 'unknown';
           }
-          $logline = "modification detected: user=$user ip=$ip query=$query";
-          if($fp = fopen(NSISWEB_LOGSDIR.'/dbmods.log', 'a')) {
-            fwrite($fp,"#dbmod#".basename($file)."#$line#".date('d-M-Y G:i:s T').'#'.$_SERVER['REQUEST_URI'].'#'.$logline."\n");
-            fclose($fp);
+          if ($dolog) {
+            $logline = "modification detected: user=$user ip=$ip query=$query";
+            if($fp = fopen(NSISWEB_LOGSDIR.'/dbmods.log', 'a')) {
+              fwrite($fp,"#dbmod#".basename($file)."#$line#".date('d-M-Y G:i:s T').'#'.$_SERVER['REQUEST_URI'].'#'.$logline."\n");
+              fclose($fp);
+            }
           }
         }
           
