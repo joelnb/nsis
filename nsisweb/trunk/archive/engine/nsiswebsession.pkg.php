@@ -189,6 +189,8 @@ function end_session()
 	setcookie(COOKIE_NAME,"",time()-86400,"/","",0);
 	unset($_GET[COOKIE_NAME]);
 
+	@session_start();
+	$_SESSION = array();
 	@session_unset();
 	@session_destroy();
 }
@@ -207,15 +209,15 @@ function login($username,$password)
 			if($result) {
 				setcookie(COOKIE_NAME,$session_id,time()+86400,"/","",0);
 				$session = new NsisWebSession(array('sessionid'=>$session_id,'userid'=>$user_id));
-				
+
 				/* Update the cached username in the session object */
   			$session->get_username();
-				
+
 				session_save_path(NSISWEB_SESSION_DIR);
   			session_start();
 				$_SESSION['session'] = base64_encode(serialize($session));
 				$_SESSION['id']      = md5($session_id+NSISWEB_MAGIC_NUMBER);
-				
+
 				return $nsisweb->session = $session;
 			} else {
 				$nsisweb->record_error(mysql_error());
