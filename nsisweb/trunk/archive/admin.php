@@ -191,7 +191,10 @@ ENDOFHTML;
 ENDOFHTML;
 
   /* There must be a way to do this with SQL and joins */
-	$result = $nsisweb->query("select user_agent from nsisweb_info group by user_agent,ip order by ip desc");
+  $agents[] = array();
+  $counts[] = array();
+  
+	$result = $nsisweb->query("select user_agent from nsisweb_info group by user_agent,ip order by user_agent desc");
 	if($result && $nsisweb->how_many_results($result) > 0) {
 		$i          = 0;
 		$index      = 1;
@@ -205,20 +208,8 @@ ENDOFHTML;
 				$count++;
 			} else {
 				if(!$first) {
-					if($i == 0) {
-						$i = 1;
-						$bgcolour = '#eeffee';
-					} else {
-						$i = 0;
-						$bgcolour = '#eeeeee';
-					}
-
-					print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
-					print '<td>&nbsp;'.$index++.'&nbsp;</td>';
-					print '<td>&nbsp;'.$last_agent.'&nbsp;</td>';
-					print '<td>&nbsp;'.$count.'&nbsp;</td>';
-					print "</tr>\n";
-ENDOFHTML;
+					$agents[] = $this_agent;
+					$counts[] = $count;
 				}
 				$last_agent = $this_agent;
 				$count      = 1;
@@ -228,20 +219,30 @@ ENDOFHTML;
 	}
 
 	if(!$first) {
-		if($i == 0) {
-			$i = 1;
-			$bgcolour = '#eeffee';
-		} else {
-			$i = 0;
-			$bgcolour = '#eeeeee';
-		}
+		$agents[] = $this_agent;
+		$counts[] = $count;
+	}
+	
+	$count = count($stats);
+	if($count > 0) {
+		array_multisort($agents,SORT_DESC,$counts);
 
-		print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
-		print '<td>&nbsp;'.$index++.'&nbsp;</td>';
-		print '<td>&nbsp;'.$last_agent.'&nbsp;</td>';
-		print '<td>&nbsp;'.$count.'&nbsp;</td>';
-		print "</tr>\n";
-ENDOFHTML;
+		for($i=0; $i<$count; $i++) {
+			if($i == 0) {
+				$i = 1;
+				$bgcolour = '#eeffee';
+			} else {
+				$i = 0;
+				$bgcolour = '#eeeeee';
+			}
+
+			print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
+			print '<td>&nbsp;'.$index++.'&nbsp;</td>';
+			print '<td>&nbsp;'.$agents[i].'&nbsp;</td>';
+			print '<td>&nbsp;'.$counts[i].'&nbsp;</td>';
+			print "</tr>\n";
+	ENDOFHTML;
+		}
 	}
 		
 	print <<<ENDOFHTML
