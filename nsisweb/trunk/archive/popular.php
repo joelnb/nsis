@@ -14,7 +14,7 @@ $nsisweb->start_page('Most Popular');
       <th align="center"><b>&nbsp;Views&nbsp;</b></th>
     </tr>
 <?
-$result = $nsisweb->query("select title,views,pageid from nsisweb_pages where views>0 and type<>'.PAGETYPE_DIRECTORY.' order by views desc");
+$result = $nsisweb->query('select title,views,pageid from nsisweb_pages where views>0 and type<>'.PAGETYPE_DIRECTORY.' order by views desc');
 if($result) {
 	$count = $nsisweb->how_many_results($result);
 	$rank  = 1;
