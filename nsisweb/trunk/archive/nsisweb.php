@@ -10,10 +10,32 @@
 
   unset($_GET['page']);
   $nsisweb->start_page('Home');
+  
+  $okay_count = 0;
+  
+  $result = $nsisweb->query("select count(*) from nsisweb_users");
+  if($result && $nsisweb->how_many_results($result) == 1) {
+	  $record = $nsisweb->get_result_array($result);
+	  $count  = $record['count(*)'];
+  	$users_text = $count.' registered '.($count == 1 ? "user" : "users");
+  	$okay_count++;
+  }
+  
+  $result = $nsisweb->query("select count(*) from nsisweb_pages where type=".PAGETYPE_TEMPLATED." and flags & ".PAGEFLAG_ORPHANED." = 0");
+  if($result && $nsisweb->how_many_results($result) == 1) {
+	  $record = $nsisweb->get_result_array($result);
+	  $count  = $record['count(*)'];
+  	$pages_text = $count.' '.($count == 1 ? "page" : "pages");
+  	$okay_count++;
+  }
 ?>
 <font style="font-family: verdana; font-size: 20pt; color: #000000;">Archive Home</font>
 <p>Welcome to the NSIS Archives, a repository of NSIS related information and downloads maintained by
-NSIS users for NSIS users.</p>
+NSIS users for NSIS users.
+<? if($okay_count == 2) { ?>
+The Archive currently contains <?= $pages_text ?> and has <?= $users_text ?>.
+<? } ?>
+</p>
 <ul>
   <li><b><a href="<?= $nsisweb->get_page_url('welcome') ?>">Welcome</a></b>
   	<ul>General information about the NSIS Archive</ul>
