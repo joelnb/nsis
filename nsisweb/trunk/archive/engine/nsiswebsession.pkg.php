@@ -155,7 +155,11 @@ function find_my_session()
   /* Update the cached username in the session object */
   $session->get_username();
 
-  /* Store the session data in the php session file */  
+  /* Store the session data in the php session file, for some reason on the
+     SourceForge php installation I have to unset here first, otherwise
+     instead of a base64 encoded stream I end up with a pure object!! */
+  unset($_SESSION['session']);
+  unset($_SESSION['id']);
 	$_SESSION['session'] = base64_encode(serialize($session));
 	$_SESSION['id']      = md5($session_id+NSISWEB_MAGIC_NUMBER);
 	return $nsisweb->session = $session;
