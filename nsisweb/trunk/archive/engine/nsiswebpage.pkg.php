@@ -182,7 +182,7 @@ class NsisWebPage
   function regenerate()
   {
     global $nsisweb;
-    $ppsource = preprocess($this->get_content(),$this->get_pageid());
+    $ppsource = mysql_escape_string(preprocess($this->get_content(),$this->get_pageid()));
     $result = $nsisweb->query("update nsisweb_pages set ppsource='$ppsource' where pageid=".$this->get_pageid());
   }
 
