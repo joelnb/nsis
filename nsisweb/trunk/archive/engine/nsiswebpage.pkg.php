@@ -294,6 +294,7 @@ function colour_source($string){
 function render_templated_page($title,$author,$date,$source,$pageid)
 {
 	global $nsisweb;
+	$source = colour_source($source);
 	include(NSISWEB_USERPAGE_SKELETON);
 }
 

@@ -1,9 +1,13 @@
 <?
-include_once("/home/groups/n/ns/nsis/nsisweb.cfg.php");
-define('NSISWEB_WWWROOT','http://nsis.sourceforge.net');
+define('NSISWEB_WWWROOT','http://127.0.0.1');
 define('NSISWEB_WWWSUBDIR','/archive');
-define('NSISWEB_FILEROOT','/home/groups/n/ns/nsis/htdocs');
+define('NSISWEB_FILEROOT','e:/src/sunjammer.net');
 define('NSISWEB_FILESUBDIR','/archive');
+define('NSISWEB_MYSQL_HOST','localhost');
+define('NSISWEB_MYSQL_USER','x');
+define('NSISWEB_MYSQL_PASSWORD','b735re');
+define('NSISWEB_OWNDB',TRUE);
+define('NSISWEB_DB','nsisweb');
 define('NSISWEB_MAXSINGLEUPLOAD',10485760);
 define('NSISWEB_USERPAGE_SKELETON',NSISWEB_FILEROOT.NSISWEB_FILESUBDIR.'/templates/user_page.skel.php');
 define('NSISWEB_DIRECTORY_SKELETON',NSISWEB_FILEROOT.NSISWEB_FILESUBDIR.'/templates/dir_page.skel.php');
