@@ -53,12 +53,12 @@ class NsisWeb
   {
     if(strlen($error)>0) {
       $this->errors[] = $error;
-      if ($fp = fopen(NSISWEB_LOGSDIR.'/errors.log', 'a')) {
+      /*if ($fp = fopen(NSISWEB_LOGSDIR.'/errors.log', 'a')) {
         /* #error# acts as a dectectable start point of an error message and is
-           not likely to turn up in the logs. */
+           not likely to turn up in the logs. * /
         fwrite($fp,"#error#".basename($file)."#$line#".date('d-M-Y G:i:s T').'#'.$_SERVER['REQUEST_URI'].'#'.$error."\n");
         fclose($fp);
-      }
+      }*/
     }
   }
   function reset_instance_history()
@@ -171,13 +171,13 @@ class NsisWeb
           } else {
             $user = $ip = 'unknown';
           }
-          if ($dolog) {
+          /*if ($dolog) {
             $logline = "modification detected: user=$user ip=$ip query=$query";
             if($fp = fopen(NSISWEB_LOGSDIR.'/dbmods.log', 'a')) {
               fwrite($fp,"#dbmod#".basename($file)."#$line#".date('d-M-Y G:i:s T').'#'.$_SERVER['REQUEST_URI'].'#'.$logline."\n");
               fclose($fp);
             }
-          }
+          }*/
         }
           
         if($result != FALSE) {

@@ -386,6 +386,6 @@ function timeout_sessions()
 function track_user_agent()
 {
   global $nsisweb;
-  $nsisweb->query("insert into nsisweb_info set at=NOW(),user_agent='".$_SERVER['HTTP_USER_AGENT']."',ip='".$_SERVER['REMOTE_ADDR']."'",__FILE__,__LINE__);
+  //$nsisweb->query("insert into nsisweb_info set at=NOW(),user_agent='".$_SERVER['HTTP_USER_AGENT']."',ip='".$_SERVER['REMOTE_ADDR']."'",__FILE__,__LINE__);
 }
 ?>
