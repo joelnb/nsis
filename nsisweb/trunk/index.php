@@ -8,10 +8,7 @@
 <? IncludePageHeader("Nullsoft (SuperPiMP|Scriptable) Install System"); ?>
 <p class="text">NSIS tries to be a scriptable win32 installer/uninstaller system that doesn't suck and isn't huge.</p> 
 <ul> 
-	<li class="text"><b><a href="http://www.nullsoft.com/free/nsis/">Official Home page</a></b> 
-		<ul>
-			General information about NSIS
-		</ul> 
+	<li class="text"><b><a href="http://www.nullsoft.com/free/nsis/" title="General information about NSIS">Official Home Page</a></b></li>
 	<li class="text"><b><a href="http://sourceforge.net/projects/nsis/">Project page</a></b> 
 		<ul>
 			Latest development info and downloads
