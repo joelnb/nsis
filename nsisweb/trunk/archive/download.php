@@ -21,6 +21,7 @@ user that contributed the file to the archive.</p>
 <br>
 <center>
   <table style="border-style:none;font-size:10pt;" cellpadding="2" cellspacing="0">
+    <tr style="background-color:#ffaa00;font-size:12pt;"><td colspan="3"><b>Downloads are currently down. Normal service <i>should</i> be resumed by 18:00 GMT 07/05/2003.</b></td></tr>
 <?
 $result = $nsisweb->query("select * from nsisweb_files",__FILE__,__LINE__);
 if($result) {
