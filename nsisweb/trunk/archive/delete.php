@@ -25,8 +25,7 @@ $user    = find_userid($session->user_id);
 if($instance->get_parentid() == 0 && !$user->is_admin()) {
   show_delete_error('Access Denied','Only an administrator can modify the contents of the root section!');
 } else if($instance->get_parentid() != 0) {
-  $directory      = new NsisWebInstance($instance->get_parentid());
-  $directory_page = $directory->get_page();
+  $directory_page = new NsisWebPage($instance->get_parentid());
   $author         = $directory_page->get_editorid();
 
   if(!$directory_page->can_modify()) {
