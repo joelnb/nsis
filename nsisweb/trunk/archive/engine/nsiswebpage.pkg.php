@@ -278,11 +278,16 @@ class NsisWebPage
     
     /* Use a join to the nsisweb_pages table to return the full pages. */ 
     global $nsisweb;
-    $record = $nsisweb->query_one_only('select count(*) from nsisweb_hierarchy as a,nsisweb_pages as b where a.parentid='.$parentid.' and b.pageid=a.pageid',__FILE__,__LINE__);
-    if($record) {
-      return $record['count(*)'];
-    }
-    return 0;
+    $child_pages    = 0;
+    $child_sections = 0;
+
+    $record = $nsisweb->query_one_only('select count(*) from nsisweb_hierarchy as a,nsisweb_pages as b where type='.PAGETYPE_TEMPLATED.' and a.parentid='.$parentid.' and b.pageid=a.pageid',__FILE__,__LINE__);
+    if($record) $child_pages = $record['count(*)'];
+
+    $record = $nsisweb->query_one_only('select count(*) from nsisweb_hierarchy as a,nsisweb_pages as b where type='.PAGETYPE_DIRECTORY.' and a.parentid='.$parentid.' and b.pageid=a.pageid',__FILE__,__LINE__);
+    if($record) $child_sections = $record['count(*)'];
+
+    return array($child_pages,$child_sections);
   }
 };
 
