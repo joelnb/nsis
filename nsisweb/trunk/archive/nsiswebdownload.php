@@ -7,12 +7,15 @@ if(strlen($_GET['file']) > 0) {
 	$result = $storage->exists_file($_GET['file']);
 	if($result) {
 		$array = $nsisweb->get_result_array($result);
-		header("Content-type: ".$array['type']);
-		header("Content-Disposition: attachment; filename=".$array['filename']);
-		if(@readfile($storage->get_file_path($array['filename']))) {
-		  exit;
-    } else {
-      $storage->remove_file($_GET['file']);
+    $path  = $storage->get_file_path($array['filename']);
+    if(@file_exists($path)) {
+		  header("Content-type: ".$array['type']);
+		  header("Content-Disposition: attachment; filename=".$array['filename']);
+		  if(@readfile($path)) {
+		    exit;
+      } else {
+        $storage->remove_file($_GET['file']);
+      }
     }
 	}
 }
