@@ -9,6 +9,8 @@ function get_image($img,$tooltip)
 }
 
 $session = $nsisweb->get_session();
+$page = $this->get_page();
+$page_instances = 0;
 
 switch($view_mode) {
   case VIEWMODE_NOBUTTONS:
@@ -19,15 +21,20 @@ switch($view_mode) {
     $insert_link = get_image('paste','This page is in view only mode and therefore pages cannot be pasted into it');
     break;
   case VIEWMODE_DETACHED:
-    $edit_link   = '<a href="edit.php?pageid='.$this->get_pageid().'&instances='.$nsisweb->get_instance_history(0).'">'.get_image('edit2','Edit this page').'</a>';
-    $pick_link   = '<a href="picklist.php?action=pick&instanceid='.$this->get_instanceid().'">'.get_image('copy2','Add this page to your pick list').'</a>';
-    $delete_link = get_image('cut','You are viewing this page without reference to a parent page and so it cannot be removed as a child of that parent');
-    $up_link     = get_image('up','You are viewing this page without reference to a parent page and so you cannot move up to the parent');
-
-    if($this->get_instanceid() == 0) {
+    $page_instances = $page->get_instances();
+    if(count($page_instances) == 1) {
+	    $delete_link = '<a href="delete.php?instanceid='.$page_instances[0]->get_instanceid().'">'.get_image('cut2','Remove this page instance from the Archive').'</a>';
+	    $up_link     = '<a href="viewpage.php?pageid='.$page_instances[0]->get_parentid().'">'.get_image('up2','View the parent of this page').'</a>';
+      $pick_link   = '<a href="picklist.php?action=pick&instanceid='.$page_instances[0]->get_instanceid().'">'.get_image('copy2','Add this page to your pick list').'</a>';
+      $edit_link   = '<a href="edit.php?pageid='.$page->get_pageid().'">'.get_image('edit2','Edit this page').'</a>';
+    } else if($this->get_instanceid() == 0) {
+	    $delete_link = get_image('cut','This page cannot be deleted');
+	    $up_link     = get_image('up','This page has no parent');
       $pick_link   = get_image('copy','This page cannot be added to your pick list');
       $edit_link   = get_image('edit','This page cannot be edited');
     } else {
+	    $delete_link = get_image('cut','You are viewing this page without reference to a parent page and so it cannot be removed as a child of that parent');
+	    $up_link     = get_image('up','You are viewing this page without reference to a parent page and so you cannot move up to the parent');
       $pick_link   = '<a href="picklist.php?action=pick&instanceid='.$this->get_instanceid().'">'.get_image('copy2','Add this page to your pick list').'</a>';
       $edit_link   = '<a href="edit.php?pageid='.$this->get_pageid().'&instances='.$nsisweb->get_instance_history(0).'">'.get_image('edit2','Edit this page').'</a>';
     }
@@ -98,7 +105,7 @@ if(strlen($instances)>0) {
   $history = 'Navigation: <span style="color:#888888">You are viewing the top level of the Archive</span>';
 }
 
-if($page = $this->get_page()) {
+if($page) {
 ?>
 <span style="font-size:8pt;"><?= $history ?></span>
 <hr style="color:#eeeeee">
