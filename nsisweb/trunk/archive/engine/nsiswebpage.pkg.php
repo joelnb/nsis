@@ -228,7 +228,7 @@ function set_page_parent($pageid,$parentid)
 {
 	global $nsisweb;
 	$result = $nsisweb->query("select count(*) from nsisweb_pages where pageid=$pageid");
-	if($result && $record = $nsisweb->get_result_array($result) && $record['count(*)'] > 0) {
+	if($result && $record = $nsisweb->get_result_array($result)) {
 		if($record['count(*)'] == 1) {
 			$page = $nsisweb->get_result_array($result);
 			if($page['flags'] & PAGEFLAG_ORPHANED) {
