@@ -23,8 +23,8 @@ if(!isset($_GET['userid'])) {
 		$record = $nsisweb->query_one_only("select created from nsisweb_users where userid=$user_id",__FILE__,__LINE__);
 		if($record) $user_created = $record['created'];
 	
-		$record = $nsisweb->query_one_only("select count(*) from nsisweb_pages where author=$user_id",__FILE__,__LINE__);
-		if($record) $pages_created = $record['count(*)'];
+		$pages_result = $nsisweb->query("select title,created,pageid from nsisweb_pages where author=$user_id order by created desc",__FILE__,__LINE__);
+		if($pages_result) $pages_created = $nsisweb->how_many_results($pages_result);
 	
 		$record = $nsisweb->query_one_only("select count(*) from nsisweb_pages where author<>$user_id and last_author=$user_id",__FILE__,__LINE__);
 		if($record) $pages_modified = $record['count(*)'];
@@ -67,6 +67,28 @@ if(!isset($_GET['userid'])) {
 		?>
 		</p>
 		<?
+		if($pages_created > 0) {
+		?>
+		<p style="margin-top:20px;">
+		  Pages created by this user :-<br>
+			<table width="80%" style="border-style:solid;border-color:black;border-width:1px;" cellpadding="2" cellspacing="1">
+				<tr style="background-color:#eeeeee"><td align="left" valign="middle">Page Title</td><td align="left">Created On</td><td align="left">Links</td></tr>
+				<?
+				  $toggle = 1;
+				  while($record = $nsisweb->get_result_array($pages_result)) {
+					  if($toggle) $bgcolour = '#ffffff'; else $bgcolour = '#eeeeee';
+						print '<tr style="background-color:'.$bgcolour.'">';
+						print '<td align="left" valign="middle">'.$record['title'].'</td>';
+						print '<td align="left" valign="middle">'.$record['created'].'</td>';
+						print '<td align="left" valign="middle"><a href="viewpage.php?pageid='.$record['pageid'].'" target="_blank">view</a></td>';
+						print '</tr>';
+					  $toggle = 1-$toggle;
+				  }
+				?>
+			</table>
+		</p>
+		<?
+		}
 	}
 }
 $nsisweb->end_page();
