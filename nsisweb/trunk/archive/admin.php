@@ -12,15 +12,29 @@ if(!$user->is_admin()) {
 } else {
 	if(strcmp($_GET['action'],'grant') == 0 && $_GET['userid'] > 0) {
 		$nsisweb->query('update nsisweb_users set usertype='.USERTYPE_ADMIN.' where userid='.$_GET['userid']);
+	} else if(strcmp($_GET['action'],'phpinfo') == 0) {
+		echo '<p>The PHP engine reports:<br><br></p>';
+		phpinfo();
+		$nsisweb->end_page();
 	}
 	
 	/* Make sure the session data we print is the most upto date */
 	timeout_sessions();
 	
+	$time_web = date('Y-m-d H:i:s',time());
+	
+	$time_db  = 'unknown';
+	$record   = $nsisweb->query_one_only("select NOW()");
+	if($record)	$time_db = $record['NOW()'];
+
 	print <<<ENDOFHTML
 	<p>Administrator status gives you the right to modify any page stored in the
 	database no	matter who created it, and the right to grant admin rights to
 	other users.</p>
+	
+	<font style="font-family:verdana;font-size:15pt;color:#000000;">Web Server Info</font>
+	<p>The time on the web server is $time_web. The time on the database server is
+	$time_db. PHP diagnostics can be viewed	<a href="admin.php?action=phpinfo">here</a></p>
 	
 	<font style="font-family:verdana;font-size:15pt;color:#000000;">Connected Sessions</font>
 	<p>The following sessions are currently established:<br>
