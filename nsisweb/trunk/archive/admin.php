@@ -226,7 +226,7 @@ ENDOFHTML;
 		array_multisort($agents,SORT_DESC,$counts);
 
 		$index = 1;
-		for($i=0; $i<$count; $i++) {
+		for($index=1; $i<=$count; $index++) {
 			if($i == 0) {
 				$i = 1;
 				$bgcolour = '#eeffee';
@@ -236,9 +236,9 @@ ENDOFHTML;
 			}
 
 			print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
-			print '<td>&nbsp;'.$index++.'&nbsp;</td>';
-			print '<td>&nbsp;'.$agents[i].'&nbsp;</td>';
-			print '<td>&nbsp;'.$counts[i].'&nbsp;</td>';
+			print '<td>&nbsp;'.$index.'&nbsp;</td>';
+			print '<td>&nbsp;'.$agents[$index-1].'&nbsp;</td>';
+			print '<td>&nbsp;'.$counts[$index-1].'&nbsp;</td>';
 			print "</tr>\n";
 	ENDOFHTML;
 		}
