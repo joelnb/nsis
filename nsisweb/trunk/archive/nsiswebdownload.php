@@ -9,8 +9,11 @@ if(strlen($_GET['file']) > 0) {
 		$array = $nsisweb->get_result_array($result);
 		header("Content-type: ".$array['type']);
 		header("Content-Disposition: attachment; filename=".$array['filename']);
-		readfile($storage->get_file_path($array['filename']));
-		exit;
+		if(@readfile($storage->get_file_path($array['filename']))) {
+		  exit;
+    } else {
+      $storage->remove_file($_GET['file']);
+    }
 	}
 }
 
