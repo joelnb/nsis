@@ -17,7 +17,6 @@ define('FETCH_CONTENT_BOTH',4); // details plus content & pp content
 
 define('PAGETYPE_TEMPLATED',1);
 define('PAGETYPE_DIRECTORY',2);
-define('USE_BEAUTIFIER',    TRUE);
 
 define('VIEWMODE_NORMAL',   0);
 define('VIEWMODE_NOBUTTONS',1);
@@ -507,35 +506,17 @@ function colour_source($string,$pageid){
   $count = count($array_contenido);
 
   if($count > 0) {  
-    if(USE_BEAUTIFIER == TRUE) {
-      global $BEAUT_PATH;
-      $BEAUT_PATH = dirname(__FILE__)."/beaut";
-      include_once($BEAUT_PATH."/Beautifier/Init.php");
-      include_once($BEAUT_PATH."/HFile/HFile_nsis.php");
-      include_once($BEAUT_PATH."/Output/Output_HTML.php");
-      $highlighter = new Core(new HFile_nsis(),new Output_HTML());
-    }
-
     for($i = 1;$i < $count;$i++){
       $array_contents = explode("[/source]",$array_contenido[$i]);
-      if(USE_BEAUTIFIER == TRUE) {
-        $lines = preg_split("/\n/",str_replace("<br>","\n",$array_contents[0]));
-        $shortened = '';
-        foreach($lines as $line) {
-          if(strlen($line)>78) {
-            $shortened .= substr($line,0,78)."\n";
-            $shortened .= substr($line,78)."\n";
-          } else {
-            $shortened .= $line."\n";
-          }
-        }
-        $array_contents[0] = $highlighter->highlight_text($shortened);
-      } else {
-        ob_start();
-        highlight_string("<?".$array_contents[0]."?".">");
-        $array_contents[0] = ob_get_contents();
-        ob_end_clean();
-      }
+
+      $script = tempnam(NSISWEB_SESSION_DIR,"nsis_");
+      @unlink($script);
+      $temp = fopen($script,"w");
+      fwrite($temp,str_replace("<br>","\n",$array_contents[0]));
+      fclose($temp); 
+      $cmd = NSISWEB_LEXER_PATH." < ".$script." 2>&1";
+      unlink($script);
+      $array_contents[0] = `$cmd`;
 
       /* attach a disk icon to enable saving the source */
       if($pageid > 0) {
@@ -545,11 +526,7 @@ function colour_source($string,$pageid){
       $final .= $array_contents[0]."</span>".$array_contents[1];
     }
 
-    if(USE_BEAUTIFIER == TRUE) {
-      return $final;
-    } else {
-      return str_replace(array("&lt;?","?&gt;"),"",$final);
-    }
+    return $final;
   }
 
   return $string;
