@@ -262,7 +262,8 @@ function make_safe_page($page)
 		'views'    => $page['views'],
 		'rating'   => $page['rating'],
 		'votes'    => $page['votes'],
-		'parentid' => $page['parentid']);
+		'parentid' => $page['parentid'],
+		'flags'    => $page['flags']);
 	if($page['type'] == PAGETYPE_DIRECTORY) {
 		$safe['description'] = $page['source'];
 	}
