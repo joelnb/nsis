@@ -94,13 +94,14 @@ ENDOFHTML;
 
         $i     = 0;
         $index = 1;
+        $len   = strlen($log);
         $pos   = strpos($log,'#error#');
 
         do {
           $end  = strpos($log,'#error#',$pos+1);
           $pos += strlen('#error#');
 
-          if(!$end) $end = strlen($log);
+          if(!$end) $end = $len;
           
           if($end-$pos > 0) {
             $markerpos = strpos($log,'#',$pos);
@@ -128,7 +129,7 @@ ENDOFHTML;
           }
 
           $pos = $end;
-        } while($pos > 0);
+        } while($pos > 0 && $end < $len);
 
         print <<<ENDOFHTML
             </table>
