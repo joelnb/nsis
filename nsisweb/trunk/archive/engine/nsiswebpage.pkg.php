@@ -6,6 +6,7 @@ define('PAGETYPE_RAW',       1);
 define('PAGETYPE_TEMPLATED', 2);
 define('PAGETYPE_DIRECTORY', 3);
 define('PAGETYPE_PARENTLINK',4);
+define('PAGEFLAG_ORPHANED',  1);
 
 function initialise_page_table()
 {
@@ -39,8 +40,7 @@ function show_page($pageid,$make_whole_page)
 				   ------------------------ */
 				$filename = $nsisweb->fileroot.'/'.$page_info['source'];
 				if(file_exists($filename)) {
-					$page_info['views']++;
-					$result = $nsisweb->query("update nsisweb_pages set views=".$page_info['views']);
+					$result = $nsisweb->query("update nsisweb_pages set views=views+1");
 					@include($filename);
 					$success = TRUE;
 				}
@@ -49,8 +49,7 @@ function show_page($pageid,$make_whole_page)
 				/* ------------------------ 
 		         PAGETYPE: TEMPLATED
 				   ------------------------ */
-				$page_info['views']++;
-				$result = $nsisweb->query("update nsisweb_pages set views=".$page_info['views']);
+				$result = $nsisweb->query("update nsisweb_pages set views=views+1");
 				$title  = &$page_info['title'];
 				$source = &$page_info['source'];
 				$user   = find_userid($page_info['author']);
@@ -110,7 +109,7 @@ function create_raw_page($title,$filename)
 	if(strlen($filename)>0 && strlen($title)>0 && file_exists($nsisweb->fileroot.'/'.$filename)) {
 		$session = $nsisweb->get_session();
 		$author  = $session->user_id;
-		$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_RAW.",flags=0,parentid=-1,source='$filename',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
+		$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_RAW.",flags='.PAGEFLAG_ORPHANED.',parentid=0,source='$filename',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
 		return $nsisweb->get_created_id();
 	}
 	return FALSE;
@@ -124,7 +123,7 @@ function create_templated_page($title,$body)
 	$source  = mysql_escape_string($source);
 	$session = $nsisweb->get_session();
 	$author  = $session->user_id;
-	$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_TEMPLATED.",flags=0,parentid=-1,source='$source',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
+	$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_TEMPLATED.",flags=0,parentid='.PAGEFLAG_ORPHANED.',source='$source',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
 	return $nsisweb->get_created_id();
 }
 
@@ -183,7 +182,7 @@ function create_directory_page($title,$description)
 	global $nsisweb;
 	$session = $nsisweb->get_session();
 	$author  = $session->user_id;
-	$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_DIRECTORY.",flags=0,parentid=-1,source='$description',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
+	$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_DIRECTORY.",flags=0,parentid='.PAGEFLAG_ORPHANED.',source='$description',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
 	return $nsisweb->get_created_id();
 }
 
@@ -191,7 +190,7 @@ function clear_page_parents($pageid)
 {
 	global $nsisweb;
 	$nsisweb->query("delete from nsisweb_pages where type=".PAGETYPE_PARENTLINK." and pageid=$pageid");
-	$nsisweb->query("update nsisweb_pages set parentid=0 where pageid=$pageid");
+	$nsisweb->query("update nsisweb_pages set parentid=0,flags=flags | '.PAGEFLAG_ORPHANED.' where pageid=$pageid");
 }
 
 function set_page_parent($pageid,$parentid)
@@ -203,7 +202,7 @@ function set_page_parent($pageid,$parentid)
 		if($count == 1) {
 			$page = $nsisweb->get_result_array($result);
 			if($page['parentid'] == ANONYMOUS_PAGE_ID) {
-				$nsisweb->query("update nsisweb_pages set parentid=$parentid where pageid=$pageid and type in (1,2,3)");
+				$nsisweb->query("update nsisweb_pages set parentid=$parentid,flags=flags & ~'.PAGE_FLAG_ORPHANED.' where pageid=$pageid and type in (1,2,3)");
 				return TRUE;
 			}
 		}
