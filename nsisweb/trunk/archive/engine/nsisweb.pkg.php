@@ -56,7 +56,7 @@ class NsisWeb
       if ($fp = fopen(NSISWEB_LOGSDIR.'/errors.log', 'a')) {
         /* #error# acts as a dectectable start point of an error message and is
            not likely to turn up in the logs. */
-        fwrite($fp,"#error#$file#$line#".date('d-M-Y G:i:s T:').$error."\n");
+        fwrite($fp,"#error#".basename($file)."#$line#".date('d-M-Y G:i:s T').'#'.$_SERVER['REQUEST_URI'].'#.$error."\n");
         fclose($fp);
       }
     }

@@ -110,6 +110,12 @@ ENDOFHTML;
             $markerpos = strpos($log,'#',$pos);
             $line      = substr($log,$pos,$markerpos-$pos);
             $pos       = $markerpos+1;
+            $markerpos = strpos($log,'#',$pos);
+            $datetime  = substr($log,$pos,$markerpos-$pos);
+            $pos       = $markerpos+1;
+            $markerpos = strpos($log,'#',$pos);
+            $request   = substr($log,$pos,$markerpos-$pos);
+            $pos       = $markerpos+1;
             $msg       = substr($log,$pos,$end-$pos);
 
             if($i == 0) {
@@ -122,7 +128,8 @@ ENDOFHTML;
 
             print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
             print '<td rowspan="2" style="text-align:center;">'.$index++.'</td>';
-            print '<td>'.$file.'</td><td style="text-align:center">Line '.$line.'</td>';
+            print '<td style="text-align:center">'.$datetime.'</td><td>'.$file.'</td>';
+            print '<td style="text-align:center">Line '.$line.'</td><td>'.$request.'</td>';
             print '</tr><tr style="background-color:#ffffff;font-size:8pt;">';
             print '<td colspan="2" style="padding:3px;font-family:courier new;">'.wordwrap(htmlentities($msg),60,"\n",1).'</td>';
             print "</tr>\n";
