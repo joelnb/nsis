@@ -45,7 +45,7 @@ function ChooseContributionType()
   /* Anonymous users can't contribute thanks to a jerk that likes to spam. */
   if($user->is_anonymous()) {
     print <<<ENDOFHTML
-      <p class="aheadernote">
+      <p class="aboxnote">
         Anonymous contribution is currently disabled. Please
         <a href="login.php">login now</a>.
         If you do not already have an account here you can
