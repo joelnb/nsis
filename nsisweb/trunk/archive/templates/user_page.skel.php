@@ -34,7 +34,7 @@ if($page) {
 					} else {
 						$last_author = $author;
 					}
-					print ' [ Last updated by '.$last_author.' '.$page->get_editor_date().' ]';
+					print '<br>Last updated by '.$last_author.' '.$page->get_editor_date();
 				}
 			?>
 			</font><br>
