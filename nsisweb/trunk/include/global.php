@@ -2,7 +2,7 @@
 
 function LocalFileDate($file) {
 	if (!file_exists($file)) return "Unknown";
-	return date("r",filemtime($file));
+	return gmdate("r",filemtime($file));
 }
 
 function IncludeHTMLHeader($title) {
