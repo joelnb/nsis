@@ -38,6 +38,10 @@ class NsisWebUser
   {
     return ($this->flags & USERFLAG_PERSIST) ? TRUE : FALSE;
   }
+  function is_anonymous()
+  {
+    return ($this->user_id == 0) ? TRUE : FALSE;
+  }
 };
 
 function find_user($username)
