@@ -27,7 +27,8 @@ if($result) {
 		$userid = $record['last_author'];
 		if($userid > 0) {
 			if(!is_object($user_map[$userid])) {
-				$user_map[$userid] = find_userid($userid);
+				$user = find_userid($userid);
+				$user_map[$userid] = $user->username;
 			}
 	  }
 	  $username = $user_map[$userid];
