@@ -191,7 +191,7 @@ ENDOFHTML;
 ENDOFHTML;
 
   /* There must be a way to do this with SQL and joins */
-	$result = $nsisweb->query("select user_agent from nsisweb_info group by user_agent order by user_agent ascselect ip,user_agent from nsisweb_info group by user_agent,ip order by user_agent asc");
+	$result = $nsisweb->query("select user_agent from nsisweb_info group by user_agent,ip order by user_agent asc");
 	if($result && $nsisweb->how_many_results($result) > 0) {
 		$i          = 0;
 		$index      = 1;
