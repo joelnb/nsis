@@ -13,10 +13,9 @@ if(strlen($_GET['file']) > 0) {
 		  header("Content-Disposition: attachment; filename=".$array['filename']);
 		  if(@readfile($path)) {
 		    exit;
-      } else {
-        $storage->remove_file($_GET['file']);
       }
     }
+    $storage->remove_file($_GET['file']);
 	}
 }
 $nsisweb->start_page('Download');
