@@ -17,11 +17,11 @@
 	$delete_link = '<a href="'.$nsisweb->get_home_url().'/nsisweb.php?action=delete&pageid='.$pageid.'">delete</a>';
 ?>
 <!-- user_page.skel.php: begin -->
-<table style="font-family:verdana;font-size:8pt;" width="100%" cellpadding="0" cellspacing="0" border="0">
+<table style="font-family:verdana;font-size:8pt;color:#000000;" width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
     <td>
-			<font style="font-family: verdana; font-size: 20pt; color: #000000;"><?= $title ?></font><br>
-			<font style="font-family: verdana; font-size: 8pt; color: #000000;">Written by <?= $author ?>, <?= $date ?></font><br>
+			<font style="font-size: 20pt;"><?= $title ?></font><br>
+			<font>Written by <?= $author ?>, <?= $date ?></font><br>
 		</td>
 		<td align="right">
 		  <?= $edit_link ?> | <?= $delete_link ?><br>
