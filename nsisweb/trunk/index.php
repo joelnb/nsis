@@ -40,6 +40,11 @@
 		Browse the latest NSIS documentation
 		</ul>
 	</li>
+	<li><b><a href="http://nsis.sourceforge.net/archive">The Archive</a></b>
+		<ul>
+		A repository of NSIS related information and downloads maintained by NSIS users for NSIS users.
+		</ul>
+	</li>
 	<li><b><a href="http://nsis.sourceforge.net/changelog.php">Change Log</a></b> 
 		<ul>
 		See what's cooking<br>
