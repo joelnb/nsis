@@ -57,8 +57,7 @@ where this site is currently hosted.<br>
 Certain user preferences such as configuring the site to use your timezone
 are not in place yet either. We want the archive to be up and running as
 soon as possible so these features are still in development. This is also
-the reason that the site probably doesn't work well in some browser, this
-will be addressed in time.</p>
+the reason that the site doesn't work equally well across all browsers.</p>
 <?
 $nsisweb->end_page();
 ?>
