@@ -91,7 +91,7 @@ function change_user_type($user,$new_type)
 	$session = $nsisweb->get_session();
 	$this_user = find_userid($session->user_id);
 	
-	if($this_user->usertype == USERTYPE_ADMIN) {
+	if($this_user->is_admin()) {
 		$result = $nsisweb->query("update nsisweb_users set usertype=$new_type where userid=".$session->user_id);
 		if($result) {
 			$user->usertype = $new_type;

@@ -43,7 +43,7 @@ if(!$user->is_admin()) {
 	  <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
 	    <tr style="background-color:#eeeeff">
 	    	<td>&nbsp;<b>Session ID</b>&nbsp;</td>
-	    	<td>&nbsp;<b>#</b>&nbsp;</td>
+	    	<td>&nbsp;<b>ID</b>&nbsp;</td>
 	    	<td>&nbsp;<b>User</b>&nbsp;</td>
 	    	<td>&nbsp;<b>Start Time</b>&nbsp;</td>
 	    	<td>&nbsp;<b>Last Access</b>&nbsp;</td>

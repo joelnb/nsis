@@ -32,7 +32,8 @@ include_once(dirname(__FILE__)."/nsiswebpage.pkg.php");
 include_once(dirname(__FILE__)."/nsiswebpicks.pkg.php");
 define('COOKIE_NAME','nsiswebid');
 define('ANONYMOUS_USER_ID',0);
-define('SESSION_TIMEOUT',60*30); /* seconds */
+define('SESSION_TIMEOUT',30*60);        /* seconds */
+define('TIMEOUT_CHECK_FREQUENCY',5*60); /* seconds, no need to check too often */
 
 function initialise_session_table()
 {
@@ -178,7 +179,7 @@ function find_my_session()
 			$session = new NsisWebSession(base64_decode($_SESSION['session']));
 			/* Does the session need timing out? Try not to do these checks too often
 			   so that we hit the database less frequently. */
-			if(!$session->persists() && (time()-$session->last_checked) > 300) {
+			if(!$session->persists() && (time()-$session->last_checked) > TIMEOUT_CHECK_FREQUENCY) {
 				timeout_sessions();
 				if($session_id != NO_SESSION) {
 					$nsisweb->query("update nsisweb_sessions set last_checked=NOW() where sessionid='$session_id'");
@@ -199,6 +200,23 @@ function find_my_session()
 				$session_okay = TRUE;
 			}
 		}
+	} else if($session_id != NO_SESSION) {
+		/* Maybe this user uses a persistent login but the php session data got
+		   expired... if this is the case the session record should still exist
+		   in the database, check to see and if it does using the userid find
+		   out if they have the persistent session option turned on... if so
+		   damn well treat them as logged in !! */
+		 $record = $nsisweb->query_one_only("select userid from nsisweb_sessions where sessionid='%session_id'");
+		 if($record) {
+			 $user = find_userid($record['userid']);
+			 if(!$user->is_anonymous() && $user->persists()) {
+				$record     = $nsisweb->query_one_only("select NOW()");
+				$now        = $record['NOW()'];
+				$session    = new NsisWebSession(array('sessionid'=>$session_id,'userid'=>$user->user_id,'created'=>$now,'last_access'=>$now,'last_checked'=>time()));
+				$session->looks_like_admin = ($record['usertype'] == USERTYPE_ADMIN) ? TRUE : FALSE;
+				$session->persist          = TRUE;
+			 }
+		 }
 	}
 
 	if($session && $session_okay) {
@@ -275,12 +293,12 @@ function login($username,$password)
 {
 	global $nsisweb;
 	$record = $nsisweb->query_one_only("select * from nsisweb_users where username='$username'");
-	
+
 	if($record && md5($password) == $record['password']) {
 		$user_id    = $record['userid'];
 		$session    = $nsisweb->get_session();
 		$session_id = $session->session_id;
-		
+
 		setcookie(COOKIE_NAME,$session_id,time()+86400,"/","",0);
 		$session->user_id          = $user_id;
 		$session->last_checked     = time();
