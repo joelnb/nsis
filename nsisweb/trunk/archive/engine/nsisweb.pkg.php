@@ -159,6 +159,15 @@ class NsisWeb
         $this->last_query = $query;
         $this->executed_queries[] = $query;
         $result = mysql_query($query);
+
+        $session = $this->get_session();
+        $user    = $session->user_id;
+        $logline = "modification detected: user=$user ip=$ip query=$query";
+        if($fp = fopen(NSISWEB_LOGSDIR.'/dbmods.log', 'a')) {
+          fwrite($fp,"#dbmod#".basename($file)."#$line#".date('d-M-Y G:i:s T').'#'.$_SERVER['REQUEST_URI'].'#'.$logline."\n");
+          fclose($fp);
+        }
+        
         if($result != FALSE) {
           return $result;
         } else {
