@@ -140,6 +140,7 @@ class NsisWebSite
         $result = mysql_query($query);
         if($result != FALSE) {
           return $result;
+        }
       }
     }
     $this->record_error(mysql_error());
