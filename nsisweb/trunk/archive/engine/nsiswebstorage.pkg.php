@@ -1,5 +1,5 @@
 <?
-include_once(dirname(__FILE__)."/../engine/nsisweb.pkg.php");
+include_once(dirname(__FILE__)."/nsisweb.pkg.php");
 
 class NsisWebStorage
 {

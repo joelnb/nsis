@@ -1,11 +1,11 @@
 <?
 /* This file contains core stuff used throughout the site code, there is a global
    instance of the NsisWebSite class named nsisweb. */
-include_once(dirname(__FILE__)."/../engine/nsisweb.cfg.php");
-include_once(dirname(__FILE__)."/../engine/nsiswebsession.pkg.php");
-include_once(dirname(__FILE__)."/../engine/nsiswebpage.pkg.php");
-include_once(dirname(__FILE__)."/../engine/nsiswebstorage.pkg.php");
-include_once(dirname(__FILE__)."/../engine/nsiswebuser.pkg.php");
+include_once(dirname(__FILE__)."/nsisweb.cfg.php");
+include_once(dirname(__FILE__)."/nsiswebsession.pkg.php");
+include_once(dirname(__FILE__)."/nsiswebpage.pkg.php");
+include_once(dirname(__FILE__)."/nsiswebstorage.pkg.php");
+include_once(dirname(__FILE__)."/nsiswebuser.pkg.php");
 define('ANONYMOUS_USER_ID',0);
 
 class NsisWebSite

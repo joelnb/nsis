@@ -1,6 +1,6 @@
 <?
-include_once(dirname(__FILE__)."/../engine/nsisweb.pkg.php");
-include_once(dirname(__FILE__)."/../engine/nsiswebuser.pkg.php");
+include_once(dirname(__FILE__)."/nsisweb.pkg.php");
+include_once(dirname(__FILE__)."/nsiswebuser.pkg.php");
 define('ANONYMOUS_PAGE_ID',  0);
 define('PAGETYPE_RAW',       1);
 define('PAGETYPE_TEMPLATED', 2);

@@ -6,8 +6,8 @@
    is an advisory to the browser in this case but in can be circumvented. */
 $upload_error = $php_errormsg;
 
-include_once(dirname(__FILE__)."/../engine/nsisweb.pkg.php");
-include_once(dirname(__FILE__)."/../engine/nsiswebstorage.pkg.php");
+include_once(dirname(__FILE__)."/nsisweb.pkg.php");
+include_once(dirname(__FILE__)."/nsiswebstorage.pkg.php");
 
 $storage = new NsisWebStorage;
 $result = $storage->process_uploaded_files('nsiswebfile');
