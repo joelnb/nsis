@@ -78,7 +78,7 @@ if(count($picks)>0) {
       <a href="Delete" onclick="pickform.action.value='delete';pickform.submit();return false;">Delete</a> |
 		  <a href="Insert" onclick="pickform.action.value='insert';pickform.submit();return false;">Insert >></a>
       <? } else { ?>
-		  <a href="Cancel" onclick="history.go(-1);return 0;"><< Cancel</a> |
+		  <a href="Cancel" onclick="history.go(-1);return false;"><< Cancel</a> |
       <a href="Delete" onclick="pickform.action.value='delete';pickform.submit();return false;">Delete</a> |
       <font color="#aaaaaa">Insert >></a>
       <? } ?>
@@ -92,7 +92,7 @@ if(count($picks)>0) {
     <? if(isset($parentid)) { ?>
 	  <a href="<?= $nsisweb->get_page_url($parentid); ?>"><< Cancel</a>
     <? } else { ?>
-		<a href="Cancel" onclick="history.go(-1);return 0;"><< Cancel</a>
+		<a href="Cancel" onclick="history.go(-1);return false;"><< Cancel</a>
     <? } ?>
 	</p>
 	<?
