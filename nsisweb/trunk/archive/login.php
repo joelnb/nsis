@@ -15,9 +15,9 @@ if(strlen($username)>0 && strlen($password)>0) {
 		$login_failed = TRUE;
 	} else {
     if(isset($_POST['page'])) {
-		  $nsisweb->redirect($_POST['page']);
+		  header("Location: ".$nsisweb->get_page_url($_POST['page']));
     } else {
-		  $nsisweb->redirect($nsisweb->get_home_url());
+		  header("Location: ".$nsisweb->get_home_url());
     }
 	}
 }

@@ -10,13 +10,17 @@ $user    = find_userid($session->user_id);
 if(!$user->is_admin()) {
 	echo '<p>This page is for users with admin rights only.</p>';
 } else {
+	if(strcmp($_GET['action'],'grant') == 0 && $_GET['userid'] > 0) {
+		$nsisweb->query('update nsisweb_users set usertype='.USERTYPE_ADMIN.' where userid='.$_GET['userid']);
+	}
+	
 	/* Make sure the session data we print is the most upto date */
 	timeout_sessions();
 	
 	print <<<ENDOFHTML
 	<p>Administrator status gives you the right to modify any page stored in the
-	database no	matter who created it. There are no other options available to an
-	administrator at this time.</p>
+	database no	matter who created it, and the right to grant admin rights to
+	other users.</p>
 	
 	<font style="font-family:verdana;font-size:15pt;color:#000000;">Connected Sessions</font>
 	<p>The following sessions are currently established:<br>
@@ -106,7 +110,11 @@ ENDOFHTML;
 			print '<td>&nbsp;'.$record['userid'].'&nbsp;</td>';
 			print '<td>&nbsp;'.$record['username'].'&nbsp;</td>';
 			print '<td>&nbsp;'.$record['created'].'&nbsp;</td>';
-			print '<td>&nbsp;'.($record['usertype'] == USERTYPE_ADMIN ? 'Yes' : 'No').'&nbsp;</td>';
+			if($record['usertype'] == USERTYPE_ADMIN) {
+				print '<td>&nbsp;Yes&nbsp;</td>';
+			} else {
+				print '<td>&nbsp;No [ <a href="admin.php?action=grant&userid='.$record['userid'].'">grant</a> ]&nbsp;</td>';
+			}
 			print "</tr>\n";
 ENDOFHTML;
 		}
