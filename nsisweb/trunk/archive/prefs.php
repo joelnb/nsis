@@ -32,7 +32,9 @@ if($session->is_anonymous()) {
 	} else if(strcmp($_POST['action'],'forumid') == 0) {
 		$user->update($user->get_email(),(int)($_POST['forumid']));
 		$user = find_userid($user_id);
-	}
+  } else if(strcmp($_POST['action'],'password') == 0) {
+	  $nsisweb->query("update nsisweb_users set password='".md5($_POST['password'])."' where userid=$user_id");
+  }
   
   $user_created     = 'Unknown';
   $pages_created    = 'Unknown';
@@ -112,7 +114,19 @@ ENDOFHTML;
     }
   }
 	
-	?><span style="font-family:verdana;font-size:15pt;color:#000000;">Your Email Address</span>
+	?>
+	<span style="font-family:verdana;font-size:15pt;color:#000000;">Your Password</span>
+	<p>Use this form to change your account password.<br>
+	<br>
+	<form name="password" method="post" enctype="multipart/form-data" action="prefs.php" onkeydown="if (event.keyCode == 13) {document.password.submit()}">
+    <input type="hidden" name="action" value="password">
+    <span style="align:middle;">Enter password:</span> 
+		<input type="password" style="font-family:courier new;font-size:10pt;" name="password" size="25" maxlength="255" value="">
+    <input type="submit" value="Update Password">
+	</form>
+  </p>
+
+  <span style="font-family:verdana;font-size:15pt;color:#000000;">Your Email Address</span>
 	<p>Use this form to update the email address we have for you in our records. This email address is visible only to administrators and allows them to contact you if necessary.<br>
 	<br>
 	<form name="email" method="post" enctype="multipart/form-data" action="prefs.php" onkeydown="if (event.keyCode == 13) {document.email.submit()}">
@@ -122,7 +136,7 @@ ENDOFHTML;
     <input type="submit" value="Update Profile">
 	</form>
   </p>
-	
+
 	<span style="font-family:verdana;font-size:15pt;color:#000000;">Your Winamp Forum User ID</span>
 	<p>Use this form to update the Winamp forum user id we have for you in our records. This id allows both users and administrators to contact you via the forum.<br>
 	<br>
