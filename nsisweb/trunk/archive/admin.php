@@ -196,19 +196,17 @@ ENDOFHTML;
   
 	$result = $nsisweb->query("select user_agent from nsisweb_info group by user_agent,ip order by user_agent desc");
 	if($result && $nsisweb->how_many_results($result) > 0) {
-		$i          = 0;
-		$index      = 1;
 		$last_agent = '';
 		$count      = 0;
 		$first      = TRUE;
-		
+
 		while($record = $nsisweb->get_result_array($result)) {
 			$this_agent = $record['user_agent'];
 			if(strcmp($this_agent,$last_agent) == 0) {
 				$count++;
 			} else {
 				if(!$first) {
-					$agents[] = $this_agent;
+					$agents[] = $last_agent;
 					$counts[] = $count;
 				}
 				$last_agent = $this_agent;
@@ -219,14 +217,15 @@ ENDOFHTML;
 	}
 
 	if(!$first) {
-		$agents[] = $this_agent;
+		$agents[] = $last_agent;
 		$counts[] = $count;
 	}
 	
-	$count = count($stats);
+	$count = count($agents);
 	if($count > 0) {
 		array_multisort($agents,SORT_DESC,$counts);
 
+		$index = 1;
 		for($i=0; $i<$count; $i++) {
 			if($i == 0) {
 				$i = 1;
@@ -244,7 +243,7 @@ ENDOFHTML;
 	ENDOFHTML;
 		}
 	}
-		
+
 	print <<<ENDOFHTML
 	  </table>
 	</p>
