@@ -76,7 +76,7 @@ function show_page($pageid,$make_whole_page)
 				$source = &$page_info['source'];
 				$user   = find_userid($page_info['author']);
 				$author = $user->username;
-				$date   = &$page_info['created'];
+				$date   = $page_info['created'];
 				render_templated_page($title,$author,$date,$source,$pageid);
 				$success = TRUE;
 				break;
