@@ -260,7 +260,7 @@ END_OF_HTML;
           $user_map[$userid] = find_userid($userid);
         }
         $user = $user_map[$userid];
-        print '<td align="center">&nbsp;'.$user->username.'&nbsp;</td>';
+        print '<td align="center">&nbsp;<a href="profile.php?userid='.$userid.'">'.$user->username.'</a>&nbsp;</td>';
       } else {
         print '<td align="center">&nbsp;Anonymous&nbsp;</td>';
       }
