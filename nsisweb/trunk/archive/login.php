@@ -29,7 +29,7 @@ $nsisweb->start_page('Login');
 ?>
 <font style="font-family: verdana; font-size: 20pt; color: #000000;">Login</font>
 <p>This page allows you to login to the <b>Archive</b> using your user account. If you do not have a user account you can
-<a href="$create_url">create a a free account</a> now.</p>
+<a href="<?= $create_url ?>">create a a free account</a> now.</p>
 <?
 if($login_failed) {
 	print '<p><b><font color="red">You could not be logged in, please try again.</font></b></p>';
