@@ -4,7 +4,15 @@
 <head> 
 <base href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/nsis/NSIS/">
 <? IncludeHTMLHeader("Changelog"); ?>
-</head> 
+"<link rel=\"Stylesheet\" type=\"text/css\" href=\"http://nsis.sourceforge.net/include/style.css\">\n";
+</head>
+<style type="text/css">
+<!--
+p, li {
+	font-size: 11px; 
+    font-family: Verdana, Arial, Helvetica, sans-serif; 
+}
+-->
 <body> 
 <? IncludePageHeader("NSIS Changelog",true); ?>
 <?php 
