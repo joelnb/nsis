@@ -54,6 +54,7 @@ if($login_failed) {
   Password: <input type="password" style="font-family:courier new;font-size:10pt;" name="password" size="25" maxlength="255"><br>
   </p>
   <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+    <input type="submit" style="color:white;background-color:white;border-style:none">
     <a href="javascript:wizard.submit();">Login >></a>
   </p>
 </form>

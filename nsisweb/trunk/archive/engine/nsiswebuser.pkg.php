@@ -27,6 +27,10 @@ class NsisWebUser
 		$this->username = $array['username'];
 		$this->usertype = $array['usertype'];
 	}
+  function is_admin()
+  {
+    return ($this->usertype == USERTYPE_ADMIN) ? TRUE : FALSE;
+  }
 };
 
 function find_user($username)

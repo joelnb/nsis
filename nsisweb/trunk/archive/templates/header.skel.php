@@ -55,7 +55,12 @@ if(!$session->is_anonymous()) {
 			<table width="750" cellpadding="0" cellspacing="0" border="0" style="background-color:#F0F0F0">
 				<tr>
 				  <td align="left" style="font-size:8pt;padding-bottom:2px;"><b>Logged in as:</b> <?= $logged_in_text ?></td>
-				  <td align="right" style="font-size:8pt;padding-bottom:2px;">[ <a href="<?= $picklist_url ?>">Pick List</a> ] [ <a href="<?= $home_url ?>">Home</a> ]</td>
+				  <td align="right" style="font-size:8pt;padding-bottom:2px;">
+            <? if(!$session->is_anonymous()) { ?>
+              [ <a href="<?= $nsisweb->get_page_url('prefs').$login_url_ext ?>">Preferences</a> ]
+            <? } ?>
+            [ <a href="<?= $picklist_url ?>">Pick List</a> ] [ <a href="<?= $home_url ?>">Home</a> ]
+          </td>
 				</tr>
 			</table>
 			<table width="750" cellpadding="0" cellspacing="0" class="maintable"> 

@@ -1,5 +1,7 @@
 <?
 include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
+include_once(dirname(__FILE__)."/engine/nsiswebuser.pkg.php");
+include_once(dirname(__FILE__)."/engine/nsiswebsession.pkg.php");
 include_once(dirname(__FILE__)."/engine/nsiswebpage.pkg.php");
 
 $nsisweb->start_page('Delete');
@@ -15,8 +17,10 @@ if(strlen($_GET['pageid']) <= 0 || FALSE == ($page = find_pageid($_GET['pageid']
 } else {
 	// make sure that user can delete this post
 	$session = $nsisweb->get_session();
+  $user    = find_userid($session->user_id);
 	$author  = $page['last_author'];
-	if($author != ANONYMOUS_USER_ID && $author != $session->user_id) {
+
+  if(!$user->is_admin() && $author != ANONYMOUS_USER_ID && $author != $session->user_id) {
 		?>
 		<font style="font-family: verdana; font-size: 20pt; color: #000000;">Delete Page: <font color="red">Access Denied</font></font>
 		<p>You do not have the right to delete the page entitled '<?= $page['title'] ?>'. Click <b>Go Back</b>
