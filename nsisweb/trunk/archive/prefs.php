@@ -16,7 +16,7 @@ if($session->is_anonymous()) {
   $passwordcolour = '';
 
   if(strcmp($_GET['action'],'loggedin') == 0) {
-	  echo '<br><br><center style="border:1px solid black;padding:2px;"><b style="color:#000000;">Thankyou for logging in '.$username.'</b></center>';
+	  echo '<br><br><center style="border:1px solid black;padding:2px;"><b style="color:#000000;">Thank you for logging in '.$username.'</b></center>';
   } else if(strcmp($_POST['action'],'applychanges') == 0) {
 		$changes  = 0;
 		$errorstr = "";
