@@ -185,7 +185,7 @@ function create_directory_page($title,$description)
 	global $nsisweb;
 	$session = $nsisweb->get_session();
 	$author  = $session->user_id;
-	$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_DIRECTORY.",flags='.PAGEFLAG_ORPHANED.',parentid=0,source='$description',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
+	$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_DIRECTORY.",flags=".PAGEFLAG_ORPHANED.",parentid=0,source='$description',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
 	return $nsisweb->get_created_id();
 }
 
@@ -193,7 +193,7 @@ function clear_page_parents($pageid)
 {
 	global $nsisweb;
 	$nsisweb->query("delete from nsisweb_pages where type=".PAGETYPE_PARENTLINK." and pageid=$pageid");
-	$nsisweb->query("update nsisweb_pages set parentid=0,flags=flags | '.PAGEFLAG_ORPHANED.' where pageid=$pageid");
+	$nsisweb->query("update nsisweb_pages set parentid=0,flags=flags | ".PAGEFLAG_ORPHANED." where pageid=$pageid");
 }
 
 function set_page_parent($pageid,$parentid)
