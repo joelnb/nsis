@@ -16,12 +16,11 @@ if(strcmp($_GET['action'],'pick') == 0) {
     add_to_current_picks($page->get_pageid(),$page->get_type());
   }
 } else if(strlen($_POST['action'])>0 && count($_POST['picked'])>0) {
+  $instance = new NsisWebInstance($instanceid);
   foreach($_POST['picked'] as $pageid) {
     if(strcmp($_POST['action'],'insert') == 0) {
-      if($page = find_pageid($pageid)) {
-        $instance = new NsisWebInstance($instanceid);
-        $parentid = new NsisWebPage($instance->get_pageid());
-        $page->add_instance($parentid);
+      if($page = find_pageid($pageid)) {        
+        $page->add_instance($instance->get_pageid());
         remove_from_current_picks($pageid);
       }
     } else if(strcmp($_POST['action'],'delete') == 0) {
