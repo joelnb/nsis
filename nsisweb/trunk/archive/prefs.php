@@ -2,7 +2,7 @@
 include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 
 $nsisweb->start_page('Your Preferences',FALSE);
-echo '<span style="font-family:verdana;font-size:20pt;color:#000000;">Your Preferences</span>';
+echo '<span class="atitle">Your Preferences</span>';
 
 $session = $nsisweb->get_session();
 
@@ -16,7 +16,7 @@ if($session->is_anonymous()) {
   $passwordcolour = '';
 
   if(strcmp($_GET['action'],'loggedin') == 0) {
-	  echo '<br><br><center style="border:1px solid black;padding:2px;"><b style="color:#000000;">Thank you for logging in '.$username.'</b></center>';
+	  echo '<p><strong>Thank you for logging in '.$username.'</strong></p>';
   } else if(strcmp($_POST['action'],'applychanges') == 0) {
 		$changes  = 0;
 		$errorstr = "";
@@ -35,14 +35,14 @@ if($session->is_anonymous()) {
 				$nsisweb->query("update nsisweb_users set password='".$md5result."' where userid=$user_id");
 				$resultarray = $nsisweb->query_one_only("select password from nsisweb_users where userid=$user_id");
 				if(strcasecmp($md5result,$resultarray['password']) == 0) {
-					$errorstr = '<br><br><center style="border:1px solid black;padding:2px;"><b style="color:#55ff55;">Your password has been changed successfully.</b></center>';
+					$errorstr = '<p><strong>Your password has been changed successfully.</strong></p>';
 					$changes++;
 				} else {
-					$errorstr = '<br><br><center style="border:1px solid black;"><b style="color:#ff0000;">Your password could not be changed!</b></center>';
+					$errorstr = '<p class="aboxnote">Your password could not be changed!</p>';
 				}
 			} else {
-				$passwordcolour = 'background-color:#ffaaaa';
-				$errorstr       = '<br><br><center style="border:1px solid black;"><b style="color:#ff0000;">The passwords you enter must match exactly!</b></center>';
+				$passwordcolour = 'acolore';
+				$errorstr       = '<p class="aboxnote">The passwords you enter must match exactly!<p>';
 			}
 		}
 
@@ -116,20 +116,20 @@ if($session->is_anonymous()) {
   <p style="margin-top:20px;">
   	<form name="settings" method="post" enctype="multipart/form-data" action="prefs.php" onkeydown="if (event.keyCode == 13) { document.settings.submit(); }">
   	  <input type="hidden" name="action" value="applychanges">
-	    <table width="80%" style="border-style:solid;border-color:black;border-width:1px;" cellpadding="2" cellspacing="1">
-	      <tr style="background-color:#ffffee"><td align="center" valign="middle" colspan="2" height="20">Account Information</td></tr>
-	      <tr style="background-color:#eeeeee"><td align="left" valign="middle" height="20">Your user name</td><td align="left"><b><?= $username ?></b></td></tr>
-	      <tr><td align="left" valign="middle" height="20">You created your account on</td><td align="left"><?= $user_created ?></td></tr>
-	      <tr style="background-color:#eeeeee"><td align="left" valign="middle" height="20">Pages created by you</td><td align="left"><?= $pages_created ?></td></tr>
-	      <tr><td align="left" valign="middle" height="20">Other pages last modified by you</td><td align="left"><?= $pages_modified ?></td></tr>
-	      <tr style="background-color:#eeeeee"><td align="left" valign="middle" height="20">Downloadable files supplied by you</td><td align="left"><?= $files_uploaded ?></td></tr>
-	      <tr><td align="left" valign="middle" height="20">Number of items in your pick list</td><td align="left"><?= $current_picks ?></td></tr>
-	      <tr style="background-color:#eeeeee"><td align="left" valign="middle" height="20">Number of current sessions</td><td align="left"><?= $current_sessions ?></td></tr>
-	      <tr><td align="left" valign="middle" height="20">Do you have admin rights?</td><td align="left"><input type="checkbox" DISABLED <?= $user->is_admin() ? 'CHECKED' : ''; ?>></td></tr>
-	      <tr style="background-color:#ffffee"><td align="center" valign="middle" colspan="2" height="20">Configurable Settings</td></tr>
-	      <tr style="background-color:#eeeeee"><td align="left" valign="middle" height="20">Enable persistent logins</td><td align="left"><input name="persist" type="checkbox" <?= $user->persists() ? 'CHECKED' : ''; ?>></td></tr>
-	      <tr><td align="left" valign="middle" height="20">Your email address</td><td align="left"><input style="margin:0px;padding:1px;font-size:8pt;width:200px;" name="email" type="text" size="20" maxlength="255" value="<?= $user->get_email() ?>"></td></tr>
-	      <tr style="background-color:#eeeeee"><td align="left" valign="middle" height="20">Your Winamp forum userid</td><td align="left"><input style="margin:0px;padding:1px;font-size:8pt;width:200px;" name="forumid" type="text" size="20" maxlength="255" value="<?= $user->get_forumid() ?>"></td></tr>
+	    <table width="80%">
+	      <tr class="aboxheader"><td align="center" valign="middle" colspan="2" height="20">Account Information</td></tr>
+	      <tr><td height="20">Your user name</td><td align="left"><b><?= $username ?></b></td></tr>
+	      <tr><td height="20">You created your account on</td><td align="left"><?= $user_created ?></td></tr>
+	      <tr><td height="20">Pages created by you</td><td align="left"><?= $pages_created ?></td></tr>
+	      <tr><td height="20">Other pages last modified by you</td><td align="left"><?= $pages_modified ?></td></tr>
+	      <tr><td height="20">Downloadable files supplied by you</td><td align="left"><?= $files_uploaded ?></td></tr>
+	      <tr><td height="20">Number of items in your pick list</td><td align="left"><?= $current_picks ?></td></tr>
+	      <tr><td height="20">Number of current sessions</td><td align="left"><?= $current_sessions ?></td></tr>
+	      <tr><td height="20">Do you have admin rights?</td><td align="left"><input type="checkbox" DISABLED <?= $user->is_admin() ? 'CHECKED' : ''; ?>></td></tr>
+	      <tr class="aboxheader"><td align="center" valign="middle" colspan="2" height="20">Configurable Settings</td></tr>
+	      <tr><td height="20">Enable persistent logins</td><td align="left"><input name="persist" type="checkbox" <?= $user->persists() ? 'CHECKED' : ''; ?>></td></tr>
+	      <tr><td height="20">Your email address</td><td align="left"><input style="margin:0px;padding:1px;font-size:8pt;width:200px;" name="email" type="text" size="20" maxlength="255" value="<?= $user->get_email() ?>"></td></tr>
+	      <tr><td height="20">Your Winamp forum userid</td><td align="left"><input style="margin:0px;padding:1px;font-size:8pt;width:200px;" name="forumid" type="text" size="20" maxlength="255" value="<?= $user->get_forumid() ?>"></td></tr>
 	      <?
 				  if($user->is_admin()) {
 				    $record = $nsisweb->query_one_only('select flags from nsisweb_users where userid='.$user_id,__FILE__,__LINE__);
@@ -144,14 +144,14 @@ if($session->is_anonymous()) {
 			      }
 		      }
 				?>
-	      <tr style="background-color:#ffffee"><td align="center" valign="middle" colspan="2" height="20">Change Your Password</td></tr>
-	      <tr style="background-color:#eeeeee"><td align="left" valign="middle" height="20">Enter your new password</td><td align="left"><input style="margin:0px;padding:1px;font-size:8pt;width:200px;<?= $passwordcolour ?>" name="password1" type="password" size="20" maxlength="255" value=""></td></tr>
-	      <tr><td align="left" valign="middle" height="20">Confirm your new password</td><td align="left"><input style="margin:0px;padding:1px;font-size:8pt;width:200px;<?= $passwordcolour ?>" name="password2" type="password" size="20" maxlength="255" value=""></td></tr>
+	      <tr class="aboxheader"><td  colspan="2" height="20">Change Your Password</td></tr>
+	      <tr><td height="20">Enter your new password</td><td align="left"><input class="<?= $passwordcolour ?>" name="password1" type="password" size="20" maxlength="255" value=""></td></tr>
+	      <tr><td height="20">Confirm your new password</td><td align="left"><input class="<?= $passwordcolour ?>" name="password2" type="password" size="20" maxlength="255" value=""></td></tr>
 	    </table>
 	    <p align="center"><a href="javascript:document.settings.submit();">Click Here To Apply Changes To Your Settings</a></p>
     </form>
   </p>
-  <span style="font-family:verdana;font-size:20pt;color:#000000;">Settings Explained</span>
+  <span class="atitle">Settings Explained</span>
   <p>
     <b>Q:</b> Can I change my username?<br>
     <b>A:</b> No, this name uniquely identifies you and cannot be changed.<br>

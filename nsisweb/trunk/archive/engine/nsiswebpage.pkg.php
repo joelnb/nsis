@@ -541,7 +541,7 @@ function colour_source($string,$pageid){
         $final .= '<span style="font-family:verdana;font-size:7pt;">Save this script</span><br>';
       }
 
-      $final .= '<span style="font-family:courier new;font-size:10pt;">';
+      $final .= '<span class="afixfont">';
       $final .= $array_contents[0]."</span>".$array_contents[1];
     }
 

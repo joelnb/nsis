@@ -28,7 +28,7 @@
     $okay_count++;
   }
 ?>
-<span style="font-family: verdana; font-size: 20pt; color: #000000;">Archive Home</span>
+<span class="atitle">Archive Home</span>
 <p>Welcome to the NSIS Archives, a repository of NSIS related information and downloads maintained by
 NSIS users for NSIS users.
 <? if($okay_count == 2) { ?>

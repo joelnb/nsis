@@ -27,7 +27,7 @@ unset($password);
 $create_url = $nsisweb->get_page_url('createaccount');
 $nsisweb->start_page('Login',FALSE);
 ?>
-<span style="font-family: verdana; font-size: 20pt; color: #000000;">Login</span>
+<span class="atitle">Login</span>
 <p>This page allows you to login to the <b>Archive</b> using your user account.
 You only need an account if you want to make contributions.
 If you do not have a user account you can <a href="<?= $create_url ?>">create a a free account</a> now.</p>
@@ -41,13 +41,11 @@ if($login_failed) {
     <input type="hidden" name="page" value="<?= $_GET['page'] ?>">
   <? } ?>
   <p align="center">
-  Username: <input type="text" style="font-family:courier new;font-size:10pt;" name="username" size="25" maxlength="255"><br>
+  Username: <input type="text" name="username" size="25" maxlength="255"><br>
   <br>
-  Password: <input type="password" style="font-family:courier new;font-size:10pt;" name="password" size="25" maxlength="255"><br>
+  Password: <input type="password" name="password" size="25" maxlength="255"><br>
   </p>
-  <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-    <a href="javascript:document.loginform.submit();">Login >></a>
-  </p>
+  <p class="asubtitle"><a href="javascript:document.loginform.submit();">Login ></a></p>
 </form>
 <?
 $nsisweb->end_page();

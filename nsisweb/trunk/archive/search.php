@@ -28,7 +28,7 @@ if(strcmp($exclude_dirs,'CHECKED') != 0) $exclude_dirs = '';
 $nsisweb->start_page('Search',FALSE);
 
 ?>
-<span style="font-family: verdana; font-size: 20pt; color: #000000;">Search</span>
+<span class="atitle">Search</span>
 <p>You can use this page to search through the content of those archive pages
 whose content is stored in the database. This should mean that almost all of
 the content of this site can be searched from this page. The search engine will
@@ -77,7 +77,7 @@ doesn't work but 25 December 2002 does). The native date format used is yyyy-mm-
       </tr>
     </table>
     <br>
-    <center><input type="submit" value="Search"></center>
+    <input type="submit" value="Search">
   </form>
 </p>
 <?
@@ -214,7 +214,7 @@ if(strlen($modified_until)>0) {
 
 if($do_search) {
   /* Head up the search results area on the generated page */
-  print '<br><span style="font-family: verdana; font-size: 20pt; color: #000000;">Results</span><p>';
+  print '<br><span class="atitle">Results</span><p>';
 
   /* Fire the search query */
   if(isset($query)) {

@@ -63,13 +63,13 @@ $session = $nsisweb->get_session();
 /* Handle error conditions */
 if(!$page || $pageid == 0) {
   $nsisweb->start_page('Edit',FALSE);
-  echo '<span style="font-family: verdana; font-size: 20pt; color: #000000;">Edit Page: <span color="red">Access Denied</span></span>';
+  echo '<span class="atitle">Edit Page: <span color="red">Access Denied</span></span>';
   echo '<p>Page '.$pageid.' not found!<br><br></p>';
   $nsisweb->end_page();
   exit;
 } else if($page->get_type() != PAGETYPE_TEMPLATED && $page->get_type() != PAGETYPE_DIRECTORY) {
   $nsisweb->start_page('Edit',FALSE);
-  echo '<span style="font-family: verdana; font-size: 20pt; color: #000000;">Edit Page: <span color="red">Access Denied</span></span>';
+  echo '<span class="atitle">Edit Page: <span color="red">Access Denied</span></span>';
   echo '<p>Internal Error: The type of page is not recognised (type='.$page->get_type().'<br><br></p>';
   $nsisweb->end_page();
   exit;
@@ -79,7 +79,7 @@ if(!$page || $pageid == 0) {
   if(!$page->can_modify()) {
     $nsisweb->start_page('Edit',FALSE);
     ?>
-    <span style="font-family: verdana; font-size: 20pt; color: #000000;">Edit Page: <span color="red">Access Denied</span></span>
+    <span class="atitle">Edit Page: <span color="red">Access Denied</span></span>
     <p>You do not have the right to edit the page entitled '<?= $page->get_title() ?>'. Click <b>Go Back</b>
     to return to the page you came from.</p>
     <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
@@ -110,7 +110,7 @@ switch($action) {
 
 $nsisweb->start_page('Edit',FALSE);
 ?>
-<span style="font-family: verdana; font-size: 20pt; color: #000000;">Edit Page</span>
+<span class="atitle">Edit Page</span>
 <p>Use the edit controls on this page to edit the page you selected. Click preview
 at any time to see how your edits are affecting the appearance of the page.
 Clicking revert will throw away your edits and you will begin the editing process
@@ -118,7 +118,7 @@ from scratch again. When you are finished editing press Save Changes to keep the
 edits, or Cancel to discard them and return to the page you were viewing.</p>
 <form name="editform" method="post" enctype="multipart/form-data" action="edit.php">
   <p>Edit the title of the page: (255 characters max)<br>
-    <input type="text" style="font-family:courier new;font-size:10pt;" name="title" size="79" maxlength="255" value="<?=$title?>"><br>
+    <input type="text" class="afixfont" name="title" size="79" maxlength="255" value="<?=$title?>"><br>
     <br>
     <? if($page->get_type() == PAGETYPE_DIRECTORY) { ?>
     Edit the description of this directory page.
@@ -129,7 +129,7 @@ edits, or Cancel to discard them and return to the page you were viewing.</p>
     used to attack this site will be removed from your content. Additionally you can
     enclose text inside a [source] ... [/source] token pair which will cause that
     text to be syntax highlighted as if the text is NSIS script code:<br>
-    <textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="25"><?=htmlentities($content)?></textarea>
+    <textarea name="content" class="afixfont" cols="79" rows="25"><?=htmlentities($content)?></textarea>
   </p>
   <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
     <input type="hidden" name="pageid" value="<?= $pageid ?>">

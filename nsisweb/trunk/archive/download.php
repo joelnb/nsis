@@ -22,12 +22,12 @@ if(isset($_GET['file'])) {
 
 $nsisweb->start_page('Download Files');
 ?>
-<span style="font-family: verdana; font-size: 20pt; color: #000000;">Download</span>
+<span class="atitle">Download</span>
 <p>The following table lists files that are available for download from this website, and the name of the
 user that contributed the file to the archive.</p>
 <br>
 <center>
-  <table style="border-style:none;font-size:10pt;" cellpadding="2" cellspacing="0">
+  <table cellpadding="2" cellspacing="0">
 <?
 $result = $nsisweb->query("select * from nsisweb_files",__FILE__,__LINE__);
 if($result) {
@@ -47,22 +47,22 @@ if($result) {
 
       if($i == 0) {
         $i = 1;
-        $bgcolour = '#eeffee';
+        $bgcolour = 'acolor1';
       } else {
         $i = 0;
-        $bgcolour = '#eeeeee';
+        $bgcolour = 'acolor2';
       }
 
       ?>
-        <tr style="background-color:<?= $bgcolour ?>;">
-          <td style="text-align:center;border:solid 1px #aaaaaa;padding:4px;border-bottom:none;"><a href="<?= $grab_link ?>"><img style="vertical-align:middle;" src="<?= $file->get_image_url() ?>" border="0"> <?= $file->get_filename() ?></a> (<?= $size ?>)</td>
-          <td style="text-align:center;border:solid 1px #aaaaaa;padding:4px;border-bottom:none;border-left:none;"><?= $downloads ?></td>
-          <td style="text-align:center;border:solid 1px #aaaaaa;padding:4px;border-bottom:none;border-left:none;">Uploaded by <a href="profile.php?userid=<?= $user->user_id ?>"><?= $username ?></a></td>
+        <tr class="<?= $bgcolour ?>">
+          <td><a href="<?= $grab_link ?>"><img src="<?= $file->get_image_url() ?>" border="0"> <?= $file->get_filename() ?></a> (<?= $size ?>)</td>
+          <td><?= $downloads ?></td>
+          <td>Uploaded by <a href="profile.php?userid=<?= $user->user_id ?>"><?= $username ?></a></td>
         </tr>
-        <tr style="text-align:justify;background-color:#ffffff;border-style:none;">
-          <td colspan="3" style="border:solid 1px #aaaaaa;padding:10px;"><?= $about ?></td>
+        <tr>
+          <td colspan="3"><?= $about ?></td>
         </tr>
-        <tr style="background-color:#ffffff;height:20pt;"><td></td></tr>
+        <tr><td>&nbsp;</td></tr>
       <?
     }
   }

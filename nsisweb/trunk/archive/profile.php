@@ -2,7 +2,7 @@
 include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 
 $nsisweb->start_page('User Profile',FALSE);
-echo '<span style="font-family:verdana;font-size:20pt;color:#000000;">User Profile</span>';
+echo '<span class="atitle">User Profile</span>';
 
 if(!isset($_GET['userid'])) {
 	?><p>Internal Error: No userid specified.</p><?

@@ -43,11 +43,11 @@ $page = $instance->get_page();
 add_to_current_picks($page->get_pageid(),$page->get_type());
 $nsisweb->start_page('Delete',FALSE);
 ?>
-<span style="font-family: verdana; font-size: 20pt; color: #000000;">Delete Page:</span>
-<p>The instance of the page in that section has now been removed.<br><br>Click <b>Go To Section</b> to return to the section that contained the deleted page.</p>
-<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+<span class="atitle">Delete Page</span>
+<p>The instance of the page in that section has now been removed.<br><br>Click <strong>Go To Section</strong> to return to the section that contained the deleted page.</p>
+<p class="subtitle">
   <a href="picklist.php?instanceid=<?= $returnid ?>">View Your Pick List</a> |
-  <a href="<?= $nsisweb->get_page_url($returnid) ?>">Go To Section >></a>
+  <a href="<?= $nsisweb->get_page_url($returnid) ?>">Go To Section ></a>
 </p>
 <?
 $nsisweb->end_page();
@@ -57,11 +57,9 @@ function show_delete_error($summary,$message)
   global $nsisweb;
   $nsisweb->start_page('Delete',FALSE);
   ?>
-  <span style="font-family: verdana; font-size: 20pt; color: #000000;">Delete Page: <span color="red"><?= $summary ?></span></span>
-  <p><?= $message ?> Click <b>Go Back</b> to return to the page you came from.</p>
-  <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-  <a href="Go Back" onclick="history.go(-1);return false;">Go Back >></a>
-  </p>
+  <span class="atitle">Delete Page: <?= $summary ?></span>
+  <p><?= $message ?> Click <strong>Go Back</strong> to return to the page you came from.</p>
+  <p class="subtitle"><a href="Go Back" onclick="history.go(-1);return false;">Go Back ></a></p>
   <?
   $nsisweb->end_page();
   exit;

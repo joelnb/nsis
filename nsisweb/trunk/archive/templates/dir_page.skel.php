@@ -98,23 +98,23 @@ if(strlen($instances)>0) {
 	  }
   }
   if($history2 == "") {
-	  $history2 = '<span style="color:#888888">This page has been removed from all sections in the Archive</span>';
+	  $history2 = '<span>This page has been removed from all sections in the Archive</span>';
   }
   $history .= $history2;
 } else {
-  $history = 'Navigation: <span style="color:#888888">You are viewing the top level of the Archive</span>';
+  $history = 'Navigation: <span>You are viewing the top level of the Archive</span>';
 }
 
 if($page) {
 ?>
-<span style="font-size:8pt;"><?= $history ?></span>
-<hr style="color:#eeeeee">
+<span style="asmall"><?= $history ?></span>
+<hr class="aline">
 <!-- dir_page.skel.php: begin -->
-<table style="font-family:verdana;font-size:8pt;color:#000000;" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
-<td align="left" valign="middle"><span style="font-size:20pt;"><?= $page->get_title() ?></span></td>
-<td align="right" valign="middle"><?= $edit_link ?> | <?= $delete_link ?> | <?= $pick_link ?> | <?= $insert_link ?> | <?= $up_link ?></td>
+<table style="asmall" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td width="550" valign="middle"><span style="font-size:20pt;"><?= $page->get_title() ?></span></td>
+<td width="228" valign="middle"><?= $edit_link ?> | <?= $delete_link ?> | <?= $pick_link ?> | <?= $insert_link ?> | <?= $up_link ?></td>
 </tr></table>
-<hr style="color:#eeeeee">
+<hr class="aline">
 <p><i><?= $page->get_pp_content() ?></i></p>
 <p>
   <?
@@ -122,9 +122,9 @@ if($page) {
   if(count($children) > 0) {
     foreach($children as $child) {
       if($child['type'] == PAGETYPE_DIRECTORY) {
-        print '<img src="images/folder.gif" width="16" height="16" vspace="5" hspace="5" style="vertical-align:middle;">';
+        print '<p class="alist"><img src="images/folder.gif" class="aicon">&nbsp;';
       } else {
-        print '<img src="images/file.gif" width="16" height="16" vspace="5" hspace="5" style="vertical-align:middle;">';
+        print '<p class="alist"><img src="images/file.gif" class="aicon">&nbsp;';
       }
       print '<a href="'.$nsisweb->get_page_url($child['instanceid']).'&instances='.$nsisweb->get_instance_history(0).'">'.$child['title']."</a>";
       if($child['type'] == PAGETYPE_DIRECTORY) {
@@ -141,7 +141,7 @@ if($page) {
 	        echo ']';
         }
       }
-      print "<br>\n";
+      print "</p>\n";
     }
   } else {
     print 'There are no pages in this section.<br>';

@@ -14,20 +14,15 @@
 $query_count = count($nsisweb->executed_queries);
 ?>
 <!-- footer.skel.php: begin -->
-      <p class="center"><a href="http://sourceforge.net"><img class="centerimage" src="http://sourceforge.net/sflogo.php?group_id=22049&amp;type=1" alt="SourceForge Logo"></a></p>
-                </div>
-              </td> 
-            </tr> 
-          </table> 
-        </td>
-      </tr> 
-    </table> 
-    <table width="750" cellpadding="0" cellspacing="0" border="0" style="background-color:#F0F0F0">
-      <tr>
-        <td align="left" style="font-size:8pt;padding-bottom:2px;"><i>Page generated in <?= number_format($nsisweb->get_gen_time(),3) ?> seconds (<?= $query_count.' '.($query_count == 1 ? "query" : "queries") ?>).</i></td>
-      </tr>
-    </table>
-  </div>
+      </div>
+      <p class="logo"><a href="http://sourceforge.net"><img id="logo" src="http://sourceforge.net/sflogo.php?group_id=22049&amp;type=1" alt="SourceForge Logo" border="0"></a></p>
+    </td> 
+  </tr> 
+</table>
+<?
+/*
+
+  <p class="asmall">Page generated in <?= number_format($nsisweb->get_gen_time(),3) ?> seconds (<?= $query_count.' '.($query_count == 1 ? "query" : "queries") ?>).</p>
   <?
   $session = $nsisweb->get_session();
   $user    = $session->get_user();
@@ -45,6 +40,9 @@ $query_count = count($nsisweb->executed_queries);
       print "</ol>";
     }
   }
+?>
+
+*/
 ?>
 </body> 
 </html>

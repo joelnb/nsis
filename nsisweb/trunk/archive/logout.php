@@ -31,7 +31,7 @@ if(strlen($_POST['method']) > 0) {
       $page = $_GET['page'];
 
       print <<<ENDOFHTML
-        <span style="font-family:verdana;font-size:20pt;color:#000000;">Logout</span>
+        <span class="atitle">Logout</span>
         <p>Which sessions would you like to logout?<br>
         <br>
         <form name="logoutform" method="post" enctype="multipart/form-data" action="logout.php">
@@ -44,10 +44,7 @@ ENDOFHTML;
       print <<<ENDOFHTML
           <input type="radio" name="method" value="thiscomp" CHECKED>Logout on the this computer<br>
           <input type="radio" name="method" value="all">Logout all sessions<br>
-          <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-            <input type="submit" style="color:white;background-color:white;border-style:none">
-            <a href="javascript:document.logoutform.submit();">Logout >></a>
-          </p>
+          <p class="asubtitle"><a href="javascript:document.logoutform.submit();">Logout ></a></p>
         </form>
       </p>
 ENDOFHTML;

@@ -6,7 +6,7 @@ set_time_limit(300);
 include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 
 $nsisweb->start_page('Regenerating Content',FALSE);
-echo '<span style="font-family:verdana;font-size:20pt;color:#000000;">Regenerate Content</span>';
+echo '<span class="atitle">Regenerate Content</span>';
 
 $session = $nsisweb->get_session();
 $user    = find_userid($session->user_id);

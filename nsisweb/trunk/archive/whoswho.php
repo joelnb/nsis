@@ -5,7 +5,7 @@ $nsisweb->start_page("Who's Who");
 $users = $nsisweb->query("select * from nsisweb_users order by username asc",__FILE__,__LINE__);
 
 print <<<ENDOFHTML
-  <span style="font-family:verdana;font-size:20pt;color:#000000;">Who's Who?</span><br>
+  <span class="atitle">Who's Who?</span><br>
   <p>Archive users ordered alphabetically. Click a username to view their profile. Administrators are highlighted in yellow. High contributors are highlighted in blue, a deeper blue indicates more contributions.<br>
   <br>
   <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">

@@ -80,17 +80,17 @@ if($page) {
 		  }
 	  }
 	  if($history2 == "") {
-		  $history2 = '<span style="color:#888888">This page has been removed from all sections in the Archive</span>';
+		  $history2 = 'This page has been removed from all sections in the Archive';
 	  }
 	  $history .= $history2;
   } else {
-	  $history = 'Navigation: <span style="color:#888888">You are viewing the top level of the Archive</span>';
+	  $history = 'Navigation: You are viewing the top level of the Archive';
   }
 ?>
 <!-- user_page.skel.php: begin -->
-<span style="font-size:8pt"><?= $history ?></a>
-<hr style="color:#eeeeee">
-<table style="font-family:verdana;font-size:8pt;color:#000000;" width="100%" cellpadding="0" cellspacing="0" border="0">
+<?= $history ?></a>
+<hr class="aline">
+<table class="asmall" width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
     <td align="left" valign="middle" style="font-size: 20pt;">
       <?= $page->get_title() ?>
@@ -100,8 +100,8 @@ if($page) {
     </td>
   </tr>
 </table>
-<hr style="color:#eeeeee">
-<table style="font-family:verdana;font-size:8pt;color:#000000;" width="100%" cellpadding="0" cellspacing="0" border="0">
+<hr class="aline">
+<table class="" width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
     <td align="left" valign="top">
       Written by <a href="profile.php?userid=<?= $page->get_authorid() ?>"><?= $author ?></a> <?= $page->get_author_date() ?>
@@ -121,7 +121,7 @@ if($page) {
     </td>
   </tr>
   <tr><td><br><br></td></tr>
-  <tr><td colspan="2" align="left" valign="top" style="background-color:#eeeeff;border-width:1px;border-style:solid;padding:10px;font-size:10pt;">
+  <tr><td colspan="2" align="left" valign="top" class="apage">
 <!-- user_page.skel.php: source -->
 <?= $page->get_pp_content() ?>
 <!-- user_page.skel.php: end -->

@@ -45,12 +45,11 @@ function ChooseContributionType()
   /* Anonymous users can't contribute thanks to a jerk that likes to spam. */
   if($user->is_anonymous()) {
     print <<<ENDOFHTML
-      <p style="border:solid 2px red;padding:5px;margin-top:20px;margin-bottom:20px;">
+      <p class="aheadernote">
         Anonymous contribution is currently disabled. Please
-        <a style="text-decoration:underline;" href="login.php">login now</a>.
+        <a href="login.php">login now</a>.
         If you do not already have an account here you can
-        <a style="text-decoration:underline;" href="createaccount.php">create
-        one for free</a>.
+        <a href="createaccount.php">create one for free</a>.
       </p>
 ENDOFHTML;
   }
@@ -58,7 +57,7 @@ ENDOFHTML;
     /* Present visitors with a selection of ways that they can contribute to the
        Archive. */
     print <<<ENDOFHTML
-      <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute To The Archive</span>
+      <span class="atitle">Contribute To The Archive</span>
       <p>I want to contribute:</p>
       <form name="choiceform" method="post" enctype="multipart/form-data" action="contribute.php">
         <p style="margin-left:20px;">
@@ -77,19 +76,18 @@ ENDOFHTML;
         <p>
           When you have made your choice press continue to move on to the next stage:
         </p>
-        <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+        <p class="asubtitle">
           <input type="hidden" name="stage" value="2">
-          <a href="javascript:document.choiceform.submit();">Continue >></a>
+          <a href="javascript:document.choiceform.submit();">Continue ></a>
         </p>
       </form>
       </p>
 ENDOFHTML;
 
     print <<<ENDOFHTML
-      <p style="border:solid 2px red;padding:5px;margin-top:20px;margin-bottom:20px;">
+      <p style="aboxnote">
         Please do <b>not </b> post bug reports and patches here. Post both at the
-        <a style="text-decoration:underline;" href="http://sourceforge.net/projects/nsis">
-        SourceForge project page</a>.
+        <a href="http://sourceforge.net/projects/nsis">SourceForge project page</a>.
       </p>
 ENDOFHTML;
   }
@@ -102,7 +100,7 @@ function ContributeNewPage()
   global $nsisweb;
   $nsisweb->start_page('Contribute New Page',FALSE);
   print <<<ENDOFHTML
-    <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute New Page</span>
+    <span class="atitle">Contribute New Page</span>
     <p>A new page requires three things, a title, some content and a place to
     exist in the page hierarchy. At this stage you must choose the title and
     the content. You can edit the title and content and preview the results
@@ -125,22 +123,22 @@ ENDOFHTML;
     <form name="editform" method="post" enctype="multipart/form-data" action="contribute.php">
       <p>
         Choose a title for your new page: (255 characters max)<br>
-        <input type="text" style="font-family:courier new;font-size:10pt;" name="title" size="79" maxlength="255" value="$title"><br>
+        <input type="text" class="afixfont" name="title" size="79" maxlength="255" value="$title"><br>
         <br>
         You must now enter the content of your new page. You are allowed to use HTML although some
         tags that could be used to attack this site will be removed from your content. Additionally you
         can enclose text inside a [source] ... [/source] token pair which will cause that text to be
         syntax highlighted as if the text is NSIS script code:<br>
-        <textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="25">$safe_content</textarea>
+        <textarea name="content" class="afixfont" cols="79" rows="25">$safe_content</textarea>
       </p>
-      <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+      <p class="asubtitle">
         <input type="hidden" name="action" value="savepage">
-        <a href="contribute.php"><< Back</a> |
+        <a href="contribute.php">< Back</a> |
         <a href="javascript:document.editform.action.value='previewpage';document.editform.submit();">Preview</a> |
-        <a href="javascript:document.editform.submit();">Continue >></a>
+        <a href="javascript:document.editform.submit();">Continue ></a>
       </p>
     </form>
-    <a name="preview">
+    <a name="preview"></a>
 ENDOFHTML;
 
   /* Construct a preview of the content supplied */
@@ -193,7 +191,7 @@ function SavePage()
 
   $nsisweb->start_page('Contribute New Page',FALSE);
   print <<<ENDOFHTML
-    <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute New Page</span>
+    <span class="atitle">Contribute New Page</span>
     <p>From the list below please choose a section in which to insert your new page:</p>
     <form name="insertform" method="post" enctype="multipart/form-data" action="contribute.php">
       <input type="hidden" name="action" value="savepage">
@@ -218,9 +216,9 @@ ENDOFHTML;
 
   print <<<ENDOFHTML
       </p>
-      <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+      <p class="asubtitle">
         <input type="hidden" name="action" value="savepage">
-        <a href="javascript:document.insertform.submit();">Insert Your Page >></a>
+        <a href="javascript:document.insertform.submit();">Insert Your Page ></a>
       </p>
     </form>
 ENDOFHTML;
@@ -232,7 +230,7 @@ function ContributeNewSection()
   global $nsisweb;
   $nsisweb->start_page('Contribute New Section',FALSE);
   print <<<ENDOFHTML
-    <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute New Section</span>
+    <span class="atitle">Contribute New Section</span>
     <p>A new section requires three things, a title, a description of what kind of pages should be contained
     within the section, and a place for the section to exist in the page hierarchy. At this stage you must
     choose the title and the description. You can edit the title and description and preview
@@ -255,19 +253,19 @@ ENDOFHTML;
     <form name="editform" method="post" enctype="multipart/form-data" action="contribute.php">
       <p>
         Choose a title for your new page: (255 characters max)<br>
-        <input type="text" style="font-family:courier new;font-size:10pt;" name="title" size="79" maxlength="255" value="$title"><br>
+        <input type="text" class="afixfont" name="title" size="79" maxlength="255" value="$title"><br>
         <br>
         Enter a description for your new section:<br>
-        <textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="3">$safe_content</textarea>
+        <textarea name="content" class="afixfont" cols="79" rows="3">$safe_content</textarea>
       </p>
-      <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+      <p class="asubtitle">
         <input type="hidden" name="action" value="savesection">
-        <a href="contribute.php"><< Back</a> |
+        <a href="contribute.php">< Back</a> |
         <a href="javascript:document.editform.action.value='previewsection';document.editform.submit();">Preview</a> |
-        <a href="javascript:document.editform.submit();">Continue >></a>
+        <a href="javascript:document.editform.submit();">Continue ></a>
       </p>
     </form>
-    <a name="preview">
+    <a name="preview"></a>
 ENDOFHTML;
 
   /* Construct a preview of the content supplied */
@@ -315,7 +313,7 @@ function SaveSection()
 
   $nsisweb->start_page('Contribute New Section',FALSE);
   print <<<ENDOFHTML
-    <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute New Section</span>
+    <span class="atitle">Contribute New Section</span>
     <p>From the list below please choose a section in which to insert your new section:</p>
     <form name="insertform" method="post" enctype="multipart/form-data" action="contribute.php">
       <input type="hidden" name="action" value="savesection">
@@ -340,9 +338,7 @@ ENDOFHTML;
 
   print <<<ENDOFHTML
       </p>
-      <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
-        <a href="javascript:document.insertform.submit();">Insert Your Section >></a>
-      </p>
+      <p class="asubtitle"><a href="javascript:document.insertform.submit();">Insert Your Section ></a></p>
     </form>
 ENDOFHTML;
 }
@@ -358,7 +354,7 @@ function ContributeNewFile()
   
   $nsisweb->start_page('Contribute New File',FALSE);
   print <<<ENDOFHTML
-    <span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute New File</span>
+    <span class="atitle">Contribute New File</span>
     <p>Your admin status gives you the right to upload files to the Archive.
     Please do not abuse this facility, and please remember that these files
     will be stored in the SourceForge webspace where we have a 100 Mb
@@ -389,16 +385,16 @@ ENDOFHTML;
     <form name="uploadform" method="post" enctype="multipart/form-data" action="contribute.php">
       <p>
         Enter a description for your new file:<br>
-        <textarea name="content" style="font-family:courier new;font-size:10pt;" cols="79" rows="3">$content</textarea>
+        <textarea name="content" cols="79" rows="3">$content</textarea>
         <br>
         Choose the file that you wish to upload: (max single upload: $max_upload_mb Mb)<br>
         <input name="MAX_FILE_SIZE" type="hidden" value="$max_upload_bytes">
         <input name="nsiswebfile" type="file" size="72"><br>
       </p>
-      <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+      <p class="asubtitle>
         <input type="hidden" name="action" value="uploadfile">
-        <a href="contribute.php"><< Back</a> |
-        <a href="javascript:document.uploadform.submit();">Continue >></a>
+        <a href="contribute.php">< Back</a> |
+        <a href="javascript:document.uploadform.submit();">Continue ></a>
       </p>
     </form>
 ENDOFHTML;
@@ -410,7 +406,7 @@ function UploadFile()
   global $nsisweb;
   
   $nsisweb->start_page('Contribute New File',FALSE);
-  print '<span style="font-family:verdana;font-size:20pt;color:#000000;">Contribute New File</span>';
+  print '<span class="atitle">Contribute New File</span>';
   
   if(count($_FILES) > 0) {
     $result = process_uploaded_files('nsiswebfile','content');

@@ -1,5 +1,5 @@
 <html>
-<body style="font-family:courier new;font-size:10pt;">
+<body style="font-family:courier new;">
 <?
   echo '<b>PHP Version: '.phpversion().'</b><br>';
   echo '<b>Installing NSISWeb:</b><br>';

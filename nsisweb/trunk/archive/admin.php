@@ -28,8 +28,8 @@ if(!$user->is_admin()) {
     // ----------------------
     case 'phpinfo':
       print <<<ENDOFHTML
-        <span style="font-family:verdana;font-size:20pt;color:#000000;">Web Server Info</span><br>
-        <span style="font-family:verdana;font-size:10pt;"><a href="admin.php">Return To Main Admin Options</a></span>
+        <span class="atitle">Web Server Info</span><br>
+        <a href="admin.php">Return To Main Admin Options</a>
         <p>The PHP engine reports the following about it's configuration:<br><br></p>
 ENDOFHTML;
 
@@ -55,13 +55,13 @@ ENDOFHTML;
         $file = fopen($filename,'w');
         if($file) {
           fwrite($file,"Log emptied on ".date('Y-m-s H:i:s')."\n");
-          fclose($filename);
+          fclose($file);
         }
       }
       
       print <<<ENDOFHTML
-        <span style="font-family:verdana;font-size:20pt;color:#000000;">Database Server Info</span><br>
-        <span style="font-family:verdana;font-size:10pt;"><a href="admin.php">Return To Main Admin Options</a></span>
+        <span class="atitle">Database Server Info</span><br>
+        <a href="admin.php">Return To Main Admin Options</a>
 ENDOFHTML;
 
       if(@filesize($filename) <= 0) {
@@ -80,10 +80,10 @@ ENDOFHTML;
             <br>
             <div style="text-align:center;"><a href="admin.php?action=dbinfo&subaction=clearlog" onclick="return checkclearlog();"><img style="border:none;" src="images/bigred.jpg"></a><div>
             <br>
-            <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
-              <tr style="background-color:#eeeeff">
-                <td style="text-align:center;">&nbsp;<b>#</b>&nbsp;</td>
-                <td colspan="4" style="text-align:center;">&nbsp;<b>Log Message</b>&nbsp;</td>
+            <table border="1">
+              <tr class="aboxheader">
+                <td>&nbsp;<strong>#</strong>&nbsp;</td>
+                <td colspan="4">&nbsp;<b>Log Message</b>&nbsp;</td>
               </tr>
 ENDOFHTML;
 
@@ -120,18 +120,18 @@ ENDOFHTML;
 
             if($i == 0) {
               $i = 1;
-              $bgcolour = '#eeffee';
+              $bgcolour = 'acolor1';
             } else {
               $i = 0;
-              $bgcolour = '#eeeeee';
+              $bgcolour = 'acolor2';
             }
 
-            print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
-            print '<td rowspan="2" style="text-align:center;">'.$index++.'</td>';
-            print '<td style="text-align:center">'.$datetime.'</td><td style="text-align:center">'.$file.'</td>';
-            print '<td style="text-align:center">Line '.$line.'</td><td style="text-align:center">'.$request.'</td>';
-            print '</tr><tr style="background-color:#ffffff;font-size:8pt;">';
-            print '<td colspan="4" style="padding:3px;font-family:courier new;">'.wordwrap(htmlentities($msg),60,"\n",1).'</td>';
+            print '<tr class="'.$bgcolour.'">';
+            print '<td rowspan="2">'.$index++.'</td>';
+            print '<td>'.$datetime.'</td><td>'.$file.'</td>';
+            print '<td>Line '.$line.'</td><td>'.$request.'</td>';
+            print '</tr><tr>';
+            print '<td colspan="4">'.wordwrap(htmlentities($msg),60,"\n",1).'</td>';
             print "</tr>\n";
           }
 
@@ -160,13 +160,13 @@ ENDOFHTML;
       $anoncount = $anons ? $nsisweb->how_many_results($unique_a) : 0;
 
       print <<<ENDOFHTML
-        <span style="font-family:verdana;font-size:20pt;color:#000000;">Connected Sessions</span><br>
-        <span style="font-family:verdana;font-size:10pt;"><a href="admin.php">Return To Main Admin Options</a></span>
+        <span class="atitle">Connected Sessions</span><br>
+        <a href="admin.php">Return To Main Admin Options</a>
         <p>The following sessions are currently established: ($usercount registered users and
         $anoncount guests)<br>
           <br>
-          <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
-            <tr style="background-color:#eeeeff">
+          <table>
+            <tr class="aboxheader">
               <td>&nbsp;<b>ID</b>&nbsp;</td>
               <td>&nbsp;<b>User</b>&nbsp;</td>
               <td>&nbsp;<b>Start Time</b>&nbsp;</td>
@@ -181,16 +181,16 @@ ENDOFHTML;
         while($record = $nsisweb->get_result_array($users)) {
           if($i == 0) {
             $i = 1;
-            $bgcolour = '#eeffee';
+            $bgcolour = 'acolor1';
           } else {
             $i = 0;
-            $bgcolour = '#eeeeee';
+            $bgcolour = 'acolor2';
           }
 
           $uptime   = how_long($record['uptime']);
           $accessed = how_long($record['accessed']);
 
-          print "<tr style=\"background-color:$bgcolour;font-size:8pt;\" title=\"Session ID: ".$record['sessionid'].", session created $uptime, last accessed $accessed\">";
+          print "<tr class=\"$bgcolour\" title=\"Session ID: ".$record['sessionid'].", session created $uptime, last accessed $accessed\">";
           print '<td>&nbsp;'.$record['userid'].'&nbsp;</td>';
           print '<td>&nbsp;'.$record['username'].'&nbsp;</td>';
           print '<td>&nbsp;'.$record['created'].'&nbsp;</td>';
@@ -205,16 +205,16 @@ ENDOFHTML;
         while($record = $nsisweb->get_result_array($anons)) {
           if($i == 0) {
             $i = 1;
-            $bgcolour = '#eeffee';
+            $bgcolour = 'acolor1';
           } else {
             $i = 0;
-            $bgcolour = '#eeeeee';
+            $bgcolour = 'acolor2';
           }
           
           $uptime   = how_long($record['uptime']);
           $accessed = how_long($record['accessed']);
 
-          print "<tr style=\"background-color:$bgcolour;font-size:8pt;\" title=\"Session ID: ".$record['sessionid'].", session created $uptime, last accessed $accessed\">";
+          print "<tr class=\"$bgcolour\" title=\"Session ID: ".$record['sessionid'].", session created $uptime, last accessed $accessed\">";
           print '<td>&nbsp;0&nbsp;</td>';
           print '<td>&nbsp;Anonymous&nbsp;</td>';
           print '<td>&nbsp;'.$record['created'].'&nbsp;</td>';
@@ -243,12 +243,12 @@ ENDOFHTML;
       $usercount = $users ? $nsisweb->how_many_results($users) : 0;
 
       print <<<ENDOFHTML
-        <span style="font-family:verdana;font-size:20pt;color:#000000;">Registered Users</span><br>
-        <span style="font-family:verdana;font-size:10pt;"><a href="admin.php">Return To Main Admin Options</a></span>
+        <span class="atitle">Registered Users</span><br>
+        <a href="admin.php">Return To Main Admin Options</a>
         <p>The following $usercount users are registered on this site (click the username to view the profile of the user) :-<br>
           <br>
-          <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
-            <tr style="background-color:#eeeeff">
+          <table>
+            <tr class="aboxheader">
               <td>&nbsp;<b>ID</b>&nbsp;</td>
               <td>&nbsp;<b>User</b>&nbsp;</td>
               <td>&nbsp;<b>Created</b>&nbsp;</td>
@@ -265,13 +265,13 @@ ENDOFHTML;
         while($record = $nsisweb->get_result_array($users)) {
           if($i == 0) {
             $i = 1;
-            $bgcolour = '#eeffee';
+            $bgcolour = 'acolor1';
           } else {
             $i = 0;
-            $bgcolour = '#eeeeee';
+            $bgcolour = 'acolor2';
           }
 
-          print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
+          print '<tr class="'.$bgcolour.'">';
           print '<td>&nbsp;'.$record['userid'].'&nbsp;</td>';
           print '<td>&nbsp;<a href="profile.php?userid='.$record['userid'].'">'.$record['username'].'</a>&nbsp;</td>';
           print '<td>&nbsp;'.$record['created'].'&nbsp;</td>';
@@ -312,12 +312,12 @@ ENDOFHTML;
     // -----------------------------
     case 'browsers':
       print <<<ENDOFHTML
-        <span style="font-family:verdana;font-size:20pt;color:#000000;">Browsers By IP</span><br>
-        <span style="font-family:verdana;font-size:10pt;"><a href="admin.php">Return To Main Admin Options</a></span>
+        <span class="atitle">Browsers By IP</span><br>
+        <a href="admin.php">Return To Main Admin Options</a>
         <p>This table shows the number of distinct ip addresses associated with each browser type:<br>
           <br>
-          <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
-            <tr style="background-color:#eeeeff">
+          <table>
+            <tr class="aboxheader">
               <td>&nbsp;<b>#</b>&nbsp;</td>
               <td>&nbsp;<b>User Agent</b>&nbsp;</td>
               <td>&nbsp;<b>IP Addresses</b>&nbsp;</td>
@@ -331,13 +331,13 @@ ENDOFHTML;
         while($record = $nsisweb->get_result_array($result)) {
           if($i == 0) {
             $i = 1;
-            $bgcolour = '#eeffee';
+            $bgcolour = 'acolor1';
           } else {
             $i = 0;
-            $bgcolour = '#eeeeee';
+            $bgcolour = 'acolor2';
           }
 
-          print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
+          print '<tr class="'.$bgcolour.'">';
           print '<td>&nbsp;'.$index++.'&nbsp;</td>';
           print '<td>&nbsp;'.$record['user_agent'].'&nbsp;</td>';
           print '<td>&nbsp;'.$record['cc'].'&nbsp;</td>';
@@ -356,7 +356,7 @@ ENDOFHTML;
     // -------------------
     default:
       print <<<ENDOFHTML
-        <span style="font-family:verdana;font-size:20pt;color:#000000;">NSIS Archive Admin Options</span>
+        <span class="atitle">NSIS Archive Admin Options</span>
         <p>Administrator status gives you the right to modify any page stored in the
         database no matter who created it, the right to grant admin rights to other
         users, the right to upload files to the archive and the ability to see

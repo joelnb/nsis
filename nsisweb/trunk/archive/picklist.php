@@ -42,8 +42,8 @@ if(strcmp($_GET['action'],'pick') == 0) {
 $nsisweb->start_page('Your Pick List',FALSE);
 
 ?>
-<span style="font-family: verdana; font-size: 20pt; color: #000000;">Your Pick List</span>
-<p>Below you will see the pages in your pick list, a kind of clipboard for removed and newly created pages. Pages <a style="text-decoration:underline;color:#0000ff;" href="<?= $nsisweb->get_page_url('contribute') ?>">created by you</a> will appear in your pick list so
+<span class="atitle">Your Pick List</span>
+<p>Below you will see the pages in your pick list, a kind of clipboard for removed and newly created pages. Pages <a href="<?= $nsisweb->get_page_url('contribute') ?>">created by you</a> will appear in your pick list so
 that you can insert them into the archive where you feel they belong. You will only be able to insert a page if you came to your pick list by clicking on an Insert link in the archive, otherwise the action will be greyed out and unavailable.<br>
 <br>
 Select one or more pages from the pick list and then click an action link at the bottom:<br>
@@ -54,11 +54,11 @@ if(count($picks)>0) {
   <form name="pickform" method="post" enctype="multipart/form-data" action="picklist.php">
     <input type="hidden" name="instanceid" value="<?= $instanceid ?>">
     <input type="hidden" name="action" value="insert">
-    <table width="100%" border="1" bordercolor="#dddddd" cellpadding="2" cellspacing="0" style="margin-bottom:20px;">
-      <tr style="background-color:#d9d9d9;font-weight:bold;">
-        <td width="50" align="center">Select</td>
+    <table width="100%">
+      <tr>
+        <td width="50" >Select</td>
         <td>&nbsp;Title</td>
-        <td width="70" align="center">Preview</td>
+        <td width="70">Preview</td>
       </tr>
   <?
   foreach($picks as $pick) {
@@ -70,9 +70,9 @@ if(count($picks)>0) {
         if(strlen($page->get_title())>0) {
           ?>
           <tr>
-            <td align="center" valign="middle"><input style="margin-left:10px;" type="checkbox" name="picked[]" value="<?= $pageid ?>"></td>
-            <td align="left" valign="middle">&nbsp;<?= $page->get_title() ?></td>
-            <td align="center" valign="middle"><a style="text-decoration:underline;color:#0000ff;" href="viewpage.php?pageid=<?= $pageid ?>" target="_blank">view</a></td>
+            <td><input type="checkbox" name="picked[]" value="<?= $pageid ?>"></td>
+            <td>&nbsp;<?= $page->get_title() ?></td>
+            <td><a href="viewpage.php?pageid=<?= $pageid ?>" target="_blank">view</a></td>
           </tr>
           <?
         }
@@ -83,22 +83,22 @@ if(count($picks)>0) {
     </table>
     <p>Press Cancel to return to the page you were viewing before, or Insert to add
     the ticked pages as children of the page you were viewing.</p>
-    <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+    <p class="asubtitle">
       <?
       if(isset($instanceid)) {
         $session = $nsisweb->get_session();
         if($instanceid > 0 || $session->looks_like_admin()) {
         ?>
-          <a href="<?= $nsisweb->get_page_url($instanceid); ?>"><< Cancel</a> |
+          <a href="<?= $nsisweb->get_page_url($instanceid); ?>">< Cancel</a> |
           <a href="Delete" onclick="pickform.action.value='delete';document.pickform.submit();return false;">Delete</a> |
-          <a href="Insert" onclick="pickform.action.value='insert';document.pickform.submit();return false;">Insert >></a>
+          <a href="Insert" onclick="pickform.action.value='insert';document.pickform.submit();return false;">Insert ></a>
         <?
         }
       } else {
         ?>
-          <a href="<?= $nsisweb->get_home_url() ?>"><< Home</a> |
+          <a href="<?= $nsisweb->get_home_url() ?>">< Home</a> |
           <a href="Delete" onclick="pickform.action.value='delete';document.pickform.submit();return false;">Delete</a> |
-          <span style="color:#aaaaaa">Insert >></span></a>
+          <span class="atcolord">Insert ></span>
         <?
       }
       ?>
@@ -108,15 +108,14 @@ if(count($picks)>0) {
 } else {
 ?>
 <ul><li>There are no pages in your pick list at this time.</ul>
-  <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
+  <p class="asubtitle">
     <? if(isset($instanceid)) { ?>
-      <a href="<?= $nsisweb->get_page_url($instanceid); ?>"><< Cancel</a>
+      <a href="<?= $nsisweb->get_page_url($instanceid); ?>">< Cancel</a>
     <? } else { ?>
-      <a href="<?= $nsisweb->get_home_url() ?>"><< Home</a>
+      <a href="<?= $nsisweb->get_home_url() ?>">< Home</a>
     <? } ?>
   </p>
 <?
 }
-echo '</p>';
 $nsisweb->end_page();
 ?>
