@@ -235,13 +235,14 @@ struct keyword {
 	{"SetSilent", INSTRUCTION},
 	{"ShowWindow", INSTRUCTION},
 	{"LoadLanguageFile", ATTRIBUTE},
-	{"LangString", INSTRUCTION},
+	{"LangString", ATTRIBUTE},
 	{"VIAddVersionKey", ATTRIBUTE},
 	{"AllowSkipFiles", ATTRIBUTE},
 	{"SectionSetSize", INSTRUCTION},
 	{"SectionGetSize", INSTRUCTION},
 	{"SetCurInstType", INSTRUCTION},
-	{"GetCurInstType" INSTRUCTION},
+	{"GetCurInstType", INSTRUCTION},
+	{"WriteUninstaller", INSTRUCTION},
 	{"license", PARAMETER},
 	{"components", PARAMETER},
 	{"directory", PARAMETER},
@@ -312,6 +313,20 @@ struct keyword {
 	{"IDOK", PARAMETER},
 	{"IDRETRY", PARAMETER},
 	{"IDYES", PARAMETER},
+	{"HKCR", PARAMETER},
+	{"HKLM", PARAMETER},
+	{"HKCU", PARAMETER},
+	{"HKU", PARAMETER},
+	{"HKCC", PARAMETER},
+	{"HKDD", PARAMETER},
+	{"HKPD", PARAMETER},
+	{"HKEY_CLASSES_ROOT", PARAMETER},
+	{"HKEY_LOCAL_MACHINE", PARAMETER},
+	{"HKEY_CURRENT_USER", PARAMETER},
+	{"HKEY_USERS", PARAMETER},
+	{"HKEY_CURRENT_CONFIG", PARAMETER},
+	{"HKEY_DYN_DATA", PARAMETER},
+	{"HKEY_PERFORMANCE_DATA", PARAMETER},
 	{"current", PARAMETER},
 	{"all", PARAMETER},
 	{"true", PARAMETER},
@@ -328,14 +343,15 @@ struct keyword {
 	{"/UNDERLINE", PARAMETER},
 	{"/STRIKE", PARAMETER},
 	{"smooth", PARAMETER},
-	{"/BRANDING", PARAMETER}
+	{"/BRANDING", PARAMETER},
+	{"/o", PARAMETER}
 };
 %}
 
 %x SLCOMMENT STRING STRING2 STRING3 VAR PREPROCESSOR
 
-SWC		[A-Za-z_]
-WWC		[_A-Za-z0-9]
+SWC		[\.\/A-Za-z_]
+WWC		[_A-Za-z0-9\.]
 OC		[0-7]
 DC		[0-9]
 HC		[0-9A-Fa-f]
@@ -396,6 +412,7 @@ SYMB	[<>(){}\[\]+\-*=&|~`\/\\,.:;!$?%]
 }
 
 <SLCOMMENT>{
+	\\{EOL}				ECHO;
 	{EOL}				BEGIN(INITIAL); printf("%s</span>",yytext); 
 }
 
@@ -416,6 +433,7 @@ SYMB	[<>(){}\[\]+\-*=&|~`\/\\,.:;!$?%]
 }
 
 <PREPROCESSOR>{
+	\\{EOL}				ECHO;
 	{EOL}				BEGIN(INITIAL);   ECHO;
 }
 
