@@ -46,7 +46,7 @@
 	</li>
 	<li class="text"><b><a href="http://nsis.sourceforge.net/nightly/nsis.zip">Development Snapshot</a></b> 
 		<ul>
-		NSIS CVS directory zipped up
+		NSIS CVS directory zipped up<br>
 		<span class="smalltext">Updated: <?=LocalFileDate("nightly/nsis.zip")?></span> 
 		</ul>
 	</li>
