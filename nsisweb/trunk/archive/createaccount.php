@@ -71,7 +71,7 @@ kind of special rights.</p>
   </p>
   <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
     <input type="submit" style="color:white;background-color:white;border-style:none">
-    <a href="javascript:wizard.submit();">Continue >></a>
+    <a href="javascript:document.wizard.submit();">Continue >></a>
   </p>
 </form>
 <?

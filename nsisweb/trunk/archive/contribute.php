@@ -72,7 +72,7 @@ switch($stage) {
 			</p>
 			<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
 			  <input type="hidden" name="stage" value="2">
-			  <a href="javascript:wizard.submit();">Continue >></a>
+			  <a href="javascript:document.wizard.submit();">Continue >></a>
 			</p>
 		</form>
 		</p>
@@ -189,9 +189,9 @@ ENDOFHTML;
 			<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
 			  <input type="hidden" name="stage" value="3">
 			  <input type="hidden" name="pagetype" value="$pagetype">
-		  	<a href="javascript:wizard.stage.value=1;wizard.submit();"><< Back</a> |
-		  	<a href="javascript:wizard.stage.value=2;wizard.submit();">Preview</a> |
-			  <a href="javascript:wizard.submit();">Continue >></a>
+		  	<a href="javascript:document.wizard.stage.value=1;wizard.submit();"><< Back</a> |
+		  	<a href="javascript:document.wizard.stage.value=2;wizard.submit();">Preview</a> |
+			  <a href="javascript:document.wizard.submit();">Continue >></a>
 			</p>
 			</form>
 ENDOFHTML;
@@ -242,8 +242,8 @@ ENDOFHTML;
 			<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
 			  <input type="hidden" name="stage" value="2">
 			  <input type="hidden" name="pagetype" value="$pagetype">
-		  	<a href="javascript:wizard.stage.value=1;wizard.submit();"><< Back</a> |
-		  	<a href="javascript:wizard.stage.value=2;wizard.submit();">Upload</a> |
+		  	<a href="javascript:document.wizard.stage.value=1;wizard.submit();"><< Back</a> |
+		  	<a href="javascript:document.wizard.stage.value=2;wizard.submit();">Upload</a> |
 			  <a href="$home_link">Finished >></a>
 			</p>
 			</form>

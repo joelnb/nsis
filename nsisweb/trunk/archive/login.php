@@ -56,7 +56,7 @@ if($login_failed) {
   </p>
   <p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
     <input type="submit" style="color:white;background-color:white;border-style:none">
-    <a href="javascript:wizard.submit();">Login >></a>
+    <a href="javascript:document.wizard.submit();">Login >></a>
   </p>
 </form>
 <?

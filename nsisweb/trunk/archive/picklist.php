@@ -85,11 +85,11 @@ if(count($picks)>0) {
 		<p align="right" style="margin-top:30px;border-top:solid 1px #000000;">
       <? if(isset($instanceid)) { ?>
 		  <a href="<?= $nsisweb->get_page_url($instanceid); ?>"><< Cancel</a> |
-      <a href="Delete" onclick="pickform.action.value='delete';pickform.submit();return false;">Delete</a> |
-		  <a href="Insert" onclick="pickform.action.value='insert';pickform.submit();return false;">Insert >></a>
+      <a href="Delete" onclick="pickform.action.value='delete';document.pickform.submit();return false;">Delete</a> |
+		  <a href="Insert" onclick="pickform.action.value='insert';document.pickform.submit();return false;">Insert >></a>
       <? } else { ?>
 		  <a href="<?= $nsisweb->get_home_url() ?>"><< Home</a> |
-      <a href="Delete" onclick="pickform.action.value='delete';pickform.submit();return false;">Delete</a> |
+      <a href="Delete" onclick="pickform.action.value='delete';document.pickform.submit();return false;">Delete</a> |
       <font color="#aaaaaa">Insert >></a>
       <? } ?>
 		</p>
