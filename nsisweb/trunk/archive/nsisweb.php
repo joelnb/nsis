@@ -49,6 +49,9 @@ The Archive currently contains <?= $pages_text ?> and has <?= $users_text ?>.
   <li><b><a href="<?= $nsisweb->get_page_url('download') ?>">Download</a></b>
     <ul>Skip the information and head straight for the downloads</ul>
   </li>
+  <li><b><a href="<?= $nsisweb->get_page_url('newest') ?>">Latest Additions/Changes</a></b>
+    <ul>See the latest additions and modifications</ul>
+  </li>
   <li><b><a href="<?= $nsisweb->get_page_url('popular') ?>">Most Popular</a></b>
     <ul>See which pages are visited most and which files are downloaded most frequently</ul>
   </li>
