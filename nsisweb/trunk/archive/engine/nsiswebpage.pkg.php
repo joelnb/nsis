@@ -377,7 +377,7 @@ function preprocess($content)
 	   attributes should be forcibly removed. bad_attvals replaces parts of
 	   attributes on certain tags with replacement text of our choosing.
 	   add_attr_to_tag adds attributes of our choosing to certain tags. */
- 	$tag_list             = array(true,	"font", "div", "span", "h1", "h2", "h3", "table", "tr", "td", "th", "br", "hr", "b", "a", "i", "img", "strong", "em", "p", "li", "ul", "ol", "pre", "blockquote");
+ 	$tag_list             = array(true,	"font", "div", "span", "h1", "h2", "h3", "table", "tr", "td", "th", "br", "hr", "b", "a", "i", "u", "img", "strong", "em", "p", "li", "ul", "ol", "pre", "blockquote");
 	$rm_tags_with_content = array('script', 'style', 'applet', 'embed', 'head', 'frameset');
 	$self_closing_tags    = array(); //array('img', 'br', 'hr', 'input');
 	$force_tag_closing    = false;

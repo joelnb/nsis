@@ -160,13 +160,17 @@ function find_my_session()
 			if(time()-$session->last_checked > 300) {
 				$nsisweb->query("delete from nsisweb_sessions where (UNIX_TIMESTAMP()-UNIX_TIMESTAMP(last_access))>".SESSION_TIMEOUT);
 				if($session_id != ANONYMOUS_SESSION_ID) {
-					$result = $nsisweb->query("select * from nsisweb_sessions where sessionid='$session_id'");
-					if($result && $nsisweb->how_many_results($result) == 1) {
-						$session = new NsisWebSession($nsisweb->get_result_array($result));
+					$record = $nsisweb->query_one_only("select * from nsisweb_sessions where sessionid='$session_id'");
+					if($record) {
+						$session = new NsisWebSession($record);
 						if($session->is_legal()) {
 							$session->last_checked = time();
 							$session_okay = TRUE;
 						}
+					} else {
+						end_session();
+						session_save_path(NSISWEB_SESSION_DIR);
+					  session_start();
 					}
 				}
 			} else {
@@ -225,6 +229,7 @@ function end_session()
 	}
 
 	setcookie(COOKIE_NAME,"",time()-86400,"/","",0);
+	setcookie(session_name(),"","","/");
 	unset($_GET[COOKIE_NAME]);
 
 	@session_start();
