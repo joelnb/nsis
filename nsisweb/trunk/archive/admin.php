@@ -243,7 +243,7 @@ ENDOFHTML;
       print <<<ENDOFHTML
         <span style="font-family:verdana;font-size:20pt;color:#000000;">Registered Users</span><br>
         <span style="font-family:verdana;font-size:10pt;"><a href="admin.php">Return To Main Admin Options</a></span>
-        <p>The following $usercount users are registered on this site:<br>
+        <p>The following $usercount users are registered on this site (click the username to view the profile of the user) :-<br>
           <br>
           <table border="1" bordercolor="#aaaaaa" cellpadding="2" cellspacing="0">
             <tr style="background-color:#eeeeff">
@@ -271,7 +271,7 @@ ENDOFHTML;
 
           print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
           print '<td>&nbsp;'.$record['userid'].'&nbsp;</td>';
-          print '<td>&nbsp;'.$record['username'].'&nbsp;</td>';
+          print '<td>&nbsp;<a href="profile.php?userid='.$record['userid'].'">'.$record['username'].'</a>&nbsp;</td>';
           print '<td>&nbsp;'.$record['created'].'&nbsp;</td>';
           print '<td>&nbsp;'.($record['flags'] & USERFLAG_PERSIST ? 'Yes' : 'No').'&nbsp;</td>';
 
