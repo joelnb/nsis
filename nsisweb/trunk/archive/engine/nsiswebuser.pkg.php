@@ -7,12 +7,13 @@ define('ANONYMOUS_USER_ID', 0);
 define('SYSTEM_USER_ID',   -1);
 define('USERTYPE_NORMAL',   0);
 define('USERTYPE_ADMIN',    1);
+define('USERFLAG_PERSIST',  1);
 
 function initialise_user_table()
 {
 	global $nsisweb;
 	$nsisweb->query("drop table if exists nsisweb_users");
-	$nsisweb->query("create table nsisweb_users (username varchar(255) not null,password varchar(255) not null,userid int unsigned auto_increment, primary key(userid), created datetime not null, usertype int unsigned not null default 0)");
+	$nsisweb->query("create table nsisweb_users (username varchar(255) not null,password varchar(255) not null,userid int unsigned auto_increment,primary key(userid),created datetime not null,usertype int unsigned not null default 0,flags int unsigned default 0)");
 }
 
 class NsisWebUser
@@ -20,16 +21,22 @@ class NsisWebUser
 	var $user_id;
 	var $username;
 	var $usertype;
+	var $flags;
 	
 	function NsisWebUser($array)
 	{
 		$this->user_id  = $array['userid'];
 		$this->username = $array['username'];
 		$this->usertype = $array['usertype'];
+		$this->flags    = $array['flags'];
 	}
   function is_admin()
   {
     return ($this->usertype == USERTYPE_ADMIN) ? TRUE : FALSE;
+  }
+  function persists()
+  {
+	  return ($this->flags & USERFLAG_PERSIST) ? TRUE : FALSE;
   }
 };
 

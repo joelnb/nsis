@@ -90,11 +90,12 @@ ENDOFHTML;
 	    	<td>&nbsp;<b>#</b>&nbsp;</td>
 	    	<td>&nbsp;<b>User</b>&nbsp;</td>
 	    	<td>&nbsp;<b>Created</b>&nbsp;</td>
-	    	<td>&nbsp;<b>Admin</b>&nbsp;</td>
+	    	<td>&nbsp;<b>Persistent Login</b>&nbsp;</td>
+	    	<td>&nbsp;<b>Is Admin</b>&nbsp;</td>
 	    </tr>
 ENDOFHTML;
 
-	$result = $nsisweb->query("select userid,username,created,usertype from nsisweb_users");
+	$result = $nsisweb->query("select userid,username,created,usertype,flags from nsisweb_users");
 	if($result && $nsisweb->how_many_results($result) > 0) {
 		$i = 0;
 		while($record = $nsisweb->get_result_array($result)) {
@@ -110,6 +111,8 @@ ENDOFHTML;
 			print '<td>&nbsp;'.$record['userid'].'&nbsp;</td>';
 			print '<td>&nbsp;'.$record['username'].'&nbsp;</td>';
 			print '<td>&nbsp;'.$record['created'].'&nbsp;</td>';
+			print '<td>&nbsp;'.($record['flags'] & USERFLAG_PERSIST ? 'Yes' : 'No').'&nbsp;</td>';
+
 			if($record['usertype'] == USERTYPE_ADMIN) {
 				print '<td>&nbsp;Yes&nbsp;</td>';
 			} else {

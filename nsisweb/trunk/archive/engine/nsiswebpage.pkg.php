@@ -2,7 +2,6 @@
 include_once(dirname(__FILE__)."/nsisweb.pkg.php");
 include_once(dirname(__FILE__)."/nsiswebuser.pkg.php");
 
-
 function initialise_page_table()
 {
 	global $nsisweb;

@@ -50,10 +50,13 @@ class NsisWebSession
 	var $last_checked;
 	var $cached_username; /* do not use this directly, call get_username() instead! */
 	var $looks_like_admin;
+	var $persist;
 
 	function NsisWebSession($param)
 	{
 		$this->looks_like_admin = FALSE;
+		$this->persist          = FALSE;
+		
 		if(is_array($param)) {
 			$this->session_id       = $param['sessionid'];
 			$this->user_id          = $param['userid'];
@@ -91,13 +94,13 @@ class NsisWebSession
 	{
 		/* No I don't trust serialize/unserialize!!! */
 		$string = sprintf(
-			"%3d%3d%3d%3d%3d%3d%3d%s%s%s%s%s%s%s",
+			"%3d%3d%3d%3d%3d%3d%3d%3d%s%s%s%s%s%s%s%s",
 			strlen($this->session_id),
 			strlen($this->user_id),
 			strlen($this->created),
 			strlen($this->last_access),
 			strlen($this->last_checked),
-			1,
+			1,1,
 			isset($this->cached_username) ? strlen($this->cached_username) : 0,
 			"$this->session_id",
 			"$this->user_id",
@@ -105,12 +108,13 @@ class NsisWebSession
 			"$this->last_access",
 			"$this->last_checked",
 			$this->looks_like_admin ? 1 : 0,
+			$this->persist ? 1 : 0,
 			isset($this->cached_username) ? "$this->cached_username" : "");
 		return $string;
 	}
 	function from_string($string)
 	{
-		$format_string          = "%3d%3d%3d%3d%3d%3d%3d";
+		$format_string          = "%3d%3d%3d%3d%3d%3d%3d%3d";
 		$skipcount              = strlen($format_string);
 		$lengths                = sscanf($string,$format_string);
 		$this->session_id       = substr($string,$skipcount,$lengths[0]); $skipcount += $lengths[0];
@@ -119,15 +123,21 @@ class NsisWebSession
 		$this->last_access      = substr($string,$skipcount,$lengths[3]); $skipcount += $lengths[3];
 		$this->last_checked     = substr($string,$skipcount,$lengths[4]); $skipcount += $lengths[4];
 		$this->looks_like_admin = substr($string,$skipcount,$lengths[5]); $skipcount += $lengths[5];
-		if($lengths[6] > 0) {
-			$this->cached_username = substr($string,$skipcount,$lengths[6]);
+		$this->persist          = substr($string,$skipcount,$lengths[6]); $skipcount += $lengths[6];
+		
+		if($lengths[7] > 0) {
+			$this->cached_username = substr($string,$skipcount,$lengths[7]);
 		} else {
 			unset($this->cached_username);
 		}
 	}
 	function looks_like_admin()
 	{
-		return $this->looks_like_admin;
+		return ($this->looks_like_admin ? TRUE : FALSE);
+	}
+	function persists()
+	{
+		return ($this->persist ? TRUE : FALSE);
 	}
 };
 
@@ -167,7 +177,7 @@ function find_my_session()
 			$session = new NsisWebSession(base64_decode($_SESSION['session']));
 			/* Does the session need timing out? Try not to do these checks too often
 			   so that we hit the database less frequently. */
-			if((time()-$session->last_checked) > 300) {
+			if(!$session->persists() && (time()-$session->last_checked) > 300) {
 				timeout_sessions();
 				if($session_id != NO_SESSION) {
 					$nsisweb->query("update nsisweb_sessions set last_checked=NOW() where sessionid='$session_id'");
@@ -252,6 +262,7 @@ function end_session()
 		$session = $nsisweb->session;
 		$session->user_id = 0;
 		$session->looks_like_admin = FALSE;
+		$session->persist          = FALSE;
 		unset($session->cached_username);
 	}
 	
@@ -272,6 +283,7 @@ function login($username,$password)
 		$session->user_id          = $user_id;
 		$session->last_checked     = time();
 		$session->looks_like_admin = ($record['usertype'] == USERTYPE_ADMIN) ? TRUE : FALSE;
+		$session->persist          = ($record['flags'] & USERFLAG_PERSIST) ? TRUE : FALSE;
 		unset($session->cached_username);
 
 		/* Update the cached username in the session object */
