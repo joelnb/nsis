@@ -37,7 +37,7 @@ if(!$session->is_anonymous()) {
     <? } ?>
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" href="../site/media/template/nsis.css" type="text/css">
+<link rel="stylesheet" href="/media/template/nsis.css" type="text/css">
 
 </head>
 
@@ -65,7 +65,7 @@ if(!$session->is_anonymous()) {
 <tr></td>
 
   <tr>
-    <td width="150" height="100" class="top"><a href="../site/index.php"><img src="../site/media/template/left.gif" width="150" height="100" border="0"></a></td>
+    <td width="150" height="100" class="top"><a href="/index.php"><img src="/media/template/left.gif" width="150" height="100" border="0"></a></td>
     <td width="628" height="100" class="top"><h1 class="header">NSIS Archive</td>
   </tr>
 
