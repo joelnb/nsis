@@ -28,7 +28,18 @@ $nsisweb->start_page('Search');
 <font style="font-family: verdana; font-size: 20pt; color: #000000;">Search</font>
 <p>You can use this page to search through the content of those archive pages
 whose content is stored in the database. This should mean that almost all of
-the content of this site can be searched from this page.<br></p>
+the content of this site can be searched from this page. The search engine will
+try to match your keywords against page titles and page content.<br>
+<br>
+Separate multiple authors/editors with commas, and separate multiple keywords
+with spaces. The date fields understand many types of date string, if it doesn't
+do what you expected try writing the date another way (e.g. 25th December 2002
+doesn't work but 25 December 2002 does). The native date format used is yyyy-mm-dd hh:mm:ss.<br>
+<br>
+Orphaned pages are pages that for one reason or another are in the database but
+not in the page hierarchy (and therefore not normally accessible).<br>
+<br>
+</p>
 <br>
 <p>
 	<form name="search" method="post" enctype="multipart/form-data" action="search.php">	
