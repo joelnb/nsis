@@ -223,7 +223,7 @@ function find_page($title)
 	if($result && $nsisweb->how_many_results($result) == 1) {
 		$page = $nsisweb->get_result_array($result);
 		if(strcmp($page['title'],$title) == 0) {
-			return make_safe_page($page);
+			return $page;
 		}
 	}
 	return FALSE;
@@ -237,40 +237,10 @@ function find_pageid($pageid)
 	if($result && $nsisweb->how_many_results($result) == 1) {
 		$page = $nsisweb->get_result_array($result);
 		if($page['pageid'] == $pageid) {
-			return make_safe_page($page);
+			return $page;
 		}
 	}
 	return FALSE;
-}
-
-function get_top_level_pages()
-{
-	global $nsisweb;
-	$result = $nsisweb->query("select * from nsisweb_pages where parentid=0 and not flags & ".PAGEFLAG_ORPHANED);
-	$pages  = array();
-	if($result && $nsisweb->how_many_results($result) > 0) {
-		while($page = $nsisweb->get_result_array($result)) {
-			$pages[] = make_safe_page($page);
-		}
-	}
-	return $pages;
-}
-
-function make_safe_page($page)
-{
-	$safe = array(
-		'pageid'   => $page['pageid'],
-		'title'    => $page['title'],
-		'type'     => $page['type'],
-		'views'    => $page['views'],
-		'rating'   => $page['rating'],
-		'votes'    => $page['votes'],
-		'parentid' => $page['parentid'],
-		'flags'    => $page['flags']);
-	if($page['type'] == PAGETYPE_DIRECTORY) {
-		$safe['description'] = $page['source'];
-	}
-	return $safe;
 }
 
 /* Based on a function provided in the PHP Manual from php.net, in a user
