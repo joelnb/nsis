@@ -23,8 +23,12 @@
 	<li><b><a href="http://sourceforge.net/tracker/?group_id=22049&amp;atid=373085">Submit Bug</a></b>
 		<p>Found a bug?</p>
 		</li>
-	<li><b><a href="http://forums.winamp.com/forumdisplay.php?forumid=65">Forum</a></b>
+	<li><b><a href="http://forums.winamp.com/forumdisplay.php?forumid=65">Forum</a> <font color="red">(currently down)</font></b>
 		<p>Talk to other NSIS users</p>
+		</li>
+  <li><b><a href="irc://irc.landoleet.org/nsis">IRC channel</a></b>
+		<p><a href="irc://irc.landoleet.org/nsis">#nsis @ irc.landoleet.org</a><br />
+    Another way to talk to other NSIS users</p>
 		</li>
 	<li><b><a href="http://forums.winamp.com/showthread.php?threadid=102650">FAQ</a></b>
 		<p>Some frequently asked questions</p>
