@@ -109,7 +109,7 @@ function create_raw_page($title,$filename)
 	if(strlen($filename)>0 && strlen($title)>0 && file_exists($nsisweb->fileroot.'/'.$filename)) {
 		$session = $nsisweb->get_session();
 		$author  = $session->user_id;
-		$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_RAW.",flags='.PAGEFLAG_ORPHANED.',parentid=0,source='$filename',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
+		$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_RAW.",flags=".PAGEFLAG_ORPHANED.",parentid=0,source='$filename',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
 		return $nsisweb->get_created_id();
 	}
 	return FALSE;
@@ -123,7 +123,7 @@ function create_templated_page($title,$body)
 	$source  = mysql_escape_string($source);
 	$session = $nsisweb->get_session();
 	$author  = $session->user_id;
-	$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_TEMPLATED.",flags='.PAGEFLAG_ORPHANED.',parentid=0,source='$source',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
+	$nsisweb->query("insert into nsisweb_pages set type=".PAGETYPE_TEMPLATED.",flags=".PAGEFLAG_ORPHANED.",parentid=0,source='$source',title='$title',author=$author,created=NOW(),last_author=$author,last_updated=NOW(),views=0,rating=0");
 	return $nsisweb->get_created_id();
 }
 
