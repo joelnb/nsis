@@ -19,7 +19,10 @@ if(strlen($_GET['file']) > 0) {
     }
 	}
 }
-
-$nsisweb->start_page('Download Error');
-print 'The file you attempted to download ('.$_GET['file'].') does not exist on this server.';
+$nsisweb->start_page('Download');
+?>
+<font style="font-family: verdana; font-size: 20pt; color: #000000;">Download: <font color="#ff0000"><b>Error</b></font></font>
+<p>The file you attempted to download ('.$_GET['file'].') does not exist on this server.</p>
+<?
+$nsisweb->end_page();
 ?>
