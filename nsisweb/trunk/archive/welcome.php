@@ -1,6 +1,5 @@
 <?
 include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
-include_once(dirname(__FILE__)."/engine/nsiswebstorage.pkg.php");
 $nsisweb->start_page('Welcome');
 ?>
 <p class="atitle">Welcome to the NSIS Archive</p>
