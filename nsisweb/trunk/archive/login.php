@@ -28,8 +28,9 @@ $create_url = $nsisweb->get_page_url('createaccount');
 $nsisweb->start_page('Login',FALSE);
 ?>
 <span style="font-family: verdana; font-size: 20pt; color: #000000;">Login</span>
-<p>This page allows you to login to the <b>Archive</b> using your user account. If you do not have a user account you can
-<a href="<?= $create_url ?>">create a a free account</a> now.</p>
+<p>This page allows you to login to the <b>Archive</b> using your user account.
+You only need an account if you want to make contributions.
+If you do not have a user account you can <a href="<?= $create_url ?>">create a a free account</a> now.</p>
 <?
 if($login_failed) {
   print '<p><b><span color="red">You could not be logged in, please try again.</span></b></p>';
