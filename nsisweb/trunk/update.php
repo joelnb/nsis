@@ -39,5 +39,7 @@ else {
 	$output="0";
 }
 header("Content-Length: " . strlen($output));
+header("Content-Type: " . "text/plain");
+
 print $output;
 ?>
