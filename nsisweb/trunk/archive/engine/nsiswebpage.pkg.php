@@ -1,12 +1,11 @@
 <?
 include_once(dirname(__FILE__)."/nsisweb.pkg.php");
 include_once(dirname(__FILE__)."/nsiswebuser.pkg.php");
-define('ANONYMOUS_PAGE_ID',  0);
-define('PAGETYPE_RAW',       1);
-define('PAGETYPE_TEMPLATED', 2);
-define('PAGETYPE_DIRECTORY', 3);
-define('PAGETYPE_PARENTLINK',4);
-define('PAGEFLAG_ORPHANED',  1);
+define('PAGETYPE_RAW',        1);
+define('PAGETYPE_TEMPLATED',  2);
+define('PAGETYPE_DIRECTORY',  3);
+define('PAGETYPE_PARENTLINK', 4);
+define('PAGEFLAG_ORPHANED',   1);
 
 function initialise_page_table()
 {
@@ -65,26 +64,14 @@ function show_page($pageid,$make_whole_page)
 				$result = $nsisweb->query("select * from nsisweb_pages where pageid=$pageid");
 				if($result && $nsisweb->how_many_results($result) == 1) {
 					$directory_page = $nsisweb->get_result_array($result);
-					$items = array();
-
-					$result = $nsisweb->query("select * from nsisweb_pages where parentid=$pageid");
-					if($result && $nsisweb->how_many_results($result) > 0) {
-						while($mapping = $nsisweb->get_result_array($result)) {
-							$result2 = $nsisweb->query("select * from nsisweb_pages where pageid=".$mapping['pageid']);
-							if($result2 && $nsisweb->how_many_results($result2) == 1 && $child_page = $nsisweb->get_result_array($result2)) {
-								$items[] = array(
-									'pageid' => $child_page['pageid'],
-									'title' => $child_page['title']
-								);
-							}
-						}
-					}
+					$items = find_children($pageid);
 					render_directory_page(
 						$directory_page['title'],
 						$directory_page['author'],
 						$directory_page['date'],
 						$directory_page['source'],
-						$pageid,$items);
+						$pageid,
+						$items);
 				}
 				$success = TRUE;
 				break;
@@ -100,6 +87,22 @@ function show_page($pageid,$make_whole_page)
 	}
 
 	return $success;
+}
+
+function find_children($parentid)
+{
+	global $nsisweb;
+	$items  = array();
+	$result = $nsisweb->query("select * from nsisweb_pages where parentid=$parentid");
+	if($result && $nsisweb->how_many_results($result) > 0) {
+		while($mapping = $nsisweb->get_result_array($result)) {
+			$result2 = $nsisweb->query("select * from nsisweb_pages where pageid=".$mapping['pageid']);
+			if($result2 && $nsisweb->how_many_results($result2) == 1) {
+				$items[] = $nsisweb->get_result_array($result2);
+			}
+		}
+	}
+	return $items;
 }
 
 /* Returns the pageid of the newly created page (should be a positive non-zero integer). */

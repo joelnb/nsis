@@ -15,6 +15,10 @@
 			 + $items   : an array of contained pages
 			   -> $pageid
 			   -> $title
+			   
+		The $author might be SYSTEM_USER_ID in which case it isn't a user at
+		all but instead this template has been invoked by the engine for some
+		other nefarious use ;-)
 */
 ?>
 <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
