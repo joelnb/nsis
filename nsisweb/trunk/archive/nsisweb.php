@@ -15,6 +15,7 @@
   unset($_GET['page']);
   $nsisweb->start_page('Home');
 ?>
+<font style="font-family: verdana; font-size: 20pt; color: #000000;">Archive Home</font>
 <p>Welcome to the NSIS Archives, a repository of NSIS related information and downloads maintained by
 NSIS users for NSIS users.</p>
 <ul>
