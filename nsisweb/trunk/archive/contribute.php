@@ -280,7 +280,11 @@ ENDOFHTML;
 ENDOFHTML;
 
 		if($result > 0) {
-			add_to_current_picks($result,0);
+		  if(strcmp($pagetype,'newpage') == 0) {
+			  add_to_current_picks($result,PAGETYPE_TEMPLATED);
+		  } else if(strcmp($pagetype,'newsection') == 0) {
+			  add_to_current_picks($result,PAGETYPE_DIRECTORY);
+      }
 			print <<<ENDOFHTML
 			<p>The new page that you have created has been added to your pick list.
 			You should now browse through the archive until you find somewhere that
