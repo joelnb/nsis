@@ -24,7 +24,7 @@ function initialise_picks_table()
 	$nsisweb->query("create table nsisweb_picks (sessionid varchar(255) not null,pickedid int not null,pickedtype int not null)");
 }
 
-function get_current_session_picks()
+function get_current_picks()
 {
 	global $nsisweb;
 	$picks      = array();
