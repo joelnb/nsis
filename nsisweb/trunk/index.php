@@ -1,69 +1,55 @@
 <? include("include/global.php"); ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
 <head>
 <? IncludeHTMLHeader("Nullsoft (SuperPiMP|Scriptable) Install System"); ?>
 </head> 
 <body> 
 <? IncludePageHeader("Nullsoft (SuperPiMP|Scriptable) Install System"); ?>
 <p>NSIS tries to be a scriptable win32 installer/uninstaller system that doesn't suck and isn't huge.</p>
-<div class="announcement"><a href="http://sourceforge.net/project/shownotes.php?release_id=126427">
-<span class="highlight">NEW!</span> NSIS 2 beta 0</a></div>
-<ul> 
-	<li><b><a href="http://www.nullsoft.com/free/nsis/">Official Home Page</a></b>
-		<ul>
-		General information about NSIS
-		</ul>
-	</li>
-	<li><b><a href="http://sourceforge.net/projects/nsis/">Project page</a></b>
-		<ul>
-		Latest development info and downloads
-		</ul>
-	</li>
-	<li><b><a href="http://sourceforge.net/tracker/?group_id=22049&atid=373085">Submit Bug</a></b>
-		<ul>
-		Found a bug?
-		</ul>
-	</li>
-	<li><b><a href="http://forums.winamp.com/forumdisplay.php?s=&forumid=65">Forum</a></b>
-		<ul>
-		Talk to other NSIS users
-		</ul>
-	</li>
-	<li><b><a href="http://forums.winamp.com/showthread.php?s=&threadid=102650">FAQ</a></b>
-		<ul>
-		Some frequently asked questions
-		</ul>
-	</li>
-	<li><b><a href="http://nsis.sourceforge.net/Docs/">Documentation</a></b>
-		<ul>
-		Browse the latest NSIS documentation
-		</ul>
-	</li>
-	<li><b><a href="http://nsis.sourceforge.net/archive">The Archive</a></b>
-		<ul>
-		Examples, related software and information<br>
-		Maintained by NSIS users for NSIS users
-		</ul>
-	</li>
-	<li><b><a href="http://nsis.sourceforge.net/changelog.php">Change Log</a></b> 
-		<ul>
-		See what's cooking<br>
-		<span class="smalltext">Updated: <?=LocalFileDate("nightly/changelog.htm")?></span> 
-		</ul>
-	</li>
-	<li><b><a href="http://nsis.sourceforge.net/nightly/nsis.zip">Development Snapshot</a></b> 
-		<ul>
-		NSIS CVS directory zipped up<br>
-		<span class="smalltext">Updated: <?=LocalFileDate("nightly/nsis.zip")?></span> 
-		</ul>
-	</li>
-	<li><b><a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/nsis/NSIS/">Browse CVS</a></b>
-		<ul>
-		Browse the files of the latest version
-		</ul>
-	</li>
-</ul> 
+<table class="contenttable">
+<tr>
+<td>
+	<ul><li><b><a href="http://www.nullsoft.com/free/nsis/">Official Home Page</a></b><br />
+		<p>General information about NSIS</p>
+		</li>
+	<li><b><a href="http://sourceforge.net/projects/nsis/">Project page</a></b><br />
+		<p>Latest development info and downloads</p>
+		</li>
+	<li><b><a href="http://nsis.sourceforge.net/archive">The Archive</a></b><br />
+		<p>Examples, related software and information<br />
+		Maintained by NSIS users for NSIS users</p>
+		</li>
+	<li><b><a href="http://sourceforge.net/tracker/?group_id=22049&amp;atid=373085">Submit Bug</a></b><br />
+		<p>Found a bug?</p>
+		</li>
+	<li><b><a href="http://forums.winamp.com/forumdisplay.php?forumid=65">Forum</a></b><br />
+		<p>Talk to other NSIS users</p>
+		</li>
+	<li><b><a href="http://forums.winamp.com/showthread.php?threadid=102650">FAQ</a></b><br />
+		<p>Some frequently asked questions</p>
+		</li>
+	<li><b><a href="http://nsis.sourceforge.net/Docs/">Documentation</a></b><br />
+		<p>Browse the latest NSIS documentation</p>
+		</li>
+	<li><b><a href="http://nsis.sourceforge.net/changelog.php">Change Log</a></b><br />
+		<p>See what's cooking<br />
+		<span class="smalltext">Updated: <?=LocalFileDate("nightly/changelog.htm")?></span></p>
+		</li>
+	<li><b><a href="http://nsis.sourceforge.net/nightly/nsis.zip">Development Snapshot</a></b><br />
+		<p>NSIS CVS directory zipped up<br />
+		<span class="smalltext">Updated: <?=LocalFileDate("nightly/nsis.zip")?></span></p>
+		</li>
+	 <li><b><a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/nsis/NSIS/">Browse CVS</a></b><br />
+		<p>Browse the files of the latest version</p>
+		</li>
+	</ul>
+</td>
+<td class="announcement"><a href="http://nsis.sourceforge.net/archive">
+<span class="highlight">NEW!</span> The NSIS Archive</a>
+</td>
+</tr>
+</table>
 <? IncludePageFooter(); ?>
 </body> 
-</html> 
+</html>

@@ -14,7 +14,7 @@ table {
     margin: auto;
     text-align: left;
     background-color: #FFFFFF;
-} 
+}
      
 .maintable {
     border: 2px solid #376EAB;
@@ -31,11 +31,16 @@ table {
 	background-position: 370px 140px;
 }
 
+.contenttable {
+	background-color: transparent;
+	margin: 0px;
+}
+
 p, li {
     margin: 12px;
     font-size: 10pt;
-} 
-     
+}
+
 .smalltext {
     font-size: 8pt;
     color: #666666;
@@ -43,9 +48,9 @@ p, li {
 
 .announcement {
 	font-size: 16pt;
+	vertical-align: top;
 	position: relative;
-	top: 425px;
-	left: 400px;
+	top: 450px;
 }
 
 .highlight {
@@ -68,9 +73,14 @@ a:hover {
     font-size: 19pt;
     text-align: center;
 } 
-     
+
 .image {
     border: 0px;
+} 
+
+.centerimage {
+    border: 0px;
+    text-align: center;
 } 
 
 ul {
