@@ -14,7 +14,7 @@ if ($version) {
         if ($latest>=$series) print "1|".$latest;
 		else if (!strcmp($betaseries,$series)) {
 			if (!strncmp($betaversion,$revision,1)) {
-				if (substr($betaversion,1)>substr($revision)) print "2|".$betaseries.$betaversion;
+				if (substr($betaversion,1)>substr($revision),1) print "2|".$betaseries.$betaversion;
 				else print "0";
 			}
 			else if (!strncmp($betaversion,"b",1)&&!strncmp($revision,"a",1)) {
