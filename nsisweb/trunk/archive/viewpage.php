@@ -6,7 +6,7 @@ if($_GET['pageid'] == 0) {
 } else if($page = new NsisWebPage($_GET['pageid'],FETCH_CONTENT_PP)) {
   if($page->is_okay()) {
     $instance = new NsisWebInstance($page);
-    $instance->show();
+    $instance->show(VIEWMODE_DETACHED);
     exit;
   }
 }

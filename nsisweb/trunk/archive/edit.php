@@ -132,7 +132,7 @@ if(strlen($title)>0 || strlen($content)>0) {
   }
   $page = new NsisWebPage($fake_page_details);
   $instance = new NsisWebInstance($page);
-  $instance->show_inline();
+  $instance->show_inline(VIEWMODE_NOBUTTONS);
 }
 $nsisweb->end_page();
 ?>

@@ -153,7 +153,7 @@ ENDOFHTML;
       'type'         => PAGETYPE_TEMPLATED);
     $preview  = new NsisWebPage($preview_detail);
     $instance = new NsisWebInstance($preview);
-    $instance->show_inline(TRUE);
+    $instance->show_inline(VIEWMODE_NOBUTTONS);
   }
   $nsisweb->end_page();
 }
@@ -276,7 +276,7 @@ ENDOFHTML;
       'type'         => PAGETYPE_DIRECTORY);
     $preview  = new NsisWebPage($preview_detail);
     $instance = new NsisWebInstance($preview);
-    $instance->show_inline(TRUE);
+    $instance->show_inline(VIEWMODE_NOBUTTONS);
   }
   $nsisweb->end_page();
 }

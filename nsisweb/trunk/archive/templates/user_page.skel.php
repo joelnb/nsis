@@ -8,22 +8,32 @@ function get_image($img,$tooltip)
   return '<img src="images/'.$img.'.png" name="'.$img.'" width="20" height="20" border="0" alt="'.$tooltip.'">';
 }
 
-if($view_only) {
-  $edit_link   = get_image('edit','This page is in view only mode and cannot be edited');
-  $pick_link   = get_image('copy','This page is in view only mode and cannot be copied to your pick list');
-  $delete_link = get_image('cut','This page is in view only mode and cannot be removed from the Archive');
-  $up_link     = get_image('up','This page is in view only mode and has no parent page to browse to');
-} else {
-  $edit_link = '<a href="'.$nsisweb->get_page_url('edit').'&instanceid='.$this->get_instanceid().'">'.get_image('edit2','Edit this page').'</a>';
-  if($this->get_instanceid() == 0) {
-    $pick_link   = get_image('copy','This page cannot be added to your pick list');
-    $delete_link = get_image('cut','This page instance cannot be removed from the Archive');
-    $up_link     = '<a href="'.$nsisweb->get_home_url($this->get_parentid()).'">'.get_image('up2','Return to the Archive home page').'</a>';
-  } else {
+switch($view_mode) {
+  case VIEWMODE_NOBUTTONS:
+    $edit_link   = get_image('edit','This page is in view only mode and cannot be edited');
+    $pick_link   = get_image('copy','This page is in view only mode and cannot be copied to your pick list');
+    $delete_link = get_image('cut','This page is in view only mode and cannot be removed from the Archive');
+    $up_link     = get_image('up','This page is in view only mode and has no parent page to browse to');
+    break;
+  case VIEWMODE_DETACHED:
+    $edit_link   = '<a href="'.$nsisweb->get_page_url('edit').'&instanceid='.$this->get_instanceid().'">'.get_image('edit2','Edit this page').'</a>';
     $pick_link   = '<a href="picklist.php?action=pick&instanceid='.$this->get_instanceid().'">'.get_image('copy2','Add this page to your pick list').'</a>';
-    $delete_link = '<a href="'.$nsisweb->get_page_url('delete').'&instanceid='.$this->get_instanceid().'">'.get_image('cut2','Remove this page instance from the Archive').'</a>';
-    $up_link     = '<a href="'.$nsisweb->get_up_url().'">'.get_image('up2','View the parent of this page').'</a>';
-  }
+    $delete_link = get_image('cut','You are viewing this page without reference to a parent page and so it cannot be removed as a child of that parent');
+    $up_link     = get_image('up','You are viewing this page without reference to a parent page and so you cannot move up to the parent');
+    break;
+  case VIEWMODE_NORMAL:
+  default:
+    $edit_link = '<a href="'.$nsisweb->get_page_url('edit').'&instanceid='.$this->get_instanceid().'">'.get_image('edit2','Edit this page').'</a>';
+    if($this->get_instanceid() == 0) {
+      $pick_link   = get_image('copy','This page cannot be added to your pick list');
+      $delete_link = get_image('cut','This page instance cannot be removed from the Archive');
+      $up_link     = '<a href="'.$nsisweb->get_home_url($this->get_parentid()).'">'.get_image('up2','Return to the Archive home page').'</a>';
+    } else {
+      $pick_link   = '<a href="picklist.php?action=pick&instanceid='.$this->get_instanceid().'">'.get_image('copy2','Add this page to your pick list').'</a>';
+      $delete_link = '<a href="'.$nsisweb->get_page_url('delete').'&instanceid='.$this->get_instanceid().'">'.get_image('cut2','Remove this page instance from the Archive').'</a>';
+      $up_link     = '<a href="'.$nsisweb->get_up_url().'">'.get_image('up2','View the parent of this page').'</a>';
+    }
+    break;
 }
   
 $page = $this->get_page();

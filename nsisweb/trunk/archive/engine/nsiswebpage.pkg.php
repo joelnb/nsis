@@ -19,6 +19,10 @@ define('PAGETYPE_TEMPLATED',1);
 define('PAGETYPE_DIRECTORY',2);
 define('USE_BEAUTIFIER',    TRUE);
 
+define('VIEWMODE_NORMAL',   0);
+define('VIEWMODE_NOBUTTONS',1);
+define('VIEWMODE_DETACHED', 2);
+
 class NsisWebPage
 {
   var $private_info;
@@ -376,25 +380,25 @@ class NsisWebInstance
     }
     return $this->private_info['page'];
   }
-  function show()
+  function show($view_mode = VIEWMODE_NORMAL)
   {
     global $nsisweb;
     global $instance;
     $instance = $this;
     $page = $this->get_page();
     $nsisweb->start_page($page->get_title());
-    $success = $this->show_inline();
+    $success = $this->show_inline($view_mode);
     $nsisweb->end_page();
     return $success;
   }
-  function show_inline($view_only = FALSE)
+  function show_inline($view_mode = VIEWMODE_NORMAL)
   {
     if(strlen($_GET['instances']) > 0) {
       $instances = $_GET['instances'].','.$this->get_instanceid();
     } else {
       $instances = $this->get_instanceid();
     }
-    
+
     global $nsisweb; /* Used by the template pages */
     $page = $this->get_page();
     switch($page->get_type()) {
