@@ -190,43 +190,11 @@ ENDOFHTML;
 	    </tr>
 ENDOFHTML;
 
-  /* There must be a way to do this with SQL and joins */
-  $agents = array();
-  $counts = array();
-
-	$result = $nsisweb->query("select user_agent from nsisweb_info group by user_agent,ip order by user_agent desc");
+	$result = $nsisweb->query("select count(ip) as cc,user_agent from nsisweb_info group by ip order by cc desc,user_agent asc");
 	if($result && $nsisweb->how_many_results($result) > 0) {
-		$last_agent = '';
-		$count      = 0;
-		$first      = TRUE;
-
+		$i     = 0;
+		$index = 1;
 		while($record = $nsisweb->get_result_array($result)) {
-			$this_agent = $record['user_agent'];
-			if(strcmp($this_agent,$last_agent) == 0) {
-				$count++;
-			} else {
-				if(!$first) {
-					$agents[] = $last_agent;
-					$counts[] = $count;
-				}
-				$last_agent = $this_agent;
-				$count      = 1;
-				$first      = FALSE;
-			}
-		}
-	}
-
-	if(!$first) {
-		$agents[] = $last_agent;
-		$counts[] = $count;
-	}
-
-	$count = count($agents);
-	if($count > 0) {
-		array_multisort($counts,SORT_DESC,$agents);
-
-		$i = 0;
-		for($index=1; $index<=$count; $index++) {
 			if($i == 0) {
 				$i = 1;
 				$bgcolour = '#eeffee';
@@ -237,8 +205,8 @@ ENDOFHTML;
 
 			print '<tr style="background-color:'.$bgcolour.';font-size:8pt;">';
 			print '<td>&nbsp;'.$index.'&nbsp;</td>';
-			print '<td>&nbsp;'.$agents[$index-1].'&nbsp;</td>';
-			print '<td>&nbsp;'.$counts[$index-1].'&nbsp;</td>';
+			print '<td>&nbsp;'.$record['user_agent'].'&nbsp;</td>';
+			print '<td>&nbsp;'.$record['cc'].'&nbsp;</td>';
 			print "</tr>\n";
 	ENDOFHTML;
 		}
