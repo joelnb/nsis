@@ -72,7 +72,7 @@ class NsisWebSite
 		  $url = $this->wwwroot.'/'.$pagename.'.php';
 		  // encode get args into $url
 		  $first = TRUE;
-		  foreach($_GET as $key = $value) {
+		  foreach($_GET as $key => $value) {
 			  if($first) {
 				  $url .= '?';
 				  $first = FALSE;
