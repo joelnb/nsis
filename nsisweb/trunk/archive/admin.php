@@ -100,6 +100,8 @@ ENDOFHTML;
           $end  = strpos($log,'#error#',$pos+1);
           $pos += strlen('#error#');
 
+          if(!$end) $end = strlen($log);
+          
           if($end-$pos > 0) {
             $markerpos = strpos($log,'#',$pos);
             $file      = substr($log,$pos,$markerpos-$pos);
