@@ -36,29 +36,29 @@ if($result) {
     $new = $record['last_updated'] == $record['created'];
     $diff = time() - ($new ? $record['created'] : $record['last_updated']);
 
-    $units = 'seconds';
+    $units = 'second';
     if ($diff > 60) {
       $diff = (int)($diff / 60);
-      $units = 'minutes';
+      $units = 'minute';
       if ($diff > 60) {
 	$diff = (int)($diff / 60);
-	$units = 'hours';
+	$units = 'hour';
 	if ($diff > 24) {
 	  $diff = (int)($diff / 24);
-	  $units = 'days';
+	  $units = 'day';
 	  if ($diff > 365) {
 	    $diff = (int)($diff / 365);
-	    $units = 'years';
+	    $units = 'year';
 	  }
 	  else if ($diff > 30) {
 	    $diff = (int)($diff / 30);
-	    $units = 'months';
+	    $units = 'month';
 	  }
 	}
       }
     }
     
-    $action = ($new ? 'added' : 'changed')." $diff $units ago by ".$username;
+    $action = ($new ? 'added' : 'changed')." $diff".($diff > 1 ? "s" : "")." $units ago by ".$username;
 
     if($i == 0) {
       $i = 1;
