@@ -143,7 +143,14 @@ function update_templated_page($pageid,$title,$body)
 	}
 	$session = $nsisweb->get_session();
 	$author  = $session->user_id;
-	$nsisweb->query("update nsisweb_pages set source='$source',title='$title',last_author=$author,last_updated=NOW() where pageid=$pageid");
+	$result = $nsisweb->query("select author from nsisweb_pages where pageid=$pageid");
+	if($result && $nsisweb->how_many_results($result) > 0) {
+		$original_author = $nsisweb->get_result_array($result);
+		$original_author = $original_author[0];
+		if ($original_author == $author || !$original_author /*anonymous*/) {
+			$nsisweb->query("update nsisweb_pages set source='$source',title='$title',last_author=$author,last_updated=NOW() where pageid=$pageid");
+		}
+	}
 }
 
 function process_templated_content($content)

@@ -22,6 +22,12 @@ if($revert || $_GET['pageid'] > 0) {
 		$pageid  = $_GET['pageid'];
 	}
 	$page    = find_pageid($pageid);
+	if ($page == FALSE) {
+		$nsisweb->start_page('Edit');
+		echo "<b><font color=\"red\">Page $pageid not found!</font></b>";
+		$nsisweb->end_page();
+		exit;
+	}
 	$title   = $page['title'];
 	$content = $page['source'];
 } else if($_POST['pageid'] > 0) {
@@ -33,6 +39,21 @@ if($revert || $_GET['pageid'] > 0) {
 }
 
 $nsisweb->start_page('Edit');
+
+// make sure that user can edit this post
+$session = $nsisweb->get_session();
+$result = $nsisweb->query("select author from nsisweb_pages where pageid=$pageid");
+if($result && $nsisweb->how_many_results($result) > 0) {
+	$original_author = $nsisweb->get_result_array($result);
+	$original_author = $original_author[0];
+	if ($original_author != $session->user_id && $original_author) {
+		$nsisweb->start_page('Edit');
+		echo "<b><font color=\"red\">You are not allowed to edit this page!</font></b>";
+		$nsisweb->end_page();
+		exit;
+	}
+}
+
 ?>
 <font style="font-family: verdana; font-size: 20pt; color: #000000;">Edit Page</font>
 <p>Use the edit controls on this page to edit the page you selected. Click preview
