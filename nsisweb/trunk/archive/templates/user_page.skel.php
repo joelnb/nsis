@@ -13,8 +13,8 @@
 			 + $pageid  : the NSISWeb internal id of the user document
 			 + $nsisweb : the NSISWeb core object instance
 */
-	$edit_link = '<a href="'.$nsisweb->get_home_url().'?action=edit&pageid='.$pageid.'">edit</a>';
-	$delete_link = '<a href="'.$nsisweb->get_home_url().'?action=delete&pageid='.$pageid.'">delete</a>';
+	$edit_link = '<a href="'.$nsisweb->get_home_url().'/nsisweb.php?action=edit&pageid='.$pageid.'">edit</a>';
+	$delete_link = '<a href="'.$nsisweb->get_home_url().'/nsisweb.php?action=delete&pageid='.$pageid.'">delete</a>';
 ?>
 <table style="font-family:verdana;font-size:8pt;" width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
