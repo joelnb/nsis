@@ -11,7 +11,13 @@
 	  $constants = get_defined_constants();
 	  foreach($constants as $constant => $value) {
 		  if(strncmp($constant,'NSISWEB_',8) == 0) {
-				echo '<li>Configuration Option: '.$constant.' => '.$value."\n";
+			  if(strcmp($constant,'NSISWEB_MYSQL_USER') == 0 ||
+			     strcmp($constant,'NSISWEB_MYSQL_PASSWORD') == 0 ||
+			     strcmp($constant,'NSISWEB_MAGIC_NUMBER') == 0) {
+					echo '<li>Configuration Option: '.$constant." => hidden\n";
+			  } else {
+					echo '<li>Configuration Option: '.$constant.' => '.$value."\n";
+				}
 		  }
 	  }
 	  echo '<li>Path Check .. ';

@@ -31,16 +31,18 @@ class NsisWebSite
   }
   function initialise()
   {
-    if(NSISWEB_OWNDB) {
-      $this->query('drop database if exists '.NSISWEB_DB);
-      $this->query('create database '.NSISWEB_DB);
+	  if(defined('NSISWEB_ALLOW_INIT') && NSISWEB_ALLOW_INIT == TRUE) {
+	    if(NSISWEB_OWNDB) {
+	      $this->query('drop database if exists '.NSISWEB_DB);
+	      $this->query('create database '.NSISWEB_DB);
+	    }
+	    initialise_user_table();
+	    initialise_session_table();
+	    initialise_page_table();
+	    initialise_picks_table();
+	    $storage = new NsisWebStorage;
+	    $storage->initialise();
     }
-    initialise_user_table();
-    initialise_session_table();
-    initialise_page_table();
-    initialise_picks_table();
-    $storage = new NsisWebStorage;
-    $storage->initialise();
   }
   function record_error($error)
   {
