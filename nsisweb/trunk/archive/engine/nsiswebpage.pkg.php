@@ -200,7 +200,7 @@ function process_templated_content($content,$syntax_highlight)
 		$add_attr_to_tag
 	);
 
-	return $trusted;
+	return str_replace("\n",'<br>',$trusted);
 }
 
 /* Returns the pageid of the newly created page (should be a positive non-zero integer). */
@@ -294,7 +294,7 @@ function colour_source($string){
 				$array_contents[0] = ob_get_contents();
 				ob_end_clean();
 		  }
-			$final .= '<pre style="margin: 12px;">'.$array_contents[0]."</pre>".$array_contents[1];
+			$final .= '<span style="font-family:courier new;font-size:10pt;">'.str_replace("\n","<br>",$array_contents[0])."</span>".$array_contents[1];
 		}
 
 		if(USE_BEAUTIFIER == TRUE) {
