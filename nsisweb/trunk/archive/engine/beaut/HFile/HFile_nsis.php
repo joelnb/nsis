@@ -16,7 +16,7 @@ class HFile_nsis extends HFile{
 		// Flags
 
 		$this->nocase            	= "0";
-		$this->notrim            	= "0";
+		$this->notrim            	= "1";
 		$this->perl              	= "0";
 
 		// Colours

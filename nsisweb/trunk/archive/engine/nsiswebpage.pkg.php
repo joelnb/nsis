@@ -186,7 +186,7 @@ function process_templated_content($content,$syntax_highlight)
 	);
 	
 	if($syntax_highlight) {
-		$content = colour_source($content);
+		$content = colour_source(str_replace("\n",'<br>',$content));
 	}
 
 	$trusted = sanitize(
@@ -200,7 +200,7 @@ function process_templated_content($content,$syntax_highlight)
 		$add_attr_to_tag
 	);
 
-	return str_replace("\n",'<br>',$trusted);
+	return $trusted;
 }
 
 /* Returns the pageid of the newly created page (should be a positive non-zero integer). */
@@ -287,14 +287,14 @@ function colour_source($string){
 	  for($i = 1;$i < $count;$i++){
 			$array_contents = explode("[/source]",$array_contenido[$i]);
 			if(USE_BEAUTIFIER == TRUE) {
-		    $array_contents[0] = $highlighter->highlight_text($array_contents[0]);
+		    $array_contents[0] = $highlighter->highlight_text(str_replace('<br>',"\n",$array_contents[0]));
 	    } else {
 				ob_start();
 				highlight_string("<?".$array_contents[0]."?".">");
 				$array_contents[0] = ob_get_contents();
 				ob_end_clean();
 		  }
-			$final .= '<span style="font-family:courier new;font-size:10pt;">'.str_replace("\n","<br>",$array_contents[0])."</span>".$array_contents[1];
+			$final .= '<span style="white-space:pre;font-family:courier new;font-size:10pt;">'.$array_contents[0]."</span>".$array_contents[1];
 		}
 
 		if(USE_BEAUTIFIER == TRUE) {
