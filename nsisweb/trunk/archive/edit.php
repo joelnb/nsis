@@ -73,12 +73,12 @@ if(!$instance || !$page) {
 /* Do action specific stuff */
 switch($action) {
   case ACTION_SAVE:
-    $page->save(htmlentities(stripslashes($_POST['title'])),stripslashes($_POST['content']),$page->get_flags());
+    $page->save(stripslashes($_POST['title']),stripslashes($_POST['content']),$page->get_flags());
     $nsisweb->redirect($instanceid);
     break;
   case ACTION_PREVIEW:
     $title   = htmlentities(stripslashes($_POST['title']));
-    $content = stripslashes($_POST['content']);
+    $content = htmlentities(stripslashes($_POST['content']));
     break;
   case ACTION_REVERT:
   default:

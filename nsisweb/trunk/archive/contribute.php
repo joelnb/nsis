@@ -298,8 +298,8 @@ function SaveSection()
     $page    = new NsisWebPage();
     $result  = $page->insert(
       PAGETYPE_DIRECTORY,0,
-      unhtmlentities($_POST['savetitle']),
-      unhtmlentities($_POST['savecontent']));
+      stripslashes(unhtmlentities($_POST['savetitle'])),
+      stripslashes(unhtmlentities($_POST['savecontent'])));
     $page->add_instance($_POST['parentid']);
     header('Location: '.$nsisweb->wwwroot.'/viewpage.php?pageid='.$_POST['parentid']);
     exit;
