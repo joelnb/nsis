@@ -70,17 +70,16 @@ if(!isset($_GET['userid'])) {
 		if($pages_created > 0) {
 		?>
 		<p style="margin-top:20px;">
-		  Pages created by this user :-<br>
+		  Pages created by this user (most recent first):-<br>
+		  <br>
 			<table width="80%" style="border-style:solid;border-color:black;border-width:1px;" cellpadding="2" cellspacing="1">
-				<tr style="background-color:#eeeeee"><td align="left" valign="middle">Page Title</td><td align="left">Created On</td><td align="left">Links</td></tr>
 				<?
-				  $toggle = 1;
+				  $toggle = 0;
 				  while($record = $nsisweb->get_result_array($pages_result)) {
 					  if($toggle) $bgcolour = '#ffffff'; else $bgcolour = '#eeeeee';
 						print '<tr style="background-color:'.$bgcolour.'">';
-						print '<td align="left" valign="middle">'.$record['title'].'</td>';
+						print '<td align="left" valign="middle"><a href="viewpage.php?pageid='.$record['pageid'].'" target="_blank">'.$record['title'].'</a></td>';
 						print '<td align="left" valign="middle">'.$record['created'].'</td>';
-						print '<td align="left" valign="middle"><a href="viewpage.php?pageid='.$record['pageid'].'" target="_blank">view</a></td>';
 						print '</tr>';
 					  $toggle = 1-$toggle;
 				  }
