@@ -14,7 +14,7 @@
 		<p>General information about NSIS</p>
 		</li>
 	<li><b><a href="http://sourceforge.net/projects/nsis/">Project page</a></b>
-		<p>Latest development info and downloads</p>
+		<p>Latest development info and <b>downloads</b></p>
 		</li>
 	<li><b><a href="http://nsis.sourceforge.net/archive">The Archive</a></b>
 		<p>Examples, related software and information<br />
