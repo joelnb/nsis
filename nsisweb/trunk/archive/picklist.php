@@ -46,7 +46,7 @@ if(count($picks)>0) {
     <input type="hidden" name="action" value="insert">
 	  <table width="100%" border="1" bordercolor="#dddddd" cellpadding="2" cellspacing="0" style="margin-bottom:20px;">
 	    <tr style="background-color:#d9d9d9;font-weight:bold;">
-	      <td width="50" align="center">Insert</td>
+	      <td width="50" align="center">Select</td>
 	      <td>&nbsp;Title</td>
 	      <td width="70" align="center">Preview</td>
 	    </tr>
