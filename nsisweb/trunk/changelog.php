@@ -7,9 +7,8 @@
 <body> 
 <? IncludePageHeader("NSIS Changelog",true); ?>
 <?php 
-$contenta = @file('/home/groups/n/ns/nsis/htdocs/nightly/changelog.htm');
+$contenta = @readfile('/home/groups/n/ns/nsis/htdocs/nightly/changelog.htm');
 if ($contenta) {
-	$content = implode ('',$contenta);
 	echo $content;
 }
 ?>
