@@ -68,5 +68,8 @@ if ($session->is_anonymous()) {
     </li>
 ENDOFHTML;
 }
-
-$nsisweb->end_page(); ?>
+?>
+</ul>
+<?
+$nsisweb->end_page();
+?>
