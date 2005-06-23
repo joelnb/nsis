@@ -390,10 +390,12 @@ class NsisWebInstance
     global $instance;
     $instance = $this;
     $page = $this->get_page();
-    $nsisweb->start_page($page->get_title());
-    $success = $this->show_inline($view_mode);
-    $nsisweb->end_page();
-    return $success;
+    header('Location: /wiki/'.str_replace(' ', '_', $page->get_title()));
+    //$nsisweb->start_page($page->get_title());
+    //$success = $this->show_inline($view_mode);
+    //$nsisweb->end_page();
+    //return $success;
+    return 1;
   }
   function show_inline($view_mode = VIEWMODE_NORMAL)
   {

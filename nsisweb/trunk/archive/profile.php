@@ -1,4 +1,9 @@
 <?
+if(!isset($_GET['userid'])) {
+  header('Location: /wiki');
+  exit;
+}
+
 include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
 
 $nsisweb->start_page('User Profile',FALSE);
@@ -32,6 +37,7 @@ if(!isset($_GET['userid'])) {
 		$record = $nsisweb->query_one_only("select count(*) from nsisweb_files where userid=$user_id",__FILE__,__LINE__);
 		if($record) $files_uploaded = $record['count(*)'];
 		?>
+    <h1><a href="/wiki/User:<?= $username ?>">Wiki profile</a></h1>
 		<p>Here you can see information about the username you clicked on:</p>
 		<p>
 			<table width="80%">
