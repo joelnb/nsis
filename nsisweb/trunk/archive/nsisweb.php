@@ -1,5 +1,5 @@
 <?
-if(!isset($_GET['page']) {
+if(!isset($_GET['page'])) {
   header('Location: /wiki/');
   exit;
 }
