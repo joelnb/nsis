@@ -1,4 +1,9 @@
 <?
+if(!isset($_GET['page']) {
+  header('Location: /wiki/');
+  exit;
+}
+
   include_once(dirname(__FILE__)."/engine/nsisweb.pkg.php");
   include_once(dirname(__FILE__)."/engine/nsiswebpage.pkg.php");
   
