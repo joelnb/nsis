@@ -390,7 +390,7 @@ class NsisWebInstance
     global $instance;
     $instance = $this;
     $page = $this->get_page();
-    header('Location: /wiki/'.str_replace(' ', '_', $page->get_title()));
+    header('Location: /wiki/'.str_replace(' ', '_', html_entity_decode($page->get_title())));
     //$nsisweb->start_page($page->get_title());
     //$success = $this->show_inline($view_mode);
     //$nsisweb->end_page();
