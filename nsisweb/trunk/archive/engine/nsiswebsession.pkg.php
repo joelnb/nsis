@@ -239,7 +239,7 @@ function find_my_session()
     $record     = $nsisweb->query_one_only("select NOW()",__FILE__,__LINE__);
     $now        = $record['NOW()'];
     $session    = new NsisWebSession(array('sessionid'=>$session_id,'userid'=>0,'created'=>$now,'last_access'=>$now,'last_checked'=>time(),'ip'=>$_SERVER['REMOTE_ADDR']));
-    $nsisweb->query("insert into nsisweb_sessions set sessionid='$session_id',userid=0,created=NOW(),last_access=NOW(),ip='".$_SERVER['REMOTE_ADDR']."'",__FILE__,__LINE__);
+    #$nsisweb->query("insert into nsisweb_sessions set sessionid='$session_id',userid=0,created=NOW(),last_access=NOW(),ip='".$_SERVER['REMOTE_ADDR']."'",__FILE__,__LINE__);
     track_user_agent();
     setcookie(COOKIE_NAME,$session_id,time()+86400,"/","",0);
   }
