@@ -1,0 +1,52 @@
+php_value memory_limit 16M
+
+Options -Indexes
+
+RewriteEngine On
+
+RewriteRule ^site/Download.6.0.html$ /Download [R,L]
+RewriteRule ^site/FAQ.15.0.html$ /FAQ [R,L]
+RewriteRule ^site/Home.2.0.html$ /Main_Page [R,L]
+RewriteRule ^site/Features.8.0.html$ /Features/ [R,L]
+RewriteRule ^site/License.26.0.html$ /License [R,L]
+RewriteRule ^site/Development.4.0.html$ /Development [R,L]
+RewriteRule ^site/$ /Main_Page [R,L]
+RewriteRule ^site/index.php$ /Main_Page [R,L]
+RewriteRule ^download/nsis_1/$ http://www.nullsoft.com/free/nsis/version-history.html [R,L]
+
+RewriteRule ^features/license/*$ /License [R,L]
+RewriteRule ^news/*$ /Main_Page [R,L]
+RewriteRule ^nsisarchive/*$ /Main_Page [R,L]
+RewriteRule ^features/featurelist/*$ /Features [R,L]
+RewriteRule ^features/screenshots/*$ /Screenshots [R,L]
+RewriteRule ^features/nsis2/*$ /NSIS_2 [R,L]
+RewriteRule ^download/nsis1/*$ http://www.nullsoft.com/free/nsis/version-history.html [R,L]
+RewriteRule ^download/specialbuilds/*$ /Special_Builds [R,L]
+RewriteRule ^development/changelog/*$ /Change_Log [R,L]
+RewriteRule ^development/roadmap/*$ /Roadmap [R,L]
+RewriteRule ^development/bugreports/*$ /Bug_Reports [R,L]
+RewriteRule ^development/requests/*$ /Requests [R,L]
+RewriteRule ^support/faq/*$ /FAQ [R,L]
+RewriteRule ^support/community/*$ /Community [R,L]
+RewriteRule ^support/faqsearch/*$ /FAQ [R,L]
+RewriteRule ^changelog.php$ /Change_Log [R,L]
+
+RewriteRule ^home/*$ /wiki/Main_Page [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteCond %{REQUEST_FILENAME} !-d
+
+#RewriteRule ^([^/]*)/+$ /mediawiki/index.php?title=$1 [L,QSA]
+RewriteRule ^([^/]*)/+$ /wiki/$1 [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteCond %{REQUEST_FILENAME} !-d
+
+#RewriteRule ^(.*)$ /mediawiki/index.php?title=$1 [L,QSA]
+RewriteRule ^(.*)$ /wiki/$1 [L,QSA]
+
+<Files "wiki">
+	ForceType application/x-httpd-php
+</Files>
