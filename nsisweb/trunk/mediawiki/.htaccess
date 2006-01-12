@@ -1,0 +1,2 @@
+php_flag register_globals off
+php_flag upload_max_filesize 102400
