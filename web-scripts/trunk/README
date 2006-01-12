@@ -1,0 +1,7 @@
+This directory contains scripts responsible for maintaining the website.
+
+Used scripts and files are kept in CVS under web-scripts module.
+There's no cronjob that automatically updates files from CVS, so
+if something is updated in CVS, this should be manually synced.
+
+Please update CVS, if you update anything here.
