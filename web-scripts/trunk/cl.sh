@@ -2,8 +2,6 @@
 
 # updates change log
 
-START_DATE=`find cl.timestamp -printf %Tc`
-
 PROJDIR=/home/groups/n/ns/nsis
 HTDOCSDIR=$PROJDIR/htdocs
 BINDIR=$PROJDIR/bin
@@ -12,6 +10,8 @@ CVS2CL=$BINDIR/cvs2cl.pl
 USERMAP=$BINDIR/user.map
 CLHTMLNEW=$BINDIR/cl.htm
 CLHTML=$HTDOCSDIR/nightly/changelog.htm
+
+START_DATE=`find $BINDIR/cl.timestamp -printf %Tc`
 
 umask 0002
 
