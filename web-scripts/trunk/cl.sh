@@ -19,7 +19,7 @@ cd $CVSDIR
 $BINDIR/cvsupdate.sh
 
 $CVS2CL -f $CLHTMLNEW -l "-d'>$START_DATE'" -b -g "-q"
-if ! diff $CLHTMLNEW $CLHTML; then
+if ! diff -q $CLHTMLNEW $CLHTML; then
 	cp $CLHTMLNEW $CLHTML
 fi
 
