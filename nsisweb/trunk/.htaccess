@@ -33,6 +33,8 @@ RewriteRule ^changelog.php$ /Change_Log [R,L]
 
 RewriteRule ^home/*$ /wiki/Main_Page [L]
 
+RewriteRule ^rn/(.*)$ http://sourceforge.net/project/shownotes.php?group_id=22049&release_id=$1 [R,L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-l
 RewriteCond %{REQUEST_FILENAME} !-d
