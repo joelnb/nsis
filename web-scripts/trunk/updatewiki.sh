@@ -36,6 +36,7 @@ echo "http://nsis.sourceforge.net/mediawiki-$1/index.php?title=Main_Page&action=
 echo "http://nsis.sourceforge.net/mediawiki-$1/index.php?title=Change_Log&action=purge"
 echo "http://nsis.sourceforge.net/mediawiki-$1/index.php?title=Special:Version&action=purge"
 echo "http://nsis.sourceforge.net/mediawiki-$1/index.php?title=ExtractDLL&action=purge"
+echo "http://nsis.sourceforge.net/mediawiki-$1/index.php?title=File:Extractdll.zip&action=purge"
 
 read -n1 -p "Use new Wiki? [Y/n] " -e USE_NEW_WIKI
 
