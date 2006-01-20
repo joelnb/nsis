@@ -32,11 +32,15 @@ chmod -R g+w mediawiki-$1
 rm -rf mediawiki-$1/images
 ln -s /tmp/persistent/nsiswikiimages mediawiki-$1/images
 
+diff -ruNw mediawiki mediawiki-$1 > wiki.diff
+
 echo "http://nsis.sourceforge.net/mediawiki-$1/index.php?title=Main_Page&action=purge"
 echo "http://nsis.sourceforge.net/mediawiki-$1/index.php?title=Change_Log&action=purge"
 echo "http://nsis.sourceforge.net/mediawiki-$1/index.php?title=Special:Version&action=purge"
 echo "http://nsis.sourceforge.net/mediawiki-$1/index.php?title=ExtractDLL&action=purge"
 echo "http://nsis.sourceforge.net/mediawiki-$1/index.php?title=File:Extractdll.zip&action=purge"
+echo
+echo "http://nsis.sourceforge.net/wiki.diff"
 
 read -n1 -p "Use new Wiki? [Y/n] " -e USE_NEW_WIKI
 
@@ -44,3 +48,5 @@ if [ "$USE_NEW_WIKI" == '' -o "$USE_NEW_WIKI" == 'y' -o "$USE_NEW_WIKI" == 'Y' ]
 	mv mediawiki ../mediawiki-$1-old
 	mv mediawiki-$1 mediawiki
 fi
+
+rm -f wiki.diff
