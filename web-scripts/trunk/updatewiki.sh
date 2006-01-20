@@ -20,6 +20,8 @@ cp mediawiki/skins/NSIS.php mediawiki-$1/skins
 
 cp mediawiki/.htaccess mediawiki-$1
 
+cp mediawiki/spam_blacklist mediawiki-$1
+
 cp mediawiki/LocalSettings.php mediawiki-$1
 cp mediawiki/AdminSettings.php mediawiki-$1
 
