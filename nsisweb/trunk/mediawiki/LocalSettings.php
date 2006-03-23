@@ -129,7 +129,7 @@ $wgNoFollowLinks = false;
 # anti-spam
 $wgEnableSorbs = true;
 
-$wgSpamRegex = '/\<div[^\>]*style\="overflow\: *auto *; *height\: *1px; *"[^\>]*\>/i';
+$wgSpamRegex = '/\<div[^\>]*style\="overflow\: *auto *; *height\: *1p[xt]; *"[^\>]*\>/i';
 
 require_once( "$IP/extensions/SpamBlacklist.php" );
 if (is_readable("$IP/spam_blacklist")) {
