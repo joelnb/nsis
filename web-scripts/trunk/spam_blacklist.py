@@ -24,6 +24,6 @@ tfd, t = mkstemp()
 write(tfd, blacklist)
 close(tfd)
 
-system('cat %s | ssh -l kichik -i spam_blacklist.key nsis.sf.net 2>&1 | grep -v "Pseudo-terminal"' % t)
+system('cat %s | ssh -q -T -l kichik -i spam_blacklist.key nsis.sf.net' % t)
 
 unlink(t)

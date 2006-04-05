@@ -29,7 +29,7 @@ ZIP=*.zip
 
 zip $ZIP build.log > /dev/null
 
-cat $ZIP | ssh -l kichik -i snapshot.key nsis.sf.net 2>&1 | grep -v "Pseudo-terminal"
+cat $ZIP | ssh -q -T -l kichik -i snapshot.key nsis.sf.net
 
 cd ..
 
