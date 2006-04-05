@@ -58,3 +58,7 @@ if [ "$USE_NEW_WIKI" == '' -o "$USE_NEW_WIKI" == 'y' -o "$USE_NEW_WIKI" == 'Y' ]
 fi
 
 rm -f wiki.diff
+
+echo ""
+echo "Don't forget to delete the backup, once you're sure everything's working"
+echo "  /home/groups/n/ns/nsis/mediawiki-$1-old"
