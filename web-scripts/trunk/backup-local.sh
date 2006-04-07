@@ -5,7 +5,7 @@
 # this runs locally, and not on sourceforge shell sever.
 # on sourceforge server side, this runs backup.sh.
 
-F=~/nsisweb-backup/`date +%d-%B-%Y`.tar.bz2
+F=~/nsisweb-backup/`date +%Y-%m-%d`.tar.bz2
 
 touch $F
 chmod 600 $F
