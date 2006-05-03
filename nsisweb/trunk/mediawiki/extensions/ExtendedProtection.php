@@ -5,21 +5,17 @@ $wgExtensionFunctions[] = 'wfExtendedProtection';
 
 function wfExtendedProtection() {
 	global $wgHooks;
-	
-	$wgHooks['ArticleSave'][] = 'wfExtendedProtectionArticleSave';
+
+  $wgHooks['userCan'][] = 'wfExtendedProtectionUserCan';
 }
 
-function wfExtendedProtectionArticleSave(&$article, &$user, &$text, &$summary, &$minoredit, &$watchthis, &$sectionanchor) {
-	$title = $article->getTitle();
+function wfExtendedProtectionUserCan(&$title, &$user, $action, &$result) {
 	if ($title->getText() == 'EclipseNSIS - NSIS plugin for Eclipse') {
-		if ($user->isSysop() || $user->getName() == 'Iceman K') {
-			return true;
-		}
-		global $wgOut;
-		$wgOut->addWikiText( "<span style=\"color: red; font-size: 140%\">This page is protected and can only be edited by sysops and Iceman K.</span>" );
-		return false;
+		if ($user->isSysop() || $user->getName() == 'Iceman K')
+			return;
+		if ($action != 'read')
+      $result = false;
 	}
-	return true;
 }
 
 ?>

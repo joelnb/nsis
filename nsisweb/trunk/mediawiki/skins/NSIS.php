@@ -11,7 +11,7 @@
  */
 
 if( !defined( 'MEDIAWIKI' ) )
-        die();
+        die( -1 );
 
 /** */
 require_once('includes/SkinTemplate.php');
@@ -69,9 +69,9 @@ class SkinNSIS extends SkinTemplate {
           $link = wfMsgForContent( $line[0] );
           if ($link == '-')
             continue;
-          if (wfNoMsg($line[1], $text = wfMsg($line[1])))
+          if (wfEmptyMsg($line[1], $text = wfMsg($line[1])))
             $text = $line[1];
-          if (wfNoMsg($line[0], $link))
+          if (wfEmptyMsg($line[0], $link))
             $link = $line[0];
           $bar[$heading][] = array(
             'text' => $text,
@@ -141,25 +141,40 @@ class NSISTemplate extends QuickTemplate {
     <?php $this->html('headlinks') ?>
     <title><?php $this->text('pagetitle') ?></title>
     <link rel="alternate" type="application/rss+xml" title="NSIS Project News" href="http://sourceforge.net/export/rss2_projnews.php?group_id=22049&amp;rss_fulltext=1" />
-    <style type="text/css" media="screen,projection">/*<![CDATA[*/ @import "<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/main.css"; /*]]>*/</style>
+    <style type="text/css" media="screen,projection">/*<![CDATA[*/ @import "<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/main.css?7"; /*]]>*/</style>
     <link rel="stylesheet" type="text/css" <?php if(empty($this->data['printable']) ) { ?>media="print"<?php } ?> href="<?php $this->text('stylepath') ?>/common/commonPrint.css" />
     <!--[if lt IE 5.5000]><style type="text/css">@import "<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/IE50Fixes.css";</style><![endif]-->
     <!--[if IE 5.5000]><style type="text/css">@import "<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/IE55Fixes.css";</style><![endif]-->
-    <!--[if gte IE 6]><style type="text/css">@import "<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/IE60Fixes.css";</style><![endif]-->
+    <!--[if IE 6]><style type="text/css">@import "<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/IE60Fixes.css";</style><![endif]-->
+    <!--[if IE 7]><style type="text/css">@import "<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/IE70Fixes.css?1";</style><![endif]-->
     <!--[if IE]><script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath') ?>/common/IEFixes.js"></script>
     <meta http-equiv="imagetoolbar" content="no" /><![endif]-->
-    <?php if($this->data['jsvarurl'  ]) { ?><script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('jsvarurl'  ) ?>"></script><?php } ?>
-    <script type="<?php $this->text('jsmimetype') ?>" src="<?php                                   $this->text('stylepath' ) ?>/common/wikibits.js"></script>
-    <?php if($this->data['usercss'   ]) { ?><style type="text/css"><?php              $this->html('usercss'   ) ?></style><?php    } ?>
-    <?php if($this->data['userjs'    ]) { ?><script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('userjs'    ) ?>"></script><?php } ?>
-    <?php if($this->data['userjsprev']) { ?><script type="<?php $this->text('jsmimetype') ?>"><?php      $this->html('userjsprev') ?></script><?php   } ?>
-    <?php if($this->data['trackbackhtml']) print $this->data['trackbackhtml']; ?>
+    <script type="<?php $this->text('jsmimetype') ?>">var skin = '<?php $this->text('skinname')?>';var stylepath = '<?php $this->text('stylepath')?>';</script>
+		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/common/wikibits.js"><!-- wikibits js --></script>
+<?php	if($this->data['jsvarurl'  ]) { ?>
+		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('jsvarurl'  ) ?>"><!-- site js --></script>
+<?php	} ?>
+<?php	if($this->data['pagecss'   ]) { ?>
+		<style type="text/css"><?php $this->html('pagecss'   ) ?></style>
+<?php	}
+		if($this->data['usercss'   ]) { ?>
+		<style type="text/css"><?php $this->html('usercss'   ) ?></style>
+<?php	}
+		if($this->data['userjs'    ]) { ?>
+		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('userjs' ) ?>"></script>
+<?php	}
+		if($this->data['userjsprev']) { ?>
+		<script type="<?php $this->text('jsmimetype') ?>"><?php $this->html('userjsprev') ?></script>
+<?php	}
+		if($this->data['trackbackhtml']) print $this->data['trackbackhtml']; ?>
+		<!-- Head Scripts -->
+		<?php $this->html('headscripts') ?>
   </head>
   <body <?php if($this->data['body_ondblclick']) { ?>ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>
-        <?php if($this->data['body_onload'    ]) { ?>onload="<?php     $this->text('body_onload')     ?>"<?php } ?>
-        <?php if($this->data['nsclass'        ]) { ?>class="<?php      $this->text('nsclass')         ?>"<?php } ?>>
+<?php if($this->data['body_onload'    ]) { ?>onload="<?php     $this->text('body_onload')     ?>"<?php } ?>
+ class="<?php $this->text('nsclass') ?> <?php $this->text('dir') ?>">
   <div id="header">
-    <div id="logo"><a href="/" title="Back to website"><img src="/mediawiki/skins/nsis/logo.gif" alt="NSIS logo"/></a></div>
+    <div id="logo"><a href="/" title="Back to website"><img src="<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/logo.gif" alt="NSIS logo"/></a></div>
     <!-- <div id="logo-text">&nbsp;</div> -->
   </div>
 <div id="mainWrapper">
@@ -171,7 +186,7 @@ class NSISTemplate extends QuickTemplate {
 	  <div id="bodyContent">
 	    <h3 id="siteSub"><?php $this->msg('tagline') ?></h3>
 	    <div id="contentSub"><?php $this->html('subtitle') ?></div>
-	    <?php if($this->data['undelete']) { ?><div id="contentSub"><?php     $this->html('undelete') ?></div><?php } ?>
+	    <?php if($this->data['undelete']) { ?><div id="contentSub2"><?php     $this->html('undelete') ?></div><?php } ?>
 	    <?php if($this->data['newtalk'] ) { ?><div class="usermessage"><?php $this->html('newtalk')  ?></div><?php } ?>
 	    <!-- start content -->
 	    <?php $this->html('bodytext') ?>
@@ -197,20 +212,21 @@ class NSISTemplate extends QuickTemplate {
 	  <h5><?php $this->msg('personaltools') ?></h5>
 	  <div class="pBody">
 	    <ul>
-	    <?php foreach($this->data['personal_urls'] as $key => $item) {
-	       ?><li id="pt-<?php echo htmlspecialchars($key) ?>"><a href="<?php
-	       echo htmlspecialchars($item['href']) ?>"<?php
-	       if(!empty($item['class'])) { ?> class="<?php
-	       echo htmlspecialchars($item['class']) ?>"<?php } ?>><?php
-	       echo htmlspecialchars($item['text']) ?></a></li><?php
-	    } ?>
+<?php 			foreach($this->data['personal_urls'] as $key => $item) { ?>
+				<li id="pt-<?php echo htmlspecialchars($key) ?>"<?php
+					if ($item['active']) { ?> class="active"<?php } ?>><a href="<?php
+				echo htmlspecialchars($item['href']) ?>"<?php
+				if(!empty($item['class'])) { ?> class="<?php
+				echo htmlspecialchars($item['class']) ?>"<?php } ?>><?php
+				echo htmlspecialchars($item['text']) ?></a></li>
+<?php			} ?>
 	    </ul>
 	  </div>
 	</div>
 	<script type="<?php $this->text('jsmimetype') ?>"> if (window.isMSIE55) fixalpha(); </script>
 	<?php foreach ($this->data['sidebar'] as $bar => $cont) { ?>
 	<div class='portlet' id='p-<?php echo htmlspecialchars($bar) ?>'>
-	  <h5><?php $out = wfMsg( $bar ); if (wfNoMsg($bar, $out)) echo $bar; else echo $out; ?></h5>
+	  <h5><?php $out = wfMsg( $bar ); if (wfEmptyMsg($bar, $out)) echo $bar; else echo $out; ?></h5>
 	  <div class='pBody'>
 	    <?php $this->printSidebar($cont); ?>
 	  </div>
@@ -218,8 +234,8 @@ class NSISTemplate extends QuickTemplate {
 	<?php } ?>
 	<div id="p-search" class="portlet">
 	  <h5><label for="searchInput"><?php $this->msg('search') ?></label></h5>
-	  <div class="pBody">
-	    <form name="searchform" action="<?php $this->text('searchaction') ?>" id="searchform">
+	  <div id="searchform" class="pBody">
+	    <form action="<?php $this->text('searchaction') ?>" id="searchform">
 	      <input id="searchInput" name="search" type="text"
 	        <?php if($this->haveMsg('accesskey-search')) {
 	          ?>accesskey="<?php $this->msg('accesskey-search') ?>"<?php }
@@ -233,40 +249,6 @@ class NSISTemplate extends QuickTemplate {
 	    </form>
 	  </div>
 	</div>
-<!--
-
-	<div class="portlet" id="p-tb">
-	  <h5><?php $this->msg('toolbox') ?></h5>
-	  <div class="pBody">
-	    <ul>
-		  <?php if($this->data['notspecialpage']) { foreach( array( 'whatlinkshere', 'recentchangeslinked' ) as $special ) { ?>
-		  <li id="t-<?php echo $special?>"><a href="<?php
-		    echo htmlspecialchars($this->data['nav_urls'][$special]['href'])
-		    ?>"><?php echo $this->msg($special) ?></a></li>
-		  <?php } } ?>
-              <?php if(isset($this->data['nav_urls']['trackbacklink'])) { ?>
-		  <li id="t-trackbacklink"><a href="<?php
-		    echo htmlspecialchars($this->data['nav_urls']['trackbacklink']['href'])
-		    ?>"><?php echo $this->msg('trackbacklink') ?></a></li>
-	      <?php } ?>
-	      <?php if($this->data['feeds']) { ?><li id="feedlinks"><?php foreach($this->data['feeds'] as $key => $feed) {
-	        ?><span id="feed-<?php echo htmlspecialchars($key) ?>"><a href="<?php
-	        echo htmlspecialchars($feed['href']) ?>"><?php echo htmlspecialchars($feed['text'])?></a>&nbsp;</span>
-	        <?php } ?></li><?php } ?>
-	      <?php foreach( array('contributions', 'emailuser', 'upload', 'specialpages') as $special ) { ?>
-	      <?php if($this->data['nav_urls'][$special]) {?><li id="t-<?php echo $special ?>"><a href="<?php
-	        echo htmlspecialchars($this->data['nav_urls'][$special]['href'])
-	        ?>"><?php $this->msg($special) ?></a></li><?php } ?>
-	      <?php } ?>
-	      <?php if(!empty($this->data['nav_urls']['print']['href'])) { ?>
-	      <li id="t-print"><a href="<?php
-		    echo htmlspecialchars($this->data['nav_urls']['print']['href'])
-		    ?>"><?php echo $this->msg('printableversion') ?></a></li>
-	      <?php } ?>
-	    </ul>
-	  </div>
-	</div>
--->
 
 	<?php if( $this->data['language_urls'] ) { ?><div id="p-lang" class="portlet">
 	  <h5><?php $this->msg('otherlanguages') ?></h5>
