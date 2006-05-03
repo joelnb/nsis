@@ -36,7 +36,7 @@ ln -s /tmp/persistent/nsiswikiimages mediawiki-$1/images
 
 diff -ruNw mediawiki mediawiki-$1 > wiki.diff
 
-sed -s "s/\/home\/groups\/n\/ns\/nsis\/htdocs\/mediawiki/\/home\/groups\/n\/ns\/nsis\/htdocs\/mediawiki-$1/" mediawiki-$1/LocalSettings.php > mediawiki-$1/LocalSettings.php.sed
+sed -s "s/\/mediawiki/\/mediawiki-$1/" mediawiki-$1/LocalSettings.php > mediawiki-$1/LocalSettings.php.sed
 mv -f mediawiki-$1/LocalSettings.php.sed mediawiki-$1/LocalSettings.php
 
 echo "http://nsis.sourceforge.net/mediawiki-$1/index.php?title=Main_Page&action=purge"
@@ -49,7 +49,7 @@ echo "http://nsis.sourceforge.net/wiki.diff"
 
 read -n1 -p "Use new Wiki? [Y/n] " -e USE_NEW_WIKI
 
-sed -s "s/\/home\/groups\/n\/ns\/nsis\/htdocs\/mediawiki-$1/\/home\/groups\/n\/ns\/nsis\/htdocs\/mediawiki/" mediawiki-$1/LocalSettings.php > mediawiki-$1/LocalSettings.php.sed
+sed -s "s/\/mediawiki-$1/\/mediawiki/" mediawiki-$1/LocalSettings.php > mediawiki-$1/LocalSettings.php.sed
 mv -f mediawiki-$1/LocalSettings.php.sed mediawiki-$1/LocalSettings.php
 
 if [ "$USE_NEW_WIKI" == '' -o "$USE_NEW_WIKI" == 'y' -o "$USE_NEW_WIKI" == 'Y' ]; then
