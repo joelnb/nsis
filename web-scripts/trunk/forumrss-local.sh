@@ -14,5 +14,5 @@ fi
 rm /tmp/forum.rss
 
 F=`mktemp`
-wget -q -O $F "http://nsis.sourceforge.net/Main_Page?action=purge"
+wget -q -O $F --post-data=OK "http://nsis.sourceforge.net/Main_Page?action=purge"
 rm -f $F
