@@ -7,8 +7,8 @@
 ##############################################################
 
 ## $Revision: 1.1 $
-## $Date: 2004/10/16 02:32:11 $
-## $Author: oripel $
+## $Date: 2006/01/12 19:33:41 $
+## $Author: kichik $
 ##
 ##   (C) 1999 Karl Fogel <kfogel@red-bean.com>, under the GNU GPL.
 ## 
@@ -1123,7 +1123,7 @@ $$qunkref{'revision'} =~ /^((?:\d+\.)+)(\d+)$/;
 my $r_start = $1;
 my $r_end = $2;
 my $r_endold = $r_end-1;
-my $baselink = "http://cvs.sourceforge.net/viewcvs.py/nsis/NSIS/";
+my $baselink = "http://nsis.cvs.sourceforge.net/nsis/NSIS/";
 if ($r_endold!=0) {
 $beauty .= "<a href=\"".$baselink.$$qunkref{'filename'}.".diff?r1=".$r_start.$r_endold."&r2=".$r_start.$r_end."\">"; 
 if ($$qunkref{'filename'} =~ /\.exe/ || $$qunkref{'filename'} =~ /\.dll/) {
