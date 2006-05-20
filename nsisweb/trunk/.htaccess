@@ -15,7 +15,7 @@ RewriteRule ^site/index.php$ /Main_Page [R,L]
 RewriteRule ^download/nsis_1/$ http://www.nullsoft.com/free/nsis/version-history.html [R,L]
 
 RewriteRule ^features/license/*$ /License [R,L]
-RewriteRule ^news/*$ /Main_Page [R,L]
+RewriteRule ^news/*$ /News [R,L]
 RewriteRule ^nsisarchive/*$ /Main_Page [R,L]
 RewriteRule ^features/featurelist/*$ /Features [R,L]
 RewriteRule ^features/screenshots/*$ /Screenshots [R,L]
