@@ -4,12 +4,19 @@
 #
 # usage example:
 #   updatewiki.sh 1.5.5
+# or, for local updates:
+#   updatewiki.sh 1.5.5 mediawiki-1.5.5.tar.gz
 
 cd /home/groups/n/ns/nsis/htdocs
 
-wget http://osdn.dl.sourceforge.net/sourceforge/wikipedia/mediawiki-$1.tar.gz || exit 1
-tar xzf mediawiki-$1.tar.gz || exit 1
-rm -f mediawiki-$1.tar.gz
+if [ -f $2 ]; then
+	tar xzf $2 || exit 1
+	rm -f $2
+else
+	wget http://osdn.dl.sourceforge.net/sourceforge/wikipedia/mediawiki-$1.tar.gz || exit 1
+	tar xzf mediawiki-$1.tar.gz || exit 1
+	rm -f mediawiki-$1.tar.gz
+fi
 
 rm -rf mediawiki-$1/config
 
