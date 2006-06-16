@@ -9,9 +9,14 @@
 
 cd /home/groups/n/ns/nsis/htdocs
 
-if [ -f "$2" ]; then
-	tar xzf $2 || exit 1
-	rm -f $2
+if [ -n "$2" ]; then
+	if [ -f "$2" ]; then
+		tar xzf $2 || exit 1
+		rm -f $2
+	else
+		echo "$2 cannot be found!"
+		exit 1
+	fi
 else
 	wget http://osdn.dl.sourceforge.net/sourceforge/wikipedia/mediawiki-$1.tar.gz || exit 1
 	tar xzf mediawiki-$1.tar.gz || exit 1
