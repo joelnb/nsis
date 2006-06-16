@@ -23,12 +23,13 @@ function wfNavImgHook($input) {
 	if ($type == 'local') {
 		$title = Title::newFromText($page);
 		$url = $title->getLocalURL();
-	} else {
-		global $wgParser, $wgMsgParserOptions;
-		$url = $wgParser->transformMsg($page, $wgMsgParserOptions);
-	}
+  } else {
+    global $wgMsgParserOptions;
+    $parser = new Parser();
+    $url = $parser->transformMsg($page, $wgMsgParserOptions);
+  }
 
-	return '<span class="plainlinks"><a href="' . $url . '">' . navImgToHtml($img) . '</a></span>';
+  return '<span class="plainlinks"><a href="' . $url . '">' . navImgToHtml($img) . '</a></span>';
 }
 
 function navImgToHtml($image) {
