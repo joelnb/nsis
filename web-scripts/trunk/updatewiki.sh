@@ -9,7 +9,7 @@
 
 cd /home/groups/n/ns/nsis/htdocs
 
-if [ -f $2 ]; then
+if [ -f "$2" ]; then
 	tar xzf $2 || exit 1
 	rm -f $2
 else
