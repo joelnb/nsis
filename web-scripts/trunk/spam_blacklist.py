@@ -15,6 +15,10 @@ blacklist = urlopen('http://blacklist.chongqed.org/').read().replace('https?:\/\
 
 badsigns = r'|\*$^[]()'
 
+if 'http' not in blacklist or '<pre>' in blacklist:
+	print 'invalid blacklist'
+	exit(1)
+
 for b in badsigns:
 	if blacklist.find(b) >= 0:
 		print 'black list contains regex'
