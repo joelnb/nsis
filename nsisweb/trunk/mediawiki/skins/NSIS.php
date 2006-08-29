@@ -234,7 +234,7 @@ class NSISTemplate extends QuickTemplate {
 	<?php } ?>
 	<div id="p-search" class="portlet">
 	  <h5><label for="searchInput"><?php $this->msg('search') ?></label></h5>
-	  <div id="searchform" class="pBody">
+	  <div class="pBody">
 	    <form action="<?php $this->text('searchaction') ?>" id="searchform">
 	      <input id="searchInput" name="search" type="text"
 	        <?php if($this->haveMsg('accesskey-search')) {
