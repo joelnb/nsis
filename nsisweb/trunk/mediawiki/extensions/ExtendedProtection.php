@@ -10,8 +10,13 @@ function wfExtendedProtection() {
 }
 
 function wfExtendedProtectionUserCan(&$title, &$user, $action, &$result) {
-  if ($title->getText() == 'EclipseNSIS - NSIS plugin for Eclipse') {
-    if ($user->isSysop() || $user->getName() == 'Iceman K')
+  $extendedProtectionList = array(
+    'EclipseNSIS - NSIS plugin for Eclipse' => 'Iceman K',
+    'File Association' => 'Vytautas'
+  );
+
+  if (in_array($title->getText(), array_keys($extendedProtectionList))) {
+    if ($user->isSysop() || $user->getName() == $extendedProtectionList[$title->getText()])
       return;
     if ($action != 'read')
       $result = false;
