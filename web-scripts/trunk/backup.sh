@@ -10,7 +10,7 @@ TMP=`mktemp`
 
 cd /tmp/persistent/nsiswikiimages
 
-mysqldump --quick --databases n22049_wiki n22049_archive > mysql_dump
+mysqldump --quick --databases n22049_wiki n22049_archive | grep -v "^INSERT INTO wiki_objectcache VALUES" > mysql_dump
 
 tar cj --exclude=temp --exclude=thumb * > $TMP
 
