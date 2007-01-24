@@ -2,21 +2,24 @@
 /*************************************************************************************
  * ini.php
  * --------
- * Author: Diego Pedroso (cevo_deguix@yahoo.com.br)
- * Copyright: (c) 2005 Diego Pedroso
- * Release Version: 1.0.0
- * CVS Revision Version: $Revision: 1.0 $
- * Date Started: 2005/03/31
- * Last Modified: $Date: 2005/03/31 17:24:00 $
+ * Author: deguix (cevo_deguix@yahoo.com.br)
+ * Copyright: (c) 2005 deguix
+ * Release Version: 1.0.7.17
+ * CVS Revision Version: $Revision: 870 $
+ * Date Started: 2005/03/27
+ * Last Modified: $Date: 2006-12-10 22:48:21 +1300 (Sun, 10 Dec 2006) $
  *
  * INI language file for GeSHi.
  *
  * CHANGES
  * -------
- * 2005/03/31 (1.0.0)
+ * 2005/12/28 (1.0.1)
+ *   -  Removed unnecessary keyword style index
+ *   -  Added support for " strings
+ * 2005/04/05 (1.0.0)
  *   -  First Release
  *
- * TODO (updated 2005/03/31)
+ * TODO (updated 2005/03/27)
  * -------------------------
  *
  *************************************************************************************
@@ -40,11 +43,11 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'ini',
+	'LANG_NAME' => 'INI',
 	'COMMENT_SINGLE' => array(0 => ';'),
 	'COMMENT_MULTI' => array(),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array(),
+	'QUOTEMARKS' => array('"'),
 	'ESCAPE_CHAR' => '',
 	'KEYWORDS' => array(
 		),
@@ -56,7 +59,6 @@ $language_data = array (
 		),
 	'STYLES' => array(
 		'KEYWORDS' => array(
-		    0 => ''
 			),
 		'COMMENTS' => array(
 			0 => 'color: #666666; font-style: italic;'
@@ -68,7 +70,7 @@ $language_data = array (
 		    0 => ''
 			),
 		'STRINGS' => array(
-		    0 => ''
+		    0 => 'color: #933;'
 			),
 		'NUMBERS' => array(
 		    0 => ''
@@ -96,14 +98,17 @@ $language_data = array (
 	'REGEXPS' => array(
 		0 => '\[.+\]',
 		1 => array(
-			GESHI_SEARCH => '(.+)=(.+)',
+			GESHI_SEARCH => '([a-zA-Z0-9_]+\s*)=(.+)',
 			GESHI_REPLACE => '\\1',
 			GESHI_MODIFIERS => '',
 			GESHI_BEFORE => '',
 			GESHI_AFTER => '=\\2'
 			),
 		2 => array(
-			GESHI_SEARCH => '(.+)=(.+)',
+            // Evil hackery to get around GeSHi bug: <>" and ; are added so <span>s can be matched
+            // Explicit match on variable names because if a comment is before the first < of the span
+            // gets chewed up...
+			GESHI_SEARCH => '([<>";a-zA-Z0-9_]+\s*)=(.+)',
 			GESHI_REPLACE => '\\2',
 			GESHI_MODIFIERS => '',
 			GESHI_BEFORE => '\\1=',

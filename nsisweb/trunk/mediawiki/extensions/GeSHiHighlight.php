@@ -21,12 +21,19 @@ $wgExtensionFunctions[] = "wfSyntaxExtension";
 function wfSyntaxExtension() {
 	global $wgParser;
 
-	$langArray = array("actionscript","ada","apache","asm","asp","bash",
-	                   "caddcl","cadlisp","c","cpp","css","delphi",
-	                   "html4strict","java","javascript","lisp", "lua",
-	                   "nsis","oobas","pascal","perl","php-brief","php",
- 	                   "python","qbasic","sql","vb","visualfoxpro","xml",
-	                   "ini");
+	$langArray = array("actionscript","ada","apache","applescript","asm",
+	                   "asp","autoit","bash","blitzbasic","bnf","c","caddcl",
+	                   "cadlisp","cfdg","cfm","cpp-qt","cpp","csharp","css",
+	                   "c_mac","d","delphi","diff","div","dos","eiffel",
+	                   "fortran","freebasic","gml","groovy","html4strict",
+	                   "idl","ini","inno","io","ioex","java","java5",
+	                   "javascript","latex","lisp","lua","matlab","mirc",
+	                   "mpasm","mysql","nsis","objc","ocaml-brief","ocaml",
+	                   "oobas","oracle8","pascal","perl","php-brief","php",
+	                   "plsql","python","qbasic","reg","robots","ruby","sas",
+	                   "scheme","sdlbasic","smalltalk","smarty","sql","tcl",
+	                   "thinbasic","tsql","vb","vbnet","vhdl","visualfoxpro",
+                     "winbatch","xml");
 
 	foreach ( $langArray as $lang ){
 		$wgParser->setHook( 'highlight-' . $lang,
