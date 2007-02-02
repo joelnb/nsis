@@ -111,9 +111,9 @@ $wgProxyKey = "5bb6fe31f8842453211af510317a08a061bb7d35d2188136fd858c7bf39d1efd"
 ## appropriate copyright notice / icon. GNU Free Documentation
 ## License and Creative Commons licenses are supported so far.
 # $wgEnableCreativeCommonsRdf = true;
-$wgRightsPage = ""; # Set to the title of a wiki page that describes your license/copyright
+$wgRightsPage = "License";
 $wgRightsUrl = "";
-$wgRightsText = "";
+$wgRightsText = "zlib/libpng license";
 $wgRightsIcon = "";
 # $wgRightsCode = ""; # Not yet used
 
