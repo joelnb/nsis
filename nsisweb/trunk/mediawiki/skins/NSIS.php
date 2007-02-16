@@ -250,6 +250,13 @@ class NSISTemplate extends QuickTemplate {
 	  </div>
 	</div>
 
+	<div class="portlet">
+	  <h5>donate</h5>
+	  <div class="pBody" style="text-align: center; padding: 3px">
+	    <a href="http://sourceforge.net/donate/index.php?group_id=22049"><img src="http://images.sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" alt="Support This Project" /> </a>
+	  </div>
+	</div>
+
 	<?php if( $this->data['language_urls'] ) { ?><div id="p-lang" class="portlet">
 	  <h5><?php $this->msg('otherlanguages') ?></h5>
 	  <div class="pBody">
