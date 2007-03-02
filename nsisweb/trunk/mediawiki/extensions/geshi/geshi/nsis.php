@@ -5,9 +5,9 @@
  * Author: deguix (cevo_deguix@yahoo.com.br), Tux (http://tux.a4.cz/)
  * Copyright: (c) 2005 deguix, 2004 Tux (http://tux.a4.cz/), Nigel McNie (http://qbnz.com/highlighter)
  * Release Version: 1.0.7.17
- * CVS Revision Version: $Revision: 866 $
+ * CVS Revision Version: $Revision: 1.2 $
  * Date Started: 2005/12/03
- * Last Modified: $Date: 2006-11-26 21:40:26 +1300 (Sun, 26 Nov 2006) $
+ * Last Modified: $Date: 2007/01/24 10:12:11 $
  *
  * Nullsoft Scriptable Install System language file for GeSHi.
  *
@@ -70,7 +70,7 @@ $language_data = array (
 			'Function', 'FunctionEnd', 'Icon', 'InstallButtonText', 'InstallColors', 'InstallDir',
 			'InstallDirRegKey', 'InstProgressFlags', 'InstType', 'LangString', 'LangStringUP', 'LicenseBkColor',
 			'LicenseData', 'LicenseForceSelection', 'LicenseLangString', 'LicenseText', 'LoadLanguageFile',
-			'MiscButtonText', 'Name', 'OutFile', 'Page', 'PageEx', 'PageExEnd', 'Section',
+			'MiscButtonText', 'Name', 'OutFile', 'Page', 'PageEx', 'PageExEnd', 'RequestExecutionLevel', 'Section',
 			'SectionEnd', 'SectionGroup', 'SectionGroupEnd', 'SetCompressor', 'SetFont', 'ShowInstDetails',
 			'ShowUninstDetails', 'SilentInstall', 'SilentUnInstall', 'SpaceTexts', 'SubCaption', 'SubSection',
 			'SubSectionEnd', 'UninstallButtonText', 'UninstallCaption', 'UninstallIcon', 'UninstallSubCaption',
