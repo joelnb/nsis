@@ -13,7 +13,7 @@ mv -f new.zip nsis.zip
 unzip -qo nsis.zip build.log
 chgrp nsis nsis.zip
 
-DIR=`unzip -qql nsis.zip | head -n1 | sed -e 's/^.*\(nsis-[0-9][0-9]-...-[0-9][0-9][0-9][0-9].cvs\).*$/\1/'`
+DIR=`unzip -qql nsis.zip | grep -v build | head -n1 | sed -e 's/^.*\(nsis-[0-9][0-9]-...-[0-9][0-9][0-9][0-9].cvs\).*$/\1/'`
 DOCS=${DIR}/Docs/\*
 EXAMPLES=${DIR}/Examples/\*
 INCLUDES=${DIR}/Include/\*
