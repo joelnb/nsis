@@ -123,7 +123,7 @@ $wgLivePreview = true;
 # no section [edit] links
 $wgDefaultUserOptions ['editsection'] = 0;
 
-# have Google follow links, we'll reomve spam
+# have Google follow links, we'll remove spam
 $wgNoFollowLinks = false;
 
 # anti-spam
