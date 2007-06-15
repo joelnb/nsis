@@ -129,7 +129,7 @@ $wgNoFollowLinks = false;
 # anti-spam
 $wgEnableSorbs = true;
 
-$wgSpamRegex = '/\<(div|u|p|span)[^\>]*style\="[^"]*display\:\s*none\s*;+[^"]*"[^\>]*\>|\<(div|u|p|span)[^\>]*style\="[^"]*(display\:\s*none\s*;+|(position\:\s*absolute\s*|overflow\:\s*auto\s*);+[^\>]*height\:\s*1\w\w\s*;+)[^"]*"[^\>]*\>|(I liked your site|You have made a cool site|Your site is very good|Good design on your site|Hey I like your site|You have an exelent site|Keep up a good work on the site|You have a top notch site|Buy viagra online)\s*\<a href/i';
+$wgSpamRegex = '/\<(div|u|p|span)[^\>]*style\="[^"]*display\:\s*none\s*;+[^"]*"[^\>]*\>|\<(div|u|p|span)[^\>]*style\="[^"]*(display\:\s*none\s*;+|(position\:\s*absolute\s*|overflow\:\s*auto\s*);+[^\>]*height\:\s*1\w\w\s*;+)[^"]*"[^\>]*\>|(I liked your site|You have made a cool site|Your site is very good|Good design on your site|Hey I like your site|You have an exelent site|Keep up a good work on the site|You have a top notch site|Buy viagra online|Order viagra online)\s*\<a href/i';
 
 require_once( "$IP/extensions/SpamBlacklist.php" );
 if (is_readable("$IP/spam_blacklist")) {
