@@ -123,6 +123,13 @@ $wgLivePreview = true;
 # no section [edit] links
 $wgDefaultUserOptions ['editsection'] = 0;
 
+# Google search
+$wgDisableTextSearch = true;
+$wgForwardSearchUrl = 'http://www.google.com/search?q=$1' .
+                      '&domains=nsis.sourceforge.net' .
+                      '&sitesearch=nsis.sourceforge.net' .
+                      '&ie=utf-8&oe=utf-8&safe=active';
+
 # have Google follow links, we'll remove spam
 $wgNoFollowLinks = false;
 
