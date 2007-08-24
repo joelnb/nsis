@@ -125,10 +125,10 @@ $wgDefaultUserOptions ['editsection'] = 0;
 
 # Google search
 $wgDisableTextSearch = true;
-$wgForwardSearchUrl = 'http://www.google.com/search?q=$1' .
-                      '&domains=nsis.sourceforge.net' .
-                      '&sitesearch=nsis.sourceforge.net' .
-                      '&ie=utf-8&oe=utf-8&safe=active';
+$wgForwardSearchUrl = 'http://www.google.com/cse?q=$1' .
+                      '&sa=Search&cof=FORID:1' .
+                      '&cx=013152803417979916569:ziywxtw6b6m';
+        
 
 # have Google follow links, we'll remove spam
 $wgNoFollowLinks = false;

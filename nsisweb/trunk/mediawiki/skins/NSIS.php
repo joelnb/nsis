@@ -235,18 +235,15 @@ class NSISTemplate extends QuickTemplate {
 	<div id="p-search" class="portlet">
 	  <h5><label for="searchInput"><?php $this->msg('search') ?></label></h5>
 	  <div class="pBody">
-	    <form action="<?php $this->text('searchaction') ?>" id="searchform">
-	      <input id="searchInput" name="search" type="text"
-	        <?php if($this->haveMsg('accesskey-search')) {
-	          ?>accesskey="<?php $this->msg('accesskey-search') ?>"<?php }
-	        if( isset( $this->data['search'] ) ) {
-	          ?> value="<?php $this->text('search') ?>"<?php } ?> />
-	      <input type='submit' name="go" class="searchButton" id="searchGoButton"
-	        value="<?php $this->msg('go') ?>"
-	        />&nbsp;<input type='submit' name="fulltext"
-	        class="searchButton"
-	        value="<?php $this->msg('search') ?>" />
-	    </form>
+      <!-- Google CSE Search Box Begins  -->
+      <form id="searchbox_013152803417979916569:ziywxtw6b6m" action="http://www.google.com/cse">
+        <input type="hidden" name="cx" value="013152803417979916569:ziywxtw6b6m" />
+        <input type="hidden" name="cof" value="FORID:0" />
+        <input name="q" type="text" size="15" />
+        <input type="submit" name="sa" value="Search" />
+      </form>
+      <script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=searchbox_013152803417979916569%3Aziywxtw6b6m"></script>
+      <!-- Google CSE Search Box Ends -->
 	  </div>
 	</div>
 
