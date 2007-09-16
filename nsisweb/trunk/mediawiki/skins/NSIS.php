@@ -138,6 +138,7 @@ class NSISTemplate extends QuickTemplate {
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php $this->text('lang') ?>" lang="<?php $this->text('lang') ?>" dir="<?php $this->text('dir') ?>">
   <head>
     <meta http-equiv="Content-Type" content="<?php $this->text('mimetype') ?>; charset=<?php $this->text('charset') ?>" />
+    <meta name="verify-v1" content="WLF5Lq4UBvbQthz98kyOIQ+Vz9LDT92e8JyA6Iatsoc=" />
     <?php $this->html('headlinks') ?>
     <title><?php $this->text('pagetitle') ?></title>
     <link rel="alternate" type="application/rss+xml" title="NSIS Project News" href="http://sourceforge.net/export/rss2_projnews.php?group_id=22049&amp;rss_fulltext=1" />
