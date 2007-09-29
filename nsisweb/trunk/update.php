@@ -28,8 +28,8 @@ $RTYPES = array(
 
 $output = "0";
 
-$latest_stable_version = "2.30";
-$latest_version = "2.30";
+$latest_stable_version = "2.31";
+$latest_version = "2.31";
 $latest_type = $TYPES[""];
 $latest_build = "";
 
