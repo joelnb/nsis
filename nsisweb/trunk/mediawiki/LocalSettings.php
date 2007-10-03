@@ -136,7 +136,7 @@ $wgNoFollowLinks = false;
 # anti-spam
 $wgEnableSorbs = true;
 
-$wgSpamRegex = '/\<(div|u|p|span)[^\>]*style\="[^"]*display\:\s*none\s*;+[^"]*"[^\>]*\>|\<(div|u|p|span)[^\>]*style\="[^"]*(display\:\s*none\s*|(position\:\s*absolute\s*|overflow\:\s*auto\s*);+[^\>]*height\:\s*1\w\w\s*;+)[^"]*"[^\>]*\>|(I liked your site|You have made a cool site|Your site is very good|Good design on your site|Hey I like your site|You have an exelent site|Keep up a good work on the site|You have a top notch site|(viagra|cialis) (online|cheap)|Very good web site Great work and thank you for your service Bob)\s*\<a href\="|(\<a href\="[^"]*">[^\<]*\<\/a\>\s*){2,}|(\[http:\/\/[^\]]+\] ){4,}/i';
+$wgSpamRegex = '/\<(div|u|p|span)[^\>]*style\="[^"]*display\:\s*none\s*;+[^"]*"[^\>]*\>|\<(div|u|p|span)[^\>]*style\="[^"]*(display\:\s*none\s*|(position\:\s*absolute\s*|overflow\:\s*auto\s*);+[^\>]*height\:\s*1\w\w\s*;+)[^"]*"[^\>]*\>|(I liked your site|You have made a cool site|Your site is very good|Good design on your site|Hey I like your site|You have an exelent site|Keep up a good work on the site|You have a top notch site|(viagra|cialis) (online|cheap)|Very good web site Great work and thank you for your service Bob)\s*\<a href\="|(\<a href\="[^"]*">[^\<]*\<\/a\>\s*){2,}|(\[http:\/\/[^\]]+\] ){4,}|(^|\n)http:\/\/[\w\d\/\.-]+ [\w\d ]+ \d{6}($|\n)/i';
 
 require_once( "$IP/extensions/SpamBlacklist.php" );
 if (is_readable("$IP/spam_blacklist")) {
