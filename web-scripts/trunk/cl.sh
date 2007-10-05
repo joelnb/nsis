@@ -17,7 +17,7 @@ TAGREV=$((`cat $BINDIR/cl.tagrev` + 1))
 
 umask 0002
 
-$SVNLOG -r $TAGREV:HEAD $SVNROOT | xsltproc $XSL - | grep -v '^<?xml version="1.0"?>$' > $CLHTMLNEW
+$SVNLOG -r HEAD:$TAGREV $SVNROOT | xsltproc $XSL - | grep -v '^<?xml version="1.0"?>$' > $CLHTMLNEW
 
 if ! diff -q $CLHTMLNEW $CLHTML; then
 	cp $CLHTMLNEW $CLHTML
