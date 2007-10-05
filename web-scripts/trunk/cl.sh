@@ -13,11 +13,11 @@ XSL=cl.xsl
 SVNLOG="svn log --xml --verbose"
 SVNROOT=https://nsis.svn.sourceforge.net/svnroot/nsis/NSIS/
 
-START_DATE=`find $BINDIR/cl.timestamp -printf %Tc`
+TAGREV=$((`cat $BINDIR/cl.tagrev` + 1))
 
 umask 0002
 
-$SVNLOG -r \{$START_DATE\} $SVNROOT | xsltproc $XSL - | grep -v '^<?xml version="1.0"?>$' > $CLHTMLNEW
+$SVNLOG -r $TAGREV:HEAD $SVNROOT | xsltproc $XSL - | grep -v '^<?xml version="1.0"?>$' > $CLHTMLNEW
 
 if ! diff -q $CLHTMLNEW $CLHTML; then
 	cp $CLHTMLNEW $CLHTML
