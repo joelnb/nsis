@@ -7,8 +7,7 @@
 
 cd /home/kichik/c
 
-cvs -Q -d:pserver:anonymous:@nsis.cvs.sourceforge.net:/cvsroot/nsis login > /dev/null
-cvs -Q -z3 -d:pserver:anonymous:@nsis.cvs.sourceforge.net:/cvsroot/nsis co -P -d nsis-snapshot NSIS || exit 1
+svn -q co https://nsis.svn.sourceforge.net/svnroot/nsis/NSIS/trunk nsis-snapshot || exit 1
 
 cd nsis-snapshot
 
