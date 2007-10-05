@@ -6,4 +6,4 @@ umask 0002
 cd /home/groups/n/ns/nsis/bin/nsisweb
 svn -q up
 cp -rf . ../../htdocs/
-rm -rf `find ../../htdocs -name CVS`
+rm -rf `find ../../htdocs -name .svn`
