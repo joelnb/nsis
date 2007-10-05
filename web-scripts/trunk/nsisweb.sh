@@ -1,9 +1,9 @@
 #!/bin/sh
 
-# updates htdocs files from cvs
+# updates htdocs files from svn
 
 umask 0002
 cd /home/groups/n/ns/nsis/bin/nsisweb
-cvs -q update -PRd
+svn -q up
 cp -rf . ../../htdocs/
 rm -rf `find ../../htdocs -name CVS`
