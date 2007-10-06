@@ -9,7 +9,7 @@ USERMAP=$BINDIR/user.map
 CLHTMLNEW=$BINDIR/cl.htm
 CLHTML=$HTDOCSDIR/nightly/changelog.htm
 
-XSL=cl.xsl
+XSL=$BINDIR/cl.xsl
 SVNLOG="svn log --xml --verbose"
 SVNROOT=https://nsis.svn.sourceforge.net/svnroot/nsis/NSIS/
 
