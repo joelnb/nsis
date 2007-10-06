@@ -26,7 +26,7 @@
 			</p>
 			<p class="clitem">
 				<xsl:for-each select="paths/path">
-					<a href="{$baseurl}{text()}?r1={$rev}&amp;r2={($rev)-1}&amp;pathrev={$rev}">
+					<xsl:variable name="link-text">
 						<xsl:choose>
 							<xsl:when test="starts-with(text(), '/NSIS/trunk')">
 								<xsl:value-of select="substring-after(text(), '/NSIS/trunk/')" />
@@ -35,7 +35,21 @@
 								<xsl:value-of select="substring-after(text(), '/NSIS/')" />
 							</xsl:otherwise>
 						</xsl:choose>
-					</a>
+					</xsl:variable>
+					<xsl:choose>
+						<xsl:when test="@action = 'M'">
+							<a href="{$baseurl}{text()}?r1={$rev}&amp;r2={($rev)-1}&amp;pathrev={$rev}">
+								<xsl:value-of select="$link-text" />
+							</a>
+						</xsl:when>
+						<xsl:otherwise>
+							<a href="{$baseurl}{text()}">
+								<i>
+									<xsl:value-of select="$link-text" />
+								</i>
+							</a>
+						</xsl:otherwise>
+					</xsl:choose>
 					<xsl:choose>
 						<xsl:when test="last() != position()">
 							<xsl:text>, </xsl:text>
