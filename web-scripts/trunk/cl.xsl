@@ -4,7 +4,6 @@
 
  TODO
 
-   * link author to full name and maybe http://sf.net/users/<author>
    * consolidate paths like cvs2cl did
 
 -->
@@ -22,7 +21,9 @@
 				<xsl:text> </xsl:text>
 				<xsl:value-of select="substring-after(substring-before(date, '.'), 'T')" />
 				<xsl:text> </xsl:text>
-				<xsl:value-of select="author" />
+				<xsl:call-template name="get-fullname">
+					<xsl:with-param name="username" select="author" />
+				</xsl:call-template>
 			</p>
 			<p class="clitem">
 				<xsl:for-each select="paths/path">
@@ -101,15 +102,38 @@
 	<!-- strips line breaks from end of string -->
 	<xsl:template name="strip-lf">
 		<xsl:param name="text"/>
+			<xsl:choose>
+				<xsl:when test="substring($text, string-length($text), 1) = '&#xA;'">
+				<xsl:call-template name="strip-lf">
+						<xsl:with-param name="text" select="substring($text, 0, string-length($text))"/>
+					</xsl:call-template>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="$text" disable-output-escaping="yes"/>
+				</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+	<!-- loads full name from user.map -->
+	<xsl:template name="get-fullname">
+		<xsl:param name="username"/>
+
+		<xsl:variable name="authors" select="document('user.map')/authors"/>
+		<xsl:variable name="author" select="$authors/author[normalize-space(username) = $username]"/>
 
 		<xsl:choose>
-			<xsl:when test="substring($text, string-length($text), 1) = '&#xA;'">
-				<xsl:call-template name="strip-lf">
-					<xsl:with-param name="text" select="substring($text, 0, string-length($text))"/>
-				</xsl:call-template>
+			<xsl:when test="fullname = ''">
+				<a href="http://sourceforge.net/users/{$username}">
+					<xsl:value-of select="$username"/>
+				</a>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:value-of select="$text" disable-output-escaping="yes"/>
+				<xsl:value-of select="normalize-space($author/fullname)"/>
+				<xsl:text> (</xsl:text>
+				<a href="http://sourceforge.net/users/{$username}">
+					<xsl:value-of select="$username"/>
+				</a>
+				<xsl:text>)</xsl:text>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
