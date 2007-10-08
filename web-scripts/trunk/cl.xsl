@@ -59,7 +59,7 @@
 				<xsl:text>: </xsl:text>
 				<xsl:call-template name="replace-string">
 					<xsl:with-param name="text">
-						<xsl:call-template name="strip_lf">
+						<xsl:call-template name="strip-lf">
 							<xsl:with-param name="text" select="msg" />
 						</xsl:call-template>
 					</xsl:with-param>
@@ -99,17 +99,18 @@
 	</xsl:template>
 
 	<!-- strips line breaks from end of string -->
-	<xsl:template name="strip_lf">
+	<xsl:template name="strip-lf">
 		<xsl:param name="text"/>
-			<xsl:choose>
-				<xsl:when test="substring($text, string-length($text), 1) = '&#xA;'">
-					<xsl:call-template name="strip_lf">
-						<xsl:with-param name="text" select="substring($text, 0, string-length($text))"/>
-					</xsl:call-template>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:value-of select="$text" disable-output-escaping="yes"/>
-				</xsl:otherwise>
+
+		<xsl:choose>
+			<xsl:when test="substring($text, string-length($text), 1) = '&#xA;'">
+				<xsl:call-template name="strip-lf">
+					<xsl:with-param name="text" select="substring($text, 0, string-length($text))"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$text" disable-output-escaping="yes"/>
+			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
 
