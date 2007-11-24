@@ -11,8 +11,7 @@ function wfExtendedProtection() {
 
 function wfExtendedProtectionUserCan(&$title, &$user, $action, &$result) {
   $extendedProtectionList = array(
-    'EclipseNSIS - NSIS plugin for Eclipse' => 'Iceman K',
-    'File Association' => 'Vytautas'
+    'EclipseNSIS - NSIS plugin for Eclipse' => 'Iceman K'
   );
 
   if (in_array($title->getText(), array_keys($extendedProtectionList))) {
