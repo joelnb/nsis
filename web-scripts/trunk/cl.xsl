@@ -29,7 +29,7 @@
 				<xsl:for-each select="paths/path">
 					<xsl:variable name="link-text">
 						<xsl:choose>
-							<xsl:when test="starts-with(text(), '/NSIS/trunk')">
+							<xsl:when test="starts-with(text(), '/NSIS/trunk/')">
 								<xsl:value-of select="substring-after(text(), '/NSIS/trunk/')" />
 							</xsl:when>
 							<xsl:otherwise>
