@@ -4,10 +4,8 @@
  * --------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.17
- * CVS Revision Version: $Revision: 866 $
+ * Release Version: 1.0.7.21
  * Date Started: 2004/06/20
- * Last Modified: $Date: 2006-11-26 21:40:26 +1300 (Sun, 26 Nov 2006) $
  *
  * PHP language file for GeSHi.
  *
@@ -260,7 +258,11 @@ $language_data = array (
             )
         ),
     'SYMBOLS' => array(
-        '(', ')', '[', ']', '{', '}', '!', '@', '%', '&', '*', '|', '/', '<', '>'
+        '(', ')', '[', ']', '{', '}',
+        '!', '@', '%', '&', '|', '/',
+        '<', '>',
+        '=', '-', '+', '*',
+        '.', ':', ',', ';'
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
@@ -321,14 +323,14 @@ $language_data = array (
         2 => '::'
         ),
     'REGEXPS' => array(
-        0 => "[\\$]{1,2}[a-zA-Z_][a-zA-Z0-9_]*",
-        1 => array(
-            GESHI_SEARCH  => "([a-zA-Z]+)(\n)(.*)(\n)(\\1;?)",
+        0 => array(
+            GESHI_SEARCH  => "([a-zA-Z]+)(\\n)(.*?)(\\n)(\\1[^a-zA-Z0-9])",
             GESHI_REPLACE => '\3',
             GESHI_BEFORE => '\1\2',
             GESHI_AFTER => '\4\5',
             GESHI_MODIFIERS => 'siU'
-            )
+            ),
+        1 => "[\\$]{1,2}[a-zA-Z_][a-zA-Z0-9_]*"
         ),
     'STRICT_MODE_APPLIES' => GESHI_MAYBE,
     'SCRIPT_DELIMITERS' => array(
@@ -350,7 +352,8 @@ $language_data = array (
         1 => true,
         2 => true,
         3 => true
-        )
+        ),
+    'TAB_WIDTH' => 4
 );
 
 ?>

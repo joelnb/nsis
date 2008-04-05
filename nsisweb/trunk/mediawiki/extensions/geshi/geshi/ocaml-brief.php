@@ -4,10 +4,8 @@
  * ----------
  * Author: Flaie (fireflaie@gmail.com)
  * Copyright: (c) 2005 Flaie, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.17
- * CVS Revision Version: $Revision: 866 $
+ * Release Version: 1.0.7.21
  * Date Started: 2005/08/27
- * Last Modified: $Date: 2006-11-26 21:40:26 +1300 (Sun, 26 Nov 2006) $
  *
  * OCaml (Objective Caml) language file for GeSHi.
  *
@@ -59,9 +57,9 @@ $language_data = array (
 		),
 	/* highlighting symbols is really important in OCaml */
 	'SYMBOLS' => array(
-			';', '!', ':', '.', '=', '%', '^', '*', '-', '/', '+', 
+			';', '!', ':', '.', '=', '%', '^', '*', '-', '/', '+',
 			'>', '<', '(', ')', '[', ']', '&', '|', '#', "'"
-			), 
+			),
 	'CASE_SENSITIVE' => array(
 		GESHI_COMMENTS => true,
 		1 => false,
@@ -89,7 +87,7 @@ $language_data = array (
 			),
 		'REGEXPS' => array(
 			),
-		'SYMBOLS' => array( 
+		'SYMBOLS' => array(
 			0 => 'color: #a52a2a;' /* maroon */
 			),
 		'SCRIPT' => array(

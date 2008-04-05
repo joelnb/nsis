@@ -1,22 +1,21 @@
 <?php
 /*************************************************************************************
- * div.php
- * ---------------------------------
- * Author: Gabriel Lorenzo (ermakina@gmail.com)
- * Copyright: (c) 2005 Gabriel Lorenzo (http://ermakina.gazpachito.net)
+ * abap.php
+ * --------
+ * Author: Andres Picazo (andres@andrespicazo.com)
+ * Copyright: (c) 2007 Andres Picazo
  * Release Version: 1.0.7.21
- * Date Started: 2005/06/19
+ * Date Started: 2004/06/04
  *
- * DIV language file for GeSHi.
+ * ABAP language file for GeSHi.
  *
  * CHANGES
  * -------
- * 2005/06/22 (1.0.0)
- *  -  First Release, includes "2nd gen" ELSEIF statement
+ * 2007/06/27 (1.0.0)
+ *   -  First Release
  *
- * TODO (updated 2005/06/22)
- * -------------------------
- *  -  I'm pretty satisfied with this, so nothing for now... :P
+ * TODO
+ * ----
  *
  *************************************************************************************
  *
@@ -39,34 +38,40 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'DIV',
-	'COMMENT_SINGLE' => array(1 => '//'),
-	'COMMENT_MULTI' => array('/*' => '*/'),
-	'CASE_KEYWORDS' => GESHI_CAPS_UPPER,
-	'QUOTEMARKS' => array("'", '"'),
-	'ESCAPE_CHAR' => '',
+	'LANG_NAME' => 'ABAP',
+    'COMMENT_SINGLE' => array(1 => '"', 2 => '*'),
+    'CASE_KEYWORDS' => 0,
+	'QUOTEMARKS' => array("'"),
+    'ESCAPE_CHAR' => '',
 	'KEYWORDS' => array(
 		1 => array(
-			'while','until','to','switch','step','return','repeat','loop','if','from','frame','for','end','elseif',
-			'else','default','debug','continue','clone','case','break','begin'
+			'if', 'return', 'while', 'case', 'default',
+            'do', 'else', 'for', 'endif', 'elseif', 'eq',
+            'not', 'and'
 			),
 		2 => array(
-			'xor','whoami','type','sizeof','pointer','or','offset','not','neg','mod','id','dup','and','_ne','_lt',
-			'_le','_gt','_ge','_eq'
+			'data', 'types', 'seletion-screen', 'parameters', 'field-symbols', 'extern', 'inline'
 			),
 		3 => array(
-			'setup_program','program','process','private','local','import','global','function','const',
-			'compiler_options'
+			'report', 'write', 'append', 'select', 'endselect', 'call method', 'call function',
+			'loop', 'endloop', 'raise', 'read table', 'concatenate', 'split', 'shift',
+			'condense', 'describe', 'clear', 'endfunction', 'assign', 'create data', 'translate',
+			'continue', 'start-of-selection', 'at selection-screen', 'modify', 'call screen',
+			'create object', 'perform', 'form', 'endform',
+			'reuse_alv_block_list_init', 'zbcialv', 'include'
 			),
 		4 => array(
-			'word','struct','string','int','byte'
+			'type ref to', 'type', 'begin of',  'end of', 'like', 'into',
+			'from', 'where', 'order by', 'with key', 'into', 'string', 'separated by',
+            'exporting', 'importing', 'to upper case', 'to', 'exceptions', 'tables',
+            'using', 'changing'
 			),
 		),
 	'SYMBOLS' => array(
-		'(',')','[',']','=','+','-','*','/','!','%','^','&',':',';',',','<','>'
+		'(', ')', '{', '}', '[', ']', '=', '+', '-', '*', '/', '!', '%', '^', '&', ':'
 		),
 	'CASE_SENSITIVE' => array(
-		GESHI_COMMENTS => false,
+		GESHI_COMMENTS => true,
 		1 => false,
 		2 => false,
 		3 => false,
@@ -74,20 +79,21 @@ $language_data = array (
 		),
 	'STYLES' => array(
 		'KEYWORDS' => array(
-			1 => 'color: #0040b1;',
-			2 => 'color: #000000;',
-			3 => 'color: #000066; font-weight: bold;',
+			1 => 'color: #b1b100;',
+			2 => 'color: #000000; font-weight: bold;',
+			3 => 'color: #000066;',
 			4 => 'color: #993333;'
 			),
 		'COMMENTS' => array(
 			1 => 'color: #808080; font-style: italic;',
+			2 => 'color: #339933;',
 			'MULTI' => 'color: #808080; font-style: italic;'
 			),
 		'ESCAPE_CHAR' => array(
-			0 => ''
+			0 => 'color: #000099; font-weight: bold;'
 			),
 		'BRACKETS' => array(
-			0 => 'color: #44aa44;'
+			0 => 'color: #66cc66;'
 			),
 		'STRINGS' => array(
 			0 => 'color: #ff0000;'
@@ -96,10 +102,11 @@ $language_data = array (
 			0 => 'color: #cc66cc;'
 			),
 		'METHODS' => array(
-			0 => 'color: #202020;',
+			1 => 'color: #202020;',
+			2 => 'color: #202020;'
 			),
 		'SYMBOLS' => array(
-			0 => 'color: #44aa44;'
+			0 => 'color: #66cc66;'
 			),
 		'REGEXPS' => array(
 			),
@@ -109,11 +116,14 @@ $language_data = array (
 	'URLS' => array(
 		1 => '',
 		2 => '',
-		3 => '',
+		3 => 'http://sap4.com/wiki/index.php?title={FNAME}',
 		4 => ''
 		),
-	'OOLANG' => false,
-	'OBJECT_SPLITTER' => '',
+	'OOLANG' => true,
+	'OBJECT_SPLITTERS' => array(
+		1 => '.',
+		2 => '::'
+		),
 	'REGEXPS' => array(
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,

@@ -4,10 +4,8 @@
  * ----------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.17
- * CVS Revision Version: $Revision: 866 $
+ * Release Version: 1.0.7.21
  * Date Started: 2004/06/20
- * Last Modified: $Date: 2006-11-26 21:40:26 +1300 (Sun, 26 Nov 2006) $
  *
  * QBasic/QuickBASIC language file for GeSHi.
  *
@@ -104,7 +102,7 @@ $language_data = array (
 		'COMMENTS' => array(
 			1 => 'color: #808080;',
 			2 => 'color: #808080;',
-            3 => 'color: #808080;'
+			3 => 'color: #808080;'
 			),
 		'BRACKETS' => array(
 			0 => 'color: #66cc66;'
@@ -130,7 +128,7 @@ $language_data = array (
 		),
 	'URLS' => array(
 		1 => '',
-		3 => 'http://www.qbasicnews.com/qboho/qck{FNAME}.shtml'
+		3 => 'http://www.qbasicnews.com/qboho/qck{FNAMEL}.shtml'
 		),
 	'OOLANG' => false,
 	'OBJECT_SPLITTERS' => array(
@@ -141,7 +139,8 @@ $language_data = array (
 	'SCRIPT_DELIMITERS' => array(
 		),
 	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
+        ),
+    'TAB_WIDTH' => 8
 );
 
 ?>

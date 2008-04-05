@@ -4,10 +4,8 @@
  * ----------
  * Author: Alan Juden (alan@judenware.org)
  * Copyright: (c) 2004 Alan Juden, Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.17
- * CVS Revision Version: $Revision: 866 $
+ * Release Version: 1.0.7.21
  * Date Started: 2004/07/10
- * Last Modified: $Date: 2006-11-26 21:40:26 +1300 (Sun, 26 Nov 2006) $
  *
  * Smarty template language file for GeSHi.
  *
@@ -162,7 +160,13 @@ $language_data = array (
 	),
 	'HIGHLIGHT_STRICT_BLOCK' => array(
 		0 => true
-		)
+	),
+	'PARSER_CONTROL' => array(
+        'KEYWORDS' => array(
+            'DISALLOWED_BEFORE' => "a-zA-Z0-9\$_\|\#;>|^",
+            'DISALLOWED_AFTER' => "a-zA-Z0-9_<\|%\\-&"
+        )
+    )
 );
 
 ?>

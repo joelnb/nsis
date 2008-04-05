@@ -1,20 +1,23 @@
 <?php
 /*************************************************************************************
- * cfdg.php
+ * m68k.php
  * --------
- * Author: John Horigan <john@glyphic.com>
- * Copyright: (c) 2006 John Horigan http://www.ozonehouse.com/john/
+ * Author: Benny Baumann (BenBE@omorphia.de)
+ * Copyright: (c) 2007 Benny Baumann (http://www.omorphia.de/), Nigel McNie (http://qbnz.com/highlighter)
  * Release Version: 1.0.7.21
- * Date Started: 2006/03/11
+ * Date Started: 2007/02/06
  *
- * CFDG language file for GeSHi.
+ * Motorola 68000 Assembler language file for GeSHi.
+ *
+ * Syntax definition as commonly used by the motorola documentation for the
+ * MC68HC908GP32 Microcontroller (and maybe others).
  *
  * CHANGES
  * -------
- * 2006/03/11 (1.0.0)
- *  -  First Release
+ * 2007/06/02 (1.0.0)
+ *   -  First Release
  *
- * TODO (updated 2006/03/11)
+ * TODO (updated 2007/06/02)
  * -------------------------
  *
  *************************************************************************************
@@ -38,88 +41,95 @@
  ************************************************************************************/
 
 $language_data = array (
-	'LANG_NAME' => 'CFDG',
-	'COMMENT_SINGLE' => array(1 => '//', 2 => '#'),
-	'COMMENT_MULTI' => array('/*' => '*/'),
+	'LANG_NAME' => 'Motorola 68000 Assembler',
+	'COMMENT_SINGLE' => array(1 => ';'),
+	'COMMENT_MULTI' => array(),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
 	'QUOTEMARKS' => array("'", '"'),
 	'ESCAPE_CHAR' => '',
 	'KEYWORDS' => array(
+		/*CPU*/
 		1 => array(
-			'include', 'startshape', 'rule', 'background'
-			),
+			'adc','add','ais','aix','and','asl','asr','bcc','bclr','bcs','beq',
+			'bge','bgt','bhcc','bhcs','bhi','bhs','bih','bil','bit','ble','blo',
+			'bls','blt','bmc','bmi','bms','bne','bpl','bra','brclr','brn',
+			'brset','bset','bsr','cbeq','clc','cli','clr','cmp','com','cphx',
+			'cpx','daa','dbnz','dec','div','eor','inc','jmp','jsr','lda','ldhx',
+			'ldx','lsl','lsr','mov','mul','neg','nop','nsa','ora','psha','pshh',
+			'pshx','pula','pulh','pulx','rol','ror','rsp','rti','rts','sbc',
+			'sec','sei','sta','sthx','stop','stx','sub','swi','tap','tax','tpa',
+			'tst','tsx','txa','txs','wait'
+		),
+		/*registers*/
 		2 => array(
-			'SQUARE', 'CIRCLE', 'TRIANGLE',
+			'a','h','x',
+			'hx','sp'
 			),
+		/*Directive*/
 		3 => array(
-			'b','brightness','h','hue','sat','saturation',
-			'a','alpha','x','y','z','s','size',
-			'r','rotate','f','flip','skew','xml_set_object'
-			)
+			'#define','#endif','#else','#ifdef','#ifndef','#include','#undef',
+			'.db','.dd','.df','.dq','.dt','.dw','.end','.org','equ'
+			),
 		),
 	'SYMBOLS' => array(
-		'[', ']', '{', '}', '*', '|'
+		','
 		),
 	'CASE_SENSITIVE' => array(
-		GESHI_COMMENTS => false,
+		GESHI_COMMENTS => true,
 		1 => false,
 		2 => false,
 		3 => false,
 		),
 	'STYLES' => array(
 		'KEYWORDS' => array(
-			1 => 'color: #717100;',
-			2 => 'color: #000000; font-weight: bold;',
-			3 => 'color: #006666;'
+			1 => 'color: #0000ff; font-weight:bold;',
+			2 => 'color: #0000ff;',
+			3 => 'color: #46aa03; font-weight:bold;'
 			),
 		'COMMENTS' => array(
-			1 => 'color: #808080; font-style: italic;',
-			2 => 'color: #808080; font-style: italic;',
-			'MULTI' => 'color: #808080; font-style: italic;'
+			1 => 'color: #adadad; font-style: italic;',
 			),
 		'ESCAPE_CHAR' => array(
 			0 => 'color: #000099; font-weight: bold;'
 			),
 		'BRACKETS' => array(
-			0 => 'color: #66cc66;'
+			0 => 'color: #0000ff;'
 			),
 		'STRINGS' => array(
-			0 => 'color: #ff0000;'
+			0 => 'color: #7f007f;'
 			),
 		'NUMBERS' => array(
-			0 => 'color: #cc66cc;'
+			0 => 'color: #dd22dd;'
 			),
 		'METHODS' => array(
-			1 => 'color: #006600;',
-			2 => 'color: #006600;'
 			),
 		'SYMBOLS' => array(
-			0 => 'color: #66cc66;'
+			0 => 'color: #008000;'
 			),
 		'REGEXPS' => array(
+			0 => 'color: #22bbff;',
+			1 => 'color: #22bbff;',
+			2 => 'color: #993333;'
 			),
 		'SCRIPT' => array(
-			0 => '',
-			1 => '',
-			2 => '',
-			3 => ''
 			)
 		),
 	'URLS' => array(
-		1 => '',
-		2 => '',
-		3 => '',
-		4 => ''
 		),
 	'OOLANG' => false,
-	'OBJECT_SPLITTERS' => '',
+	'OBJECT_SPLITTERS' => array(
+		),
 	'REGEXPS' => array(
+		0 => '#?0[0-9a-fA-F]{1,32}[hH]',
+		1 => '\%[01]{1,64}[bB]',
+		2 => '^[_a-zA-Z][_a-zA-Z0-9]{0,50}\:'
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
 	'SCRIPT_DELIMITERS' => array(
 		),
 	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
+        ),
+    'TAB_WIDTH' => 8
 );
 
 ?>

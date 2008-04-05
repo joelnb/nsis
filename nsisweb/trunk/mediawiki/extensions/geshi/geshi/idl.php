@@ -4,10 +4,8 @@
  * -------
  * Author: Cedric Bosdonnat (cedricbosdo@openoffice.org)
  * Copyright: (c) 2006 Cedric Bosdonnat
- * Release Version: 1.0.7.17
- * CVS Revision Version: $Revision: 866 $
+ * Release Version: 1.0.7.21
  * Date Started: 2006/08/20
- * Last Modified: $Date: 2006-11-26 21:40:26 +1300 (Sun, 26 Nov 2006) $
  *
  * Unoidl language file for GeSHi.
  *
@@ -55,7 +53,7 @@ $language_data = array (
 			'True', 'False', 'TRUE', 'FALSE'
             ),
 		4 => array(
-		    'string', 'long', 'byte', 'hyper', 'boolean', 'any', 'char', 'double', 'long', 
+		    'string', 'long', 'byte', 'hyper', 'boolean', 'any', 'char', 'double', 'long',
             'void', 'sequence', 'unsigned', '...'
             ),
 		),

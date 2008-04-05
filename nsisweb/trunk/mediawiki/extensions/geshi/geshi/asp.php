@@ -4,10 +4,8 @@
  * --------
  * Author: Amit Gupta (http://blog.igeek.info/)
  * Copyright: (c) 2004 Amit Gupta (http://blog.igeek.info/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.17
- * CVS Revision Version: $Revision: 870 $
+ * Release Version: 1.0.7.21
  * Date Started: 2004/08/13
- * Last Modified: $Date: 2006-12-10 22:48:21 +1300 (Sun, 10 Dec 2006) $
  *
  * ASP language file for GeSHi.
  *
@@ -52,7 +50,7 @@ $language_data = array (
 	'COMMENT_MULTI' => array('/*' => '*/'),
 	'CASE_KEYWORDS' => 0,
 	'QUOTEMARKS' => array('"'),
-	'ESCAPE_CHAR' => '\\',
+	'ESCAPE_CHAR' => '',
 	'KEYWORDS' => array(
 		1 => array(
 			'include', 'file', 'Dim', 'Option', 'Explicit', 'Implicit', 'Set', 'Select', 'ReDim', 'Preserve',

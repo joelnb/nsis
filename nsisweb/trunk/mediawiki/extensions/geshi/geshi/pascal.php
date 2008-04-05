@@ -4,10 +4,8 @@
  * ----------
  * Author: Tux (tux@inamil.cz)
  * Copyright: (c) 2004 Tux (http://tux.a4.cz/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.6
- * CVS Revision Version: $Revision: 1.1 $
+ * Release Version: 1.0.7.21
  * Date Started: 2004/07/26
- * Last Modified: $Date: 2005/06/02 04:57:18 $
  *
  * Pascal language file for GeSHi.
  *
@@ -139,7 +137,8 @@ $language_data = array (
 	'SCRIPT_DELIMITERS' => array(
 		),
 	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
+        ),
+    'TAB_WIDTH' => 4
 );
 
 ?>

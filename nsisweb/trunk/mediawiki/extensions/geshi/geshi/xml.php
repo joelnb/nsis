@@ -4,10 +4,8 @@
  * -------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.17
- * CVS Revision Version: $Revision: 866 $
+ * Release Version: 1.0.7.21
  * Date Started: 2004/09/01
- * Last Modified: $Date: 2006-11-26 21:40:26 +1300 (Sun, 26 Nov 2006) $
  *
  * XML language file for GeSHi. Based on the idea/file by Christian Weiske
  *
@@ -100,7 +98,7 @@ $language_data = array (
 		),
 	'REGEXPS' => array(
 		0 => array(
-			GESHI_SEARCH => '([a-z\-:]+)(=)',
+			GESHI_SEARCH => '([a-z_\-:]+)(=)',
 			GESHI_REPLACE => '\\1',
 			GESHI_MODIFIERS => 'i',
 			GESHI_BEFORE => '',
@@ -141,7 +139,8 @@ $language_data = array (
 		1 => false,
 		2 => false,
 		3 => true
-		)
+        ),
+    'TAB_WIDTH' => 4
 );
 
 ?>
