@@ -50,7 +50,7 @@ $wgDefaultSkin      = "nsis";
 $wgUploadPath       = "$wgScriptPath/images";
 $wgUploadDirectory  = "$IP/images";
 
-$wgFileExtensions   = array( 'png', 'gif', 'jpg', 'jpeg', 'zip' );
+$wgFileExtensions   = array( 'png', 'gif', 'jpg', 'jpeg', 'zip', '7z' );
 
 $wgEmergencyContact = "kichik@users.sourceforge.net";
 $wgPasswordSender	= "kichik@users.sourceforge.net";
