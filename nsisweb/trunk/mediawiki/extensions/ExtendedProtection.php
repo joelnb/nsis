@@ -11,7 +11,8 @@ function wfExtendedProtection() {
 
 function wfExtendedProtectionUserCan(&$title, &$user, $action, &$result) {
   $extendedProtectionList = array(
-    'EclipseNSIS - NSIS plugin for Eclipse' => 'Iceman K'
+    'EclipseNSIS - NSIS plugin for Eclipse' => 'Iceman K',
+    'Adding Language strings as resources' => 'CancerFace'
   );
 
   if (in_array($title->getText(), array_keys($extendedProtectionList))) {
