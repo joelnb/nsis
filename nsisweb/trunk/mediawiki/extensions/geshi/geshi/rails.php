@@ -4,10 +4,10 @@
  * ---------
  * Author: Moises Deniz
  * Copyright: (c) 2005 Moises Deniz
- * Release Version: 1.0.7.21
+ * Release Version: 1\.0\.8
  * Date Started: 2007/03/21
  *
- * Ruby language and Ruby on Rails Framework file for GeSHi
+ * Ruby (with Ruby on Rails Framework) language file for GeSHi.
  *
  *************************************************************************************
  *
@@ -360,7 +360,9 @@ $language_data = array (
     'URLS' => array(
         1 => '',
         2 => '',
-        3 => ''
+        3 => '',
+        4 => '',
+        5 => ''
         ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(
@@ -381,7 +383,7 @@ $language_data = array (
             GESHI_BEFORE => '\\1',
             GESHI_AFTER => ''
             ),
-        2 => "([A-Z][a-zA-Z0-9_]*::)+[A-Z][a-zA-Z0-9_]*",
+        2 => "([A-Z][a-zA-Z0-9_]*::)+[A-Z][a-zA-Z0-9_]*", //Static OOP References
         3 => array(
             GESHI_SEARCH => "([[:space:]]|\[|\()(:[a-zA-Z_][a-zA-Z0-9_]*)",
             GESHI_REPLACE => '\\2',
