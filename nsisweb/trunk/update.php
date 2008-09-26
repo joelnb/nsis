@@ -2,13 +2,11 @@
 
 function get_param($param_name)
 {
-  global $HTTP_POST_VARS;
-  global $HTTP_GET_VARS;
   $param_value = "";
-  if(isset($HTTP_POST_VARS[$param_name]))
-    $param_value = $HTTP_POST_VARS[$param_name];
-  else if(isset($HTTP_GET_VARS[$param_name]))
-    $param_value = $HTTP_GET_VARS[$param_name];
+  if(isset($_POST[$param_name]))
+    $param_value = $_POST[$param_name];
+  else if(isset($_GET[$param_name]))
+    $param_value = $_GET[$param_name];
   return $param_value;
 }
 
