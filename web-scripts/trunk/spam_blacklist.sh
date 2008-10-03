@@ -1,14 +1,16 @@
 #!/bin/bash
 
-# this runs on the shell server
-# spam_blacklist.py runs locally
+# updates the spam blacklist and uploads it
 
-T=`mktemp`
+source config.sh
 
-chgrp nsis $T
-chmod 664 $T
+BASEDIR=`dirname $0`
+LISTTMP=`mktemp`
 
-cat > $T || exit 1
+if $BASEDIR/spam_blacklist.py > $LISTTMP; then
+	scp -q -i $SFKEY $LISTTMP $SFUSER@$SFSERV:$SFDIR/htdocs/mediawiki/spam_blacklist
+else
+	cat $LISTTMP # error text
+fi
 
-mv -f $T /home/groups/n/ns/nsis/htdocs/mediawiki/spam_blacklist
-
+rm -f $LISTTMP

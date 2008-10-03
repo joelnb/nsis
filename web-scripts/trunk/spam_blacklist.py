@@ -1,10 +1,6 @@
 #!/usr/bin/python
 
-# updates the spam blacklist
-
-# this runs locally, and not on SourceForge shell sever.
-# SourceForge shell server doesn't allow outbound connections.
-# on SourceForge server side, it runs spam_blacklist.sh
+# prints an updated spam blacklist
 
 from urllib import urlopen
 from tempfile import mkstemp
@@ -24,10 +20,4 @@ for b in badsigns:
 		print 'black list contains regex'
 		exit(1)
 
-tfd, t = mkstemp()
-write(tfd, blacklist)
-close(tfd)
-
-system('cat %s | ssh -q -T -l kichik -i spam_blacklist.key nsis.sf.net' % t)
-
-unlink(t)
+print blacklist
