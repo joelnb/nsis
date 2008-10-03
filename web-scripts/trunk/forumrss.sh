@@ -1,11 +1,20 @@
 #!/bin/sh
 
-# downloads forum feed and transforms it to html
+# downloads forum feed, transforms it to html and uploads
 
-# this runs on SourceForge shell servers.
-# forumrss-local.sh runs locally.
+source config.sh
 
-cat > /home/groups/n/ns/nsis/forum.rss
-xsltproc /home/groups/n/ns/nsis/bin/forumrss.xsl /home/groups/n/ns/nsis/forum.rss | tail -n 1 > /home/groups/n/ns/nsis/forum.rss.html
+RSSTMP=`mktemp`
+BASEDIR=`dirname $0`
 
-#wget -q -O /home/groups/n/ns/nsis/forum.rss "http://forums.winamp.com/backend.php?forumid=65&limit=5"
+if wget -q -O $RSSTMP "http://forums.winamp.com/backend.php?forumid=65&limit=5"; then
+	xsltproc $BASEDIR/forumrss.xsl $RSSTMP | tail -n 1 > $RSSTMP.html
+	scp -q -i $SFKEY $RSSTMP.html $SFUSER@$SFSERV:$SFDIR/forum.rss.html
+fi
+
+rm -f $RSSTMP > /dev/null
+rm -f $RSSTMP.html > /dev/null
+
+F=`mktemp`
+wget -q -O $F --post-data=OK "http://nsis.sourceforge.net/Main_Page?action=purge"
+rm -f $F
