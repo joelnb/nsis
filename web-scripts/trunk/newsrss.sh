@@ -1,11 +1,17 @@
 #!/bin/sh
 
-# downloads news feed and transforms it to html
+# downloads news feed, transforms it to html and uploads
 
-if wget -q -O /home/groups/n/ns/nsis/news.rss "http://sourceforge.net/export/rss2_projnews.php?group_id=22049&rss_fulltext=1&rss_limit=3"; then
-	RT=`mktemp`
-	if xsltproc /home/groups/n/ns/nsis/bin/newsrss.xsl /home/groups/n/ns/nsis/news.rss > $RT; then
-		tail -n 1 $RT > /home/groups/n/ns/nsis/news.rss.html
+source config.sh
+
+RSSTMP=`mktemp`
+BASEDIR=`dirname $0`
+
+if wget -q -O $RSSTMP "http://sourceforge.net/export/rss2_projnews.php?group_id=22049&rss_fulltext=1&rss_limit=3"; then
+	if xsltproc $BASEDIR/newsrss.xsl $RSSTMP | tail -n 1 > $RSSTMP.html; then
+		scp -q -i $SFKEY $RSSTMP.html $SFUSER@$SFSERV:$SFDIR/news.rss.html
 	fi
-	rm -f $RT
 fi
+
+rm -f $RSSTMP
+rm -f $RSSTMP.html
