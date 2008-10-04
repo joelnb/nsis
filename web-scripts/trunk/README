@@ -1,7 +1,0 @@
-This directory contains scripts responsible for maintaining the website.
-
-Used scripts and files are kept in SVN under web-scripts module.
-There's no cronjob that automatically updates files from SVN, so
-if something is updated in SVN, this should be manually synced.
-
-Please update SVN, if you update anything here.
