@@ -9,7 +9,8 @@ source $BASEDIR/config.sh
 # local vars
 
 SNAPSHOTROOT=$WINEROOT/nsis-snapshot
-DISTROOTWINE=C:\\nsis-snapshot\\dist
+ROOTWINE=C:\\nsis-snapshot
+DISTROOTWINE=$ROOTWINE\\dist
 DISTROOT=$SNAPSHOTROOT/dist
 
 # remote vars
@@ -26,7 +27,7 @@ svn -q export $SVNROOT/trunk $WINEROOT/nsis-snapshot || exit 1
 
 # build
 
-$SCONS -C $SNAPSHOTROOT MSTOOLKIT=yes PREFIX=$DISTROOTWINE -k install dist-zip > $SNAPSHOTROOT/build.log 2>&1
+$SCONS -C $SNAPSHOTROOT MSTOOLKIT=yes PREFIX=$DISTROOTWINE -k install dist-zip '>' $ROOTWINE\\build.log '2>&1' > /dev/null
 mv $SNAPSHOTROOT/*.zip $SNAPSHOTROOT/nsis.zip
 
 # fix-up docs
