@@ -15,7 +15,6 @@ LOGTMP=`mktemp`
 
 HTDOCSDIR=$SFDIR/htdocs
 CLHTML=$HTDOCSDIR/nightly/changelog.htm
-SVNROOT=https://nsis.svn.sourceforge.net/svnroot/nsis/NSIS/
 
 # others
 
