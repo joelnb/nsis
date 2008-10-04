@@ -6,3 +6,6 @@ SFKEY=XXXX_PATH_TO_PRIVATE_KEY_XXX
 SFDIR=/home/groups/n/ns/nsis
 
 SVNROOT=https://nsis.svn.sourceforge.net/svnroot/nsis/NSIS/
+
+WINEROOT=~/c
+SCONS=~/bin/scons.sh

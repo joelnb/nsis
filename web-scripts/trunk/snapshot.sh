@@ -1,44 +1,49 @@
 #!/bin/bash
 
-# updates the nightly snapshot
+# builds and uploads the nightly snapshot
 
-# this runs on SourceForge shell servers.
-# snapshot-local.sh runs locally.
+BASEDIR=`dirname $0`
 
-umask 0002
+source $BASEDIR/config.sh
 
-cd /home/groups/n/ns/nsis/htdocs/nightly
-cat > new.zip
-mv -f new.zip nsis.zip
-unzip -qo nsis.zip build.log
-chgrp nsis nsis.zip
+# local vars
 
-DIR=`unzip -qql nsis.zip | grep -v build | head -n1 | sed -e 's/^.*\(nsis-[0-9][0-9]-...-[0-9][0-9][0-9][0-9].cvs\).*$/\1/'`
-DOCS=${DIR}/Docs/\*
-EXAMPLES=${DIR}/Examples/\*
-INCLUDES=${DIR}/Include/\*
+SNAPSHOTROOT=$WINEROOT/nsis-snapshot
+DISTROOTWINE=C:\\nsis-snapshot\\dist
+DISTROOT=$SNAPSHOTROOT/dist
 
-unzip -qqo nsis.zip $DOCS $EXAMPLES $INCLUDES || exit 1
+# remote vars
 
-rm -rf Docs
-mv -f ${DIR}/Docs Docs
-cp .htaccess Docs
-chgrp -R nsis Docs
-chmod -R g+w Docs
-cp Docs/Contents.html Docs/index.html
+NIGHTLY=$SFDIR/htdocs/nightly
 
-rm -rf Examples
-mv -f ${DIR}/Examples Examples
-cp .htaccess Examples
-chmod -R g+w Examples
-chgrp -R nsis Examples
+# commands
 
-rm -rf Include
-mv -f ${DIR}/Include Include
-cp .htaccess Include
-chmod -R g+w Include
-chgrp -R nsis Include
+RSYNC="rsync -rz --delay-updates --rsh='ssh -l $SFUSER -i $SFKEY'"
 
-rmdir $DIR
+# export a fresh copy
 
-/home/groups/n/ns/nsis/bin/sflogoadder.sh
+svn -q export $SVNROOT/trunk $WINEROOT/nsis-snapshot || exit 1
+
+# build
+
+$SCONS -C $SNAPSHOTROOT MSTOOLKIT=yes PREFIX=$DISTROOTWINE -k install dist-zip > $SNAPSHOTROOT/build.log 2>&1
+mv $SNAPSHOTROOT/*.zip $SNAPSHOTROOT/nsis.zip
+
+# fix-up docs
+
+cp $DISTROOT/Docs/Contents.html $DISTROOT/Docs/index.html
+$BASEDIR/sflogoadder.sh $DISTROOT/Docs
+
+# add .htaccess
+
+echo Options +indexes > $DISTROOT/Docs/.htaccess
+echo Options +indexes > $DISTROOT/Examples/.htaccess
+echo Options +indexes > $DISTROOT/Include/.htaccess
+
+# upload everything using rsync
+
+$RSYNC $SNAPSHOTROOT/build.log $SNAPSHOTROOT/nsis.zip $DISTROOT/Docs $DISTROOT/Examples $DISTROOT/Include $SFSERV:$NIGHTLY
+
+# delete local snapshot directory
+
+rm -rf $WINEROOT/nsis-snapshot
