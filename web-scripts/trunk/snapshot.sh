@@ -27,6 +27,7 @@ svn -q export $SVNROOT/trunk $WINEROOT/nsis-snapshot || exit 1
 
 # build
 
+cd $WINEROOT
 $SCONS -C $SNAPSHOTROOT MSTOOLKIT=yes PREFIX=$DISTROOTWINE -k install dist-zip '>' $ROOTWINE\\build.log '2>&1' > /dev/null
 mv $SNAPSHOTROOT/*.zip $SNAPSHOTROOT/nsis.zip
 
