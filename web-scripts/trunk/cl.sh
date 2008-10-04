@@ -2,9 +2,9 @@
 
 # updates change log and uploads
 
-source config.sh
-
 BASEDIR=`dirname $0`
+
+source $BASEDIR/config.sh
 
 # local
 

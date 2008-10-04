@@ -2,10 +2,10 @@
 
 # downloads forum feed, transforms it to html and uploads
 
-source config.sh
-
 RSSTMP=`mktemp`
 BASEDIR=`dirname $0`
+
+source $BASEDIR/config.sh
 
 if wget -q -O $RSSTMP "http://forums.winamp.com/backend.php?forumid=65&limit=5"; then
 	xsltproc $BASEDIR/forumrss.xsl $RSSTMP | tail -n 1 > $RSSTMP.html
