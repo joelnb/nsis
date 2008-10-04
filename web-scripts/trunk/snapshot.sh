@@ -19,7 +19,7 @@ NIGHTLY=$SFDIR/htdocs/nightly
 
 # commands
 
-RSYNC="rsync -rz --delay-updates --rsh='ssh -l $SFUSER -i $SFKEY'"
+RSYNC="rsync -rz --delay-updates --rsh=\"ssh -l $SFUSER -i $SFKEY\""
 
 # export a fresh copy
 
@@ -44,7 +44,7 @@ echo Options +indexes > $DISTROOT/Include/.htaccess
 
 # upload everything using rsync
 
-$RSYNC $SNAPSHOTROOT/build.log $SNAPSHOTROOT/nsis.zip $DISTROOT/Docs $DISTROOT/Examples $DISTROOT/Include $SFSERV:$NIGHTLY
+eval $RSYNC $SNAPSHOTROOT/build.log $SNAPSHOTROOT/nsis.zip $DISTROOT/Docs $DISTROOT/Examples $DISTROOT/Include $SFSERV:$NIGHTLY
 
 # delete local snapshot directory
 
