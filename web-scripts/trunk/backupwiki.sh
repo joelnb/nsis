@@ -19,7 +19,9 @@ mkdir $WIKIDIR
 
 if $RSYNC -k $SFSERV:$SFDIR/htdocs/mediawiki/images $WIKIDIR; then
 
-	tar cjf $WIKIFILE $WIKIDIR/images/*
+	pushd $WIKIDIR/images
+	tar cjf $WIKIFILE *
+	popd
 
 else
 
