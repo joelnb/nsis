@@ -7,5 +7,8 @@ SFDIR=/home/groups/n/ns/nsis
 
 SVNROOT=https://nsis.svn.sourceforge.net/svnroot/nsis/NSIS/
 
+_RSYNC="rsync -rz --delay-updates --rsh=\"ssh -l $SFUSER -i $SFKEY\""
+RSYNC="eval $_RSYNC"
+
 WINEROOT=~/c
 SCONS=~/bin/scons.sh

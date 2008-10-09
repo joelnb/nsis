@@ -17,10 +17,6 @@ DISTROOT=$SNAPSHOTROOT/dist
 
 NIGHTLY=$SFDIR/htdocs/nightly
 
-# commands
-
-RSYNC="rsync -rz --delay-updates --rsh=\"ssh -l $SFUSER -i $SFKEY\""
-
 # export a fresh copy
 
 svn -q export $SVNROOT/trunk $WINEROOT/nsis-snapshot || exit 1
@@ -44,7 +40,7 @@ echo Options +indexes > $DISTROOT/Include/.htaccess
 
 # upload everything using rsync
 
-eval $RSYNC $SNAPSHOTROOT/build.log $SNAPSHOTROOT/nsis.zip $DISTROOT/Docs $DISTROOT/Examples $DISTROOT/Include $SFSERV:$NIGHTLY
+$RSYNC $SNAPSHOTROOT/build.log $SNAPSHOTROOT/nsis.zip $DISTROOT/Docs $DISTROOT/Examples $DISTROOT/Include $SFSERV:$NIGHTLY
 
 # delete local snapshot directory
 
