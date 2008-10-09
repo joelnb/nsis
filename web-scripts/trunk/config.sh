@@ -7,8 +7,14 @@ SFDIR=/home/groups/n/ns/nsis
 
 SVNROOT=https://nsis.svn.sourceforge.net/svnroot/nsis/NSIS/
 
+DBUSER=n22049ro
+DBPASS=XXXX_DB_PASSWORD_XXXX
+DBEXPORT=https://mysql-n.sourceforge.net/export.php
+
 _RSYNC="rsync -rz --delay-updates --rsh=\"ssh -l $SFUSER -i $SFKEY\""
 RSYNC="eval $_RSYNC"
+
+BACKUPDIR=~/nsisweb-backup
 
 WINEROOT=~/c
 SCONS=~/bin/scons.sh

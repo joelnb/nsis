@@ -1,21 +1,11 @@
 #!/bin/bash
 
-# this runs on the shell server
-# backup-local.sh runs locally
+BASEDIR=`dirname $0`
 
-# make sure no-pty is used in authorized_keys
-# if it isn't used, file transfers will be corrupted
+# backups mysql database
 
-TMP=`mktemp`
+$BASEDIR/backupdb.sh
 
-cd /tmp/persistent/nsiswikiimages
+# backup wiki files
 
-mysqldump --quick --databases n22049_wiki n22049_archive | grep -v "^INSERT INTO wiki_objectcache VALUES" > mysql_dump
-
-tar cj --exclude=temp --exclude=thumb * > $TMP
-
-rm -f mysql_dump
-
-cat $TMP
-
-rm -f $TMP
+$BASEDIR/backupwiki.sh
