@@ -40,6 +40,9 @@ fi
 
 # filter out large unneeded data
 
+touch $DBFILE.open
+chmod 600 $DBFILE.open
+
 bzgrep -v "^INSERT INTO wiki_objectcache VALUES" $DBFILE > $DBFILE.open
 bzip2 -c $DBFILE.open > $DBFILE
 rm -f $DBFILE.open
