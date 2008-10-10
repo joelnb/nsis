@@ -29,7 +29,8 @@ chmod 600 $DBFILE
 
 # export db
 
-if [ ! $EXPORT -o $DBFILE -d "token=$TOKEN&export_type=server&lang=utf-8&server=1&collation_connection=utf8_unicode_ci&what=sql&header_comment=&sql_compat=NONE&sql_structure=structure&sql_auto_increment=1&use_backquotes=1&sql_data=data&max_query_size=50000000&asfile=sendit&compression=bzip" ]; then
+$EXPORT -o $DBFILE -d "token=$TOKEN&export_type=server&lang=utf-8&server=1&collation_connection=utf8_unicode_ci&what=sql&header_comment=&sql_compat=NONE&sql_structure=structure&sql_auto_increment=1&use_backquotes=1&sql_data=data&max_query_size=50000000&asfile=sendit&compression=bzip"
+if [ $? != 0 ]; then
 
 	echo export failed
 
