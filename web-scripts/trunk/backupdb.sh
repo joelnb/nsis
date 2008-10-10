@@ -38,6 +38,12 @@ if [ $? != 0 ]; then
 
 fi
 
+# filter out large unneeded data
+
+bzgrep -v "^INSERT INTO wiki_objectcache VALUES" $DBFILE > $DBFILE.open
+bzip2 -c $DBFILE.open > $DBFILE
+rm -f $DBFILE.open
+
 # delete files
 
 rm -f $COOKIEJAR
