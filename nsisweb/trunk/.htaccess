@@ -53,3 +53,5 @@ RewriteRule ^(.*)$ /wiki/$1 [L,QSA]
 <Files "wiki">
 	ForceType application/x-httpd-php
 </Files>
+
+AddType application/x-7z-compressed 7z
