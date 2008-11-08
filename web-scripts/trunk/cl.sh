@@ -26,11 +26,11 @@ if TAG=`svn list $SVNROOT/tags`; then
 	if TAGINFO=`svn info --xml $SVNROOT/tags/$TAG`; then
 		TAGREV=$((`echo $TAGINFO | xmlstarlet sel -t -m /info/entry/commit -v "@revision"` + 1))
 	else
-		echo can't get tag info
+		echo "can't get tag info"
 		exit 1
 	fi
 else
-	echo can't get tag list
+	echo "can't get tag list"
 	exit 1
 fi
 
