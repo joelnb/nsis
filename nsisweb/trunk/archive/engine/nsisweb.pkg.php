@@ -144,7 +144,8 @@ class NsisWeb
   }
   function query($query,$file='Unknown',$line='Unknown',$dolog=1)
   {
-    unset($this->$last_query);
+    if (isset($this->$last_query))
+      unset($this->$last_query);
     if($link = mysql_pconnect(NSISWEB_MYSQL_HOST,NSISWEB_MYSQL_USER,NSISWEB_MYSQL_PASSWORD)) {
       /* only select the db if the query does not mention the db name and we have not already selected the database */
       $result = TRUE;
