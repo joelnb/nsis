@@ -51,31 +51,12 @@ function wfSimpleUpdateLogin($user, $password) {
   if( is_null( $u ) ) {
     return false;
   }
-  if ( 0 == $u->getID() ) {
-    global $wgAuth;
-    /**
-     * If the external authentication plugin allows it,
-     * automatically create a new account for users that
-     * are externally defined but have not yet logged in.
-     */
-    if ( $wgAuth->autoCreate() && $wgAuth->userExists( $u->getName() ) ) {
-      if ( $wgAuth->authenticate( $u->getName(), $this->mPassword ) ) {
-        $u =& $this->initUser( $u );
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
-  } else {
-    $u->loadFromDatabase();
-  }
 
   if (!$u->checkPassword( $password )) {
     return false;
   }
 
-  if (!$u->isSysop()) {
+  if (!in_array('sysop', $u->getEffectiveGroups())) {
     return false;
   }
 

@@ -16,7 +16,7 @@ function wfExtendedProtectionUserCan(&$title, &$user, $action, &$result) {
   );
 
   if (in_array($title->getText(), array_keys($extendedProtectionList))) {
-    if ($user->isAllowed('sysop') || $user->getName() == $extendedProtectionList[$title->getText()]) {
+    if (in_array('sysop', $user->getEffectiveGroups()) || $user->getName() == $extendedProtectionList[$title->getText()]) {
       return true;
     }
     if ($action != 'read') {
