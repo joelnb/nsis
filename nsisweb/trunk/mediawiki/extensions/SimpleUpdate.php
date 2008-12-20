@@ -26,8 +26,9 @@ function wfSpecialSimpleUpdate() {
   $summary  = $wgRequest->getText('su_summary');
 
   if (wfSimpleUpdateLogin($user, $password)) {
+    global $wgArticle;
     $title = Title::newFromText($title);
-    $article = new Article($title);
+    $wgArticle = $article = new Article($title);
     $article->updateArticle($data, $summary, false, $title->userIsWatching());
     $result = 'success';
   } else {
