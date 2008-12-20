@@ -37,8 +37,8 @@ cp mediawiki/spam_blacklist mediawiki-$2
 cp mediawiki/LocalSettings.php mediawiki-$2
 cp mediawiki/AdminSettings.php mediawiki-$2
 
-sed -s "s/\([ \t]*NS_IMAGE[ \t]*=>[ \t]*'\)Image\(',\)/\1File\2/;s/\([ \t]*NS_IMAGE_TALK[ \t]*=>[ \t]*'\)Image\(_talk',\)/\1File\2/" mediawiki-$2/languages/Language.php > mediawiki-$2/languages/Language.php.sed
-mv -f mediawiki-$2/languages/Language.php.sed mediawiki-$2/languages/Language.php
+sed -s "s/\([ \t]*NS_IMAGE[ \t]*=>[ \t]*'\)Image\(',\)/\1File\2/;s/\([ \t]*NS_IMAGE_TALK[ \t]*=>[ \t]*'\)Image\(_talk',\)/\1File\2/" mediawiki-$2/languages/messages/MessagesEn.php > mediawiki-$2/languages/messages/MessagesEn.php.sed
+mv -f mediawiki-$2/languages/messages/MessagesEn.php.sed mediawiki-$2/languages/messages/MessagesEn.php
 
 chgrp -R nsis mediawiki-$2
 chmod -R g+w mediawiki-$2
