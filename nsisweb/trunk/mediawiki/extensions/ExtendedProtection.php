@@ -21,6 +21,8 @@ function wfExtendedProtectionUserCan(&$title, &$user, $action, &$result) {
     if ($action != 'read')
       $result = false;
   }
+
+  return true;
 }
 
 ?>
