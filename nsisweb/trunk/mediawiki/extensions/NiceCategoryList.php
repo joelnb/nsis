@@ -19,6 +19,7 @@ $wgExtensionFunctions[] = 'wfNiceCategoryList';
 function wfNiceCategoryList() {
 	global $wgParser;
 	$wgParser->setHook('ncl', hookNiceCategoryList);
+	return true;
 }
 
 /*

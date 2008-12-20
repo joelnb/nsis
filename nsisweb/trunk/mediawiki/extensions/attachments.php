@@ -4,11 +4,11 @@ $wgExtensionFunctions[] = "wfAttachmentsExtension";
 
 function wfAttachmentsExtension() {
 	global $wgParser;
-
 	$wgParser->setHook('attach', 'attach_func');
+	return true;
 }
 
-function attach_func($input) {
+function attach_func($input, $args, $parser) {
 	$zip = Image::newFromName('Zip.gif');
 	$attachment = Image::newFromName($input);
 	if (!$attachment->exists())

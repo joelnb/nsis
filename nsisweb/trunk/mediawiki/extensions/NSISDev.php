@@ -6,6 +6,7 @@ function wfNSISDev() {
 	$wgParser->setHook('changelogtimestamp', 'tsChangeLog');
 	$wgParser->setHook('nightlybuildtimestamp', 'tsNightlyBuild');
 	$wgParser->setHook('changelog', 'showChangeLog');
+	return true;
 }
 
 function getTimeStamp($file) {

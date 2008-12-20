@@ -41,6 +41,8 @@ function wfSyntaxExtension() {
 		                 #$geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS);
 		                 return $geshi->parse_code();'));
 	}
+
+	return true;
 }
 
 ?>

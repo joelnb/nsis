@@ -16,10 +16,13 @@ function wfExtendedProtectionUserCan(&$title, &$user, $action, &$result) {
   );
 
   if (in_array($title->getText(), array_keys($extendedProtectionList))) {
-    if ($user->isSysop() || $user->getName() == $extendedProtectionList[$title->getText()])
-      return;
-    if ($action != 'read')
+    if ($user->isAllowed('sysop') || $user->getName() == $extendedProtectionList[$title->getText()]) {
+      return true;
+    }
+    if ($action != 'read') {
       $result = false;
+      return false;
+    }
   }
 
   return true;

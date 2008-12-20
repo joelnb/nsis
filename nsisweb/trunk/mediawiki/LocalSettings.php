@@ -11,7 +11,7 @@ ini_set( "include_path", ".:$IP:$IP/includes:$IP/languages" );
 require_once( "includes/DefaultSettings.php" );
 
 # If PHP's memory limit is very low, some operations may fail.
-ini_set( 'memory_limit', '20M' );
+ini_set( 'memory_limit', '32M' );
 
 if (!is_dir('/home/groups/n/ns/nsis/persistent/mediawiki/nsiswikisessions'))
 	mkdir('/home/groups/n/ns/nsis/persistent/mediawiki/nsiswikisessions', 0777);

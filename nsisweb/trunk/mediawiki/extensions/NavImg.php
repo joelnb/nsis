@@ -4,32 +4,30 @@ $wgExtensionFunctions[] = "wfNavImg";
 
 function wfNavImg() {
 	global $wgParser;
-
 	$wgParser->setHook('navimg', 'wfNavImgHook');
+	return true;
 }
 
-function wfNavImgHook($input) {
+function wfNavImgHook($input, $args, $parser) {
 	list($type, $imgname, $page) = explode('|', $input);
 
 	if (!isset($type) || !isset($imgname) || !isset($page))
 		return $input;
 
-	$img = Image::newFromName($imgname);
-	if (!$img->exists()) {
-		global $wgOut;
-		return $wgOut->parse('[['. $page . ']]');
+	$img = wfLocalFile($imgname);
+	if (!$img) {
+		return $parser->recursiveTagParse('[['. $page . ']]');
 	}
 
 	if ($type == 'local') {
 		$title = Title::newFromText($page);
 		$url = $title->getLocalURL();
-  } else {
-    global $wgMsgParserOptions;
-    $parser = new Parser();
-    $url = $parser->transformMsg($page, $wgMsgParserOptions);
-  }
+	} else {
+		//$url = $parser->transformMsg($page, $wgMsgParserOptions);
+		$url = $page;
+	}
 
-  return '<span class="plainlinks"><a href="' . $url . '">' . navImgToHtml($img) . '</a></span>';
+	return '<span class="plainlinks"><a href="' . $url . '">' . navImgToHtml($img) . '</a></span>';
 }
 
 function navImgToHtml($image) {
