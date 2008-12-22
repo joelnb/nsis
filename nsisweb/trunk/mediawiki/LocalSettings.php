@@ -77,9 +77,8 @@ $wgDBprefix         = "wiki_";
 $wgDBmysql4 = $wgEnablePersistentLC = true;
 
 ## Shared memory settings
-$wgUseMemCached = false;
+$wgMainCacheType = 'CACHE_ACCEL';
 $wgMemCachedServers = array();
-$wgUseTurckShm = function_exists( 'mmcache_get' ) && php_sapi_name() == 'apache';
 
 ## To enable image uploads, make sure the 'images' directory
 ## is writable, then uncomment this:
