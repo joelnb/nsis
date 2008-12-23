@@ -80,6 +80,9 @@ $wgDBmysql4 = $wgEnablePersistentLC = true;
 $wgMainCacheType = 'CACHE_ACCEL';
 $wgMemCachedServers = array();
 
+## Proxy stuff... We must know which proxy to trust
+$wgSquidServersNoPurge = array('127.0.0.1');
+
 ## To enable image uploads, make sure the 'images' directory
 ## is writable, then uncomment this:
 $wgEnableUploads		= true;
