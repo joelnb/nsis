@@ -23,8 +23,8 @@ function wfNavImgHook($input, $args, $parser) {
 		$title = Title::newFromText($page);
 		$url = $title->getLocalURL();
 	} else {
-		//$url = $parser->transformMsg($page, $wgMsgParserOptions);
-		$url = $page;
+		global $wgTitle;
+		$url = $parser->preprocess($page, $wgTitle, new ParserOptions());
 	}
 
 	return '<span class="plainlinks"><a href="' . $url . '">' . navImgToHtml($img) . '</a></span>';
