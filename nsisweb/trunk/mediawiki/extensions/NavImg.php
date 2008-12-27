@@ -23,8 +23,9 @@ function wfNavImgHook($input, $args, $parser) {
 		$title = Title::newFromText($page);
 		$url = $title->getLocalURL();
 	} else {
-		global $wgTitle;
-		$url = $parser->preprocess($page, $wgTitle, new ParserOptions());
+		// this is private, but public methods call Parser::clearState() which resets
+		// the unique prefix and makes replacement of other tags fail
+		$url = $parser->replaceVariables($page);
 	}
 
 	return '<span class="plainlinks"><a href="' . $url . '">' . navImgToHtml($img) . '</a></span>';
