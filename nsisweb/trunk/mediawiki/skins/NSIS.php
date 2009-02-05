@@ -281,7 +281,7 @@ class NSISTemplate extends QuickTemplate {
 <!--      <div class="visualClear"></div> -->
       <div id="footer">
         <!-- Piwik --><script type="text/javascript">var pkBaseURL = (("https:" == document.location.protocol) ? "https://apps.sourceforge.net/piwik/nsis/" : "http://apps.sourceforge.net/piwik/nsis/");document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">piwik_action_name = '';piwik_idsite = 1;piwik_url = pkBaseURL + "piwik.php";piwik_log(piwik_action_name, piwik_idsite, piwik_url);</script><object><noscript><p><img src="http://apps.sourceforge.net/piwik/nsis/piwik.php?idsite=1" alt="piwik"/></p></noscript></object><!-- End Piwik Tag -->
-        <? if($this->data['poweredbyico']) { ?><div id="f-poweredbyico"><a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=22049&amp;type=1" border="0" alt="SourceForge.net" /></a>&nbsp;<? $this->html('poweredbyico') ?></div><? } ?>
+        <? if($this->data['poweredbyico']) { ?><div id="f-poweredbyico"><a href="http://sourceforge.net/projects/nsis/"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=22049&amp;type=1" border="0" alt="SourceForge.net" /></a>&nbsp;<? $this->html('poweredbyico') ?></div><? } ?>
 	      <? if($this->data['copyrightico']) { ?><div id="f-copyrightico"><? $this->html('copyrightico') ?></div><? } ?>
         <ul id="f-list">
           <? if($this->data['lastmod'   ]) { ?><li id="f-lastmod"><?    $this->html('lastmod')    ?><br/></li><? } ?>
