@@ -160,7 +160,6 @@ include("extensions/NewsRSS.php");
 include("extensions/NSISDev.php");
 include("extensions/NiceCategoryList.php");
 include("extensions/NavImg.php");
-include("extensions/NewUserLog.php");
 include("extensions/SimpleUpdate.php");
 include("extensions/ExtendedProtection.php");
 
