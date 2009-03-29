@@ -51,6 +51,8 @@ $wgUploadPath       = "$wgScriptPath/images";
 $wgUploadDirectory  = "$IP/images";
 
 $wgFileExtensions   = array( 'png', 'gif', 'jpg', 'jpeg', 'zip', '7z', 'nsi', 'nsh' );
+function isZipMimeType($x) { return $x != 'application/zip'; }
+$wgMimeTypeBlacklist= array_filter($wgMimeTypeBlacklist, isZipMimeType);
 
 $wgEmergencyContact = "kichik@users.sourceforge.net";
 $wgPasswordSender	= "kichik@users.sourceforge.net";
