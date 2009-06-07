@@ -26,8 +26,8 @@ $RTYPES = array(
 
 $output = "0";
 
-$latest_stable_version = "2.44";
-$latest_version = "2.44";
+$latest_stable_version = "2.45";
+$latest_version = "2.45";
 $latest_type = $TYPES[""];
 $latest_build = "";
 
