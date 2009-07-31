@@ -263,6 +263,20 @@ class NSISTemplate extends QuickTemplate {
 	  </div>
 	</div>
 
+	<div class="portlet">
+	  <h5>ads</h5>
+	  <div class="pBody">
+	    <script type="text/javascript"><!--
+google_ad_client = "pub-6164632244757680";
+/* NSIS Wiki */
+google_ad_slot = "4219930685";
+google_ad_width = 120;
+google_ad_height = 240;
+	    //--></script>
+	    <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+	  </div>
+	</div>
+
 	<?php if( $this->data['language_urls'] ) { ?><div id="p-lang" class="portlet">
 	  <h5><?php $this->msg('otherlanguages') ?></h5>
 	  <div class="pBody">
