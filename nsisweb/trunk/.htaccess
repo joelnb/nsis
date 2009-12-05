@@ -33,7 +33,7 @@ RewriteRule ^changelog.php$ /Change_Log [R,L]
 
 RewriteRule ^home/*$ /wiki/Main_Page [L]
 
-RewriteRule ^rn/new$ http://sourceforge.net/project/admin/newrelease.php?package_id=15374&group_id=22049 [R,L]
+RewriteRule ^rn/new$ https://sourceforge.net/project/admin/explorer.php?group_id=22049 [R,L]
 RewriteRule ^rn/(.*)$ http://sourceforge.net/project/shownotes.php?group_id=22049&release_id=$1 [R,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
