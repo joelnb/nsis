@@ -22,4 +22,4 @@ SCONS=~/bin/scons.sh
 # env variables
 
 export ZLIB_W32=C:\\zlib
-export WXWIN=C:\\wxWidgets-2.8.10
+#export WXWIN=C:\\wxWidgets-2.8.10
