@@ -199,7 +199,7 @@ class NSISTemplate extends QuickTemplate {
 	    <?php if($this->data['newtalk'] ) { ?><div class="usermessage"><?php $this->html('newtalk')  ?></div><?php } ?>
 	    <!-- start content -->
 	    <?php $this->html('bodytext') ?>
-	    <?php if($this->data['catlinks']) { ?><div id="catlinks"><?php       $this->html('catlinks') ?></div><?php } ?>
+	    <?php if($this->data['catlinks']) { ?><?php       $this->html('catlinks') ?><?php } ?>
 	    <!-- end content -->
 	    <div class="visualClear"></div>
 	  </div>
