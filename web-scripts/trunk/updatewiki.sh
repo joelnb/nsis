@@ -7,7 +7,11 @@
 # or, for local updates:
 #   updatewiki.sh 1.13 1.13.3 mediawiki-1.13.3.tar.gz
 
-cd /home/groups/n/ns/nsis/htdocs
+BASEDIR=`dirname $0`
+
+source $BASEDIR/config.sh
+
+cd $SFDIR/htdocs
 
 if [ -n "$3" ]; then
 	if [ -f "$2" ]; then
@@ -44,7 +48,7 @@ chgrp -R nsis mediawiki-$2
 chmod -R g+w mediawiki-$2
 
 rm -rf mediawiki-$2/images
-ln -s /home/groups/n/ns/nsis/persistent/mediawiki/nsiswikiimages mediawiki-$2/images
+ln -s $SFDIR/persistent/mediawiki/nsiswikiimages mediawiki-$2/images
 
 diff -ruNw mediawiki mediawiki-$2 > wiki.diff
 
@@ -73,4 +77,4 @@ rm -f wiki.diff
 
 echo ""
 echo "Don't forget to delete the backup, once you're sure everything's working"
-echo "  /home/groups/n/ns/nsis/mediawiki-$2-old"
+echo "  $SFDIR/mediawiki-$2-old"

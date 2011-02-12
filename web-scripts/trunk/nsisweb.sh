@@ -1,9 +1,13 @@
 #!/bin/sh
 
+BASEDIR=`dirname $0`
+
+source $BASEDIR/config.sh
+
 # updates htdocs files from svn
 
 umask 0002
-cd /home/groups/n/ns/nsis/bin/nsisweb
+cd $SFDIR/bin/nsisweb
 svn -q up
-cp -rf . ../../htdocs/
-rm -rf `find ../../htdocs -name .svn`
+cp -rf . $SFDIR/htdocs/
+rm -rf `find $SFDIR/htdocs -name .svn`
