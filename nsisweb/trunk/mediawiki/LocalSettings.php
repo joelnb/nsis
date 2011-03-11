@@ -5,7 +5,7 @@
 # recreate them later.
 
 $IP = "/home/groups/n/ns/nsis/htdocs/mediawiki";
-ini_set( "include_path", ".:$IP:$IP/includes:$IP/languages" );
+ini_set( "include_path", ".:$IP:$IP/includes:$IP/languages:$IP/../../pear/php" );
 #ini_set( "register_globals", "off" );
 #ini_set( "upload_max_filesize", "102400" );
 require_once( "includes/DefaultSettings.php" );
