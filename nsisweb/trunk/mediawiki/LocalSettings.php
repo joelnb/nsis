@@ -93,6 +93,8 @@ $wgMemCachedServers = array();
 
 ## Proxy stuff... We must know which proxy to trust
 $wgSquidServersNoPurge = array('127.0.0.1');
+for ($i = 1; $i < 256; $i++) # sourceforge proxies...
+        $wgSquidServersNoPurge[] = '172.29.30.' . $i;
 
 ## To enable image uploads, make sure the 'images' directory
 ## is writable, then uncomment this:
