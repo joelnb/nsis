@@ -65,6 +65,15 @@ $wgDBuser           = NSISWEB_MYSQL_USER;
 $wgDBpassword       = NSISWEB_MYSQL_PASSWORD;
 $wgDBprefix         = "wiki_";
 
+$wgSMTP = array(
+ 'host'     => "prwebmail", //could also be an IP address
+ 'IDHost'   => "nsis",
+ 'port'     => 25,
+ 'auth'     => true,
+ 'username' => "nsis",
+ 'password' => NSISWEB_MYSQL_PASSWORD,
+);
+
 ## To allow SQL queries through the wiki's Special:Askaql page,
 ## uncomment the next lines. THIS IS VERY INSECURE. If you want
 ## to allow semipublic read-only SQL access for your sysops,
