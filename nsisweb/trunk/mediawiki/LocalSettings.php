@@ -4,7 +4,7 @@
 # If you make manual changes, please keep track in case you need to
 # recreate them later.
 
-$IP = "/home/groups/n/ns/nsis/htdocs/mediawiki";
+$IP = "/home/project-web/nsis/htdocs/mediawiki";
 ini_set( "include_path", ".:$IP:$IP/includes:$IP/languages:$IP/../../pear/php" );
 #ini_set( "register_globals", "off" );
 #ini_set( "upload_max_filesize", "102400" );
@@ -13,9 +13,9 @@ require_once( "includes/DefaultSettings.php" );
 # If PHP's memory limit is very low, some operations may fail.
 ini_set( 'memory_limit', '32M' );
 
-if (!is_dir('/home/groups/n/ns/nsis/persistent/mediawiki/nsiswikisessions'))
-	mkdir('/home/groups/n/ns/nsis/persistent/mediawiki/nsiswikisessions', 0777);
-session_save_path('/home/groups/n/ns/nsis/persistent/mediawiki/nsiswikisessions');
+if (!is_dir('/home/project-web/nsis/persistent/mediawiki/nsiswikisessions'))
+	mkdir('/home/project-web/nsis/persistent/mediawiki/nsiswikisessions', 0777);
+session_save_path('/home/project-web/nsis/persistent/mediawiki/nsiswikisessions');
 
 if ( $wgCommandLineMode ) {
 	if ( isset( $_SERVER ) && array_key_exists( 'REQUEST_METHOD', $_SERVER ) ) {
@@ -57,7 +57,7 @@ $wgMimeTypeBlacklist= array_filter($wgMimeTypeBlacklist, isZipMimeType);
 $wgEmergencyContact = "kichik@users.sourceforge.net";
 $wgPasswordSender	= "kichik@users.sourceforge.net";
 
-include_once("/home/groups/n/ns/nsis/nsisweb.cfg.php");
+include_once("/home/project-web/nsis/nsisweb.cfg.php");
 
 $wgDBserver         = NSISWEB_MYSQL_HOST;
 $wgDBname           = NSISWEB_DB_PREFIX."wiki";

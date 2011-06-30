@@ -16,11 +16,11 @@ function getTimeStamp($file) {
 }
 
 function tsChangeLog() {
-	return getTimeStamp('/home/groups/n/ns/nsis/htdocs/nightly/changelog.htm');
+	return getTimeStamp('/home/project-web/nsis/htdocs/nightly/changelog.htm');
 }
 
 function tsNightlyBuild() {
-	return GetTimeStamp('/home/groups/n/ns/nsis/htdocs/nightly/nsis.zip');
+	return GetTimeStamp('/home/project-web/nsis/htdocs/nightly/nsis.zip');
 }
 
 function showChangeLog($linesPerPage) {
@@ -42,7 +42,7 @@ function showChangeLog($linesPerPage) {
 	$curpage = $wgRequest->getInt('clpage', 1);
 
 	// Get lines
-	$lines = file('/home/groups/n/ns/nsis/htdocs/nightly/changelog.htm');
+	$lines = file('/home/project-web/nsis/htdocs/nightly/changelog.htm');
 	$lines = array_filter($lines);
 	$linescount = count($lines);
 

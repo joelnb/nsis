@@ -10,7 +10,7 @@ function wfForumRSS() {
 function ForumRSS() {
 	global $wgParser;
 	$wgParser->disableCache();
-	return file_get_contents('/home/groups/n/ns/nsis/forum.rss.html');
+	return file_get_contents('/home/project-web/nsis/forum.rss.html');
 }
 
 ?>
