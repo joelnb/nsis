@@ -157,11 +157,15 @@ require_once( "$IP/extensions/SpamBlacklist.php" );
 if (is_readable("$IP/spam_blacklist")) {
 	$wgSpamBlacklistFiles = array(
 		"$IP/spam_blacklist",
-		"DB: $wgDBname Spam_Blacklist"
+		"DB: $wgDBname Spam_Blacklist",
+		"http://meta.wikimedia.org/wiki/Spam_blacklist",
+		"http://en.wikipedia.org/wiki/MediaWiki:Spam-blacklist"
 	);
 } else {
 	$wgSpamBlacklistFiles = array(
-		"DB: $wgDBname Spam_Blacklist"
+		"DB: $wgDBname Spam_Blacklist",
+		"http://meta.wikimedia.org/wiki/Spam_blacklist",
+		"http://en.wikipedia.org/wiki/MediaWiki:Spam-blacklist"
 	);
 }
 
