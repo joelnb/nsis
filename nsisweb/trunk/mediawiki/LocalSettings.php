@@ -169,6 +169,11 @@ if (is_readable("$IP/spam_blacklist")) {
 	);
 }
 
+$wgGroupPermissions['sysop']['deleterevision'] = true;
+$wgGroupPermissions['suppress']['hideuser'] = true;
+$wgGroupPermissions['suppress']['suppressrevision'] = true;
+$wgGroupPermissions['suppress']['suppressionlog'] = true;
+
 # extensions
 include("extensions/GeSHiHighlight.php");
 include("extensions/attachments.php");
