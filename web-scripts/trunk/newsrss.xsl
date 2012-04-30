@@ -8,7 +8,7 @@
 <b>Posted: </b><xsl:value-of select="pubDate"/>
 </p>
 <blockquote>
-<xsl:variable name="descnc" select="substring-before(description, ' (&lt;a href=&quot;http://sourceforge.net/forum/forum.php?forum_id=')"/>
+<xsl:variable name="descnc" select="description"/>
 <xsl:choose>
 <xsl:when test="starts-with(title, 'NSIS ') and contains(title, 'released')">
 <xsl:variable name="desc" select="substring-after($descnc, '&lt;br /&gt;')"/>
