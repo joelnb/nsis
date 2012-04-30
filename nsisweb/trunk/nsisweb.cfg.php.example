@@ -1,0 +1,14 @@
+<?
+# this file should contain correct passwords and be in /home/project-web/nsis/nsisweb.cfg.php
+define('NSISWEB_MYSQL_HOST','mysql-n');
+define('NSISWEB_MYSQL_USER','n22049rw');
+define('NSISWEB_MYSQL_PASSWORD','xxxxxxxxxxxx');
+define('NSISWEB_OWNDB',FALSE);
+define('NSISWEB_DB','n22049_archive');
+define('NSISWEB_DB_PREFIX','n22049_');
+define('NSISWEB_MAGIC_NUMBER',0xDEADBEEF);
+#define('NSISWEB_SESSION_DIR','/home/groups/n/ns/nsis/archive_sessions');
+define('NSISWEB_SESSION_DIR','/home/groups/n/ns/nsis/persistent/archive');
+define('NSISWEB_LEXER_PATH','/home/groups/n/ns/nsis/bin/nsis_parser');
+define('NSISWEB_RECAPTCHA_KEY', 'xxxxxxxxxxxxxxxx');
+?>
