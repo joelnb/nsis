@@ -10,8 +10,6 @@ $wgExtensionCredits['other'][] = array(
 );
 
 function wfSimpleUpdateSetup() {
-  global $wgMessageCache;
-  $wgMessageCache->addMessages(array('simpleupdate' => 'Simple Update'));
   SpecialPage::addPage(new SpecialPage("Simpleupdate", '', false, 'wfSpecialSimpleUpdate', __FILE__));
 }
 

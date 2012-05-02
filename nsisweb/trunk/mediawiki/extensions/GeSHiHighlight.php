@@ -20,6 +20,7 @@ $wgExtensionFunctions[] = "wfSyntaxExtension";
 
 function wfSyntaxExtension() {
 	global $wgParser;
+	global $geshiPath;
 
 	$langArray = array("actionscript","ada","apache","applescript","asm",
 	                   "asp","autoit","bash","blitzbasic","bnf","c","caddcl",
@@ -37,7 +38,7 @@ function wfSyntaxExtension() {
 
 	foreach ( $langArray as $lang ){
 		$wgParser->setHook( 'highlight-' . $lang,
-		create_function( '$text', '$geshi = new GeSHi(rtrim(ltrim($text,"\n\r")), ' . $lang . ', "' . $geshiPath . '");
+		create_function( '$text', '$geshi = new GeSHi(rtrim(ltrim($text,"\n\r")), "' . $lang . '", "' . $geshiPath . '");
 		                 #$geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS);
 		                 return $geshi->parse_code();'));
 	}

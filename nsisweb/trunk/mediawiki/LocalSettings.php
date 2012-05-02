@@ -51,8 +51,6 @@ $wgUploadPath       = "$wgScriptPath/images";
 $wgUploadDirectory  = "$IP/images";
 
 $wgFileExtensions   = array( 'png', 'gif', 'jpg', 'jpeg', 'zip', '7z', 'nsi', 'nsh' );
-function isZipMimeType($x) { return $x != 'application/zip'; }
-$wgMimeTypeBlacklist= array_filter($wgMimeTypeBlacklist, isZipMimeType);
 
 $wgEmergencyContact = "kichik@users.sourceforge.net";
 $wgPasswordSender	= "kichik@users.sourceforge.net";
@@ -88,7 +86,7 @@ $wgSMTP = array(
 $wgDBmysql4 = $wgEnablePersistentLC = true;
 
 ## Shared memory settings
-$wgMainCacheType = 'CACHE_ACCEL';
+$wgMainCacheType = CACHE_ANYTHING;
 $wgMemCachedServers = array();
 
 ## Proxy stuff... We must know which proxy to trust
@@ -185,4 +183,21 @@ include("extensions/NavImg.php");
 include("extensions/SimpleUpdate.php");
 include("extensions/ExtendedProtection.php");
 
+### Captcha begin ###
+include("extensions/ConfirmEdit/QuestyCaptcha.php");
+$wgCaptchaClass = 'QuestyCaptcha';
+$wgCaptchaQuestions[] = array( 'question' => "<b style=\"color: red;\">What is the name of this project?</b> (Hint: The answer is NSIS)", 'answer' => "NSIS" );
+
+# no outbound internet access... can't work
+#include("extensions/ConfirmEdit/ReCaptcha.php");
+#$wgCaptchaClass = 'ReCaptcha';
+#$wgReCaptchaPublicKey = '6LeDrMYSAAAAAH_kA2IxUYao_cbX5NEMiW20eoKv';
+#$wgReCaptchaPrivateKey = NSISWEB_RECAPTCHA_KEY;
+
+$wgCaptchaTriggers['edit']          = false; 
+$wgCaptchaTriggers['create']        = true; 
+$wgCaptchaTriggers['addurl']        = false; 
+$wgCaptchaTriggers['createaccount'] = true;
+$wgCaptchaTriggers['badlogin']      = false;
+### Captcha end ###
 ?>
