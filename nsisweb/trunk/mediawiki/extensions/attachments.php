@@ -9,9 +9,9 @@ function wfAttachmentsExtension() {
 }
 
 function attach_func($input, $args, $parser) {
-	$zip = Image::newFromName('Zip.gif');
-	$attachment = Image::newFromName($input);
-	if (!$attachment->exists())
+	$zip = wfFindFile('Zip.gif');
+	$attachment = wfFindFile($input);
+	if (!is_object($attachment) && !$attachment->exists())
 		return $input . ' not found';
 
 	$output = '<a href="' . $attachment->getURL() . '" style="text-decoration: none">';
