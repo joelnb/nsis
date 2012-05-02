@@ -11,7 +11,7 @@ function wfAttachmentsExtension() {
 function attach_func($input, $args, $parser) {
 	$zip = wfFindFile('Zip.gif');
 	$attachment = wfFindFile($input);
-	if (!is_object($attachment) && !$attachment->exists())
+	if (!is_object($attachment) || !$attachment->exists())
 		return $input . ' not found';
 
 	$output = '<a href="' . $attachment->getURL() . '" style="text-decoration: none">';
