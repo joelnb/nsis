@@ -26,7 +26,7 @@ function wfNiceCategoryList() {
  * The hook function. Handles <ncl></ncl>.
  * Receives the category name as a parameter.
  */
-function hookNiceCategoryList($category) {
+function hookNiceCategoryList($category, $args, $parser, $frame) {
 	$dbr =& wfGetDB(DB_SLAVE);
 
 	$title = Title::newFromText($category);
@@ -34,8 +34,7 @@ function hookNiceCategoryList($category) {
 
 	$ct = fetchCategoryLinks($dbr, $title);
 
-	global $wgOut;
-	return $wgOut->parse(outputCategory($ct));
+	return $parser->recursiveTagParse(outputCategory($ct), $frame);
 }
 
 /*
