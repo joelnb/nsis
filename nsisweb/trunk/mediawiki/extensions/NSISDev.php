@@ -28,7 +28,6 @@ function showChangeLog($linesPerPage) {
 	if ($LINESPERPAGE <= 0) $LINESPERPAGE = 30;
 
 	global $wgRequest, $wgUser, $wgLang, $wgArticle, $wgParser;
-	$wgSkin = $wgUser->getSkin();
 	$wgTitle = $wgArticle->getTitle();
 	$wgThisLink = $wgTitle->getText();
 
@@ -56,7 +55,7 @@ function showChangeLog($linesPerPage) {
 			if ($i == $curpage) {
 				$output .= '<strong>[ '.$i.' ]</strong> ';
 			} else {
-				$link = $wgSkin->makeKnownLink($wgThisLink, $wgLang->formatNum("{$i}"), "clpage={$i}");
+				$link = Linker::makeKnownLinkObj($wgThisLink, $wgLang->formatNum("{$i}"), "clpage={$i}");
 				$output .= '[ '.$link.' ] ';
 			}
 		}
@@ -82,13 +81,13 @@ function showChangeLog($linesPerPage) {
 		$nextpage = $curpage + 1;
 
 		if ($backpage > 0) {
-			$output .= $wgSkin->makeKnownLink($wgThisLink, '&lt; Back', "clpage={$backpage}");
+			$output .= Linker::makeKnownLinkObj($wgThisLink, '&lt; Back', "clpage={$backpage}");
 		}
 
 		$output .= ' ';
 
 		if ($nextpage <= $pages) {
-			$output .= $wgSkin->makeKnownLink($wgThisLink, 'Next &gt;', "clpage={$nextpage}");
+			$output .= Linker::makeKnownLinkObj($wgThisLink, 'Next &gt;', "clpage={$nextpage}");
 		}
 
 		$output .= "</strong></p>";
