@@ -175,6 +175,7 @@ $wgGroupPermissions['suppress']['suppressionlog'] = true;
 # extensions
 include("extensions/GeSHiHighlight.php");
 include("extensions/attachments.php");
+include("extensions/Twitter.php");
 include("extensions/ForumRSS.php");
 include("extensions/NewsRSS.php");
 include("extensions/NSISDev.php");
