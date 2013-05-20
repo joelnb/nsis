@@ -183,6 +183,7 @@ include("extensions/NiceCategoryList.php");
 include("extensions/NavImg.php");
 include("extensions/SimpleUpdate.php");
 include("extensions/ExtendedProtection.php");
+include("extensions/ParserFunctions/ParserFunctions.php");
 
 ### Captcha begin ###
 include("extensions/ConfirmEdit/QuestyCaptcha.php");
