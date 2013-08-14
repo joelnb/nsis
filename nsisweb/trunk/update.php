@@ -27,9 +27,9 @@ $RTYPES = array(
 $output = "0";
 
 $latest_stable_version = "2.46";
-$latest_version = "3.0a1";
-$latest_type = $TYPES[""];
-$latest_build = "";
+$latest_version = "3.0";
+$latest_type = $TYPES["a"];
+$latest_build = "1";
 
 $version = get_param("version");
 $cvs = get_param("cvs");
