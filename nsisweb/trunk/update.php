@@ -29,7 +29,7 @@ $output = "0";
 $latest_stable_version = "2.46";
 $latest_version = "3.0";
 $latest_type = $TYPES["a"];
-$latest_build = "1";
+$latest_build = "2";
 
 $version = get_param("version");
 $cvs = get_param("cvs");
