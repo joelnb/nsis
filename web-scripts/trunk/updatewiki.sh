@@ -28,6 +28,7 @@ else
 fi
 
 rm -rf mediawiki-$2/config
+rm -rf mediawiki-$2/mw-config
 
 cp -rf mediawiki/extensions/* mediawiki-$2/extensions
 
