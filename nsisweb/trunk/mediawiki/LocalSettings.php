@@ -106,7 +106,6 @@ $wgImageMagickConvertCommand = "/usr/bin/convert";
 # $wgUseTeX			= true;
 $wgMathPath         = "{$wgUploadPath}/math";
 $wgMathDirectory    = "{$wgUploadDirectory}/math";
-$wgTmpDirectory     = "{$wgUploadDirectory}/tmp";
 
 $wgLocalInterwiki   = $wgSitename;
 
