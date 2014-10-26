@@ -5,6 +5,8 @@
 #   runs on sf shell server after build is done and copied
 #
 
+set -e
+
 # unzip built files
 mkdir unzipped
 unzip nsis*.zip -d unzipped
