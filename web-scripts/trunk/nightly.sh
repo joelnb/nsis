@@ -5,6 +5,8 @@
 #   currently running on drone.io
 #
 
+set -e
+
 # get zlib library
 sudo apt-get -y install scons mingw32 mingw32-binutils zlib1g-dev libcppunit-dev
 wget -O /tmp/zlib.zip "https://downloads.sourceforge.net/project/libpng/zlib/1.2.8/zlib128-dll.zip?r=&ts=1403402496&use_mirror=hivelocity"
