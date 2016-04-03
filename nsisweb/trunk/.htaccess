@@ -36,7 +36,7 @@ RewriteRule ^home/*$ /Main_Page [R,L]
 RewriteRule ^rn/new$ https://sourceforge.net/project/admin/explorer.php?group_id=22049 [R,L]
 RewriteRule ^rn/v(2.*)$ http://sourceforge.net/projects/nsis/files/NSIS\ 2/$1/RELEASE.html/view [R,L]
 RewriteRule ^rn/v(3[.0-9]*)$ http://sourceforge.net/projects/nsis/files/NSIS\ 3/$1/RELEASE.html/view [R,L]
-RewriteRule ^rn/v(3[.0-9]*[ab][0-9]*)$ http://sourceforge.net/projects/nsis/files/NSIS\ 3\ Pre-release/$1/RELEASE.html/view [R,L]
+RewriteRule ^rn/v(3[.0-9]*([ab]|rc)[0-9]*)$ http://sourceforge.net/projects/nsis/files/NSIS\ 3\ Pre-release/$1/RELEASE.html/view [R,L]
 RewriteRule ^rn/(.*)$ http://sourceforge.net/project/shownotes.php?group_id=22049&release_id=$1 [R,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
