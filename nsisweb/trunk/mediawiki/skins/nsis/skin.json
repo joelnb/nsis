@@ -1,0 +1,16 @@
+{
+	"name": "NSIS",
+	"author": "Joost",
+	"url": "https://nsis.sourceforge.net/",
+	"descriptionmsg": "Skin for NSIS Wiki",
+	"namemsg": "nsis",
+	"license-name": "zlib",
+	"type": "skin",
+	"AutoloadClasses": {
+		"SkinNSIS": "NSIS.php",
+		"NSISTemplate": "NSIS.php"
+	},
+	"ValidSkinNames": {
+		"nsis": "NSIS"
+	}
+}

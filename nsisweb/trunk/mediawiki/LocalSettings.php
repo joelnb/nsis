@@ -17,6 +17,7 @@ if (!is_dir('/home/project-web/nsis/persistent/mediawiki/nsiswikisessions'))
 	mkdir('/home/project-web/nsis/persistent/mediawiki/nsiswikisessions', 0777);
 session_save_path('/home/project-web/nsis/persistent/mediawiki/nsiswikisessions');
 
+
 if ( $wgCommandLineMode ) {
 	if ( isset( $_SERVER ) && array_key_exists( 'REQUEST_METHOD', $_SERVER ) ) {
 		die( "This script must be run from the command line\n" );
@@ -56,6 +57,7 @@ $wgEmergencyContact = "kichik@users.sourceforge.net";
 $wgPasswordSender	= "kichik@users.sourceforge.net";
 
 include_once("/home/project-web/nsis/nsisweb.cfg.php");
+
 
 $wgDBserver         = NSISWEB_MYSQL_HOST;
 $wgDBname           = NSISWEB_DB_PREFIX."wiki";
@@ -180,14 +182,16 @@ include("extensions/NewsRSS.php");
 include("extensions/NSISDev.php");
 include("extensions/NiceCategoryList.php");
 include("extensions/NavImg.php");
-include("extensions/SimpleUpdate.php");
+//include("extensions/SimpleUpdate.php");
 include("extensions/ExtendedProtection.php");
 include("extensions/ParserFunctions/ParserFunctions.php");
 
 ### Captcha begin ###
 include("extensions/ConfirmEdit/QuestyCaptcha.php");
 $wgCaptchaClass = 'QuestyCaptcha';
-$wgCaptchaQuestions[] = array( 'question' => "<b style=\"color: red;\">What is the name of this project?</b> (Hint: The answer is NSIS)", 'answer' => "NSIS" );
+$wgCaptchaQuestions[] = array( 'question' => "<b style=\"color: 
+red;\">The waiting version of the Exec command is called?</b>", 
+'answer' => "ExecWait" );
 
 # no outbound internet access... can't work
 #include("extensions/ConfirmEdit/ReCaptcha.php");
@@ -201,4 +205,8 @@ $wgCaptchaTriggers['addurl']        = false;
 $wgCaptchaTriggers['createaccount'] = true;
 $wgCaptchaTriggers['badlogin']      = false;
 ### Captcha end ###
+
+$wgGroupPermissions['*']['edit'] = false;
+
+wfLoadSkin( 'nsis' );
 ?>
