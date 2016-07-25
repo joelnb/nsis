@@ -5,7 +5,7 @@
 #   runs on sf shell server after build is done and copied
 #
 
-set -e
+set -ex
 
 # unzip built files
 mkdir unzipped
