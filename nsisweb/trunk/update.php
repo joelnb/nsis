@@ -26,10 +26,10 @@ $RTYPES = array(
 
 $output = "0";
 
-$latest_stable_version = "2.51";
+$latest_stable_version = "3.0";
 $latest_version = "3.0";
-$latest_type = $TYPES["rc"];
-$latest_build = "2";
+$latest_type = $TYPES[""];
+$latest_build = "";
 
 $version = get_param("version");
 $cvs = get_param("cvs");
