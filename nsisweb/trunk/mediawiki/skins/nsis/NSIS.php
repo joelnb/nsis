@@ -252,13 +252,18 @@ class NSISTemplate extends QuickTemplate {
 	  <h5><label for="searchInput"><?php $this->msg('search') ?></label></h5>
 	  <div class="pBody">
       <!-- Google CSE Search Box Begins  -->
-      <form id="searchbox_013152803417979916569:ziywxtw6b6m" action="http://www.google.com/cse">
-        <input type="hidden" name="cx" value="013152803417979916569:ziywxtw6b6m" />
-        <input type="hidden" name="cof" value="FORID:0" />
-        <input name="q" type="text" size="15" />
-        <input type="submit" name="sa" value="Search" />
-      </form>
-      <script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=searchbox_013152803417979916569%3Aziywxtw6b6m"></script>
+      <script>
+        (function() {
+          var cx = '013152803417979916569:ziywxtw6b6m';
+          var gcse = document.createElement('script');
+          gcse.type = 'text/javascript';
+          gcse.async = true;
+          gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+          var s = document.getElementsByTagName('script')[0];
+          s.parentNode.insertBefore(gcse, s);
+        })();
+      </script>
+      <gcse:searchbox-only></gcse:searchbox-only>
       <!-- Google CSE Search Box Ends -->
 	  </div>
 	</div>
