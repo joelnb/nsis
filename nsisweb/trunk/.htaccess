@@ -4,6 +4,9 @@ Options -Indexes
 
 RewriteEngine On
 
+RewriteRule ^BBS[/]?$ http://forums.winamp.com/forumdisplay.php?forumid=65 [R=302,NC,L]
+RewriteRule ^CI[/]?$ https://travis-ci.org/kichik/nsis [R=302,NC,L]
+
 RewriteRule ^site/Download.6.0.html$ /Download [R,L]
 RewriteRule ^site/FAQ.15.0.html$ /FAQ [R,L]
 RewriteRule ^site/Home.2.0.html$ /Main_Page [R,L]
