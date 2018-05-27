@@ -153,7 +153,7 @@ class NSISTemplate extends QuickTemplate {
 		<?php } ?><!--[if lt IE 7]><?php if( in_array( 'IE', $skin->cssfiles ) ) { ?><script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath') ?>/common/IEFixes.js?<?php echo $GLOBALS['wgStyleVersion'] ?>"></script>
 		<?php } ?><meta http-equiv="imagetoolbar" content="no" /><![endif]-->
 		
-		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
+		<?php /* print Skin::makeGlobalVariablesScript( $this->data ); */ ?>
                 
 		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/common/wikibits.js?<?php echo $GLOBALS['wgStyleVersion'] ?>"><!-- wikibits js --></script>
 		<!-- Head Scripts -->
@@ -182,6 +182,7 @@ class NSISTemplate extends QuickTemplate {
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
   ga('create', 'UA-75865490-1', 'auto');
+  ga('set', 'anonymizeIp', true);
   ga('send', 'pageview');
 
 </script>
