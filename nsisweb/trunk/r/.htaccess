@@ -1,0 +1,25 @@
+
+Options -Indexes
+RewriteEngine On
+
+
+
+#
+# NSIS Menu & MakeNSISW permalink redirects
+#
+
+RewriteRule ^Slack$ https://nsischat.herokuapp.com [R=302,NC,L]
+RewriteRule ^Donate[/]?$ https://sourceforge.net/donate/index.php?group_id=22049 [R=302,NC,L]
+
+
+
+#
+# Other useful redirects
+# (These have not been publicly shared. If you share one, move it to a different section with a comment.)
+#
+
+RewriteRule ^InteractiveSupport[/]?$ /r/Slack [NC,PT]
+RewriteRule ^Chat[/]?$ /r/IRC [NC,PT]
+RewriteRule ^BBS[/]?$ http://forums.winamp.com/forumdisplay.php?forumid=65 [NC,PT]
+RewriteRule ^CI[/]?$ https://travis-ci.org/kichik/nsis [R=302,NC,L]
+RedirectMatch 302 (?i)/IRC[/]?$ irc://irc.landoleet.org/nsis
