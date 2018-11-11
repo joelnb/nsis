@@ -180,6 +180,7 @@ include("extensions/Twitter.php");
 include("extensions/ForumRSS.php");
 include("extensions/NewsRSS.php");
 include("extensions/NSISDev.php");
+include("extensions/NSISDonate.php");
 include("extensions/NiceCategoryList.php");
 include("extensions/NavImg.php");
 //include("extensions/SimpleUpdate.php");
