@@ -1,4 +1,4 @@
-<?
+<?php
 # this file should contain correct passwords and be in /home/project-web/nsis/nsisweb.cfg.php
 define('NSISWEB_MYSQL_HOST','mysql-n');
 define('NSISWEB_MYSQL_USER','n22049rw');

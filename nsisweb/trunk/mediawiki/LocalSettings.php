@@ -56,7 +56,7 @@ $wgFileExtensions   = array( 'png', 'gif', 'jpg', 'jpeg', 'zip', '7z', 'nsi', 'n
 $wgEmergencyContact = "kichik@users.sourceforge.net";
 $wgPasswordSender	= "kichik@users.sourceforge.net";
 
-include_once("/home/project-web/nsis/nsisweb.cfg.php");
+require_once("/home/project-web/nsis/nsisweb.cfg.php");
 
 
 $wgDBserver         = NSISWEB_MYSQL_HOST;

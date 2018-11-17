@@ -48,10 +48,10 @@ class SkinNSIS extends SkinTemplate {
    */
   function buildSidebar() {
     $fname = 'SkinNSIS::buildSidebar';
-    wfProfileIn( $fname );
+    //wfProfileIn( $fname );
 
     $bar = array();
-    $lines = explode( "\n", wfMsgForContent( 'sidebar' ) );
+    $lines = explode( "\n", wfMessage( 'sidebar' )->text() );
     foreach ($lines as $line) {
       if (strpos($line, '*') !== 0)
         continue;
@@ -63,12 +63,13 @@ class SkinNSIS extends SkinTemplate {
         $line = substr($line, $level);
         if (strpos($line, '|') !== false) { // sanity check
           $line = explode( '|' , trim($line, '* '), 2 );
-          $link = wfMsgForContent( $line[0] );
+          $text = wfMessage($line[1])->text();
+          $link = wfMessage($line[0])->text();
           if ($link == '-')
             continue;
-          if (wfEmptyMsg($line[1], $text = wfMsg($line[1])))
+          if (wfMessage($line[1])->inContentLanguage()->isBlank())
             $text = $line[1];
-          if (wfEmptyMsg($line[0], $link))
+          if (wfMessage($line[0])->inContentLanguage()->isBlank())
             $link = $line[0];
           $bar[$heading][] = array(
             'text' => $text,
@@ -80,7 +81,7 @@ class SkinNSIS extends SkinTemplate {
       }
     }
 
-    wfProfileOut( $fname );
+    //wfProfileOut( $fname );
     return $bar;
   }
 }
@@ -243,7 +244,7 @@ class NSISTemplate extends QuickTemplate {
 	<script type="<?php $this->text('jsmimetype') ?>"> if (window.isMSIE55) fixalpha(); </script>
 	<?php foreach ($this->data['sidebar'] as $bar => $cont) { ?>
 	<div class='portlet' id='p-<?php echo htmlspecialchars($bar) ?>'>
-	  <h5><?php $out = wfMsg( $bar ); if (wfEmptyMsg($bar, $out)) echo $bar; else echo $out; ?></h5>
+	  <h5><?php $out = wfMessage( $bar )->text(); if (wfMessage($bar)->inContentLanguage()->isBlank()) echo $bar; else echo $out; ?></h5>
 	  <div class='pBody'>
 	    <?php $this->printSidebar($cont); ?>
 	  </div>
@@ -308,7 +309,6 @@ google_ad_height = 240;
 <!--      <div class="visualClear"></div> -->
       <div id="footer">
         <? if($this->data['poweredbyico']) { ?><div id="f-poweredbyico"><a href="http://sourceforge.net/projects/nsis/"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=22049&amp;type=1" border="0" alt="SourceForge.net" /></a>&nbsp;<? $this->html('poweredbyico') ?></div><? } ?>
-	      <? if($this->data['copyrightico']) { ?><div id="f-copyrightico"><? $this->html('copyrightico') ?></div><? } ?>
         <ul id="f-list">
           <? if($this->data['lastmod'   ]) { ?><li id="f-lastmod"><?    $this->html('lastmod')    ?><br/></li><? } ?>
           <? if(!$this->data['lastmod'  ]) { ?><li id="f-spec">This page is automatically generated.<br/></li><? } ?>
