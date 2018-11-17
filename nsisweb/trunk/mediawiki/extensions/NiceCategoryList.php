@@ -127,7 +127,7 @@ function fetchCategoryLinks($dbr, $category_title, $processed = array()) {
  */
 function outputCategory($category, $level = 0) {
 	global $wgContLang, $wgUser;
-	$sk =& $wgUser->getSkin();
+	// $sk =& $wgUser->getSkin(); // Deprecated in MediaWiki 1.18 and removed in 1.27 https://gerrit.wikimedia.org/r/261896#I7602ab7609b13b807e67296c8ce0a1d184c88521
 
 	if ($level == 0) {
 		// no need for TOC
