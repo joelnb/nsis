@@ -175,7 +175,7 @@ class NSISTemplate extends QuickTemplate {
 		<script type="<?php $this->text('jsmimetype') ?>"><?php $this->html('userjsprev') ?></script>
 <?php	}
 		if($this->data['trackbackhtml']) print $this->data['trackbackhtml']; ?>
-		<link rel="alternate" type="application/rss+xml" title="NSIS Project News" href="http://sourceforge.net/export/rss2_projnews.php?group_id=22049&amp;rss_fulltext=1" />
+		<link rel="alternate" type="application/rss+xml" title="NSIS Project News" href="https://sourceforge.net/export/rss2_projnews.php?group_id=22049&rss_fulltext=1" />
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -273,7 +273,7 @@ class NSISTemplate extends QuickTemplate {
 	<div class="portlet">
 	  <h5>donate</h5>
 	  <div class="pBody" style="text-align: center; padding: 3px">
-	    <a href="http://sourceforge.net/donate/index.php?group_id=22049"><img src="http://images.sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" alt="Support This Project" /> </a>
+	    <a href="https://sourceforge.net/donate/index.php?group_id=22049"><img src="https://images.sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" alt="Support This Project" /> </a>
 	  </div>
 	</div>
 
@@ -287,7 +287,7 @@ google_ad_slot = "4219930685";
 google_ad_width = 120;
 google_ad_height = 240;
 	    //--></script>
-	    <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+	    <script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 	  </div>
 	</div>
 
@@ -308,7 +308,7 @@ google_ad_height = 240;
       </div><!-- end of the left (by default at least) column -->
 <!--      <div class="visualClear"></div> -->
       <div id="footer">
-        <? if($this->data['poweredbyico']) { ?><div id="f-poweredbyico"><a href="http://sourceforge.net/projects/nsis/"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=22049&amp;type=1" border="0" alt="SourceForge.net" /></a>&nbsp;<? $this->html('poweredbyico') ?></div><? } ?>
+        <? if($this->data['poweredbyico']) { ?><div id="f-poweredbyico"><a href="https://sourceforge.net/projects/nsis/"><img src="https://sflogo.sourceforge.net/sflogo.php?group_id=22049&type=1" border="0" alt="SourceForge.net" /></a>&nbsp;<? $this->html('poweredbyico') ?></div><? } ?>
         <ul id="f-list">
           <? if($this->data['lastmod'   ]) { ?><li id="f-lastmod"><?    $this->html('lastmod')    ?><br/></li><? } ?>
           <? if(!$this->data['lastmod'  ]) { ?><li id="f-spec">This page is automatically generated.<br/></li><? } ?>
