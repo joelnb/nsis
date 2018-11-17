@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # updates mediawiki version
 #
@@ -11,6 +11,11 @@ BASEDIR=`dirname $0`
 
 source $BASEDIR/config.sh
 
+echo Backing up database...
+
+mysqldump n22049_wiki | gzip > $SFDIR/db-bak-`date +%Y-%m-%d`.gz
+mysqldump --xml n22049_wiki | gzip > $SFDIR/db-bak-xml-`date +%Y-%m-%d`.gz
+
 cd $SFDIR/htdocs
 
 if [ -n "$3" ]; then
@@ -22,7 +27,7 @@ if [ -n "$3" ]; then
 		exit 1
 	fi
 else
-	wget http://download.wikimedia.org/mediawiki/$1/mediawiki-$2.tar.gz || exit 1
+	wget https://releases.wikimedia.org/mediawiki/$1/mediawiki-$2.tar.gz || exit 1
 	tar xzf mediawiki-$2.tar.gz || exit 1
 	rm -f mediawiki-$2.tar.gz
 fi
@@ -30,7 +35,7 @@ fi
 rm -rf mediawiki-$2/config
 rm -rf mediawiki-$2/mw-config
 
-cp -rf mediawiki/extensions/* mediawiki-$2/extensions
+cp -rn mediawiki/extensions/* mediawiki-$2/extensions
 
 cp -r mediawiki/skins/nsis mediawiki-$2/skins
 cp mediawiki/skins/NSIS.php mediawiki-$2/skins
@@ -55,13 +60,15 @@ diff -ruNw mediawiki mediawiki-$2 > wiki.diff
 
 sed -i -s "s/\/mediawiki/\/mediawiki-$2/" mediawiki-$2/LocalSettings.php
 
-echo "http://nsis.sourceforge.net/mediawiki-$2/index.php?title=Main_Page&action=purge"
-echo "http://nsis.sourceforge.net/mediawiki-$2/index.php?title=Change_Log&action=purge"
-echo "http://nsis.sourceforge.net/mediawiki-$2/index.php?title=Special:Version&action=purge"
-echo "http://nsis.sourceforge.net/mediawiki-$2/index.php?title=ExtractDLL&action=purge"
-echo "http://nsis.sourceforge.net/mediawiki-$2/index.php?title=File:Extractdll.zip&action=purge"
+echo "https://nsis.sourceforge.io/mediawiki-$2/index.php?title=Main_Page&action=purge"
+echo "https://nsis.sourceforge.io/mediawiki-$2/index.php?title=Change_Log&action=purge"
+echo "https://nsis.sourceforge.io/mediawiki-$2/index.php?title=Special:Version&action=purge"
+echo "https://nsis.sourceforge.io/mediawiki-$2/index.php?title=ExtractDLL&action=purge"
+echo "https://nsis.sourceforge.io/mediawiki-$2/index.php?title=File:Extractdll.zip&action=purge"
 echo
-echo "http://nsis.sourceforge.net/wiki.diff"
+echo "https://nsis.sourceforge.io/wiki.diff"
+echo
+echo "Maybe? cd $SFDIR/htdocs/mediawiki-$2/maintenance && php update.php --dbuser n22049admin --dbpass xxx"
 
 read -n1 -p "Use new Wiki? [Y/n] " -e USE_NEW_WIKI
 
