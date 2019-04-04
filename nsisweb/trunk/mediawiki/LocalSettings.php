@@ -188,17 +188,10 @@ include("extensions/ExtendedProtection.php");
 include("extensions/ParserFunctions/ParserFunctions.php");
 
 ### Captcha begin ###
-include("extensions/ConfirmEdit/QuestyCaptcha.php");
-$wgCaptchaClass = 'QuestyCaptcha';
-$wgCaptchaQuestions[] = array( 'question' => "<b style=\"color: 
-red;\">The waiting version of the Exec command is called?</b>", 
-'answer' => "ExecWait" );
-
-# no outbound internet access... can't work
-#include("extensions/ConfirmEdit/ReCaptcha.php");
-#$wgCaptchaClass = 'ReCaptcha';
-#$wgReCaptchaPublicKey = '6LeDrMYSAAAAAH_kA2IxUYao_cbX5NEMiW20eoKv';
-#$wgReCaptchaPrivateKey = NSISWEB_RECAPTCHA_KEY;
+wfLoadExtensions([ 'ConfirmEdit', 'ConfirmEdit/QuestyCaptcha' ]);
+$wgCaptchaQuestions = [
+  '<b style="color:red;">The waiting version of the Exec command is called?</b>' => 'ExecWait',
+];
 
 $wgCaptchaTriggers['edit']          = false; 
 $wgCaptchaTriggers['create']        = true; 

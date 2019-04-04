@@ -159,6 +159,7 @@ class NSISTemplate extends QuickTemplate {
 		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/common/wikibits.js?<?php echo $GLOBALS['wgStyleVersion'] ?>"><!-- wikibits js --></script>
 		<!-- Head Scripts -->
 <?php $this->html('headscripts') ?>
+<?php global $wgOut; echo implode($wgOut->getHeadItemsArray()); ?>
 <?php	if($this->data['jsvarurl']) { ?>
 		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('jsvarurl') ?>"><!-- site js --></script>
 <?php	} ?>
