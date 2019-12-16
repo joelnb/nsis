@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -ex
 
 # updates mediawiki version
 #
@@ -21,7 +21,6 @@ cd $SFDIR/htdocs
 if [ -n "$3" ]; then
 	if [ -f "$3" ]; then
 		tar xzf $3 || exit 1
-		rm -f $3
 	else
 		echo "$3 cannot be found!"
 		exit 1

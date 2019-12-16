@@ -2,8 +2,9 @@
 
 #
 # nightly build script
-#   currently running on drone.io
+#   ran on drone.io
 #
+#   DEPRECATED
 
 set -ex
 

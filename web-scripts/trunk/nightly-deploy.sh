@@ -4,12 +4,18 @@
 # nightly build deploymet script
 #   runs on sf shell server after build is done and copied
 #
+# need this in ~/.ssh/authorized_keys
+#   command="/home/project-web/nsis/bin/nightly-deploy.sh",no-port-forwarding,no-x11-forwarding,no-agent-forwarding ssh-ed25519 AAAAC3...
 
 set -ex
 
+cd /home/project-web/nsis/bin
+
 # unzip built files
+cat > nsis.zip
+rm -rf unzipped
 mkdir unzipped
-unzip nsis*.zip -d unzipped
+unzip nsis.zip -d unzipped
 mv unzipped/nsis-* unzipped/nsis
 
 # some constants
