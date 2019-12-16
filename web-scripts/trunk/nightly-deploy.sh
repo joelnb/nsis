@@ -20,7 +20,7 @@ mv unzipped/nsis-* unzipped/nsis
 
 # some constants
 DISTROOT=unzipped/nsis
-BASEROOT=$PWD/web-scripts
+BASEROOT=$PWD
 NIGHTLYROOT=$PWD/../htdocs/nightly/
 
 # fix-up docs
