@@ -34,7 +34,7 @@ echo Options +indexes > $DISTROOT/Contrib/.htaccess
 
 # copy filse around
 cp -f nsis*.zip $NIGHTLYROOT/nsis.zip
-cp -f build.log $NIGHTLYROOT/build.log
+cp -f unzipped/build.log $NIGHTLYROOT/build.log
 rsync -vaW --delete $DISTROOT/Docs/ $NIGHTLYROOT/Docs/
 rsync -vaW --delete $DISTROOT/Examples/ $NIGHTLYROOT/Examples/
 rsync -vaW --delete $DISTROOT/Include/ $NIGHTLYROOT/Include/
